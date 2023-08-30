@@ -14,4 +14,4 @@ pnpm dev
 
 ## License
 
-This project is licensed under a [proprietary license](https://v4-teacher.vercel.app/developer_links/license)https://v4-teacher.vercel.app/developer_links/license.
+This project is licensed under a [proprietary license](https://v4-teacher.vercel.app/developer_links/license).
