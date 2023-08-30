@@ -57,7 +57,7 @@ This channel provides realtime information about orders, fills, transfers, perpe
 
 ### Initial Response
 
-Returns everything from the `/v4/addresses/:address/subaccountNumber/:subaccountNumber`, and `/v4/orders?addresses=${address}&subaccountNumber=${subaccountNumber}&status=OPEN`.
+Returns everything from the `/v4/addresses/:address/subaccountNumber/:subaccountNumber`, and `/v4/orders?address=${address}&subaccountNumber=${subaccountNumber}&status=OPEN`.
 
 ### Example
 ```tsx
@@ -365,7 +365,7 @@ export enum TransferType {
 
 ### Initial Response
 
-Returns everything from `v4/orderbooks/perpetualMarkets/${id}` endpoint.
+Returns everything from `v4/orderbooks/perpetualMarket/${id}` endpoint.
 
 - Example
     
