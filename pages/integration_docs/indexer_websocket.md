@@ -2,7 +2,7 @@
 
 dYdX offers a WebSocket API for streaming v4 updates.
 
-You can connect to the v4 Testnet's webSockets at: `wss://indexer.v4testnet.dydx.exchange/v4/ws`
+You can connect to the v4 Testnet's webSockets at: `wss://indexer.v4testnet2.dydx.exchange/v4/ws`
 
 ## Overall
 
@@ -38,7 +38,7 @@ Use a command-line websocket client such as [interactive-websocket-cli](https:/
 Example (with `interactive-websocket-cli`)
 
 ```tsx
-wscli connect wss://indexer.v4testnet.dydx.exchange/v4/ws
+wscli connect wss://indexer.v4testnet2.dydx.exchange/v4/ws
 <output from ws-cli>
 <type 's' to send> { "type": "subscribe", "channel": "v4_trades", "id": "BTC-USD" }
 ```
