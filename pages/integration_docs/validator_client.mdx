@@ -1,0 +1,352 @@
+import { Tab, Tabs } from "nextra-theme-docs";
+
+# Validator Client
+
+## Getting Started
+
+### Installation
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```bash copy
+    pnpm install @dydxprotocol/v4-client 
+    ```
+  </Tab>
+  <Tab>
+    ```bash copy
+    pip install dydx4 
+    ```
+  </Tab>
+</Tabs>
+
+## Initializing the Client
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    import { ValidatorClient } from "@dydxprotocol/v4-client";
+
+    const client = await ValidatorClient.connect(Network.testnet().validatorConfig);
+    ```
+  </Tab>
+  <Tab>
+    ```python copy
+    from dydx4 import ValidatorClient
+    client = ValidatorClient.connect(Network.testnet().validator_config);
+    ```
+  </Tab>
+</Tabs>
+
+## Creating a LocalWallet
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    import {
+      BECH32_PREFIX,
+      LocalWallet,
+    } from '@dydxprotocol/v4-client';
+
+    const mnemonic = 'YOUR MNEMONIC HERE';
+    const wallet = await LocalWallet.fromMnemonic(mnemonic, BECH32_PREFIX);
+    ```
+  </Tab>
+  <Tab>
+    ```python copy
+    from dydx4.chain.aerial.wallet import LocalWallet, BECH32_PREFIX
+    mnemonic = 'YOUR MNEMONIC HERE'
+    wallet = LocalWallet.from_mnemonic(DYDX_TEST_MNEMONIC, BECH32_PREFIX);
+    ```
+  </Tab>
+</Tabs>
+
+## Simulate, Sign and Send Transactions
+
+### Simulate a Transaction
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    const messages = () => Promise.resolve([ /* ... your transaction messages here */ ]);
+    const fee = await client.simulate(wallet, messages);
+    ```
+  </Tab>
+  <Tab>
+    Simulation is not exposed by Python client at this moment
+  </Tab>
+</Tabs>
+
+### Sign a Transaction
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    const messages = () => Promise.resolve([ /* ... your transaction messages here */ ]);
+    const zeroFee = true;
+    const signedTransaction = await client.sign(wallet, messages, zeroFee);
+    ```
+  </Tab>
+  <Tab>
+    Signing is not exposed by Python client at this moment
+  </Tab>
+</Tabs>
+
+### Send a Transaction
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    const messages = () => Promise.resolve([ /* ... your transaction messages here */ ]);
+    const zeroFee = true;
+    const signedTransaction = await client.send(wallet, messages, zeroFee);
+    ```
+  </Tab>
+  <Tab>
+    ```python copy
+    const message = # compose your message
+    zeroFee = true
+    tx = client.send_message(subaccount, msg, zeroFee)
+    ```
+  </Tab>
+</Tabs>
+
+## Get Account Balances
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    // Get all balances for an account.
+    const balances = await client.get.getAccountBalances(DYDX_ADDRESS)
+
+    // Get balance of one denom for an account.
+    const balance = await client.get.getAccountBalance(DYDX_ADDRESS, TOKEN_DENOM)
+    ```
+  </Tab>
+  <Tab>
+    ```python copy
+    # Get all balances for an account.
+    balances = client.get.get_account_balances(DYDX_ADDRESS)
+
+    # Get balance of one denom for an account.
+    balance = client.get.get_account_balance(DYDX_ADDRESS, TOKEN_DENOM)
+    ```
+  </Tab>
+</Tabs>
+
+## Transfers, Deposits, and Withdraws
+
+### Transfering an Asset
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    import { SubaccountClient } from '@dydxprotocol/v4-client';
+
+    const subaccount = new SubaccountClient(wallet, 0);
+    const recipientAddress = 'dydx...' // address of the recipient
+    const recipientSubaccountNumber = 0 // subaccount number of the recipient
+    const assetId = 0 // asset id of the token you want to transfer
+    const amount = Long.fromNumber(/* amount of the token you want to transfer */);
+
+    const tx = await client.post.transfer(
+      subaccount,
+      recipientAddress,
+      recipientSubaccountNumber,
+      assetId,
+      amount
+    );
+    ```
+  </Tab>
+  <Tab>
+    ```python copy
+    from dydx4 import Subaccount
+
+    subaccount = Subaccount(wallet, 0)
+    recipient_address = 'dydx...' # address of the recipient
+    recipient_subaccount_number = 0 # subaccount number of the recipient
+    asset_id = 0 # asset id of the token you want to transfer
+    amount = # amount of the token you want to transfer
+
+    tx = client.post.transfer(
+        subaccount,
+        recipient_address,
+        recipient_subaccount_number,
+        asset_id,
+        amount,
+    )
+    ```
+  </Tab>
+</Tabs>
+
+### Depositing from wallet to Subaccount
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    import { SubaccountClient } from '@dydxprotocol/v4-client';
+
+    const subaccount = new SubaccountClient(wallet, 0);
+    const assetId = 0 // asset id of the token you want to deposit
+    const amount = Long.fromNumber(/* amount of the token you want to deposit */);
+
+    const tx = await client.post.deposit(
+      subaccount,
+      assetId,
+      amount
+    );
+    ```
+  </Tab>
+  <Tab>
+    ```python copy
+    from dydx4 import Subaccount
+
+    subaccount = Subaccount(wallet, 0)
+    asset_id = 0 # asset id of the token you want to transfer
+    amount = # amount of the token you want to deposit
+
+    tx = client.post.deposit(
+        subaccount,
+        asset_id,
+        amount,
+    )
+    ```
+
+  </Tab>
+</Tabs>
+
+### Withdrawing from Subaccount to wallet
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    import { SubaccountClient } from '@dydxprotocol/v4-client';
+
+    const subaccount = new SubaccountClient(wallet, 0);
+    const assetId = 0 // asset id of the token you want to withdraw
+    const amount = Long.fromNumber(/* amount of the token you want to withdraw */);
+
+    const tx = await client.post.withdraw(
+      subaccount,
+      assetId,
+      amount
+    );
+    ```
+
+  </Tab>
+  <Tab>
+    ```python copy
+
+    from dydx4 import Subaccount
+
+    subaccount = Subaccount(wallet, 0)
+    asset_id = 0 # asset id of the token you want to transfer
+    amount = # amount of the token you want to deposit
+
+    tx = client.post.withdraw(
+        subaccount,
+        asset_id,
+        amount,
+    )
+    ```
+
+  </Tab>
+</Tabs>
+
+## Placing and Cancelling Orders
+
+### Placing an Order
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    import { Order_Side, Order_TimeInForce } from '@dydxprotocol/dydxjs/src/codegen/dydxprotocol/clob/order';
+    import { OrderFlags, SubaccountClient } from '@dydxprotocol/v4-client';
+
+    const subaccount = new SubaccountClient(wallet, 0);
+    const clientId = 123 // set to a number, can be used by the client to identify the order
+    const clobPairId = 0 // perpertual market id
+    const side = Order_Side.SIDE_BUY // side of the order
+    const quantums = Long.fromNumber(1_000_000_000); // quantums are calculated by the size if the order
+    const subticks = Long.fromNumber(1_000_000_000); // subticks are calculated by the price of the order
+    const timeInForce = Order_TimeInForce.TIME_IN_FORCE_UNSPECIFIED; // TimeInForce indicates how long an order will remain active before it is executed or expires
+    const orderFlags = OrderFlags.SHORT_TERM; // either SHORT_TERM, LONG_TERM or CONDITIONAL
+    const reduceOnly = false; // if true, the order will only reduce the position size
+
+    const tx = await client.post.placeOrder(
+      subaccount,
+      clientId,
+      clobPairId,
+      side,
+      quantums,
+      subticks,
+      timeInForce,
+      orderFlags,
+      reduceOnly
+    );
+    ```
+  </Tab>
+  <Tab>
+    ```python copy
+    from dydx4 import Subaccount, ORDER_FLAGS_SHORT_TERM
+    from dydxpy.proto.dydxprotocol.clob.order_pb2 import Order
+    
+    subaccount = new Subaccount(wallet, 0)
+    client_id = 123 // set to a number, can be used by the client to identify the order
+    clobpair_id = 0 // perpertual market id
+    side = Order.SIDE_BUY // side of the order
+    quantums = 1_000_000_000 // quantums are calculated by the size if the order
+    subticks = 1_000_000_000 // subticks are calculated by the price of the order
+    time_in_force = Order.TIME_IN_FORCE_UNSPECIFIED // TimeInForce indicates how long an order will remain active before it is executed or expires
+    order_flags = ORDER_FLAGS_SHORT_TERM // either SHORT_TERM, LONG_TERM or CONDITIONAL
+    reduce_only = false // if true, the order will only reduce the position size
+
+    tx = client.post.place_order(
+      subaccount,
+      client_id,
+      clobpair_id,
+      side,
+      quantums,
+      subticks,
+      time_in_force,
+      order_flags,
+      reduce_only
+    )
+    ```
+  </Tab>
+</Tabs>
+
+### Cancelling an Order
+
+All paramsters are from *<a id="orderObject" href="/integration_docs/indexer_api#getorder">Order</a>* object from indexer
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    /*
+    order is an Order object from the Indexer
+    */
+    const tx = await client.post.cancelOrder(
+      subaccount,
+      order.clientId,
+      order.orderFlags,
+      order.clobPairId,
+      order.goodTilBlock,
+      order.goodTilBlockTime
+    );
+    ```
+  </Tab>
+  <Tab>
+    ```python copy
+    # order is an Order object from the Indexer
+
+    tx = client.post.cancel_order(
+        subaccount,
+        order["clientId"],
+        order["orderFlags"],
+        order["clobPairId"],
+        order["goodTilBlock"],
+        order["goodTilBlockTime"],
+    )
+    ```
+  </Tab>
+</Tabs>

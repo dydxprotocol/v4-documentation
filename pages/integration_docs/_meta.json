@@ -1,0 +1,8 @@
+{
+  "indexer_api": "Indexer API",
+  "indexer_websocket": "Indexer Websocket",
+  "indexer_client": "Indexer Client",
+  "socket_client": "Socket Client",
+  "validator_client": "Validator Client",
+  "composite_client": "Composite Client"
+}
