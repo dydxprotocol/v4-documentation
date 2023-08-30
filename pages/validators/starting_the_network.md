@@ -71,6 +71,19 @@ Please check that `timeout_commit` value under `$HOME_TESTNET_2/config/config.to
 timeout_commit = "999ms"
 ```
 
+The Cosmos gRPC service is used by various daemon processes, and **must be enabled** in order for the protocol to operate.
+Please make sure that grpc is enabled in `$HOME_TESTNET_2/config/app.toml`:
+```
+[grpc]
+
+# Enable defines if the gRPC server should be enabled.
+enable = true
+```
+
+In addition, non-standard gRPC ports are not supported at this time. Please run on port 9090.
+
+```
+
 ## Starting the Node
 
 💡💡💡The testnet genesis is **17:00 UTC (13:00 ET), Wednesday 8/9.** Please complete the following instructions by this time.💡💡💡
