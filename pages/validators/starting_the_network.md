@@ -95,7 +95,11 @@ address = "0.0.0.0:9090"
 **Note** that grpc can be also be configured via start flags. Be careful not to change the default settings with either
 of the following flags: `--grpc.enable`, `--grpc.address`.
 
+## Ethereum RPC Endpoint
 
+For the chain to process bridge transactions from Sepolia Ethereum testnet, bridge daemon queries a Sepolia RPC endpoint for logs emitted by the bridge contract. By default, a node will use the demo Alchemy endpoint that has quite strict rate limiting and will cause bridge daemon to get rate limited.
+
+For your node to successfully ingest bridge transactions from Sepolia, you can set up your own Sepolia endpoint and override the default by adding flag `--bridge-daemon-eth-rpc-endpoint <YOUR_SEPOLIA_ETH_RPC_ENDPOINT_HERE>` to the command you run when starting the node.
 
 ## Starting the Node
 
