@@ -80,7 +80,22 @@ Please make sure that grpc is enabled in `$HOME_TESTNET_2/config/app.toml`:
 enable = true
 ```
 
-In addition, non-standard gRPC ports are not supported at this time. Please run on port 9090.
+In addition, non-standard gRPC ports are not supported at this time. Please run on port 9090, which is the default
+port specified in the config file:
+
+```
+[grpc]
+
+...
+
+# Address defines the gRPC server address to bind to.
+address = "0.0.0.0:9090"
+```
+
+**Note** that grpc can be also be configured via start flags. Be careful not to change the default settings with either
+of the following flags: `--grpc.enable`, `--grpc.address`.
+
+
 
 ## Starting the Node
 
