@@ -2,12 +2,10 @@
 
 ***By using, recording, referencing, or downloading (i.e., any “action”) any information contained on this page or in any dYdX Trading Inc. ("dYdX") database, you hereby and thereby agree to the [v4 Terms of Use](https://dydx.exchange/v4-terms) and [Privacy Policy](https://dydx.exchange/privacy) governing such information, and you agree that such action establishes a binding agreement between you and dYdX.***
 
-***Update 8/3/2023***: the following has been updated for the second public testnet `dydx-testnet-2` scheduled to launch on 8/9/2023.
+***Update 9/1/2023***: the following has been updated for the 3rd public testnet `dydx-testnet-3`.
 
-## For Existing Validators of `dydx-testnet-1`
-The current testnet `dydx-testnet-1` will be turned down on 8/7/2023 and the next testnet `dydx-testnet-2` will launch on 8/9/2023. If you plan to use the same machine instance for both networks, please make sure you create **a separate home directory** for `dydx-testnet-2`. When running any command with `dydxprotocold`, please explicitly pass in `--home=<directory_of_your_choice>` and `--chain-id=dydx-testnet-2` to specify which network the command is intended for.
-
-Alternatively, you are also welcomed to use a separate machine for `dydx-testnet-2` if that's easier.
+## For Existing Validators of `dydx-testnet-2`
+The current testnet `dydx-testnet-2` will be turned down on 9/11/2023 and the next testnet `dydx-testnet-3` will launch on 9/12/2023. If you plan to use the same machine instance for both networks, please make sure you create **a separate home directory** for `dydx-testnet-3`. When running any command with `dydxprotocold`, please explicitly pass in `--home=<directory_of_your_choice>` and `--chain-id=dydx-testnet-3` to specify which network the command is intended for. Alternatively, you are also welcomed to use a separate machine for `dydx-testnet-3`
 
 ## Goals
 
@@ -22,25 +20,25 @@ These are necessary steps to register your validator in the genesis and prepare 
 
 ## Timeline
 
-See the [Testnet Launch Schedule](https://v4-teacher.vercel.app/testnets/schedule) for `dydx-testnet-2`. Please make sure to submit your gentx by the deadline highlighted in the schedule.
+See the [Testnet Launch Schedule](https://v4-teacher.vercel.app/testnets/schedule) for `dydx-testnet-3`. Please make sure to submit your gentx by the deadline highlighted in the schedule.
 
 ## Prerequisites
 
 ### Get Access to the Public Testnet Repo
 
-If you haven’t been invited to the [Public Testnet Github Repo](https://github.com/dydxprotocol/networks) by Thursday, 8/3, please post in **#v-dydx-public-testnet-discussion** and tag `@Teddy Ding`. 
+If you haven’t been invited to the [Public Testnet Github Repo](https://github.com/dydxprotocol/networks), please reply to this [thread](https://dydx-team.slack.com/archives/C04QUK9QVPG/p1687524068234259).
 
 ## Get the `dydxprotocold` binary
 
-Download the binaries at [Public Testnet Github Repo](https://github.com/dydxprotocol/networks/tree/main/dydx-testnet-2/binaries). If you’ve previously cloned the `dydxprotocol/networks` repo, make sure to pull the latest from `main` .
+Download the binaries at [Public Testnet Github Repo](https://github.com/dydxprotocol/networks/tree/main/dydx-testnet-3/binaries). If you’ve previously cloned the `dydxprotocol/networks` repo, make sure to pull the latest from `main` .
 
 ```bash
-export BINARY_VERSION="v0.1.0-rc0"
+export BINARY_VERSION="v0.2.0-rc1"
 git clone git@github.com:dydxprotocol/networks.git
 cd networks
 git checkout main
 git pull origin main
-ls dydx-testnet-2/binaries/$BINARY_VERSION
+ls dydx-testnet-3/binaries/$BINARY_VERSION
 ```
 
 Choose the binary for the corresponding platform, and set up in $PATH (using `linux-amd64` as example):
@@ -48,7 +46,7 @@ Choose the binary for the corresponding platform, and set up in $PATH (using `li
 ```bash
 # Choose a platform. Supported: linux-amd64, linux-arm64
 export DYDX_PLATFORM=<platform>
-tar -xvzf dydx-testnet-2/binaries/$BINARY_VERSION/dydxprotocold-$BINARY_VERSION-${DYDX_PLATFORM}.tar.gz
+tar -xvzf dydx-testnet-3/binaries/$BINARY_VERSION/dydxprotocold-$BINARY_VERSION-${DYDX_PLATFORM}.tar.gz
 mkdir -p "${HOME}/local/bin"
 export PATH="${HOME}/local/bin:$PATH"
 cp build/dydxprotocold-$BINARY_VERSION-${DYDX_PLATFORM} "${HOME}/local/bin/dydxprotocold"
@@ -64,34 +62,34 @@ dydxprotocold version --long
 The output should look like this (**make sure** the `version` and `commit` is consistent):
 
 ```bash
-commit: 5c301ea4dda5e5ad014a150367eb77155f4ae2e3
+commit: e2ea4e4ebebbe708f42d77c890214941fc2830ae
 cosmos_sdk_version: v0.47.3
 go: go version go1.19.9 <platform>
 name: dydxprotocol
 server_name: dydxprotocold
-version: 0.1.0-rc0
+version: 0.2.0-rc1
 ```
 
-**Note:** We may release a newer binary for the actual network launch for `dydx-testnet-2`. Please stay tuned for updates in the Slack channels.
+**Note:** We may release a newer binary for the actual network launch for `dydx-testnet-3`. Please stay tuned for updates in the Slack channels.
 
 ## Initialize your node
 
-Initialize the home directory for `dydxprotocold`. Note we are using `chain-id=dydx-testnet-2` for public testnet #2.
+Initialize the home directory for `dydxprotocold`. **Please note:** we are using `chain-id=dydx-testnet-3` for public testnet #3.
 
 ```bash
-# Use a new home directory for testnet 2.
-export HOME_TESTNET_2=~/.dydx-testnet-2
+# Use a new home directory for testnet 3.
+export HOME_TESTNET_3=~/.dydx-testnet-3
 # Choose a moniker as the custom username of your node. It should be human-readable.
 export DYDX_MONIKER=<moniker>
 # Configure chain ID.
-export CHAIN_ID=dydx-testnet-2
+export CHAIN_ID=dydx-testnet-3
 # Init the home directory
-dydxprotocold init --chain-id=$CHAIN_ID --home=$HOME_TESTNET_2 $DYDX_MONIKER
+dydxprotocold init --chain-id=$CHAIN_ID --home=$HOME_TESTNET_3 $DYDX_MONIKER
 ```
 
 ## Saving/Recovering Consensus Keys
 
-Be sure to **make a copy** of the key pair json `priv_validator_key.json` and `node_key.json` under `$HOME_TESTNET_2/config`, as these key pairs are generated during `dydxprotocold init ....` and **cannot** be recovered later unless they were explicitly derived through the mnenomics.
+Be sure to **make a copy** of the key pair json `priv_validator_key.json` and `node_key.json` under `$HOME_TESTNET_3/config`, as these key pairs are generated during `dydxprotocold init ....` and **cannot** be recovered later unless they were explicitly derived through the mnenomics.
 
 If you've previously created a `gentx` and are recovering your home directory, you will need to replace the default `priv_validator_key.json` and `node_key.json` files with the files backed up from above.
 
@@ -106,7 +104,7 @@ You could either create a new key for the testnet, or import existing an existin
 # Using the `test` keyring-backend as example. 
 # Feel free to choose the keyring backend as you like. 
 export DYDX_KEY_NAME=<key_name>
-dydxprotocold keys add $DYDX_KEY_NAME --keyring-backend test --home=$HOME_TESTNET_2
+dydxprotocold keys add $DYDX_KEY_NAME --keyring-backend test --home=$HOME_TESTNET_3
 ```
 
 **Option 2: Import Via Mnemonic**
@@ -115,13 +113,13 @@ To import via mnemonic, you can do so using the following command and then input
 
 ```bash
 export DYDX_KEY_NAME=<key_name>
-dydxprotocold keys add $DYDX_KEY_NAME --recover --keyring-backend test --home=$HOME_TESTNET_2
+dydxprotocold keys add $DYDX_KEY_NAME --recover --keyring-backend test --home=$HOME_TESTNET_3
 ```
 
 **Store validator address as envvar**
 
 ```bash
-MY_VALIDATOR_ADDRESS=$(dydxprotocold keys show $DYDX_KEY_NAME -a --keyring-backend test --home=$HOME_TESTNET_2)
+MY_VALIDATOR_ADDRESS=$(dydxprotocold keys show $DYDX_KEY_NAME -a --keyring-backend test --home=$HOME_TESTNET_3)
 ```
 
 ## Create `gentx`
@@ -131,12 +129,12 @@ MY_VALIDATOR_ADDRESS=$(dydxprotocold keys show $DYDX_KEY_NAME -a --keyring-backe
 Before you can create a gentx, you’ll need to add a genesis account (using the address generated above) to the `genesis.json` file. This local `genesis.json` file will not be used for the testnet, and only helps to generate a gentx. Note that `dv4tnt` is the native token used for the public testnet.
 
 ```bash
-dydxprotocold add-genesis-account $MY_VALIDATOR_ADDRESS 100000000000dv4tnt --home=$HOME_TESTNET_2
+dydxprotocold add-genesis-account $MY_VALIDATOR_ADDRESS 100000000000dv4tnt --home=$HOME_TESTNET_3
 ```
 
 ### Generate `gentx`
 
-Use `gentx` command to create your genesis transaction in `$HOME_TESTNET_2/gentx/`. 
+Use `gentx` command to create your genesis transaction in `$HOME_TESTNET_3/gentx/`.
 
 You can also use the below optional flags:
 
@@ -148,16 +146,16 @@ You can also use the below optional flags:
 ```
 
 ```bash
-dydxprotocold gentx $DYDX_KEY_NAME 50000000000dv4tnt --moniker $DYDX_MONIKER --keyring-backend test --chain-id $CHAIN_ID --home=$HOME_TESTNET_2
+dydxprotocold gentx $DYDX_KEY_NAME 50000000000dv4tnt --moniker $DYDX_MONIKER --keyring-backend test --chain-id $CHAIN_ID --home=$HOME_TESTNET_3
 ```
 
 It will output something similar to:
 
 ```bash
-Genesis transaction written to "/Users/XXX/.dydx-testnet-2/config/gentx/gentx-ae8a1fd5828866c435f9b559fad39e1bc19a06dc.json"
+Genesis transaction written to "/Users/XXX/.dydx-testnet-3/config/gentx/gentx-ae8a1fd5828866c435f9b559fad39e1bc19a06dc.json"
 ```
 
-See [here](https://github.com/dydxprotocol/networks/blob/main/dydx-testnet-2/gentx/gentx-dydx-1.json) for an example gentx file.
+See [here](https://github.com/dydxprotocol/networks/blob/main/dydx-testnet-3/gentx/gentx-dydx-1.json) for an example gentx file.
 
 <aside>
 💡 Do not manually modify the content of generated `gentx` file (except for filename). This will result in invalid signature for transaction.
@@ -186,13 +184,13 @@ git checkout -b $DYDX_MONIKER/gentx
 3. Copy the gentx file to the `networks` repo (ensure that it is in the correct folder)
 
 ```bash
-cp $HOME_TESTNET_2/config/gentx/gentx-xxxxxxxxxxxx.json networks/dydx-testnet-2/gentx/gentx-$DYDX_MONIKER.json
+cp $HOME_TESTNET_3/config/gentx/gentx-xxxxxxxxxxxx.json networks/dydx-testnet-3/gentx/gentx-$DYDX_MONIKER.json
 ```
 
 4. Commit and push to your repo.
 
 ```bash
-git add dydx-testnet-2/gentx/*
+git add dydx-testnet-3/gentx/*
 git commit -m "$DYDX_MONIKER gentx"
 git push origin $DYDX_MONIKER/gentx
 ```
@@ -202,4 +200,6 @@ git push origin $DYDX_MONIKER/gentx
 6. The pull request should trigger a "Validate Genesis" workflow, which runs some sanity checks on the submitted `gentx`. Please try to resolve any issue if the workflow doesn't pass, and post in `#v-dydx-public-testnet-discussion` if you need help.
 
 ## Changelog
-8/3/2023: updated for the second public testnet `dydx-testnet-2`.
+8/3/2023: updated for the second public testnet `dydx-testnet-2`
+
+9/1/2023: updated for the third public testnet `dydx-testnet-3`
