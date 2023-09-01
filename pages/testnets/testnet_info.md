@@ -16,7 +16,7 @@ The above info can be found in this [`networks` repository](https://github.com/d
 {
   "rpc": "13.59.4.93:26657",
   "rest": "13.59.4.93:1317",
-  "chainId": "dydx-testnet-2",
+  "chainId": "dydx-testnet-3",
   "chainName": "dYdX Public Testnet",
   "chainSymbolImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/dydx-testnet-2/chain.png",
   "bech32Config": {
