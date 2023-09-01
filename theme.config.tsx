@@ -6,7 +6,7 @@ import { Logo } from "./components/Logo";
 
 const config: DocsThemeConfig = {
   // Global
-  docsRepositoryBase: "https://github.com/dydxprotocol/v4-teacher/tree/main",
+  docsRepositoryBase: "https://github.com/dydxprotocol/v4-documentation/tree/main",
   feedback: { content: null }, // disable until we have a feedback channel
   useNextSeoProps: () => {
     const { asPath } = useRouter();
