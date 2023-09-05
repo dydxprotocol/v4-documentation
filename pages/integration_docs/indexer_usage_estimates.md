@@ -8,11 +8,11 @@ AWS service estimates:
 
   | Service Name | Instances | CPU | Memory |
   | ------------ | --------- | --- | ------ |
-  | Comlink      | 50        | 2gb | 4gb    |
-  | Ender        | 1         | 4gb | 8gb    |
-  | Roundtable   | 10        | 2gb | 4gb    |
-  | Socks        | 150       | 4gb | 16gb   |
-  | Vulcan       | 10        | 4gb | 8gb    |
+  | Comlink      | 50        |  2  | 4gb    |
+  | Ender        | 1         |  4  | 8gb    |
+  | Roundtable   | 10        |  2  | 4gb    |
+  | Socks        | 150       |  4  | 16gb   |
+  | Vulcan       | 10        |  4  | 8gb    |
 - RDS - Postgres Database
   - Primary - db.m6g.16xlarge
   - Replica - 3 db.m6g.16xlarge
