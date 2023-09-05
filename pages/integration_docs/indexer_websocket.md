@@ -821,7 +821,6 @@ Returns everything from `v4/perpetualMarkets` endpoint.
         "volume24H": "67487133.70842158",
         "trades24H": 137552,
         "nextFundingRate": "0",
-        "nextFundingUpdate": 0,
         "initialMarginFraction": "0.050000",
         "maintenanceMarginFraction": "0.030000",
         "basePositionNotional": "1000",
