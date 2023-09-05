@@ -97,9 +97,9 @@ of the following flags: `--grpc.enable`, `--grpc.address`.
 
 ## Ethereum RPC Endpoint
 
-For the chain to process bridge transactions from Sepolia Ethereum testnet, bridge daemon queries a Sepolia RPC endpoint for logs emitted by the bridge contract. By default, a node will use the demo Alchemy endpoint that has quite strict rate limiting and will cause bridge daemon to get rate limited.
+For the chain to process bridge transactions from Ethereum, Ethereum testnet, or other chain that supports the `eth_getLogs` RPC method, the bridge daemon queries an RPC endpoint for logs emitted by the bridge contract. By default, a node will use a public testnet endpoint that may have rate-limiting, low reliability, or other restricted functionality.
 
-For your node to successfully ingest bridge transactions from Sepolia, you can set up your own Sepolia endpoint and override the default by adding flag `--bridge-daemon-eth-rpc-endpoint <YOUR_SEPOLIA_ETH_RPC_ENDPOINT_HERE>` to the command you run when starting the node.
+For your node to successfully ingest bridge transactions from the relevant blockchain, you should use your own private RPC endpoint and override the default by adding flag `--bridge-daemon-eth-rpc-endpoint <YOUR_PRIVATE_RPC_ENDPOINT>` to the command you run when starting the node.
 
 ## Starting the Node
 
