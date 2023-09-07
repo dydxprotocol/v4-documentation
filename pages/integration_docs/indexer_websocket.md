@@ -174,7 +174,6 @@ export interface OrderSubaccountMessageContents {
   status: APIOrderStatus;
   orderFlags: string;
   totalFilled?: string;
-  totalOptimisticFilled?: string;
   goodTilBlock?: string;
   goodTilBlockTime?: string;
   removalReason?: string;
