@@ -1,3 +1,13 @@
+<p align="center"><img src="https://dydx.exchange/icon.svg?" width="256" /></p>
+
+<h1 align="center">v4 Documentation</h1>
+
+<div align="center">
+  <a href='https://github.com/dydxprotocol/v4-chain/blob/main/LICENSE'>
+    <img src='https://img.shields.io/badge/License-BSL_1.1-blue' alt='License' />
+  </a>
+</div>
+
 ## Local Development
 
 Install `pnpm` and project dependencies: 
@@ -11,7 +21,3 @@ Start development server on localhost:3000:
 ```bash
 pnpm dev
 ```
-
-## License
-
-This project is licensed under a [proprietary license](https://v4-teacher.vercel.app/developer_links/license).
