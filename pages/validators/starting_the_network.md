@@ -4,43 +4,39 @@
 
 ## Timeline
 
-See `dydx-testnet-2` [Launch Schedule](https://v4-teacher.vercel.app/testnets/schedule). Please complete the following instructions by the scheduled time for `Network Launch`.
+See `dydx-testnet-3` [Launch Schedule](https://v4-teacher.vercel.app/testnets/schedule). Please complete the following instructions by the scheduled time for `Network Launch`.
 
 ## Downloading `genesis.json`
 
 After the `gentx` collection process is complete, the dYdX team will announce in the `#v-dydx-public-testnet-updates` channel that the finalized `genesis.json` file is ready for download. 
 
-Download `genesis.json` file into `$HOME_TESTNET_2` , replacing the previous `genesis.json` file:
+Download `genesis.json` file into `$HOME_TESTNET_3` , replacing the previous `genesis.json` file:
 
 ```bash
 # Run at root of `networks`.
-export HOME_TESTNET_2=<your dir>
+export HOME_TESTNET_3=<your dir>
 git checkout main
 git pull origin main
-cp dydx-testnet-2/genesis.json $HOME_TESTNET_2/config/genesis.json
+cp dydx-testnet-3/genesis.json $HOME_TESTNET_3/config/genesis.json
 ```
 
 Feel free to inspect the content of the `genesis.json` file, and let us know if there’s any questions/concerns.
 
 ## Get Latest Binary
 
-💡💡💡 We have published a newer binary `v0.1.0-rc2`. This is different from the binary used for `gentx` submission process. Please make ensure you use this newer binary to avoid consensus failure. 💡💡💡
+💡💡💡 We have published a newer [binary](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv0.2.1) `v0.2.1` in our now public repository `dydxprotocol/v4-chain`. This is different from the binary used for `gentx` submission process. Please make ensure you use this newer binary to avoid consensus failure. 💡💡💡
 
 ```bash
-export BINARY_VERSION="v0.1.0-rc2"
-git clone git@github.com:dydxprotocol/networks.git
-cd networks
-git checkout main
-git pull origin main
-ls dydx-testnet-2/binaries/$BINARY_VERSION
+export BINARY_VERSION="v0.2.1"
+# Choose a platform. Supported: linux-amd64, linux-arm64
+export DYDX_PLATFORM="linux-amd64"
+curl -LO https://github.com/dydxprotocol/v4-chain/releases/download/protocol%2F$BINARY_VERSION/dydxprotocold-$BINARY_VERSION-$DYDX_PLATFORM.tar.gz
 ```
 
-Choose the binary for the corresponding platform, and set up in $PATH (using `linux-amd64` as example):
+Put binary under `$PATH`:
 
 ```bash
-# Choose a platform. Supported: linux-amd64, linux-arm64
-export DYDX_PLATFORM=<platform>
-tar -xvzf dydx-testnet-2/binaries/$BINARY_VERSION/dydxprotocold-$BINARY_VERSION-${DYDX_PLATFORM}.tar.gz
+tar -xvzf dydxprotocold-$BINARY_VERSION-${DYDX_PLATFORM}.tar.gz
 mkdir -p "${HOME}/local/bin"
 export PATH="${HOME}/local/bin:$PATH"
 cp build/dydxprotocold-$BINARY_VERSION-${DYDX_PLATFORM} "${HOME}/local/bin/dydxprotocold"
@@ -56,23 +52,24 @@ dydxprotocold version --long
 The output should look like this (**make sure** the `version` and `commit` is correct):
 
 ```bash
-commit: 2768b3f6b8eee9e4400d46b7bcf0e0a01852f908
+commit: df7ab1ad4e2feae1f958d50b67ee76851ea3e986
 cosmos_sdk_version: v0.47.3
 go: go version go1.19.9 <platform>
 name: dydxprotocol
 server_name: dydxprotocold
-version: 0.1.0-rc2
+version: 0.2.1
 ```
 
-## Verify Config
+## [💡💡💡IMPORTANT:💡💡💡] Verify Config 
 
-Please check that `timeout_commit` value under `$HOME_TESTNET_2/config/config.toml` is equal to the testnet default:
+Please check that `timeout_commit` value under `$HOME_TESTNET_3/config/config.toml` is equal to
 ```
-timeout_commit = "999ms"
+timeout_commit = "500ms"
 ```
+This is **different** from `dydx-testnet-2`.
 
 The Cosmos gRPC service is used by various daemon processes, and **must be enabled** in order for the protocol to operate.
-Please make sure that grpc is enabled in `$HOME_TESTNET_2/config/app.toml`:
+Please make sure that grpc is enabled in `$HOME_TESTNET_3/config/app.toml`:
 ```
 [grpc]
 
@@ -103,14 +100,14 @@ For your node to successfully ingest bridge transactions from the relevant block
 
 ## Starting the Node
 
-💡💡💡The testnet genesis is **17:00 UTC (13:00 ET), Wednesday 8/9.** Please complete the following instructions by this time.💡💡💡
+💡💡💡The testnet genesis is **17:00 UTC (13:00 ET), Tuesday 9/12.** Please complete the following instructions by this time.💡💡💡
 
 ### Option 1: Run `dydxprotocold` Directly
 
 Run `dydxprotocold` and connect to the seed node:
 
 ```bash
-dydxprotocold start --p2p.seeds="25dd504d86d82673b9cf94fe78c00714f236c9f8@13.59.4.93:26656" --home="$HOME_TESTNET_2"
+dydxprotocold start --p2p.seeds="5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103" --home="$HOME_TESTNET_3"
 ```
 
 **Note:** the seed node IP for testnet #2 is different from testnet #1.
@@ -126,12 +123,12 @@ cosmovisor run version --long
 The output should look like this (**make sure** the `version` is consistent):
 
 ```bash
-commit: 2768b3f6b8eee9e4400d46b7bcf0e0a01852f908
+commit: df7ab1ad4e2feae1f958d50b67ee76851ea3e986
 cosmos_sdk_version: v0.47.3
 go: go version go1.19.9 <platform>
 name: dydxprotocol
 server_name: dydxprotocold
-version: 0.1.0-rc2
+version: 0.2.1
 ```
 
 Run `dydxprotocold` with `cosmovisor` and connect to the seed node. 
@@ -139,7 +136,7 @@ Run `dydxprotocold` with `cosmovisor` and connect to the seed node.
 💡💡💡**Note:** the seed node IP for testnet #2 is different from testnet #1.💡💡💡
 
 ```bash
-cosmovisor run start --p2p.seeds="25dd504d86d82673b9cf94fe78c00714f236c9f8@13.59.4.93:26656" --home="$HOME_TESTNET_2"
+cosmovisor run start --p2p.seeds="5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103" --home="$HOME_TESTNET_3"
 ```
 
 ### Backup: Start the network with Persistent Peers
