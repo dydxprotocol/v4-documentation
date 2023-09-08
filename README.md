@@ -3,7 +3,7 @@
 <h1 align="center">v4 Documentation</h1>
 
 <div align="center">
-  <a href='https://github.com/dydxprotocol/v4-chain/blob/main/LICENSE'>
+  <a href='https://github.com/dydxprotocol/v4-documentation/blob/main/LICENSE'>
     <img src='https://img.shields.io/badge/License-BSL_1.1-blue' alt='License' />
   </a>
 </div>
