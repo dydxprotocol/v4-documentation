@@ -1,7 +1,7 @@
 html,
 body {
   background: #212131;
-  font-family: "Circular", sans-serif !important;
+  font-family: Helvetica, sans-serif, system-ui !important;
 }
 
 #__next {
