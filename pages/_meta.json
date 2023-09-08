@@ -1,0 +1,15 @@
+{
+  "index": "Introduction",
+  "general": "General",
+  "validators": "Validators",
+  "testnets": "Testnets",
+  "integration_docs": "Integration documents",
+  "developer_links": "Developer links",
+  "governance": "Governance",
+  "app": {
+    "title": "Testnet",
+    "type": "page",
+    "href": "https://v4.testnet.dydx.exchange",
+    "newWindow": true
+  }
+}
