@@ -14,8 +14,8 @@ The above info can be found in this [`networks` repository](https://github.com/d
 ### Chain info
 ```json
 {
-  "rpc": "TODO:26657",
-  "rest": "TODO:1317",
+  "rpc": "3.136.5.36:26657",
+  "rest": "3.136.5.36:1317",
   "chainId": "dydx-testnet-3",
   "chainName": "dYdX Public Testnet",
   "chainSymbolImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/dydx-testnet-3/chain.png",
