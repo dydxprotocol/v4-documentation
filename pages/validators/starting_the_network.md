@@ -107,10 +107,10 @@ For your node to successfully ingest bridge transactions from the relevant block
 Run `dydxprotocold` and connect to the seed node:
 
 ```bash
-dydxprotocold start --p2p.seeds="5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103" --home="$HOME_TESTNET_3"
+dydxprotocold start --p2p.seeds="5b00f9ab668c35f7fcaff9a0607da59273bee399@dydx-testnet3-seednode.allthatnode.com:26656,5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103,f3339d67eac6e6a082555d2db6556ee4c0ce5f61@test-dydx-seed.kingnodes.com,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856" --home="$HOME_TESTNET_3"
 ```
 
-**Note:** the seed node IP for testnet #2 is different from testnet #1.
+**Note:** the seed node IP for testnet #3 is different from testnet #2.
 
 ### Option 2: Run `dydxprotocold` with `cosmovisor`
 
@@ -133,10 +133,10 @@ version: 0.2.1
 
 Run `dydxprotocold` with `cosmovisor` and connect to the seed node. 
 
-💡💡💡**Note:** the seed node IP for testnet #2 is different from testnet #1.💡💡💡
+💡💡💡**Note:** the seed node IP for testnet #3 is different from testnet #2.💡💡💡
 
 ```bash
-cosmovisor run start --p2p.seeds="5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103" --home="$HOME_TESTNET_3"
+cosmovisor run start --p2p.seeds="5b00f9ab668c35f7fcaff9a0607da59273bee399@dydx-testnet3-seednode.allthatnode.com:26656,5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103,f3339d67eac6e6a082555d2db6556ee4c0ce5f61@test-dydx-seed.kingnodes.com,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856" --home="$HOME_TESTNET_3"
 ```
 
 ### Backup: Start the network with Persistent Peers
