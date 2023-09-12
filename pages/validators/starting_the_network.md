@@ -98,7 +98,7 @@ For the chain to process bridge transactions from Ethereum, Ethereum testnet, or
 
 For your node to successfully ingest bridge transactions from the relevant blockchain, you should use your own private RPC endpoint and override the default by adding flag `--bridge-daemon-eth-rpc-endpoint <YOUR_PRIVATE_RPC_ENDPOINT>` to the command you run when starting the node.
 
-The RPC endpoint you choose should satisfy below requirements:
+💡IMPORTANT💡:The RPC endpoint you choose *MUST* satisfy the following requirements
 * supports `eth_chainId` method
 * supports `eth_getLogs` method
     * supports `"finalized"` as an input to `toBlock` parameter (for example Alchemy supports this while Blast doesn't)
