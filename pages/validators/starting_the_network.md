@@ -107,7 +107,7 @@ For your node to successfully ingest bridge transactions from the relevant block
 Run `dydxprotocold` and connect to the seed node:
 
 ```bash
-dydxprotocold start --p2p.seeds="5b00f9ab668c35f7fcaff9a0607da59273bee399@dydx-testnet3-seednode.allthatnode.com:26656,5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103,f3339d67eac6e6a082555d2db6556ee4c0ce5f61@test-dydx-seed.kingnodes.com:26856,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856" --home="$HOME_TESTNET_3"
+dydxprotocold start --p2p.seeds="5b00f9ab668c35f7fcaff9a0607da59273bee399@dydx-testnet3-seednode.allthatnode.com:26656,5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103,f3339d67eac6e6a082555d2db6556ee4c0ce5f61@test-dydx-seed.kingnodes.com:26856,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856,87ee8de5f0f82af6ee6740a30f8844bbe6434413@seed.dydx-testnet.cros-nest.com:26656,b8695dc21fa1b8395abb131e37c5bf5763b61d1d@dydx-testnet-3.notional.ventures:26656" --home="$HOME_TESTNET_3"
 ```
 
 **Note:** the seed node IP for testnet #3 is different from testnet #2.
@@ -136,7 +136,7 @@ Run `dydxprotocold` with `cosmovisor` and connect to the seed node.
 💡💡💡**Note:** the seed node IP for testnet #3 is different from testnet #2.💡💡💡
 
 ```bash
-cosmovisor run start --p2p.seeds="5b00f9ab668c35f7fcaff9a0607da59273bee399@dydx-testnet3-seednode.allthatnode.com:26656,5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103,f3339d67eac6e6a082555d2db6556ee4c0ce5f61@test-dydx-seed.kingnodes.com:26856,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856" --home="$HOME_TESTNET_3"
+cosmovisor run start --p2p.seeds="5b00f9ab668c35f7fcaff9a0607da59273bee399@dydx-testnet3-seednode.allthatnode.com:26656,5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103,f3339d67eac6e6a082555d2db6556ee4c0ce5f61@test-dydx-seed.kingnodes.com:26856,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856,87ee8de5f0f82af6ee6740a30f8844bbe6434413@seed.dydx-testnet.cros-nest.com:26656,b8695dc21fa1b8395abb131e37c5bf5763b61d1d@dydx-testnet-3.notional.ventures:26656" --home="$HOME_TESTNET_3"
 ```
 
 ### Backup: Start the network with Persistent Peers
