@@ -149,7 +149,7 @@ cosmovisor run start --p2p.seeds="5b00f9ab668c35f7fcaff9a0607da59273bee399@dydx-
 <aside>
 💡 The seed node should be sufficient for public testnet startup. However, if for any reason you’re seeing network issues (can troubleshoot at `localhost:26657/net_info`), you can also add the following flag to use the dYdX internal validators as persistent peers:
 
-`—p2p.persistent_peers="178b7abe7b6fbde8620588246ee7b63ed58feae1@35.79.71.58:26656,3f667030ddd9c561ec66f35e8221be0178cf62c4@3.139.242.161:26656”`
+`—p2p.persistent_peers="178b7abe7b6fbde8620588246ee7b63ed58feae1@54.199.218.236:26656,3f667030ddd9c561ec66f35e8221be0178cf62c4@3.22.142.107:26656”`
 
 </aside>
 
