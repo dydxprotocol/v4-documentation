@@ -6,7 +6,7 @@
   "integration_docs": "Integration documents",
   "developer_links": "Developer links",
   "governance": "Governance",
-  "genesis_checklist": "Genesis checklist",
+  "operational_checklist": "Operational checklist",
   "app": {
     "title": "Testnet",
     "type": "page",
