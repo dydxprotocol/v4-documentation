@@ -318,6 +318,8 @@ import { Tab, Tabs } from "nextra-theme-docs";
 ### Cancelling an Order
 
 All paramsters are from *<a id="orderObject" href="/integration_docs/indexer_api#getorder">Order</a>* object from indexer
+goodTilBlockTime is the UTC epoch second of the order's goodTilBlockTime
+One and only one of goodTilBlock and goodTilBlockTime should be passed in as a parameter
 
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
@@ -325,13 +327,21 @@ All paramsters are from *<a id="orderObject" href="/integration_docs/indexer_api
     /*
     order is an Order object from the Indexer
     */
+    const goodTilBlock = order.goodTilBlock
+    let goodTilBlockTime: number | undefined;
+    if (order.goodTilBlockTime) {
+      const datetime = new Date(order.goodTilBlockTime);
+      const utcMilllisecondsSinceEpoch = datetime.getTime()
+      goodTilBlockTime = Math.round(utcMilllisecondsSinceEpoch / 1000);
+    }
+
     const tx = await client.post.cancelOrder(
       subaccount,
       order.clientId,
       order.orderFlags,
       order.clobPairId,
-      order.goodTilBlock,
-      order.goodTilBlockTime
+      goodTilBlock,
+      goodTilBlockTime
     );
     ```
   </Tab>
@@ -339,13 +349,21 @@ All paramsters are from *<a id="orderObject" href="/integration_docs/indexer_api
     ```python copy
     # order is an Order object from the Indexer
 
+    import datetime
+
+    goodTilBlock = order["goodTilBlock"]
+    goodTilBlockTime = None
+    if order["goodTilBlockTime"] != None:
+      mydatatime = datetime.datetime.fromisoformat(order["goodTilBlockTime"].replace('Z', '+00:00'))
+      goodTilBlockTime = int(mydatatime.timestamp())
+
     tx = client.post.cancel_order(
         subaccount,
         order["clientId"],
         order["orderFlags"],
         order["clobPairId"],
-        order["goodTilBlock"],
-        order["goodTilBlockTime"],
+        goodTilBlock,
+        goodTilBlockTime,
     )
     ```
   </Tab>
