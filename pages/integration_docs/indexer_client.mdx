@@ -47,14 +47,14 @@ client = IndexerClient(
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-const response = await client.markets.getHeight();
+const response = await client.utility.getHeight();
 const height = response.height;
 const heightTime = response.time;
 ```
 </Tab>
 <Tab>
 ```python copy
-height_response = client.markets.get_height()
+height_response = client.utility.get_height()
 height = height_response.data['height']
 height_time = height_response.data['time']
 ```
@@ -68,14 +68,14 @@ height_time = height_response.data['time']
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-const response = await client.markets.getTime();
+const response = await client.utility.getTime();
 const timeIso = response.iso;
 const timeEpoch = response.epoch;
 ```
 </Tab>
 <Tab>
 ```python copy
-time_response = client.markets.get_time()
+time_response = client.utility.get_time()
 time_iso = time_response.data['iso']
 time_epoch = time_response.data['epoch']
 ```
