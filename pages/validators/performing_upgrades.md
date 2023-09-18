@@ -27,7 +27,7 @@ Releases for the dYdX chain will use [semantic versioning](https://semver.org/).
 
 #### Upgrading to a new Major/Minor Version (e.g. v0.1.0)
 
-1. Download the [binary](https://github.com/dydxprotocol/networks) for the new release, rename the binary to `dydxprotocold`.
+1. Download the [binary](https://github.com/dydxprotocol/v4-testnets) for the new release, rename the binary to `dydxprotocold`.
 
 ```bash
 mv dydxprotocold.<version>-<platform> dydxprotocold
@@ -70,7 +70,7 @@ cosmovisor/
 
 #### Upgrading to a Patch Version (e.g. v0.0.2)
 
-1. Download the [binary](https://github.com/dydxprotocol/networks/tree/main/dydx-testnet-1/binaries) for the new patch release, rename the binary to `dydxprotocold`. 
+1. Download the [binary](https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-1/binaries) for the new patch release, rename the binary to `dydxprotocold`. 
 
 ```bash
 mv dydxprotocold.<version>-<platform> dydxprotocold
@@ -99,7 +99,7 @@ cosmovisor run start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656"
 
 #### Upgrading to a Major/Minor Version (e.g. v0.1.0)
 
-1. Download the [binary](https://github.com/dydxprotocol/networks/tree/main/dydx-testnet-1/binaries) for the new release.
+1. Download the [binary](https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-1/binaries) for the new release.
     1. Ideally also before the upgrade height to minimize downtime
 2. Make sure that the new binary is executable. 
 
@@ -116,7 +116,7 @@ chmod 755 dydxprotocold
 
 #### Upgrading to a Patch Version (e.g. v0.0.2)
 
-1. Download the [binary](https://github.com/dydxprotocol/networks/tree/main/dydx-testnet-1/binaries) for the new release.
+1. Download the [binary](https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-1/binaries) for the new release.
 2. Make sure that the new binary is executable.
 
 ```bash

@@ -26,16 +26,16 @@ See the [Testnet Launch Schedule](https://v4-teacher.vercel.app/testnets/schedul
 
 ### Get Access to the Public Testnet Repo
 
-If you haven’t been invited to the [Public Testnet Github Repo](https://github.com/dydxprotocol/networks), please reply to this [thread](https://dydx-team.slack.com/archives/C04QUK9QVPG/p1687524068234259).
+If you haven’t been invited to the [Public Testnet Github Repo](https://github.com/dydxprotocol/v4-testnets), please reply to this [thread](https://dydx-team.slack.com/archives/C04QUK9QVPG/p1687524068234259).
 
 ## Get the `dydxprotocold` binary
 
-Download the binaries at [Public Testnet Github Repo](https://github.com/dydxprotocol/networks/tree/main/dydx-testnet-3/binaries). If you’ve previously cloned the `dydxprotocol/networks` repo, make sure to pull the latest from `main` .
+Download the binaries at [Public Testnet Github Repo](https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-3/binaries). If you’ve previously cloned the `dydxprotocol/v4-testnets` repo, make sure to pull the latest from `main` .
 
 ```bash
 export BINARY_VERSION="v0.2.0-rc1"
-git clone git@github.com:dydxprotocol/networks.git
-cd networks
+git clone git@github.com:dydxprotocol/v4-testnets.git
+cd v4-testnets
 git checkout main
 git pull origin main
 ls dydx-testnet-3/binaries/$BINARY_VERSION
@@ -155,7 +155,7 @@ It will output something similar to:
 Genesis transaction written to "/Users/XXX/.dydx-testnet-3/config/gentx/gentx-ae8a1fd5828866c435f9b559fad39e1bc19a06dc.json"
 ```
 
-See [here](https://github.com/dydxprotocol/networks/blob/main/dydx-testnet-3/gentx/gentx-dydx-1.json) for an example gentx file.
+See [here](https://github.com/dydxprotocol/v4-testnets/blob/main/dydx-testnet-3/gentx/gentx-dydx-1.json) for an example gentx file.
 
 <aside>
 💡 Do not manually modify the content of generated `gentx` file (except for filename). This will result in invalid signature for transaction.
@@ -169,10 +169,10 @@ See [here](https://github.com/dydxprotocol/networks/blob/main/dydx-testnet-3/gen
 
 ## Submit Your `gentx`
 
-1. Clone the [Public Testnet Github Repo](https://github.com/dydxprotocol/networks).
+1. Clone the [Public Testnet Github Repo](https://github.com/dydxprotocol/v4-testnets).
 
 ```bash
-git clone https://github.com/dydxprotocol/networks.git
+git clone https://github.com/dydxprotocol/v4-testnets.git
 ```
 
 2. Create a new local branch:
@@ -181,10 +181,10 @@ git clone https://github.com/dydxprotocol/networks.git
 git checkout -b $DYDX_MONIKER/gentx
 ```
 
-3. Copy the gentx file to the `networks` repo (ensure that it is in the correct folder)
+3. Copy the gentx file to the `v4-testnets` repo (ensure that it is in the correct folder)
 
 ```bash
-cp $HOME_TESTNET_3/config/gentx/gentx-xxxxxxxxxxxx.json networks/dydx-testnet-3/gentx/gentx-$DYDX_MONIKER.json
+cp $HOME_TESTNET_3/config/gentx/gentx-xxxxxxxxxxxx.json v4-testnets/dydx-testnet-3/gentx/gentx-$DYDX_MONIKER.json
 ```
 
 4. Commit and push to your repo.
