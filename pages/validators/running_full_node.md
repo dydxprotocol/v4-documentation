@@ -9,7 +9,7 @@ dydxprotocold config chain-id dydx-testnet-2
 
 ## Downloading `genesis.json`
 
-Download the correct `genesis.json` from the [`networks` repository](https://github.com/dydxprotocol/networks) and replace the existing `genesis.json`.
+Download the correct `genesis.json` from the [`v4-testnets` repository](https://github.com/dydxprotocol/v4-testnets) and replace the existing `genesis.json`.
 
 ## Start a Full Node
 

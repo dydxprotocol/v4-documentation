@@ -13,7 +13,7 @@ After the `gentx` collection process is complete, the dYdX team will announce in
 Download `genesis.json` file into `$HOME_TESTNET_3` , replacing the previous `genesis.json` file:
 
 ```bash
-# Run at root of `networks`.
+# Run at root of `v4-testnets`.
 export HOME_TESTNET_3=<your dir>
 git checkout main
 git pull origin main
