@@ -4,7 +4,7 @@
 Save the testnet `chain-id`. This will make it so you do not have to manually pass in the chain-id flag for every CLI command.
 
 ```bash
-dydxprotocold config chain-id dydx-testnet-2
+dydxprotocold config chain-id dydx-testnet-3
 ```
 
 ## Downloading `genesis.json`
