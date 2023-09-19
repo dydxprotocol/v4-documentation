@@ -19,4 +19,7 @@ Find the seed node's ID and the IP address from the [testnet info page](https://
 dydxprotocold start --p2p.seeds="25dd504d86d82673b9cf94fe78c00714f236c9f8@13.59.4.93:26656" --non-validating-full-node=true
 ```
 
+💡💡💡**Note**: if you want to disable gRPC on your full node, it is important to start the node with the
+`--non-validating-full-node=true` flag. Otherwise, the application will require that gRPC be enabled. 💡💡💡
+
 If you would like to access snapshots for the test-net, please see [here](https://bwarelabs.com/snapshots)
