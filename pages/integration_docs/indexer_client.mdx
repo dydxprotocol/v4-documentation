@@ -418,28 +418,6 @@ transfers = transfers_response.data['transfers']
 **Params and Response**: See *<a id="getTransfers" href="/integration_docs/indexer_api#gettransfers">Indexer API</a>*
 
 
-### Get Funding Payments
-
-<Tabs items={["TypeScript", "Python"]}>
-<Tab>
-```typescript copy
-// address is the wallet address on dYdX chain, subaccountNumber is the subaccount number
-const response = await client.account.getSubaccountFunding(address, subaccountNumber);
-const fundingPayments = response.fundingPayments;
-```
-</Tab>
-<Tab>
-```python copy
-# address is the wallet address on dYdX chain, subaccount_number is the subaccount number
-funding_response = client.account.get_subaccount_funding(address, subaccount_number)
-funding = funding_response.data['fundingPayments']
-```
-</Tab>
-</Tabs>
-
-**Params and Response**: See *<a id="getFills" href="/integration_docs/indexer_api">Indexer API</a>*
-
-
 ### Get Historical PNL
 
 <Tabs items={["TypeScript", "Python"]}>
