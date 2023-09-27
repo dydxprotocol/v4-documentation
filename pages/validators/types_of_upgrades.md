@@ -20,4 +20,4 @@ The high-level strategy for coordinating an upgrade is as follows:
 4. Before the upgrade time (corresponding to the upgrade block height), the new major release (e.g. `v9.0.0`) including the vulnerability fix is published. 
 5. Upgrades happen in a similar fashion as `MsgSoftwareUpgrade`. 
 
-From a node operator’s perspective, hard forks are essentially a combination of a patch version (`v8.0.1`) followed by a major version (`v9.0.0`). Please use the instructions from [Performing Upgrades](https://v4-teacher.vercel.app/validators/performing_upgrades) to perform the corresponding upgrades.
+From a node operator’s perspective, hard forks are essentially a combination of a patch version (`v8.0.1`) followed by a major version (`v9.0.0`). Please use the instructions from [Performing Upgrades](https://v4-mainnet-docs.vercel.app/validators/performing_upgrades) to perform the corresponding upgrades.

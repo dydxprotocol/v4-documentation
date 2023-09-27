@@ -1,19 +1,13 @@
-**Welcome to dYdX’s v4 public testnet! We are thrilled to share our progress so far.**
+**Welcome to dYdX’s v4 mainnet!**
 
-Over the course of next few months, we look forward to working with you in testing out the v4 software. This will involve various aspects of the product, including:
+Welcome to the official documentation page for dYdX v4, a robust blockchain built with the CosmosSDK. This documentation is diligently maintained by the dYdX Operations subDAO to provide a comprehensive resource for validators, developers, and the dYdX community at large.
 
-1. Core trading flows (e.g., placing an order, cancelling an order, etc.)
-2. Core user flows (e.g., deposits/withdrawals, governance, etc.)
-3. Infra-level operations (e.g., starting the network, performing upgrades or hard-forks, running indexers, etc.)
-4. Performance (e.g., network throughput, latency, etc.)
+The dYdX v4 Chain mainnet is operated by a decentralized network of independent validators, ensuring the security and transparency of the ecosystem. This documentation encompasses a wide range of topics including setup guides, netwrok parameters, and timelines among others, to facilitate a thorough understanding and effective interaction with dYdX v4 Chain.
 
-For the first half of the public testnet, our focus will be on shipping and testing new features. Therefore, we plan to launch new networks in order to minimize the engineering cost to perform upgrades or migrations when shipping new features. Please expect to see network resets.
+For further engagement and discussions, you are encouraged to visit the dYdX forum at https://dydx.forum
+To learn more about the dYdX Operations subDAO, or to get involved, please visit http://dydxopsdao.com
 
-For the second half of the public testnet, our focus will be on making the product more robust as we get closer to the mainnet. During this time, we plan to perform upgrades and migrations for features and bug fixes.
-
-We encourage you to ask questions, explore different features, and test limits.
-
-We appreciate your willingness to participate in the testnet and look forward to working with you!
+For any inquiries or additional support, feel free to reach out through the channels provided on the dYdX forum, or join our community on [Discord](https://discord.com/invite/dydx). Your contribution and involvement are highly valued as we collectively work towards a decentralized and efficient dYdX ecosystem.
 
 🦔 💜
 

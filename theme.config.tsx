@@ -42,7 +42,7 @@ const config: DocsThemeConfig = {
   project: {},
   chat: {},
   banner: {
-    key: "v3-docs-redirect-testnet1",
+    key: "v3-docs-redirect-mainnet1",
     text: (
       <span className="banner">
         ✨ Looking for our old docs?{" "}

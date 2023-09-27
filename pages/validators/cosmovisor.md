@@ -74,7 +74,7 @@ cosmovisor init <path to executable>
 
 ## How to run
 
-`cosmovisor` is simply a thin wrapper around Cosmos applications. Use the following command to start a testnet validator using `cosmovisor` .
+`cosmovisor` is simply a thin wrapper around Cosmos applications. Use the following command to start a validator using `cosmovisor` .
 
 ```bash
 cosmovisor run arg1 arg2 arg3 ...

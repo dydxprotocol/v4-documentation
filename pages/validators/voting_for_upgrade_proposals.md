@@ -2,7 +2,7 @@
 
 ## Save your Chain ID in `dydxprotocold` config
 
-Save the testnet `chain-id`. This will make it so you do not have to manually pass in the chain-id flag for every CLI command.
+Save the `chain-id`. This will make it so you do not have to manually pass in the chain-id flag for every CLI command.
 
 ```bash
 dydxprotocold config chain-id [chain_id]

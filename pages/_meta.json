@@ -2,15 +2,15 @@
   "index": "Introduction",
   "general": "General",
   "validators": "Validators",
-  "testnets": "Testnets",
+  "mainnet": "Mainnet",
   "integration_docs": "Integration documents",
   "developer_links": "Developer links",
   "governance": "Governance",
   "operational_checklist": "Operational checklist",
   "app": {
-    "title": "Testnet",
+    "title": "Mainnet",
     "type": "page",
-    "href": "https://v4.testnet.dydx.exchange",
+    "href": "https://v4-mainnet-docs.vercel.app/",
     "newWindow": true
   }
 }

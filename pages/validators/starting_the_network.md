@@ -4,30 +4,31 @@
 
 ## Timeline
 
-See `dydx-testnet-3` [Launch Schedule](https://v4-teacher.vercel.app/testnets/schedule). Please complete the following instructions by the scheduled time for `Network Launch`.
+See `dydx-mainnet-1` [Launch Schedule](https://v4-mainnet-docs.vercel.app/mainnet/schedule). Please complete the following instructions by the scheduled time for `Network Launch`.
 
 ## Downloading `genesis.json`
 
-After the `gentx` collection process is complete, the dYdX team will announce in the `#v-dydx-public-testnet-updates` channel that the finalized `genesis.json` file is ready for download. 
+After the `gentx` collection process is complete, the dYdX Operations subDAO team will announce in the `#ext-dydx-v4-validators-updates` channel that the finalized `genesis.json` file is ready for download. 
 
-Download `genesis.json` file into `$HOME_TESTNET_3` , replacing the previous `genesis.json` file:
+Download `genesis.json` file into `$HOME_MAINNET_1` , replacing the previous `genesis.json` file:
 
 ```bash
-# Run at root of `v4-testnets`.
-export HOME_TESTNET_3=<your dir>
+# Run at root of `networks`.
+export HOME_MAINNET_1=<your dir>
 git checkout main
 git pull origin main
-cp dydx-testnet-3/genesis.json $HOME_TESTNET_3/config/genesis.json
+cp dydx-mainnet-1/genesis.json $HOME_MAINNET_1/config/genesis.json
 ```
 
 Feel free to inspect the content of the `genesis.json` file, and let us know if there’s any questions/concerns.
 
 ## Get Latest Binary
 
-💡💡💡 We have published a newer [binary](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv0.2.1) `v0.2.1` in our now public repository `dydxprotocol/v4-chain`. This is different from the binary used for `gentx` submission process. Please make ensure you use this newer binary to avoid consensus failure. 💡💡💡
+The network launch binary should be available in the [dYdX Protocol repository](https://github.com/dydxprotocol/v4-chain/releases)
 
 ```bash
-export BINARY_VERSION="v0.2.1"
+# Set the correct version, e.g. "v0.2.1"
+export BINARY_VERSION=<version>
 # Choose a platform. Supported: linux-amd64, linux-arm64
 export DYDX_PLATFORM="linux-amd64"
 curl -LO https://github.com/dydxprotocol/v4-chain/releases/download/protocol%2F$BINARY_VERSION/dydxprotocold-$BINARY_VERSION-$DYDX_PLATFORM.tar.gz
@@ -57,19 +58,11 @@ cosmos_sdk_version: v0.47.3
 go: go version go1.19.9 <platform>
 name: dydxprotocol
 server_name: dydxprotocold
-version: 0.2.1
+version: <version>
 ```
-
-## [💡💡💡IMPORTANT:💡💡💡] Verify Config 
-
-Please check that `timeout_commit` value under `$HOME_TESTNET_3/config/config.toml` is equal to
-```
-timeout_commit = "500ms"
-```
-This is **different** from `dydx-testnet-2`.
 
 The Cosmos gRPC service is used by various daemon processes, and **must be enabled** in order for the protocol to operate.
-Please make sure that grpc is enabled in `$HOME_TESTNET_3/config/app.toml`:
+Please make sure that grpc is enabled in `$HOME_MAINNET_1/config/app.toml`:
 ```
 [grpc]
 
@@ -105,21 +98,19 @@ For your node to successfully ingest bridge transactions from the relevant block
 
 ## Starting the Node
 
-💡💡💡The testnet genesis is **17:00 UTC (13:00 ET), Tuesday 9/12.** Please complete the following instructions by this time.💡💡💡
+💡💡💡Please complete the following instructions before the mainnet genesis timestamp.💡💡💡
 
 ### Option 1: Run `dydxprotocold` Directly
 
 Run `dydxprotocold` and connect to the seed node:
 
 ```bash
-dydxprotocold start --p2p.seeds="5b00f9ab668c35f7fcaff9a0607da59273bee399@dydx-testnet3-seednode.allthatnode.com:26656,5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103,f3339d67eac6e6a082555d2db6556ee4c0ce5f61@test-dydx-seed.kingnodes.com:26856,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856,87ee8de5f0f82af6ee6740a30f8844bbe6434413@seed.dydx-testnet.cros-nest.com:26656,b8695dc21fa1b8395abb131e37c5bf5763b61d1d@dydx-testnet-3.notional.ventures:26656" --home="$HOME_TESTNET_3"
+dydxprotocold start --p2p.seeds="TBD" --home="$HOME_MAINNET_1"
 ```
-
-**Note:** the seed node IP for testnet #3 is different from testnet #2.
 
 ### Option 2: Run `dydxprotocold` with `cosmovisor`
 
-Install and initialize `cosmovisor` with instructions [here](https://v4-teacher.vercel.app/validators/cosmovisor). To make sure `cosmovisor` is initialized with the correct binary, run the following to binary version:
+Install and initialize `cosmovisor` with instructions [here](https://v4-mainnet-docs.vercel.app/validators/cosmovisor). To make sure `cosmovisor` is initialized with the correct binary, run the following to binary version:
 
 ```bash
 cosmovisor run version --long
@@ -133,27 +124,18 @@ cosmos_sdk_version: v0.47.3
 go: go version go1.19.9 <platform>
 name: dydxprotocol
 server_name: dydxprotocold
-version: 0.2.1
+version: <version>
 ```
 
 Run `dydxprotocold` with `cosmovisor` and connect to the seed node. 
 
-💡💡💡**Note:** the seed node IP for testnet #3 is different from testnet #2.💡💡💡
-
 ```bash
-cosmovisor run start --p2p.seeds="5b00f9ab668c35f7fcaff9a0607da59273bee399@dydx-testnet3-seednode.allthatnode.com:26656,5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103,f3339d67eac6e6a082555d2db6556ee4c0ce5f61@test-dydx-seed.kingnodes.com:26856,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856,87ee8de5f0f82af6ee6740a30f8844bbe6434413@seed.dydx-testnet.cros-nest.com:26656,b8695dc21fa1b8395abb131e37c5bf5763b61d1d@dydx-testnet-3.notional.ventures:26656" --home="$HOME_TESTNET_3"
+cosmovisor run start --p2p.seeds="TBD" --home="$HOME_MAINNET_1"
 ```
 
-### Backup: Start the network with Persistent Peers
+### Announcing yourself and cooperating with others
 
-<aside>
-💡 The seed node should be sufficient for public testnet startup. However, if for any reason you’re seeing network issues (can troubleshoot at `localhost:26657/net_info`), you can also add the following flag to use the dYdX internal validators as persistent peers:
-
-`—p2p.persistent_peers="178b7abe7b6fbde8620588246ee7b63ed58feae1@54.199.218.236:26656,3f667030ddd9c561ec66f35e8221be0178cf62c4@3.22.142.107:26656”`
-
-</aside>
-
-Validators are also encouraged to share their IPs in #v-dydx-public-testnet-discussion and use each other as persistent peers. Each p2p.persistent_peers are separated by comma and use the format `<node_id>@<public_ip_address>:<port>`.
+Validators are also encouraged to share their IPs in #ext-dydx-v4-validators-discussion and use each other as persistent peers. Each p2p.persistent_peers are separated by comma and use the format `<node_id>@<public_ip_address>:<port>`.
 
 To find your node id, run
 

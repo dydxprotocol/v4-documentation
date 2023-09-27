@@ -1,3 +1,10 @@
+# Mainnet Resources
+
+**v4 Mainnet Documentation:**\
+[https://v4-mainnet-docs.vercel.app/](https://v4-mainnet-docs.vercel.app/)
+
+---
+
 # Public Testnet Resources
 
 **Public Testnet Front-end:**\
