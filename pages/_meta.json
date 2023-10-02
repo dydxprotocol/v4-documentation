@@ -7,6 +7,7 @@
   "developer_links": "Developer links",
   "governance": "Governance",
   "operational_checklist": "Operational checklist",
+  "security": "Security",
   "app": {
     "title": "Testnet",
     "type": "page",
