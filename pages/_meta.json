@@ -1,10 +1,10 @@
 {
   "index": "Introduction",
   "general": "General",
-  "trading": "Trading",
   "validators": "Validators",
   "testnets": "Testnets",
   "integration_docs": "Integration documents",
+  "trading": "Trading",
   "developer_links": "Developer links",
   "governance": "Governance",
   "operational_checklist": "Operational checklist",
