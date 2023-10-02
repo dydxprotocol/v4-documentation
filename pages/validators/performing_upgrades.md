@@ -27,7 +27,7 @@ Releases for the dYdX chain will use [semantic versioning](https://semver.org/).
 
 #### Upgrading to a new Major/Minor Version (e.g. v0.1.0)
 
-1. Download the [binary](https://github.com/dydxprotocol/v4-testnets) for the new release, rename the binary to `dydxprotocold`.
+1. Download the [binary](https://github.com/dydxprotocol/v4-chain) for the new release, rename the binary to `dydxprotocold`.
 
 ```bash
 mv dydxprotocold.<version>-<platform> dydxprotocold
