@@ -15,7 +15,7 @@ AWS service estimates:
   | Vulcan       | 8         |  4  | 8gb    |
 - RDS - Postgres Database
   - Primary - db.m6g.16xlarge
-  - Replica - db.m6g.16xlarge
+  - Replica - 1 db.m6g.16xlarge
 - EC2
   - Devboxes - t2.medium (1 instance per engineer)
 - ElastiCache Redis
