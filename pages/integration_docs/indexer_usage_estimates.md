@@ -8,18 +8,18 @@ AWS service estimates:
 
   | Service Name | Instances | CPU | Memory |
   | ------------ | --------- | --- | ------ |
-  | Comlink      | 50        |  2  | 4gb    |
+  | Comlink      | 20        |  2  | 4gb    |
   | Ender        | 1         |  4  | 8gb    |
-  | Roundtable   | 10        |  2  | 4gb    |
-  | Socks        | 150       |  4  | 16gb   |
-  | Vulcan       | 10        |  4  | 8gb    |
+  | Roundtable   | 5         |  2  | 4gb    |
+  | Socks        | 20        |  4  | 16gb   |
+  | Vulcan       | 8         |  4  | 8gb    |
 - RDS - Postgres Database
   - Primary - db.m6g.16xlarge
-  - Replica - 3 db.m6g.16xlarge
+  - Replica - 1 db.m6g.16xlarge
 - EC2
   - Devboxes - t2.medium (1 instance per engineer)
 - ElastiCache Redis
-  - 1 primary and 3 replicas with cache.r6g.large
+  - 1 primary and 1 replica with cache.r6g.large
 - EC2 ELB - Loadbalancer
   - 250,000 LCU-Hrs/mo
 - Cloudwatch - Logs
