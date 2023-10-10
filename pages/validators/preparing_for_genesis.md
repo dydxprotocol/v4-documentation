@@ -3,6 +3,7 @@
 ***By using, recording, referencing, or downloading (i.e., any “action”) any information contained on this page or in any dYdX Trading Inc. ("dYdX") database, you hereby and thereby agree to the [v4 Terms of Use](https://dydx.exchange/v4-terms) and [Privacy Policy](https://dydx.exchange/privacy) governing such information, and you agree that such action establishes a binding agreement between you and dYdX.***
 
 ***Update 10/10/2023***: the following has been updated for `dydx-testnet-4`.
+
 ***Update 9/1/2023***: the following has been updated for the 3rd public testnet `dydx-testnet-3`.
 
 ## For Existing Validators for the current testnet
