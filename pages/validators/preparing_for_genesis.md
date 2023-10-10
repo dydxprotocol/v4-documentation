@@ -24,11 +24,9 @@ These are necessary steps to register your validator in the genesis and prepare 
 
 See the [Testnet Launch Schedule](https://v4-teacher.vercel.app/testnets/schedule) for `dydx-testnet-4`. Please make sure to submit your gentx by the deadline highlighted in the schedule.
 
-## Prerequisites
+## Get the Latest `dydxprotocold` Binary
 
-## Get Latest `dydxprotocold` Binary
-
-Download the latest release binaries from [dydxprotocol/v4-chain releases](https://github.com/dydxprotocol/v4-chain/releases).
+Download the latest release binaries from [dydxprotocol/v4-chain releases](https://github.com/dydxprotocol/v4-chain/releases), which is `v0.3.6` [here](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv0.3.6)
 
 Choose the binary for the corresponding platform, and set up in $PATH (using `linux-amd64` as example):
 
@@ -51,13 +49,15 @@ dydxprotocold version --long
 The output should look like this (**make sure** the `version` and `commit` is consistent):
 
 ```bash
-commit: TODO
+commit: 6ed30700011e4d4433272286afaed1465ae71dc3
 cosmos_sdk_version: v0.47.3
 go: go version go1.19.9 <platform>
 name: dydxprotocol
 server_name: dydxprotocold
-version: TODO
+version: 0.3.6
 ```
+
+**Note:** We will release a newer binary for the actual network launch for `dydx-testnet-4`. Please stay tuned for updates in the Slack channels.
 
 ## Initialize Your Node
 
@@ -116,7 +116,7 @@ MY_VALIDATOR_ADDRESS=$(dydxprotocold keys show $DYDX_KEY_NAME -a --keyring-backe
 Before you can create a gentx, you’ll need to add a genesis account (using the address generated above) to the `genesis.json` file. This local `genesis.json` file will not be used for the testnet, and only helps to generate a gentx. Note that `dv4tnt` is the native token used for the public testnet.
 
 ```bash
-dydxprotocold add-genesis-account $MY_VALIDATOR_ADDRESS 100000000000dv4tnt --home=$HOME_TESTNET_4
+dydxprotocold add-genesis-account $MY_VALIDATOR_ADDRESS 1000000000000000000000000adv4tnt --home=$HOME_TESTNET_4
 ```
 
 ### Generate `gentx`
@@ -133,7 +133,7 @@ You can also use the below optional flags:
 ```
 
 ```bash
-dydxprotocold gentx $DYDX_KEY_NAME 50000000000dv4tnt --moniker $DYDX_MONIKER --keyring-backend test --chain-id $CHAIN_ID --home=$HOME_TESTNET_4
+dydxprotocold gentx $DYDX_KEY_NAME 500000000000000000000000adv4tnt --moniker $DYDX_MONIKER --keyring-backend test --chain-id $CHAIN_ID --home=$HOME_TESTNET_4
 ```
 
 It will output something similar to:
