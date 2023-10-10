@@ -1,9 +1,9 @@
 <aside>
-💡 This document is meant to serve as a detailed explanation of the differences between short term and stateful orders in `[x/clob](https://github.com/dydxprotocol/v4-chain/tree/main/protocol/x/clob)` during the dYdX v4 public testnet. It touches on order lifecycle as well as signature verification, replay prevention, KVStore state, and Memstore state.
+💡 This document is meant to serve as a detailed explanation of the differences between short term and stateful orders in [`x/clob`](https://github.com/dydxprotocol/v4-chain/tree/main/protocol/x/clob) during the dYdX v4 public testnet. It touches on order lifecycle as well as signature verification, replay prevention, KVStore state, and Memstore state.
 
 </aside>
 
-*****************Note: “Placed” in this document refers to an order which has been gone through taker order matching via memclob.PlaceOrder.  An order can exist in state without having been placed yet.***************** 
+*****************Note: “Placed” in this document refers to an order which has gone through taker order matching via memclob.PlaceOrder.  An order can exist in state without having been placed yet.***************** 
 
 This document was created for traders on the dYdX Testnet, and is subject to the terms and conditions for [v4 testnet](https://v4-teacher.vercel.app).  For more details on definitions, see the v4-chain repo [here](https://github.com/dydxprotocol/v4-chain).
 
