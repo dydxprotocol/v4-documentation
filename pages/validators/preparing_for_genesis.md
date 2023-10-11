@@ -184,9 +184,9 @@ git commit -m "$DYDX_MONIKER gentx"
 git push origin $DYDX_MONIKER/gentx
 ```
 
-6. Create a pull request  `dydxprotocol/main`.
+6. Create a pull request on the original `dydxprotocol/v4-testnets` repo. In other words, the `base repository` should be `dydxprotocol/v4-testnets` and the `base` branch should be `main`. 
 
-2. The pull request should trigger a "Validate Genesis" workflow, which runs some sanity checks on the submitted `gentx`. Please try to resolve any issue if the workflow doesn't pass, and post in `#v-dydx-public-testnet-discussion` if you need help.
+7. Maintainers will review and merge the PRs. If you need any help, post in `#v-dydx-public-testnet-discussion`.
 
 ## Changelog
 8/3/2023: updated for the second public testnet `dydx-testnet-2`
