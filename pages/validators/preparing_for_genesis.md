@@ -156,25 +156,27 @@ See [here](https://github.com/dydxprotocol/v4-testnets/blob/main/dydx-testnet-4/
 
 ## Submit Your `gentx`
 
-1. Clone the [Public Testnet Github Repo](https://github.com/dydxprotocol/v4-testnets).
+1. Fork the Public Testnet Github Repo ([dydxprotocol/v4-testnets](https://github.com/dydxprotocol/v4-testnets)).
+ 
+2. Clone the forked repo.
 
 ```bash
-git clone https://github.com/dydxprotocol/v4-testnets.git
+git clone https://github.com/<your username or organization>/v4-testnets.git
 ```
 
-2. Create a new local branch:
+3. Create a new local branch:
 
 ```bash
 git checkout -b $DYDX_MONIKER/gentx
 ```
 
-3. Copy the gentx file to the `v4-testnets` repo (ensure that it is in the correct folder)
+4. Copy the gentx file to the forked `v4-testnets` repo (ensure that it is in the correct folder)
 
 ```bash
 cp $HOME_TESTNET_4/config/gentx/gentx-xxxxxxxxxxxx.json v4-testnets/dydx-testnet-4/gentx/gentx-$DYDX_MONIKER.json
 ```
 
-4. Commit and push to your repo.
+5. Commit and push to your repo.
 
 ```bash
 git add dydx-testnet-4/gentx/*
@@ -182,9 +184,9 @@ git commit -m "$DYDX_MONIKER gentx"
 git push origin $DYDX_MONIKER/gentx
 ```
 
-5. Create a pull request from your branch into `main`
+6. Create a pull request in the original `dydxprotocol/v4-testnets` repo. In other words, the `base repository` should be `dydxprotocol/v4-testnets` and the `base` branch should be `main`. 
 
-6. The pull request should trigger a "Validate Genesis" workflow, which runs some sanity checks on the submitted `gentx`. Please try to resolve any issue if the workflow doesn't pass, and post in `#v-dydx-public-testnet-discussion` if you need help.
+7. Maintainers will review and merge the PRs. If you need any help, post in `#v-dydx-public-testnet-discussion`.
 
 ## Changelog
 8/3/2023: updated for the second public testnet `dydx-testnet-2`
