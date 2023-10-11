@@ -184,7 +184,7 @@ git commit -m "$DYDX_MONIKER gentx"
 git push origin $DYDX_MONIKER/gentx
 ```
 
-6. Create a pull request on the original `dydxprotocol/v4-testnets` repo. In other words, the `base repository` should be `dydxprotocol/v4-testnets` and the `base` branch should be `main`. 
+6. Create a pull request in the original `dydxprotocol/v4-testnets` repo. In other words, the `base repository` should be `dydxprotocol/v4-testnets` and the `base` branch should be `main`. 
 
 7. Maintainers will review and merge the PRs. If you need any help, post in `#v-dydx-public-testnet-discussion`.
 
