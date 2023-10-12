@@ -1,0 +1,8 @@
+# Testnet full node providers
+
+| Provider             | Offering                  | Provider website                            |
+| -------------------- | ----------------------------------------------------------------------- |
+| DSRV (All that node) | RPC and archival nodes    | https://docs.allthatnode.com/               |
+| NodeFleet            | RPC and archival nodes    | https://nodefleet.org/                      |
+| KingNodes            | RPC nodes                 | https://www.kingnodes.com/                  |
+| Liquify              | RPC nodes                 | https://www.liquify.io/                     |
