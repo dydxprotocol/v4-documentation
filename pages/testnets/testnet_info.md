@@ -1,16 +1,19 @@
 ## Testnets
 
-To join the testnet network, you need to run the correct binary version and specify the correct `genesis.json` as well as the `seed node` info.
+To join the testnet network, you need to:
+1. run the correct binary version and 
+2. specify the correct `genesis.json` and
+3. use the correct `seed node` info
 
-The above info can be found in this [`v4-testnets` repository](https://github.com/dydxprotocol/v4-testnets).
+The info for 1 and 2 can be found in [`v4-testnets` repository](https://github.com/dydxprotocol/v4-testnets).
 
-| Testnet Chain ID | Description     | Status        | Binary Version | Seed Node ID and IP Address                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Github                                                                       |
-| ---------------- | --------------- | ------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `dydx-testnet-1` | Test Network #1 | 🔴 Inactive    | v0.0.1-rc1     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | [Link](https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-1) |
-| `dydx-testnet-2` | Test Network #2 | 🔴 Inactive    | v0.1.0-rc2     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | [Link](https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-2) |
-| `dydx-testnet-3` | Test Network #3 | ✅ Live        | v0.2.1         | 5b00f9ab668c35f7fcaff9a0607da59273bee399@dydx-testnet3-seednode.allthatnode.com:26656, 5454e22c769c5103e51c336121c532e9d6289348@tenderseed.ccvalidators.com:29103, f3339d67eac6e6a082555d2db6556ee4c0ce5f61@test-dydx-seed.kingnodes.com:26856, 87ee8de5f0f82af6ee6740a30f8844bbe6434413@seed.dydx-testnet.cros-nest.com:26656, b8695dc21fa1b8395abb131e37c5bf5763b61d1d@dydx-testnet-3.notional.ventures:26656, 20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856 | [Link](https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-3) |
-| `dydx-testnet-4` | Test Network #4 | 🏗️ Preparation | TBD            | TBD                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | [Link](https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-4) |
+### Seed Node for `dydx-testnet-4`
 
+* Lavender.Five: `20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856`
+* Crosnest: `87ee8de5f0f82af6ee6740a30f8844bbe6434413@seed.dydx-testnet.cros-nest.com:26656`
+* CryptoCrew: `38e5a5ec34c578dc323cbdd9b98330abb448d586@tenderseed.ccvalidators.com:29104`
+* StakingCabin: `182ab0015fb4b7d751b12a9c0162ac123445eac1@seed.dydx-testnet.stakingcabin.com:26656`
+* StakerSpace: `76b472b107ccf20c3d6c110c4a2a217306d2dedb@dydx-seed.staker.space:26656`
 
 ### Chain info
 ```json
@@ -33,13 +36,13 @@ The above info can be found in this [`v4-testnets` repository](https://github.co
   },
   "stakeCurrency": {
     "coinDenom": "DV4TNT",
-    "coinDecimals": 6,
+    "coinDecimals": 18,
     "coinMinimalDenom": "dv4tnt",
   },
   "currencies": [
     {
       "coinDenom": "DV4TNT",
-      "coinDecimals": 6,
+      "coinDecimals": 18,
       "coinMinimalDenom": "dv4tnt",
     },
     {
@@ -51,7 +54,7 @@ The above info can be found in this [`v4-testnets` repository](https://github.co
   "feeCurrencies": [
     {
       "coinDenom": "DV4TNT",
-      "coinDecimals": 6,
+      "coinDecimals": 18,
       "coinMinimalDenom": "dv4tnt",
     }
   ],
