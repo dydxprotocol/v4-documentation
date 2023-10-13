@@ -55,6 +55,11 @@ The info for 1 and 2 can be found in [`v4-testnets` repository](https://github.c
   ],
   "feeCurrencies": [
     {
+      "coinDenom": "DV4TNT",
+      "coinDecimals": 18,
+      "coinMinimalDenom": "adv4tnt",
+    },
+    {
       "coinDenom": "USDC",
       "coinDecimals": 6,
       "coinMinimalDenom": "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5",
