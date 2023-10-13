@@ -108,10 +108,10 @@ For your node to successfully ingest bridge transactions from the relevant block
 
 ### Option 1: Run `dydxprotocold` Directly
 
-Run `dydxprotocold` and connect to the seed node:
+Run `dydxprotocold` and connect to the seed node. The seed node info can be found in [Testnet Info](https://v4-teacher.vercel.app/testnets/testnet_info):
 
 ```bash
-dydxprotocold start --p2p.seeds="TODO" --home="$HOME_TESTNET_4"
+dydxprotocold start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TESTNET_4"
 ```
 
 **Note:** the seed node IP for testnet #3 is different from testnet #2.
