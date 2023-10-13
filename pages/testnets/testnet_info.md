@@ -9,6 +9,7 @@ The info for 1 and 2 can be found in [`v4-testnets` repository](https://github.c
 
 ### Seed Node for `dydx-testnet-4`
 
+* AllThatNode: `19d38bb5cea1378db3e16615e63594dc26119a1a@dydx-testnet4-seednode.allthatnode.com:26656`
 * Crosnest: `87ee8de5f0f82af6ee6740a30f8844bbe6434413@seed.dydx-testnet.cros-nest.com:26656`
 * CryptoCrew: `38e5a5ec34c578dc323cbdd9b98330abb448d586@tenderseed.ccvalidators.com:29104`
 * KingNodes: `80a1a6cd086634c34008c6457d3f7441cfc05c47@seeds.kingnodes.com`
