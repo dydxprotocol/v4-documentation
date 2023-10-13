@@ -20,9 +20,9 @@ The info for 1 and 2 can be found in [`v4-testnets` repository](https://github.c
 {
   "rpc": "https://dydx-testnet-archive.allthatnode.com:26657",
   "rest": "https://dydx-testnet-archive.allthatnode.com:1317",
-  "chainId": "dydx-testnet-3",
+  "chainId": "dydx-testnet-4",
   "chainName": "dYdX Public Testnet",
-  "chainSymbolImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/dydx-testnet-3/chain.png",
+  "chainSymbolImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/dydx-testnet-4/chain.png",
   "bech32Config": {
     "bech32PrefixAccPub": "dydxpub",
     "bech32PrefixValPub": "dydxvaloperpub",
@@ -37,13 +37,13 @@ The info for 1 and 2 can be found in [`v4-testnets` repository](https://github.c
   "stakeCurrency": {
     "coinDenom": "DV4TNT",
     "coinDecimals": 18,
-    "coinMinimalDenom": "dv4tnt",
+    "coinMinimalDenom": "adv4tnt",
   },
   "currencies": [
     {
       "coinDenom": "DV4TNT",
       "coinDecimals": 18,
-      "coinMinimalDenom": "dv4tnt",
+      "coinMinimalDenom": "adv4tnt",
     },
     {
       "coinDenom": "USDC",
@@ -55,7 +55,7 @@ The info for 1 and 2 can be found in [`v4-testnets` repository](https://github.c
     {
       "coinDenom": "DV4TNT",
       "coinDecimals": 18,
-      "coinMinimalDenom": "dv4tnt",
+      "coinMinimalDenom": "adv4tnt",
     }
   ],
   "features": []
