@@ -38,14 +38,14 @@ Use a command-line websocket client such as [interactive-websocket-cli](https:/
 Example (with `interactive-websocket-cli`)
 
 ```tsx
-wscli connect wss://indexer.v4testnet2.dydx.exchange/v4/ws
+wscli connect wss://dydx-testnet.imperator.co/v4/ws
 <output from ws-cli>
 <type 's' to send> { "type": "subscribe", "channel": "v4_trades", "id": "BTC-USD" }
 ```
 
 ## Subaccounts
 
-This channel provides realtime information about orders, fills, transfers, perpetual positions, and perpetual assets for a subaccount. 
+This channel provides realtime information about orders, fills, transfers, perpetual positions, and perpetual assets for a subaccount.
 
 ### Subscribe
 
@@ -284,7 +284,7 @@ export enum TransferType {
 ```
 
 ### Example
-    
+
 ```tsx
 {
   "type": "channel_data",
@@ -367,7 +367,7 @@ export enum TransferType {
 Returns everything from `v4/orderbooks/perpetualMarket/${id}` endpoint.
 
 - Example
-    
+
     ```tsx
     {
       "type": "subscribed",
@@ -451,7 +451,7 @@ Returns everything from `v4/orderbooks/perpetualMarket/${id}` endpoint.
     	},
     }
     ```
-    
+
 
 ### Channel Data
 
@@ -474,7 +474,7 @@ type PriceLevel = [string, string];
 ```
 
 - Example
-    
+
     ```tsx
     {
       "type": "channel_data",
@@ -493,7 +493,7 @@ type PriceLevel = [string, string];
       }
     }
     ```
-    
+
 
 ## Trades
 
@@ -510,7 +510,7 @@ type PriceLevel = [string, string];
 Returns everything from `v4/trades/perpetualMarkets/${id}` endpoint.
 
 - Example
-    
+
     ```tsx
     {
       "type": "subscribed",
@@ -520,7 +520,7 @@ Returns everything from `v4/trades/perpetualMarkets/${id}` endpoint.
       "id": "BTC-USD",
       "contents": {
         "trades": [
-    
+
           {
             "side": "BUY",
             "size": "0.00396135",
@@ -679,7 +679,7 @@ Returns everything from `v4/trades/perpetualMarkets/${id}` endpoint.
     	},
     }
     ```
-    
+
 
 ### Channel Data
 
@@ -709,7 +709,7 @@ interface TradeContent {
 ```
 
 ### Example
-    
+
 ```tsx
 {
   "type": "channel_data",
@@ -772,7 +772,7 @@ interface TradeContent {
 Returns everything from `v4/perpetualMarkets` endpoint.
 
 ### Example
-    
+
 ```tsx
 {
   "type": "subscribed",
@@ -900,7 +900,7 @@ interface OraclePriceMarket {
 ```
 
 ### Example
-    
+
 ```tsx
 {
   "type": "channel_data",

@@ -1,11 +1,12 @@
-
 # Indexer API v1.0.0
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
 Base URLs:
 
-* <a href="https://indexer.v4testnet.dydx.exchange/v4">https://indexer.v4testnet.dydx.exchange/v4</a>
+- <a href="https://dydx-testnet.imperator.co/v4">
+    https://dydx-testnet.imperator.co/v4
+  </a>
 
 # Authentication
 
@@ -23,39 +24,37 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/addresses/{address}', headers = headers)
+r = requests.get('https://dydx-testnet.imperator.co/v4/addresses/{address}', headers = headers)
 
 print(r.json())
 
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/addresses/{address}',
-{
-  method: 'GET',
+fetch("https://dydx-testnet.imperator.co/v4/addresses/{address}", {
+  method: "GET",
 
-  headers: headers
+  headers: headers,
 })
-.then(function(res) {
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /addresses/{address}`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|address|path|string|true|none|
+| Name    | In   | Type   | Required | Description |
+| ------- | ---- | ------ | -------- | ----------- |
+| address | path | string | true     | none        |
 
 > Example responses
 
@@ -125,61 +124,59 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/addresses/{address}',
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|Inline|
+| Status | Meaning                                                 | Description | Schema |
+| ------ | ------------------------------------------------------- | ----------- | ------ |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | Inline |
 
 ### Response Schema
 
 Status Code **200**
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[SubaccountResponseObject](#schemasubaccountresponseobject)]|false|none|none|
-|» address|string|true|none|none|
-|» subaccountNumber|number(double)|true|none|none|
-|» equity|string|true|none|none|
-|» freeCollateral|string|true|none|none|
-|» openPerpetualPositions|[PerpetualPositionsMap](#schemaperpetualpositionsmap)|true|none|none|
-|»» **additionalProperties**|[PerpetualPositionResponseObject](#schemaperpetualpositionresponseobject)|false|none|none|
-|»»» market|string|true|none|none|
-|»»» status|[PerpetualPositionStatus](#schemaperpetualpositionstatus)|true|none|none|
-|»»» side|[PositionSide](#schemapositionside)|true|none|none|
-|»»» size|string|true|none|none|
-|»»» maxSize|string|true|none|none|
-|»»» entryPrice|string|true|none|none|
-|»»» realizedPnl|string|true|none|none|
-|»»» createdAt|[IsoString](#schemaisostring)|true|none|none|
-|»»» createdAtHeight|string|true|none|none|
-|»»» sumOpen|string|true|none|none|
-|»»» sumClose|string|true|none|none|
-|»»» netFunding|string|true|none|none|
-|»»» unrealizedPnl|string|true|none|none|
-|»»» closedAt|[IsoString](#schemaisostring)¦null|false|none|none|
-|»»» exitPrice|string¦null|false|none|none|
-|» assetPositions|[AssetPositionsMap](#schemaassetpositionsmap)|true|none|none|
-|»» **additionalProperties**|[AssetPositionResponseObject](#schemaassetpositionresponseobject)|false|none|none|
-|»»» symbol|string|true|none|none|
-|»»» side|[PositionSide](#schemapositionside)|true|none|none|
-|»»» size|string|true|none|none|
-|»»» assetId|string|true|none|none|
-|» marginEnabled|boolean|true|none|none|
+| Name                        | Type                                                                      | Required | Restrictions | Description |
+| --------------------------- | ------------------------------------------------------------------------- | -------- | ------------ | ----------- |
+| _anonymous_                 | [[SubaccountResponseObject](#schemasubaccountresponseobject)]             | false    | none         | none        |
+| » address                   | string                                                                    | true     | none         | none        |
+| » subaccountNumber          | number(double)                                                            | true     | none         | none        |
+| » equity                    | string                                                                    | true     | none         | none        |
+| » freeCollateral            | string                                                                    | true     | none         | none        |
+| » openPerpetualPositions    | [PerpetualPositionsMap](#schemaperpetualpositionsmap)                     | true     | none         | none        |
+| »» **additionalProperties** | [PerpetualPositionResponseObject](#schemaperpetualpositionresponseobject) | false    | none         | none        |
+| »»» market                  | string                                                                    | true     | none         | none        |
+| »»» status                  | [PerpetualPositionStatus](#schemaperpetualpositionstatus)                 | true     | none         | none        |
+| »»» side                    | [PositionSide](#schemapositionside)                                       | true     | none         | none        |
+| »»» size                    | string                                                                    | true     | none         | none        |
+| »»» maxSize                 | string                                                                    | true     | none         | none        |
+| »»» entryPrice              | string                                                                    | true     | none         | none        |
+| »»» realizedPnl             | string                                                                    | true     | none         | none        |
+| »»» createdAt               | [IsoString](#schemaisostring)                                             | true     | none         | none        |
+| »»» createdAtHeight         | string                                                                    | true     | none         | none        |
+| »»» sumOpen                 | string                                                                    | true     | none         | none        |
+| »»» sumClose                | string                                                                    | true     | none         | none        |
+| »»» netFunding              | string                                                                    | true     | none         | none        |
+| »»» unrealizedPnl           | string                                                                    | true     | none         | none        |
+| »»» closedAt                | [IsoString](#schemaisostring)¦null                                        | false    | none         | none        |
+| »»» exitPrice               | string¦null                                                               | false    | none         | none        |
+| » assetPositions            | [AssetPositionsMap](#schemaassetpositionsmap)                             | true     | none         | none        |
+| »» **additionalProperties** | [AssetPositionResponseObject](#schemaassetpositionresponseobject)         | false    | none         | none        |
+| »»» symbol                  | string                                                                    | true     | none         | none        |
+| »»» side                    | [PositionSide](#schemapositionside)                                       | true     | none         | none        |
+| »»» size                    | string                                                                    | true     | none         | none        |
+| »»» assetId                 | string                                                                    | true     | none         | none        |
+| » marginEnabled             | boolean                                                                   | true     | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|status|OPEN|
-|status|CLOSED|
-|status|LIQUIDATED|
-|side|LONG|
-|side|SHORT|
-|side|LONG|
-|side|SHORT|
+| Property | Value      |
+| -------- | ---------- |
+| status   | OPEN       |
+| status   | CLOSED     |
+| status   | LIQUIDATED |
+| side     | LONG       |
+| side     | SHORT      |
+| side     | LONG       |
+| side     | SHORT      |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetSubaccount
 
@@ -193,40 +190,41 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/addresses/{address}/subaccountNumber/{subaccountNumber}', headers = headers)
+r = requests.get('https://dydx-testnet.imperator.co/v4/addresses/{address}/subaccountNumber/{subaccountNumber}', headers = headers)
 
 print(r.json())
 
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/addresses/{address}/subaccountNumber/{subaccountNumber}',
-{
-  method: 'GET',
+fetch(
+  "https://dydx-testnet.imperator.co/v4/addresses/{address}/subaccountNumber/{subaccountNumber}",
+  {
+    method: "GET",
 
-  headers: headers
-})
-.then(function(res) {
+    headers: headers,
+  }
+)
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /addresses/{address}/subaccountNumber/{subaccountNumber}`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|address|path|string|true|none|
-|subaccountNumber|path|number(double)|true|none|
+| Name             | In   | Type           | Required | Description |
+| ---------------- | ---- | -------------- | -------- | ----------- |
+| address          | path | string         | true     | none        |
+| subaccountNumber | path | number(double) | true     | none        |
 
 > Example responses
 
@@ -294,13 +292,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/addresses/{address}/subaccount
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[SubaccountResponseObject](#schemasubaccountresponseobject)|
+| Status | Meaning                                                 | Description | Schema                                                      |
+| ------ | ------------------------------------------------------- | ----------- | ----------------------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [SubaccountResponseObject](#schemasubaccountresponseobject) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetAssetPositions
 
@@ -314,7 +310,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/assetPositions', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/assetPositions', params={
   'address': 'string',  'subaccountNumber': '0'
 }, headers = headers)
 
@@ -323,33 +319,34 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/assetPositions?address=string&subaccountNumber=0',
-{
-  method: 'GET',
+fetch(
+  "https://dydx-testnet.imperator.co/v4/assetPositions?address=string&subaccountNumber=0",
+  {
+    method: "GET",
 
-  headers: headers
-})
-.then(function(res) {
+    headers: headers,
+  }
+)
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /assetPositions`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|address|query|string|true|none|
-|subaccountNumber|query|number(double)|true|none|
+| Name             | In    | Type           | Required | Description |
+| ---------------- | ----- | -------------- | -------- | ----------- |
+| address          | query | string         | true     | none        |
+| subaccountNumber | query | number(double) | true     | none        |
 
 > Example responses
 
@@ -370,13 +367,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/assetPositions?address=string&
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[AssetPositionResponse](#schemaassetpositionresponse)|
+| Status | Meaning                                                 | Description | Schema                                                |
+| ------ | ------------------------------------------------------- | ----------- | ----------------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [AssetPositionResponse](#schemaassetpositionresponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetCandles
 
@@ -390,7 +385,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/candles/perpetualMarkets/{ticker}', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/candles/perpetualMarkets/{ticker}', params={
   'resolution': '1MIN',  'limit': '0'
 }, headers = headers)
 
@@ -399,48 +394,49 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/candles/perpetualMarkets/{ticker}?resolution=1MIN&limit=0',
-{
-  method: 'GET',
+fetch(
+  "https://dydx-testnet.imperator.co/v4/candles/perpetualMarkets/{ticker}?resolution=1MIN&limit=0",
+  {
+    method: "GET",
 
-  headers: headers
-})
-.then(function(res) {
+    headers: headers,
+  }
+)
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /candles/perpetualMarkets/{ticker}`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|ticker|path|string|true|none|
-|resolution|query|[CandleResolution](#schemacandleresolution)|true|none|
-|limit|query|number(double)|true|none|
-|fromISO|query|string|false|none|
-|toISO|query|string|false|none|
+| Name       | In    | Type                                        | Required | Description |
+| ---------- | ----- | ------------------------------------------- | -------- | ----------- |
+| ticker     | path  | string                                      | true     | none        |
+| resolution | query | [CandleResolution](#schemacandleresolution) | true     | none        |
+| limit      | query | number(double)                              | true     | none        |
+| fromISO    | query | string                                      | false    | none        |
+| toISO      | query | string                                      | false    | none        |
 
 #### Enumerated Values
 
-|Parameter|Value|
-|---|---|
-|resolution|1MIN|
-|resolution|5MINS|
-|resolution|15MINS|
-|resolution|30MINS|
-|resolution|1HOUR|
-|resolution|4HOURS|
-|resolution|1DAY|
+| Parameter  | Value  |
+| ---------- | ------ |
+| resolution | 1MIN   |
+| resolution | 5MINS  |
+| resolution | 15MINS |
+| resolution | 30MINS |
+| resolution | 1HOUR  |
+| resolution | 4HOURS |
+| resolution | 1DAY   |
 
 > Example responses
 
@@ -469,13 +465,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/candles/perpetualMarkets/{tick
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[CandleResponse](#schemacandleresponse)|
+| Status | Meaning                                                 | Description | Schema                                  |
+| ------ | ------------------------------------------------------- | ----------- | --------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [CandleResponse](#schemacandleresponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## Screen
 
@@ -489,7 +483,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/screen', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/screen', params={
   'address': 'string'
 }, headers = headers)
 
@@ -498,32 +492,30 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/screen?address=string',
-{
-  method: 'GET',
+fetch("https://dydx-testnet.imperator.co/v4/screen?address=string", {
+  method: "GET",
 
-  headers: headers
+  headers: headers,
 })
-.then(function(res) {
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /screen`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|address|query|string|true|none|
+| Name    | In    | Type   | Required | Description |
+| ------- | ----- | ------ | -------- | ----------- |
+| address | query | string | true     | none        |
 
 > Example responses
 
@@ -537,13 +529,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/screen?address=string',
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[ComplianceResponse](#schemacomplianceresponse)|
+| Status | Meaning                                                 | Description | Schema                                          |
+| ------ | ------------------------------------------------------- | ----------- | ----------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [ComplianceResponse](#schemacomplianceresponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetFills
 
@@ -557,7 +547,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/fills', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/fills', params={
   'address': 'string',  'subaccountNumber': '0',  'market': 'string',  'marketType': 'PERPETUAL',  'limit': '0'
 }, headers = headers)
 
@@ -566,45 +556,46 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/fills?address=string&subaccountNumber=0&market=string&marketType=PERPETUAL&limit=0',
-{
-  method: 'GET',
+fetch(
+  "https://dydx-testnet.imperator.co/v4/fills?address=string&subaccountNumber=0&market=string&marketType=PERPETUAL&limit=0",
+  {
+    method: "GET",
 
-  headers: headers
-})
-.then(function(res) {
+    headers: headers,
+  }
+)
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /fills`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|address|query|string|true|none|
-|subaccountNumber|query|number(double)|true|none|
-|market|query|string|true|none|
-|marketType|query|[MarketType](#schemamarkettype)|true|none|
-|limit|query|number(double)|true|none|
-|createdBeforeOrAtHeight|query|number(double)|false|none|
-|createdBeforeOrAt|query|[IsoString](#schemaisostring)|false|none|
+| Name                    | In    | Type                            | Required | Description |
+| ----------------------- | ----- | ------------------------------- | -------- | ----------- |
+| address                 | query | string                          | true     | none        |
+| subaccountNumber        | query | number(double)                  | true     | none        |
+| market                  | query | string                          | true     | none        |
+| marketType              | query | [MarketType](#schemamarkettype) | true     | none        |
+| limit                   | query | number(double)                  | true     | none        |
+| createdBeforeOrAtHeight | query | number(double)                  | false    | none        |
+| createdBeforeOrAt       | query | [IsoString](#schemaisostring)   | false    | none        |
 
 #### Enumerated Values
 
-|Parameter|Value|
-|---|---|
-|marketType|PERPETUAL|
-|marketType|SPOT|
+| Parameter  | Value     |
+| ---------- | --------- |
+| marketType | PERPETUAL |
+| marketType | SPOT      |
 
 > Example responses
 
@@ -634,13 +625,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/fills?address=string&subaccoun
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[FillResponse](#schemafillresponse)|
+| Status | Meaning                                                 | Description | Schema                              |
+| ------ | ------------------------------------------------------- | ----------- | ----------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [FillResponse](#schemafillresponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetHeight
 
@@ -654,30 +643,28 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/height', headers = headers)
+r = requests.get('https://dydx-testnet.imperator.co/v4/height', headers = headers)
 
 print(r.json())
 
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/height',
-{
-  method: 'GET',
+fetch("https://dydx-testnet.imperator.co/v4/height", {
+  method: "GET",
 
-  headers: headers
+  headers: headers,
 })
-.then(function(res) {
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /height`
@@ -695,13 +682,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/height',
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[HeightResponse](#schemaheightresponse)|
+| Status | Meaning                                                 | Description | Schema                                  |
+| ------ | ------------------------------------------------------- | ----------- | --------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [HeightResponse](#schemaheightresponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetHistoricalFunding
 
@@ -715,7 +700,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/historicalFunding/{ticker}', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/historicalFunding/{ticker}', params={
   'limit': '0'
 }, headers = headers)
 
@@ -724,35 +709,36 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/historicalFunding/{ticker}?limit=0',
-{
-  method: 'GET',
+fetch(
+  "https://dydx-testnet.imperator.co/v4/historicalFunding/{ticker}?limit=0",
+  {
+    method: "GET",
 
-  headers: headers
-})
-.then(function(res) {
+    headers: headers,
+  }
+)
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /historicalFunding/{ticker}`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|ticker|path|string|true|none|
-|limit|query|number(double)|true|none|
-|effectiveBeforeOrAtHeight|query|number(double)|false|none|
-|effectiveBeforeOrAt|query|[IsoString](#schemaisostring)|false|none|
+| Name                      | In    | Type                          | Required | Description |
+| ------------------------- | ----- | ----------------------------- | -------- | ----------- |
+| ticker                    | path  | string                        | true     | none        |
+| limit                     | query | number(double)                | true     | none        |
+| effectiveBeforeOrAtHeight | query | number(double)                | false    | none        |
+| effectiveBeforeOrAt       | query | [IsoString](#schemaisostring) | false    | none        |
 
 > Example responses
 
@@ -774,13 +760,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/historicalFunding/{ticker}?lim
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[HistoricalFundingResponse](#schemahistoricalfundingresponse)|
+| Status | Meaning                                                 | Description | Schema                                                        |
+| ------ | ------------------------------------------------------- | ----------- | ------------------------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [HistoricalFundingResponse](#schemahistoricalfundingresponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetHistoricalPnl
 
@@ -794,7 +778,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/historical-pnl', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/historical-pnl', params={
   'address': 'string',  'subaccountNumber': '0',  'limit': '0'
 }, headers = headers)
 
@@ -803,38 +787,39 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/historical-pnl?address=string&subaccountNumber=0&limit=0',
-{
-  method: 'GET',
+fetch(
+  "https://dydx-testnet.imperator.co/v4/historical-pnl?address=string&subaccountNumber=0&limit=0",
+  {
+    method: "GET",
 
-  headers: headers
-})
-.then(function(res) {
+    headers: headers,
+  }
+)
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /historical-pnl`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|address|query|string|true|none|
-|subaccountNumber|query|number(double)|true|none|
-|limit|query|number(double)|true|none|
-|createdBeforeOrAtHeight|query|number(double)|false|none|
-|createdBeforeOrAt|query|[IsoString](#schemaisostring)|false|none|
-|createdOnOrAfterHeight|query|number(double)|false|none|
-|createdOnOrAfter|query|[IsoString](#schemaisostring)|false|none|
+| Name                    | In    | Type                          | Required | Description |
+| ----------------------- | ----- | ----------------------------- | -------- | ----------- |
+| address                 | query | string                        | true     | none        |
+| subaccountNumber        | query | number(double)                | true     | none        |
+| limit                   | query | number(double)                | true     | none        |
+| createdBeforeOrAtHeight | query | number(double)                | false    | none        |
+| createdBeforeOrAt       | query | [IsoString](#schemaisostring) | false    | none        |
+| createdOnOrAfterHeight  | query | number(double)                | false    | none        |
+| createdOnOrAfter        | query | [IsoString](#schemaisostring) | false    | none        |
 
 > Example responses
 
@@ -859,13 +844,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/historical-pnl?address=string&
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[HistoricalPnlResponse](#schemahistoricalpnlresponse)|
+| Status | Meaning                                                 | Description | Schema                                                |
+| ------ | ------------------------------------------------------- | ----------- | ----------------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [HistoricalPnlResponse](#schemahistoricalpnlresponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetPerpetualMarket
 
@@ -879,39 +862,40 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/orderbooks/perpetualMarket/{ticker}', headers = headers)
+r = requests.get('https://dydx-testnet.imperator.co/v4/orderbooks/perpetualMarket/{ticker}', headers = headers)
 
 print(r.json())
 
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/orderbooks/perpetualMarket/{ticker}',
-{
-  method: 'GET',
+fetch(
+  "https://dydx-testnet.imperator.co/v4/orderbooks/perpetualMarket/{ticker}",
+  {
+    method: "GET",
 
-  headers: headers
-})
-.then(function(res) {
+    headers: headers,
+  }
+)
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /orderbooks/perpetualMarket/{ticker}`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|ticker|path|string|true|none|
+| Name   | In   | Type   | Required | Description |
+| ------ | ---- | ------ | -------- | ----------- |
+| ticker | path | string | true     | none        |
 
 > Example responses
 
@@ -936,13 +920,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/orderbooks/perpetualMarket/{ti
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[OrderbookResponseObject](#schemaorderbookresponseobject)|
+| Status | Meaning                                                 | Description | Schema                                                    |
+| ------ | ------------------------------------------------------- | ----------- | --------------------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [OrderbookResponseObject](#schemaorderbookresponseobject) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## ListOrders
 
@@ -956,7 +938,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/orders', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/orders', params={
   'address': 'string',  'subaccountNumber': '0',  'limit': '0'
 }, headers = headers)
 
@@ -965,58 +947,59 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/orders?address=string&subaccountNumber=0&limit=0',
-{
-  method: 'GET',
+fetch(
+  "https://dydx-testnet.imperator.co/v4/orders?address=string&subaccountNumber=0&limit=0",
+  {
+    method: "GET",
 
-  headers: headers
-})
-.then(function(res) {
+    headers: headers,
+  }
+)
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /orders`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|address|query|string|true|none|
-|subaccountNumber|query|number(double)|true|none|
-|limit|query|number(double)|true|none|
-|ticker|query|string|false|none|
-|side|query|[OrderSide](#schemaorderside)|false|none|
-|type|query|[OrderType](#schemaordertype)|false|none|
-|status|query|array[any]|false|none|
-|goodTilBlockBeforeOrAt|query|number(double)|false|none|
-|goodTilBlockTimeBeforeOrAt|query|[IsoString](#schemaisostring)|false|none|
-|returnLatestOrders|query|boolean|false|none|
+| Name                       | In    | Type                          | Required | Description |
+| -------------------------- | ----- | ----------------------------- | -------- | ----------- |
+| address                    | query | string                        | true     | none        |
+| subaccountNumber           | query | number(double)                | true     | none        |
+| limit                      | query | number(double)                | true     | none        |
+| ticker                     | query | string                        | false    | none        |
+| side                       | query | [OrderSide](#schemaorderside) | false    | none        |
+| type                       | query | [OrderType](#schemaordertype) | false    | none        |
+| status                     | query | array[any]                    | false    | none        |
+| goodTilBlockBeforeOrAt     | query | number(double)                | false    | none        |
+| goodTilBlockTimeBeforeOrAt | query | [IsoString](#schemaisostring) | false    | none        |
+| returnLatestOrders         | query | boolean                       | false    | none        |
 
 #### Enumerated Values
 
-|Parameter|Value|
-|---|---|
-|side|BUY|
-|side|SELL|
-|type|LIMIT|
-|type|MARKET|
-|type|STOP_LIMIT|
-|type|STOP_MARKET|
-|type|TRAILING_STOP|
-|type|TAKE_PROFIT|
-|type|TAKE_PROFIT_MARKET|
-|type|HARD_TRADE|
-|type|FAILED_HARD_TRADE|
-|type|TRANSFER_PLACEHOLDER|
+| Parameter | Value                |
+| --------- | -------------------- |
+| side      | BUY                  |
+| side      | SELL                 |
+| type      | LIMIT                |
+| type      | MARKET               |
+| type      | STOP_LIMIT           |
+| type      | STOP_MARKET          |
+| type      | TRAILING_STOP        |
+| type      | TAKE_PROFIT          |
+| type      | TAKE_PROFIT_MARKET   |
+| type      | HARD_TRADE           |
+| type      | FAILED_HARD_TRADE    |
+| type      | TRANSFER_PLACEHOLDER |
 
 > Example responses
 
@@ -1051,84 +1034,82 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/orders?address=string&subaccou
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|Inline|
+| Status | Meaning                                                 | Description | Schema |
+| ------ | ------------------------------------------------------- | ----------- | ------ |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | Inline |
 
 ### Response Schema
 
 Status Code **200**
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[OrderResponseObject](#schemaorderresponseobject)]|false|none|none|
-|» id|string|true|none|none|
-|» subaccountId|string|true|none|none|
-|» clientId|string|true|none|none|
-|» clobPairId|string|true|none|none|
-|» side|[OrderSide](#schemaorderside)|true|none|none|
-|» size|string|true|none|none|
-|» totalFilled|string|true|none|none|
-|» price|string|true|none|none|
-|» type|[OrderType](#schemaordertype)|true|none|none|
-|» reduceOnly|boolean|true|none|none|
-|» orderFlags|string|true|none|none|
-|» goodTilBlock|string|false|none|none|
-|» goodTilBlockTime|string|false|none|none|
-|» createdAtHeight|string|false|none|none|
-|» clientMetadata|string|true|none|none|
-|» triggerPrice|string|false|none|none|
-|» timeInForce|[APITimeInForce](#schemaapitimeinforce)|true|none|none|
-|» status|any|true|none|none|
+| Name               | Type                                                | Required | Restrictions | Description |
+| ------------------ | --------------------------------------------------- | -------- | ------------ | ----------- |
+| _anonymous_        | [[OrderResponseObject](#schemaorderresponseobject)] | false    | none         | none        |
+| » id               | string                                              | true     | none         | none        |
+| » subaccountId     | string                                              | true     | none         | none        |
+| » clientId         | string                                              | true     | none         | none        |
+| » clobPairId       | string                                              | true     | none         | none        |
+| » side             | [OrderSide](#schemaorderside)                       | true     | none         | none        |
+| » size             | string                                              | true     | none         | none        |
+| » totalFilled      | string                                              | true     | none         | none        |
+| » price            | string                                              | true     | none         | none        |
+| » type             | [OrderType](#schemaordertype)                       | true     | none         | none        |
+| » reduceOnly       | boolean                                             | true     | none         | none        |
+| » orderFlags       | string                                              | true     | none         | none        |
+| » goodTilBlock     | string                                              | false    | none         | none        |
+| » goodTilBlockTime | string                                              | false    | none         | none        |
+| » createdAtHeight  | string                                              | false    | none         | none        |
+| » clientMetadata   | string                                              | true     | none         | none        |
+| » triggerPrice     | string                                              | false    | none         | none        |
+| » timeInForce      | [APITimeInForce](#schemaapitimeinforce)             | true     | none         | none        |
+| » status           | any                                                 | true     | none         | none        |
 
-*anyOf*
+_anyOf_
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|»» *anonymous*|[OrderStatus](#schemaorderstatus)|false|none|none|
+| Name           | Type                              | Required | Restrictions | Description |
+| -------------- | --------------------------------- | -------- | ------------ | ----------- |
+| »» _anonymous_ | [OrderStatus](#schemaorderstatus) | false    | none         | none        |
 
-*or*
+_or_
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|»» *anonymous*|[BestEffortOpenedStatus](#schemabesteffortopenedstatus)|false|none|none|
+| Name           | Type                                                    | Required | Restrictions | Description |
+| -------------- | ------------------------------------------------------- | -------- | ------------ | ----------- |
+| »» _anonymous_ | [BestEffortOpenedStatus](#schemabesteffortopenedstatus) | false    | none         | none        |
 
-*continued*
+_continued_
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» postOnly|boolean|true|none|none|
-|» ticker|string|true|none|none|
+| Name       | Type    | Required | Restrictions | Description |
+| ---------- | ------- | -------- | ------------ | ----------- |
+| » postOnly | boolean | true     | none         | none        |
+| » ticker   | string  | true     | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|BUY|
-|side|SELL|
-|type|LIMIT|
-|type|MARKET|
-|type|STOP_LIMIT|
-|type|STOP_MARKET|
-|type|TRAILING_STOP|
-|type|TAKE_PROFIT|
-|type|TAKE_PROFIT_MARKET|
-|type|HARD_TRADE|
-|type|FAILED_HARD_TRADE|
-|type|TRANSFER_PLACEHOLDER|
-|timeInForce|GTT|
-|timeInForce|FOK|
-|timeInForce|IOC|
-|*anonymous*|OPEN|
-|*anonymous*|FILLED|
-|*anonymous*|CANCELED|
-|*anonymous*|BEST_EFFORT_CANCELED|
-|*anonymous*|UNTRIGGERED|
-|*anonymous*|BEST_EFFORT_OPENED|
+| Property    | Value                |
+| ----------- | -------------------- |
+| side        | BUY                  |
+| side        | SELL                 |
+| type        | LIMIT                |
+| type        | MARKET               |
+| type        | STOP_LIMIT           |
+| type        | STOP_MARKET          |
+| type        | TRAILING_STOP        |
+| type        | TAKE_PROFIT          |
+| type        | TAKE_PROFIT_MARKET   |
+| type        | HARD_TRADE           |
+| type        | FAILED_HARD_TRADE    |
+| type        | TRANSFER_PLACEHOLDER |
+| timeInForce | GTT                  |
+| timeInForce | FOK                  |
+| timeInForce | IOC                  |
+| _anonymous_ | OPEN                 |
+| _anonymous_ | FILLED               |
+| _anonymous_ | CANCELED             |
+| _anonymous_ | BEST_EFFORT_CANCELED |
+| _anonymous_ | UNTRIGGERED          |
+| _anonymous_ | BEST_EFFORT_OPENED   |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetOrder
 
@@ -1142,39 +1123,37 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/orders/{orderId}', headers = headers)
+r = requests.get('https://dydx-testnet.imperator.co/v4/orders/{orderId}', headers = headers)
 
 print(r.json())
 
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/orders/{orderId}',
-{
-  method: 'GET',
+fetch("https://dydx-testnet.imperator.co/v4/orders/{orderId}", {
+  method: "GET",
 
-  headers: headers
+  headers: headers,
 })
-.then(function(res) {
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /orders/{orderId}`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|orderId|path|string|true|none|
+| Name    | In   | Type   | Required | Description |
+| ------- | ---- | ------ | -------- | ----------- |
+| orderId | path | string | true     | none        |
 
 > Example responses
 
@@ -1207,13 +1186,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/orders/{orderId}',
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[OrderResponseObject](#schemaorderresponseobject)|
+| Status | Meaning                                                 | Description | Schema                                            |
+| ------ | ------------------------------------------------------- | ----------- | ------------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [OrderResponseObject](#schemaorderresponseobject) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## ListPerpetualMarkets
 
@@ -1227,7 +1204,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/perpetualMarkets', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/perpetualMarkets', params={
   'limit': '0'
 }, headers = headers)
 
@@ -1236,33 +1213,31 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/perpetualMarkets?limit=0',
-{
-  method: 'GET',
+fetch("https://dydx-testnet.imperator.co/v4/perpetualMarkets?limit=0", {
+  method: "GET",
 
-  headers: headers
+  headers: headers,
 })
-.then(function(res) {
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /perpetualMarkets`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|limit|query|number(double)|true|none|
-|ticker|query|string|false|none|
+| Name   | In    | Type           | Required | Description |
+| ------ | ----- | -------------- | -------- | ----------- |
+| limit  | query | number(double) | true     | none        |
+| ticker | query | string         | false    | none        |
 
 > Example responses
 
@@ -1319,13 +1294,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/perpetualMarkets?limit=0',
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[PerpetualMarketResponse](#schemaperpetualmarketresponse)|
+| Status | Meaning                                                 | Description | Schema                                                    |
+| ------ | ------------------------------------------------------- | ----------- | --------------------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [PerpetualMarketResponse](#schemaperpetualmarketresponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## ListPositions
 
@@ -1339,7 +1312,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/perpetualPositions', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/perpetualPositions', params={
   'address': 'string',  'subaccountNumber': '0',  'status': [
   "OPEN"
 ],  'limit': '0'
@@ -1350,45 +1323,46 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/perpetualPositions?address=string&subaccountNumber=0&status=OPEN&limit=0',
-{
-  method: 'GET',
+fetch(
+  "https://dydx-testnet.imperator.co/v4/perpetualPositions?address=string&subaccountNumber=0&status=OPEN&limit=0",
+  {
+    method: "GET",
 
-  headers: headers
-})
-.then(function(res) {
+    headers: headers,
+  }
+)
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /perpetualPositions`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|address|query|string|true|none|
-|subaccountNumber|query|number(double)|true|none|
-|status|query|array[string]|true|none|
-|limit|query|number(double)|true|none|
-|createdBeforeOrAtHeight|query|number(double)|false|none|
-|createdBeforeOrAt|query|[IsoString](#schemaisostring)|false|none|
+| Name                    | In    | Type                          | Required | Description |
+| ----------------------- | ----- | ----------------------------- | -------- | ----------- |
+| address                 | query | string                        | true     | none        |
+| subaccountNumber        | query | number(double)                | true     | none        |
+| status                  | query | array[string]                 | true     | none        |
+| limit                   | query | number(double)                | true     | none        |
+| createdBeforeOrAtHeight | query | number(double)                | false    | none        |
+| createdBeforeOrAt       | query | [IsoString](#schemaisostring) | false    | none        |
 
 #### Enumerated Values
 
-|Parameter|Value|
-|---|---|
-|status|OPEN|
-|status|CLOSED|
-|status|LIQUIDATED|
+| Parameter | Value      |
+| --------- | ---------- |
+| status    | OPEN       |
+| status    | CLOSED     |
+| status    | LIQUIDATED |
 
 > Example responses
 
@@ -1420,13 +1394,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/perpetualPositions?address=str
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[PerpetualPositionResponse](#schemaperpetualpositionresponse)|
+| Status | Meaning                                                 | Description | Schema                                                        |
+| ------ | ------------------------------------------------------- | ----------- | ------------------------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [PerpetualPositionResponse](#schemaperpetualpositionresponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## Get
 
@@ -1440,7 +1412,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/sparklines', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/sparklines', params={
   'timePeriod': 'ONE_DAY'
 }, headers = headers)
 
@@ -1449,39 +1421,37 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/sparklines?timePeriod=ONE_DAY',
-{
-  method: 'GET',
+fetch("https://dydx-testnet.imperator.co/v4/sparklines?timePeriod=ONE_DAY", {
+  method: "GET",
 
-  headers: headers
+  headers: headers,
 })
-.then(function(res) {
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /sparklines`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|timePeriod|query|[SparklineTimePeriod](#schemasparklinetimeperiod)|true|none|
+| Name       | In    | Type                                              | Required | Description |
+| ---------- | ----- | ------------------------------------------------- | -------- | ----------- |
+| timePeriod | query | [SparklineTimePeriod](#schemasparklinetimeperiod) | true     | none        |
 
 #### Enumerated Values
 
-|Parameter|Value|
-|---|---|
-|timePeriod|ONE_DAY|
-|timePeriod|SEVEN_DAYS|
+| Parameter  | Value      |
+| ---------- | ---------- |
+| timePeriod | ONE_DAY    |
+| timePeriod | SEVEN_DAYS |
 
 > Example responses
 
@@ -1489,24 +1459,18 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/sparklines?timePeriod=ONE_DAY'
 
 ```json
 {
-  "property1": [
-    "string"
-  ],
-  "property2": [
-    "string"
-  ]
+  "property1": ["string"],
+  "property2": ["string"]
 }
 ```
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[SparklineResponseObject](#schemasparklineresponseobject)|
+| Status | Meaning                                                 | Description | Schema                                                    |
+| ------ | ------------------------------------------------------- | ----------- | --------------------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [SparklineResponseObject](#schemasparklineresponseobject) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetTime
 
@@ -1520,30 +1484,28 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/time', headers = headers)
+r = requests.get('https://dydx-testnet.imperator.co/v4/time', headers = headers)
 
 print(r.json())
 
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/time',
-{
-  method: 'GET',
+fetch("https://dydx-testnet.imperator.co/v4/time", {
+  method: "GET",
 
-  headers: headers
+  headers: headers,
 })
-.then(function(res) {
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /time`
@@ -1561,13 +1523,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/time',
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[TimeResponse](#schematimeresponse)|
+| Status | Meaning                                                 | Description | Schema                              |
+| ------ | ------------------------------------------------------- | ----------- | ----------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [TimeResponse](#schematimeresponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetTrades
 
@@ -1581,7 +1541,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/trades/perpetualMarket/{ticker}', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/trades/perpetualMarket/{ticker}', params={
   'limit': '0'
 }, headers = headers)
 
@@ -1590,35 +1550,36 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/trades/perpetualMarket/{ticker}?limit=0',
-{
-  method: 'GET',
+fetch(
+  "https://dydx-testnet.imperator.co/v4/trades/perpetualMarket/{ticker}?limit=0",
+  {
+    method: "GET",
 
-  headers: headers
-})
-.then(function(res) {
+    headers: headers,
+  }
+)
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /trades/perpetualMarket/{ticker}`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|ticker|path|string|true|none|
-|limit|query|number(double)|true|none|
-|createdBeforeOrAtHeight|query|number(double)|false|none|
-|createdBeforeOrAt|query|[IsoString](#schemaisostring)|false|none|
+| Name                    | In    | Type                          | Required | Description |
+| ----------------------- | ----- | ----------------------------- | -------- | ----------- |
+| ticker                  | path  | string                        | true     | none        |
+| limit                   | query | number(double)                | true     | none        |
+| createdBeforeOrAtHeight | query | number(double)                | false    | none        |
+| createdBeforeOrAt       | query | [IsoString](#schemaisostring) | false    | none        |
 
 > Example responses
 
@@ -1641,13 +1602,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/trades/perpetualMarket/{ticker
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[TradeResponse](#schematraderesponse)|
+| Status | Meaning                                                 | Description | Schema                                |
+| ------ | ------------------------------------------------------- | ----------- | ------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [TradeResponse](#schematraderesponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 ## GetTransfers
 
@@ -1661,7 +1620,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://indexer.v4testnet.dydx.exchange/v4/transfers', params={
+r = requests.get('https://dydx-testnet.imperator.co/v4/transfers', params={
   'address': 'string',  'subaccountNumber': '0',  'limit': '0'
 }, headers = headers)
 
@@ -1670,36 +1629,37 @@ print(r.json())
 ```
 
 ```javascript
-
 const headers = {
-  'Accept':'application/json'
+  Accept: "application/json",
 };
 
-fetch('https://indexer.v4testnet.dydx.exchange/v4/transfers?address=string&subaccountNumber=0&limit=0',
-{
-  method: 'GET',
+fetch(
+  "https://dydx-testnet.imperator.co/v4/transfers?address=string&subaccountNumber=0&limit=0",
+  {
+    method: "GET",
 
-  headers: headers
-})
-.then(function(res) {
+    headers: headers,
+  }
+)
+  .then(function (res) {
     return res.json();
-}).then(function(body) {
+  })
+  .then(function (body) {
     console.log(body);
-});
-
+  });
 ```
 
 `GET /transfers`
 
 ### Parameters
 
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|address|query|string|true|none|
-|subaccountNumber|query|number(double)|true|none|
-|limit|query|number(double)|true|none|
-|createdBeforeOrAtHeight|query|number(double)|false|none|
-|createdBeforeOrAt|query|[IsoString](#schemaisostring)|false|none|
+| Name                    | In    | Type                          | Required | Description |
+| ----------------------- | ----- | ----------------------------- | -------- | ----------- |
+| address                 | query | string                        | true     | none        |
+| subaccountNumber        | query | number(double)                | true     | none        |
+| limit                   | query | number(double)                | true     | none        |
+| createdBeforeOrAtHeight | query | number(double)                | false    | none        |
+| createdBeforeOrAt       | query | [IsoString](#schemaisostring) | false    | none        |
 
 > Example responses
 
@@ -1731,13 +1691,11 @@ fetch('https://indexer.v4testnet.dydx.exchange/v4/transfers?address=string&subac
 
 ### Responses
 
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ok|[TransferResponse](#schematransferresponse)|
+| Status | Meaning                                                 | Description | Schema                                      |
+| ------ | ------------------------------------------------------- | ----------- | ------------------------------------------- |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ok          | [TransferResponse](#schematransferresponse) |
 
-<aside class="success">
-This operation does not require authentication
-</aside>
+<aside class="success">This operation does not require authentication</aside>
 
 # Schemas
 
@@ -1750,22 +1708,21 @@ This operation does not require authentication
 
 ```json
 "OPEN"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|OPEN|
-|*anonymous*|CLOSED|
-|*anonymous*|LIQUIDATED|
+| Property    | Value      |
+| ----------- | ---------- |
+| _anonymous_ | OPEN       |
+| _anonymous_ | CLOSED     |
+| _anonymous_ | LIQUIDATED |
 
 ## PositionSide
 
@@ -1776,21 +1733,20 @@ This operation does not require authentication
 
 ```json
 "LONG"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|LONG|
-|*anonymous*|SHORT|
+| Property    | Value |
+| ----------- | ----- |
+| _anonymous_ | LONG  |
+| _anonymous_ | SHORT |
 
 ## IsoString
 
@@ -1801,14 +1757,13 @@ This operation does not require authentication
 
 ```json
 "string"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 ## PerpetualPositionResponseObject
 
@@ -1835,28 +1790,27 @@ This operation does not require authentication
   "closedAt": "string",
   "exitPrice": "string"
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|market|string|true|none|none|
-|status|[PerpetualPositionStatus](#schemaperpetualpositionstatus)|true|none|none|
-|side|[PositionSide](#schemapositionside)|true|none|none|
-|size|string|true|none|none|
-|maxSize|string|true|none|none|
-|entryPrice|string|true|none|none|
-|realizedPnl|string|true|none|none|
-|createdAt|[IsoString](#schemaisostring)|true|none|none|
-|createdAtHeight|string|true|none|none|
-|sumOpen|string|true|none|none|
-|sumClose|string|true|none|none|
-|netFunding|string|true|none|none|
-|unrealizedPnl|string|true|none|none|
-|closedAt|[IsoString](#schemaisostring)¦null|false|none|none|
-|exitPrice|string¦null|false|none|none|
+| Name            | Type                                                      | Required | Restrictions | Description |
+| --------------- | --------------------------------------------------------- | -------- | ------------ | ----------- |
+| market          | string                                                    | true     | none         | none        |
+| status          | [PerpetualPositionStatus](#schemaperpetualpositionstatus) | true     | none         | none        |
+| side            | [PositionSide](#schemapositionside)                       | true     | none         | none        |
+| size            | string                                                    | true     | none         | none        |
+| maxSize         | string                                                    | true     | none         | none        |
+| entryPrice      | string                                                    | true     | none         | none        |
+| realizedPnl     | string                                                    | true     | none         | none        |
+| createdAt       | [IsoString](#schemaisostring)                             | true     | none         | none        |
+| createdAtHeight | string                                                    | true     | none         | none        |
+| sumOpen         | string                                                    | true     | none         | none        |
+| sumClose        | string                                                    | true     | none         | none        |
+| netFunding      | string                                                    | true     | none         | none        |
+| unrealizedPnl   | string                                                    | true     | none         | none        |
+| closedAt        | [IsoString](#schemaisostring)¦null                        | false    | none         | none        |
+| exitPrice       | string¦null                                               | false    | none         | none        |
 
 ## PerpetualPositionsMap
 
@@ -1902,14 +1856,13 @@ This operation does not require authentication
     "exitPrice": "string"
   }
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|**additionalProperties**|[PerpetualPositionResponseObject](#schemaperpetualpositionresponseobject)|false|none|none|
+| Name                     | Type                                                                      | Required | Restrictions | Description |
+| ------------------------ | ------------------------------------------------------------------------- | -------- | ------------ | ----------- |
+| **additionalProperties** | [PerpetualPositionResponseObject](#schemaperpetualpositionresponseobject) | false    | none         | none        |
 
 ## AssetPositionResponseObject
 
@@ -1925,17 +1878,16 @@ This operation does not require authentication
   "size": "string",
   "assetId": "string"
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|symbol|string|true|none|none|
-|side|[PositionSide](#schemapositionside)|true|none|none|
-|size|string|true|none|none|
-|assetId|string|true|none|none|
+| Name    | Type                                | Required | Restrictions | Description |
+| ------- | ----------------------------------- | -------- | ------------ | ----------- |
+| symbol  | string                              | true     | none         | none        |
+| side    | [PositionSide](#schemapositionside) | true     | none         | none        |
+| size    | string                              | true     | none         | none        |
+| assetId | string                              | true     | none         | none        |
 
 ## AssetPositionsMap
 
@@ -1959,14 +1911,13 @@ This operation does not require authentication
     "assetId": "string"
   }
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|**additionalProperties**|[AssetPositionResponseObject](#schemaassetpositionresponseobject)|false|none|none|
+| Name                     | Type                                                              | Required | Restrictions | Description |
+| ------------------------ | ----------------------------------------------------------------- | -------- | ------------ | ----------- |
+| **additionalProperties** | [AssetPositionResponseObject](#schemaassetpositionresponseobject) | false    | none         | none        |
 
 ## SubaccountResponseObject
 
@@ -2033,20 +1984,19 @@ This operation does not require authentication
   },
   "marginEnabled": true
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|address|string|true|none|none|
-|subaccountNumber|number(double)|true|none|none|
-|equity|string|true|none|none|
-|freeCollateral|string|true|none|none|
-|openPerpetualPositions|[PerpetualPositionsMap](#schemaperpetualpositionsmap)|true|none|none|
-|assetPositions|[AssetPositionsMap](#schemaassetpositionsmap)|true|none|none|
-|marginEnabled|boolean|true|none|none|
+| Name                   | Type                                                  | Required | Restrictions | Description |
+| ---------------------- | ----------------------------------------------------- | -------- | ------------ | ----------- |
+| address                | string                                                | true     | none         | none        |
+| subaccountNumber       | number(double)                                        | true     | none         | none        |
+| equity                 | string                                                | true     | none         | none        |
+| freeCollateral         | string                                                | true     | none         | none        |
+| openPerpetualPositions | [PerpetualPositionsMap](#schemaperpetualpositionsmap) | true     | none         | none        |
+| assetPositions         | [AssetPositionsMap](#schemaassetpositionsmap)         | true     | none         | none        |
+| marginEnabled          | boolean                                               | true     | none         | none        |
 
 ## AssetPositionResponse
 
@@ -2066,14 +2016,13 @@ This operation does not require authentication
     }
   ]
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|positions|[[AssetPositionResponseObject](#schemaassetpositionresponseobject)]|true|none|none|
+| Name      | Type                                                                | Required | Restrictions | Description |
+| --------- | ------------------------------------------------------------------- | -------- | ------------ | ----------- |
+| positions | [[AssetPositionResponseObject](#schemaassetpositionresponseobject)] | true     | none         | none        |
 
 ## CandleResolution
 
@@ -2084,26 +2033,25 @@ This operation does not require authentication
 
 ```json
 "1MIN"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|1MIN|
-|*anonymous*|5MINS|
-|*anonymous*|15MINS|
-|*anonymous*|30MINS|
-|*anonymous*|1HOUR|
-|*anonymous*|4HOURS|
-|*anonymous*|1DAY|
+| Property    | Value  |
+| ----------- | ------ |
+| _anonymous_ | 1MIN   |
+| _anonymous_ | 5MINS  |
+| _anonymous_ | 15MINS |
+| _anonymous_ | 30MINS |
+| _anonymous_ | 1HOUR  |
+| _anonymous_ | 4HOURS |
+| _anonymous_ | 1DAY   |
 
 ## CandleResponseObject
 
@@ -2127,25 +2075,24 @@ This operation does not require authentication
   "startingOpenInterest": "string",
   "id": "string"
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|startedAt|[IsoString](#schemaisostring)|true|none|none|
-|ticker|string|true|none|none|
-|resolution|[CandleResolution](#schemacandleresolution)|true|none|none|
-|low|string|true|none|none|
-|high|string|true|none|none|
-|open|string|true|none|none|
-|close|string|true|none|none|
-|baseTokenVolume|string|true|none|none|
-|usdVolume|string|true|none|none|
-|trades|number(double)|true|none|none|
-|startingOpenInterest|string|true|none|none|
-|id|string|true|none|none|
+| Name                 | Type                                        | Required | Restrictions | Description |
+| -------------------- | ------------------------------------------- | -------- | ------------ | ----------- |
+| startedAt            | [IsoString](#schemaisostring)               | true     | none         | none        |
+| ticker               | string                                      | true     | none         | none        |
+| resolution           | [CandleResolution](#schemacandleresolution) | true     | none         | none        |
+| low                  | string                                      | true     | none         | none        |
+| high                 | string                                      | true     | none         | none        |
+| open                 | string                                      | true     | none         | none        |
+| close                | string                                      | true     | none         | none        |
+| baseTokenVolume      | string                                      | true     | none         | none        |
+| usdVolume            | string                                      | true     | none         | none        |
+| trades               | number(double)                              | true     | none         | none        |
+| startingOpenInterest | string                                      | true     | none         | none        |
+| id                   | string                                      | true     | none         | none        |
 
 ## CandleResponse
 
@@ -2173,14 +2120,13 @@ This operation does not require authentication
     }
   ]
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|candles|[[CandleResponseObject](#schemacandleresponseobject)]|true|none|none|
+| Name    | Type                                                  | Required | Restrictions | Description |
+| ------- | ----------------------------------------------------- | -------- | ------------ | ----------- |
+| candles | [[CandleResponseObject](#schemacandleresponseobject)] | true     | none         | none        |
 
 ## ComplianceResponse
 
@@ -2193,14 +2139,13 @@ This operation does not require authentication
 {
   "restricted": true
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|restricted|boolean|true|none|none|
+| Name       | Type    | Required | Restrictions | Description |
+| ---------- | ------- | -------- | ------------ | ----------- |
+| restricted | boolean | true     | none         | none        |
 
 ## OrderSide
 
@@ -2211,21 +2156,20 @@ This operation does not require authentication
 
 ```json
 "BUY"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|BUY|
-|*anonymous*|SELL|
+| Property    | Value |
+| ----------- | ----- |
+| _anonymous_ | BUY   |
+| _anonymous_ | SELL  |
 
 ## Liquidity
 
@@ -2236,21 +2180,20 @@ This operation does not require authentication
 
 ```json
 "TAKER"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|TAKER|
-|*anonymous*|MAKER|
+| Property    | Value |
+| ----------- | ----- |
+| _anonymous_ | TAKER |
+| _anonymous_ | MAKER |
 
 ## FillType
 
@@ -2261,23 +2204,22 @@ This operation does not require authentication
 
 ```json
 "MARKET"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|MARKET|
-|*anonymous*|LIMIT|
-|*anonymous*|LIQUIDATED|
-|*anonymous*|LIQUIDATION|
+| Property    | Value       |
+| ----------- | ----------- |
+| _anonymous_ | MARKET      |
+| _anonymous_ | LIMIT       |
+| _anonymous_ | LIQUIDATED  |
+| _anonymous_ | LIQUIDATION |
 
 ## MarketType
 
@@ -2288,21 +2230,20 @@ This operation does not require authentication
 
 ```json
 "PERPETUAL"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|PERPETUAL|
-|*anonymous*|SPOT|
+| Property    | Value     |
+| ----------- | --------- |
+| _anonymous_ | PERPETUAL |
+| _anonymous_ | SPOT      |
 
 ## FillResponseObject
 
@@ -2327,26 +2268,25 @@ This operation does not require authentication
   "orderId": "string",
   "clientMetadata": "string"
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|true|none|none|
-|side|[OrderSide](#schemaorderside)|true|none|none|
-|liquidity|[Liquidity](#schemaliquidity)|true|none|none|
-|type|[FillType](#schemafilltype)|true|none|none|
-|market|string|true|none|none|
-|marketType|[MarketType](#schemamarkettype)|true|none|none|
-|price|string|true|none|none|
-|size|string|true|none|none|
-|fee|string|true|none|none|
-|createdAt|[IsoString](#schemaisostring)|true|none|none|
-|createdAtHeight|string|true|none|none|
-|orderId|string|false|none|none|
-|clientMetadata|string|false|none|none|
+| Name            | Type                            | Required | Restrictions | Description |
+| --------------- | ------------------------------- | -------- | ------------ | ----------- |
+| id              | string                          | true     | none         | none        |
+| side            | [OrderSide](#schemaorderside)   | true     | none         | none        |
+| liquidity       | [Liquidity](#schemaliquidity)   | true     | none         | none        |
+| type            | [FillType](#schemafilltype)     | true     | none         | none        |
+| market          | string                          | true     | none         | none        |
+| marketType      | [MarketType](#schemamarkettype) | true     | none         | none        |
+| price           | string                          | true     | none         | none        |
+| size            | string                          | true     | none         | none        |
+| fee             | string                          | true     | none         | none        |
+| createdAt       | [IsoString](#schemaisostring)   | true     | none         | none        |
+| createdAtHeight | string                          | true     | none         | none        |
+| orderId         | string                          | false    | none         | none        |
+| clientMetadata  | string                          | false    | none         | none        |
 
 ## FillResponse
 
@@ -2375,14 +2315,13 @@ This operation does not require authentication
     }
   ]
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|fills|[[FillResponseObject](#schemafillresponseobject)]|true|none|none|
+| Name  | Type                                              | Required | Restrictions | Description |
+| ----- | ------------------------------------------------- | -------- | ------------ | ----------- |
+| fills | [[FillResponseObject](#schemafillresponseobject)] | true     | none         | none        |
 
 ## HeightResponse
 
@@ -2396,15 +2335,14 @@ This operation does not require authentication
   "height": "string",
   "time": "string"
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|height|string|true|none|none|
-|time|[IsoString](#schemaisostring)|true|none|none|
+| Name   | Type                          | Required | Restrictions | Description |
+| ------ | ----------------------------- | -------- | ------------ | ----------- |
+| height | string                        | true     | none         | none        |
+| time   | [IsoString](#schemaisostring) | true     | none         | none        |
 
 ## HistoricalFundingResponseObject
 
@@ -2421,18 +2359,17 @@ This operation does not require authentication
   "effectiveAt": "string",
   "effectiveAtHeight": "string"
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|ticker|string|true|none|none|
-|rate|string|true|none|none|
-|price|string|true|none|none|
-|effectiveAt|[IsoString](#schemaisostring)|true|none|none|
-|effectiveAtHeight|string|true|none|none|
+| Name              | Type                          | Required | Restrictions | Description |
+| ----------------- | ----------------------------- | -------- | ------------ | ----------- |
+| ticker            | string                        | true     | none         | none        |
+| rate              | string                        | true     | none         | none        |
+| price             | string                        | true     | none         | none        |
+| effectiveAt       | [IsoString](#schemaisostring) | true     | none         | none        |
+| effectiveAtHeight | string                        | true     | none         | none        |
 
 ## HistoricalFundingResponse
 
@@ -2453,14 +2390,13 @@ This operation does not require authentication
     }
   ]
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|historicalFunding|[[HistoricalFundingResponseObject](#schemahistoricalfundingresponseobject)]|true|none|none|
+| Name              | Type                                                                        | Required | Restrictions | Description |
+| ----------------- | --------------------------------------------------------------------------- | -------- | ------------ | ----------- |
+| historicalFunding | [[HistoricalFundingResponseObject](#schemahistoricalfundingresponseobject)] | true     | none         | none        |
 
 ## PnlTicksResponseObject
 
@@ -2480,21 +2416,20 @@ This operation does not require authentication
   "blockHeight": "string",
   "blockTime": "string"
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|true|none|none|
-|subaccountId|string|true|none|none|
-|equity|string|true|none|none|
-|totalPnl|string|true|none|none|
-|netTransfers|string|true|none|none|
-|createdAt|string|true|none|none|
-|blockHeight|string|true|none|none|
-|blockTime|[IsoString](#schemaisostring)|true|none|none|
+| Name         | Type                          | Required | Restrictions | Description |
+| ------------ | ----------------------------- | -------- | ------------ | ----------- |
+| id           | string                        | true     | none         | none        |
+| subaccountId | string                        | true     | none         | none        |
+| equity       | string                        | true     | none         | none        |
+| totalPnl     | string                        | true     | none         | none        |
+| netTransfers | string                        | true     | none         | none        |
+| createdAt    | string                        | true     | none         | none        |
+| blockHeight  | string                        | true     | none         | none        |
+| blockTime    | [IsoString](#schemaisostring) | true     | none         | none        |
 
 ## HistoricalPnlResponse
 
@@ -2518,14 +2453,13 @@ This operation does not require authentication
     }
   ]
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|historicalPnl|[[PnlTicksResponseObject](#schemapnlticksresponseobject)]|true|none|none|
+| Name          | Type                                                      | Required | Restrictions | Description |
+| ------------- | --------------------------------------------------------- | -------- | ------------ | ----------- |
+| historicalPnl | [[PnlTicksResponseObject](#schemapnlticksresponseobject)] | true     | none         | none        |
 
 ## OrderbookResponsePriceLevel
 
@@ -2539,15 +2473,14 @@ This operation does not require authentication
   "price": "string",
   "size": "string"
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|price|string|true|none|none|
-|size|string|true|none|none|
+| Name  | Type   | Required | Restrictions | Description |
+| ----- | ------ | -------- | ------------ | ----------- |
+| price | string | true     | none         | none        |
+| size  | string | true     | none         | none        |
 
 ## OrderbookResponseObject
 
@@ -2571,15 +2504,14 @@ This operation does not require authentication
     }
   ]
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|bids|[[OrderbookResponsePriceLevel](#schemaorderbookresponsepricelevel)]|true|none|none|
-|asks|[[OrderbookResponsePriceLevel](#schemaorderbookresponsepricelevel)]|true|none|none|
+| Name | Type                                                                | Required | Restrictions | Description |
+| ---- | ------------------------------------------------------------------- | -------- | ------------ | ----------- |
+| bids | [[OrderbookResponsePriceLevel](#schemaorderbookresponsepricelevel)] | true     | none         | none        |
+| asks | [[OrderbookResponsePriceLevel](#schemaorderbookresponsepricelevel)] | true     | none         | none        |
 
 ## APITimeInForce
 
@@ -2590,22 +2522,21 @@ This operation does not require authentication
 
 ```json
 "GTT"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|GTT|
-|*anonymous*|FOK|
-|*anonymous*|IOC|
+| Property    | Value |
+| ----------- | ----- |
+| _anonymous_ | GTT   |
+| _anonymous_ | FOK   |
+| _anonymous_ | IOC   |
 
 ## OrderStatus
 
@@ -2616,24 +2547,23 @@ This operation does not require authentication
 
 ```json
 "OPEN"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|OPEN|
-|*anonymous*|FILLED|
-|*anonymous*|CANCELED|
-|*anonymous*|BEST_EFFORT_CANCELED|
-|*anonymous*|UNTRIGGERED|
+| Property    | Value                |
+| ----------- | -------------------- |
+| _anonymous_ | OPEN                 |
+| _anonymous_ | FILLED               |
+| _anonymous_ | CANCELED             |
+| _anonymous_ | BEST_EFFORT_CANCELED |
+| _anonymous_ | UNTRIGGERED          |
 
 ## BestEffortOpenedStatus
 
@@ -2644,20 +2574,19 @@ This operation does not require authentication
 
 ```json
 "BEST_EFFORT_OPENED"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|BEST_EFFORT_OPENED|
+| Property    | Value              |
+| ----------- | ------------------ |
+| _anonymous_ | BEST_EFFORT_OPENED |
 
 ## APIOrderStatus
 
@@ -2668,22 +2597,21 @@ This operation does not require authentication
 
 ```json
 "OPEN"
-
 ```
 
 ### Properties
 
 anyOf
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[OrderStatus](#schemaorderstatus)|false|none|none|
+| Name        | Type                              | Required | Restrictions | Description |
+| ----------- | --------------------------------- | -------- | ------------ | ----------- |
+| _anonymous_ | [OrderStatus](#schemaorderstatus) | false    | none         | none        |
 
 or
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[BestEffortOpenedStatus](#schemabesteffortopenedstatus)|false|none|none|
+| Name        | Type                                                    | Required | Restrictions | Description |
+| ----------- | ------------------------------------------------------- | -------- | ------------ | ----------- |
+| _anonymous_ | [BestEffortOpenedStatus](#schemabesteffortopenedstatus) | false    | none         | none        |
 
 ## OrderType
 
@@ -2694,29 +2622,28 @@ or
 
 ```json
 "LIMIT"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|LIMIT|
-|*anonymous*|MARKET|
-|*anonymous*|STOP_LIMIT|
-|*anonymous*|STOP_MARKET|
-|*anonymous*|TRAILING_STOP|
-|*anonymous*|TAKE_PROFIT|
-|*anonymous*|TAKE_PROFIT_MARKET|
-|*anonymous*|HARD_TRADE|
-|*anonymous*|FAILED_HARD_TRADE|
-|*anonymous*|TRANSFER_PLACEHOLDER|
+| Property    | Value                |
+| ----------- | -------------------- |
+| _anonymous_ | LIMIT                |
+| _anonymous_ | MARKET               |
+| _anonymous_ | STOP_LIMIT           |
+| _anonymous_ | STOP_MARKET          |
+| _anonymous_ | TRAILING_STOP        |
+| _anonymous_ | TAKE_PROFIT          |
+| _anonymous_ | TAKE_PROFIT_MARKET   |
+| _anonymous_ | HARD_TRADE           |
+| _anonymous_ | FAILED_HARD_TRADE    |
+| _anonymous_ | TRANSFER_PLACEHOLDER |
 
 ## OrderResponseObject
 
@@ -2748,33 +2675,32 @@ or
   "postOnly": true,
   "ticker": "string"
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|true|none|none|
-|subaccountId|string|true|none|none|
-|clientId|string|true|none|none|
-|clobPairId|string|true|none|none|
-|side|[OrderSide](#schemaorderside)|true|none|none|
-|size|string|true|none|none|
-|totalFilled|string|true|none|none|
-|price|string|true|none|none|
-|type|[OrderType](#schemaordertype)|true|none|none|
-|reduceOnly|boolean|true|none|none|
-|orderFlags|string|true|none|none|
-|goodTilBlock|string|false|none|none|
-|goodTilBlockTime|string|false|none|none|
-|createdAtHeight|string|false|none|none|
-|clientMetadata|string|true|none|none|
-|triggerPrice|string|false|none|none|
-|timeInForce|[APITimeInForce](#schemaapitimeinforce)|true|none|none|
-|status|[APIOrderStatus](#schemaapiorderstatus)|true|none|none|
-|postOnly|boolean|true|none|none|
-|ticker|string|true|none|none|
+| Name             | Type                                    | Required | Restrictions | Description |
+| ---------------- | --------------------------------------- | -------- | ------------ | ----------- |
+| id               | string                                  | true     | none         | none        |
+| subaccountId     | string                                  | true     | none         | none        |
+| clientId         | string                                  | true     | none         | none        |
+| clobPairId       | string                                  | true     | none         | none        |
+| side             | [OrderSide](#schemaorderside)           | true     | none         | none        |
+| size             | string                                  | true     | none         | none        |
+| totalFilled      | string                                  | true     | none         | none        |
+| price            | string                                  | true     | none         | none        |
+| type             | [OrderType](#schemaordertype)           | true     | none         | none        |
+| reduceOnly       | boolean                                 | true     | none         | none        |
+| orderFlags       | string                                  | true     | none         | none        |
+| goodTilBlock     | string                                  | false    | none         | none        |
+| goodTilBlockTime | string                                  | false    | none         | none        |
+| createdAtHeight  | string                                  | false    | none         | none        |
+| clientMetadata   | string                                  | true     | none         | none        |
+| triggerPrice     | string                                  | false    | none         | none        |
+| timeInForce      | [APITimeInForce](#schemaapitimeinforce) | true     | none         | none        |
+| status           | [APIOrderStatus](#schemaapiorderstatus) | true     | none         | none        |
+| postOnly         | boolean                                 | true     | none         | none        |
+| ticker           | string                                  | true     | none         | none        |
 
 ## PerpetualMarketStatus
 
@@ -2785,24 +2711,23 @@ or
 
 ```json
 "ACTIVE"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|ACTIVE|
-|*anonymous*|PAUSED|
-|*anonymous*|CANCEL_ONLY|
-|*anonymous*|POST_ONLY|
-|*anonymous*|INITIALIZING|
+| Property    | Value        |
+| ----------- | ------------ |
+| _anonymous_ | ACTIVE       |
+| _anonymous_ | PAUSED       |
+| _anonymous_ | CANCEL_ONLY  |
+| _anonymous_ | POST_ONLY    |
+| _anonymous_ | INITIALIZING |
 
 ## PerpetualMarketResponseObject
 
@@ -2833,32 +2758,31 @@ or
   "stepBaseQuantums": 0,
   "subticksPerTick": 0
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|clobPairId|string|true|none|none|
-|ticker|string|true|none|none|
-|status|[PerpetualMarketStatus](#schemaperpetualmarketstatus)|true|none|none|
-|lastPrice|string|true|none|none|
-|oraclePrice|string|true|none|none|
-|priceChange24H|string|true|none|none|
-|volume24H|string|true|none|none|
-|trades24H|number(double)|true|none|none|
-|nextFundingRate|string|true|none|none|
-|initialMarginFraction|string|true|none|none|
-|maintenanceMarginFraction|string|true|none|none|
-|basePositionNotional|string|true|none|none|
-|openInterest|string|true|none|none|
-|atomicResolution|number(double)|true|none|none|
-|quantumConversionExponent|number(double)|true|none|none|
-|tickSize|string|true|none|none|
-|stepSize|string|true|none|none|
-|stepBaseQuantums|number(double)|true|none|none|
-|subticksPerTick|number(double)|true|none|none|
+| Name                      | Type                                                  | Required | Restrictions | Description |
+| ------------------------- | ----------------------------------------------------- | -------- | ------------ | ----------- |
+| clobPairId                | string                                                | true     | none         | none        |
+| ticker                    | string                                                | true     | none         | none        |
+| status                    | [PerpetualMarketStatus](#schemaperpetualmarketstatus) | true     | none         | none        |
+| lastPrice                 | string                                                | true     | none         | none        |
+| oraclePrice               | string                                                | true     | none         | none        |
+| priceChange24H            | string                                                | true     | none         | none        |
+| volume24H                 | string                                                | true     | none         | none        |
+| trades24H                 | number(double)                                        | true     | none         | none        |
+| nextFundingRate           | string                                                | true     | none         | none        |
+| initialMarginFraction     | string                                                | true     | none         | none        |
+| maintenanceMarginFraction | string                                                | true     | none         | none        |
+| basePositionNotional      | string                                                | true     | none         | none        |
+| openInterest              | string                                                | true     | none         | none        |
+| atomicResolution          | number(double)                                        | true     | none         | none        |
+| quantumConversionExponent | number(double)                                        | true     | none         | none        |
+| tickSize                  | string                                                | true     | none         | none        |
+| stepSize                  | string                                                | true     | none         | none        |
+| stepBaseQuantums          | number(double)                                        | true     | none         | none        |
+| subticksPerTick           | number(double)                                        | true     | none         | none        |
 
 ## PerpetualMarketResponse
 
@@ -2914,15 +2838,14 @@ or
     }
   }
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|markets|object|true|none|none|
-|» **additionalProperties**|[PerpetualMarketResponseObject](#schemaperpetualmarketresponseobject)|false|none|none|
+| Name                       | Type                                                                  | Required | Restrictions | Description |
+| -------------------------- | --------------------------------------------------------------------- | -------- | ------------ | ----------- |
+| markets                    | object                                                                | true     | none         | none        |
+| » **additionalProperties** | [PerpetualMarketResponseObject](#schemaperpetualmarketresponseobject) | false    | none         | none        |
 
 ## PerpetualPositionResponse
 
@@ -2953,14 +2876,13 @@ or
     }
   ]
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|positions|[[PerpetualPositionResponseObject](#schemaperpetualpositionresponseobject)]|true|none|none|
+| Name      | Type                                                                        | Required | Restrictions | Description |
+| --------- | --------------------------------------------------------------------------- | -------- | ------------ | ----------- |
+| positions | [[PerpetualPositionResponseObject](#schemaperpetualpositionresponseobject)] | true     | none         | none        |
 
 ## SparklineResponseObject
 
@@ -2971,21 +2893,16 @@ or
 
 ```json
 {
-  "property1": [
-    "string"
-  ],
-  "property2": [
-    "string"
-  ]
+  "property1": ["string"],
+  "property2": ["string"]
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|**additionalProperties**|[string]|false|none|none|
+| Name                     | Type     | Required | Restrictions | Description |
+| ------------------------ | -------- | -------- | ------------ | ----------- |
+| **additionalProperties** | [string] | false    | none         | none        |
 
 ## SparklineTimePeriod
 
@@ -2996,21 +2913,20 @@ or
 
 ```json
 "ONE_DAY"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|ONE_DAY|
-|*anonymous*|SEVEN_DAYS|
+| Property    | Value      |
+| ----------- | ---------- |
+| _anonymous_ | ONE_DAY    |
+| _anonymous_ | SEVEN_DAYS |
 
 ## TimeResponse
 
@@ -3024,15 +2940,14 @@ or
   "iso": "string",
   "epoch": 0
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|iso|[IsoString](#schemaisostring)|true|none|none|
-|epoch|number(double)|true|none|none|
+| Name  | Type                          | Required | Restrictions | Description |
+| ----- | ----------------------------- | -------- | ------------ | ----------- |
+| iso   | [IsoString](#schemaisostring) | true     | none         | none        |
+| epoch | number(double)                | true     | none         | none        |
 
 ## TradeResponseObject
 
@@ -3050,19 +2965,18 @@ or
   "createdAt": "string",
   "createdAtHeight": "string"
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|true|none|none|
-|side|[OrderSide](#schemaorderside)|true|none|none|
-|size|string|true|none|none|
-|price|string|true|none|none|
-|createdAt|[IsoString](#schemaisostring)|true|none|none|
-|createdAtHeight|string|true|none|none|
+| Name            | Type                          | Required | Restrictions | Description |
+| --------------- | ----------------------------- | -------- | ------------ | ----------- |
+| id              | string                        | true     | none         | none        |
+| side            | [OrderSide](#schemaorderside) | true     | none         | none        |
+| size            | string                        | true     | none         | none        |
+| price           | string                        | true     | none         | none        |
+| createdAt       | [IsoString](#schemaisostring) | true     | none         | none        |
+| createdAtHeight | string                        | true     | none         | none        |
 
 ## TradeResponse
 
@@ -3084,14 +2998,13 @@ or
     }
   ]
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|trades|[[TradeResponseObject](#schematraderesponseobject)]|true|none|none|
+| Name   | Type                                                | Required | Restrictions | Description |
+| ------ | --------------------------------------------------- | -------- | ------------ | ----------- |
+| trades | [[TradeResponseObject](#schematraderesponseobject)] | true     | none         | none        |
 
 ## TransferType
 
@@ -3102,23 +3015,22 @@ or
 
 ```json
 "TRANSFER_IN"
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|string|false|none|none|
+| Name        | Type   | Required | Restrictions | Description |
+| ----------- | ------ | -------- | ------------ | ----------- |
+| _anonymous_ | string | false    | none         | none        |
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|*anonymous*|TRANSFER_IN|
-|*anonymous*|TRANSFER_OUT|
-|*anonymous*|DEPOSIT|
-|*anonymous*|WITHDRAWAL|
+| Property    | Value        |
+| ----------- | ------------ |
+| _anonymous_ | TRANSFER_IN  |
+| _anonymous_ | TRANSFER_OUT |
+| _anonymous_ | DEPOSIT      |
+| _anonymous_ | WITHDRAWAL   |
 
 ## TransferResponseObject
 
@@ -3145,26 +3057,25 @@ or
   "type": "TRANSFER_IN",
   "transactionHash": "string"
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|true|none|none|
-|sender|object|true|none|none|
-|» subaccountNumber|number(double)|false|none|none|
-|» address|string|true|none|none|
-|recipient|object|true|none|none|
-|» subaccountNumber|number(double)|false|none|none|
-|» address|string|true|none|none|
-|size|string|true|none|none|
-|createdAt|string|true|none|none|
-|createdAtHeight|string|true|none|none|
-|symbol|string|true|none|none|
-|type|[TransferType](#schematransfertype)|true|none|none|
-|transactionHash|string|true|none|none|
+| Name               | Type                                | Required | Restrictions | Description |
+| ------------------ | ----------------------------------- | -------- | ------------ | ----------- |
+| id                 | string                              | true     | none         | none        |
+| sender             | object                              | true     | none         | none        |
+| » subaccountNumber | number(double)                      | false    | none         | none        |
+| » address          | string                              | true     | none         | none        |
+| recipient          | object                              | true     | none         | none        |
+| » subaccountNumber | number(double)                      | false    | none         | none        |
+| » address          | string                              | true     | none         | none        |
+| size               | string                              | true     | none         | none        |
+| createdAt          | string                              | true     | none         | none        |
+| createdAtHeight    | string                              | true     | none         | none        |
+| symbol             | string                              | true     | none         | none        |
+| type               | [TransferType](#schematransfertype) | true     | none         | none        |
+| transactionHash    | string                              | true     | none         | none        |
 
 ## TransferResponse
 
@@ -3195,12 +3106,10 @@ or
     }
   ]
 }
-
 ```
 
 ### Properties
 
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|transfers|[[TransferResponseObject](#schematransferresponseobject)]|true|none|none|
-
+| Name      | Type                                                      | Required | Restrictions | Description |
+| --------- | --------------------------------------------------------- | -------- | ------------ | ----------- |
+| transfers | [[TransferResponseObject](#schematransferresponseobject)] | true     | none         | none        |
