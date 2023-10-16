@@ -27,7 +27,7 @@ Feel free to inspect the content of the `genesis.json` file, and let us know if 
 💡💡💡 We have published a newer `v0.4.0` binary ([link](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv0.4.0)) in our now public repository `dydxprotocol/v4-chain`. This is different from the binary used for `gentx` submission process. Please make ensure you use this newer binary to avoid consensus failure. 💡💡💡
 
 ```bash
-export BINARY_VERSION="0.4.0"
+export BINARY_VERSION="v0.4.0"
 # Choose a platform. Supported: linux-amd64, linux-arm64
 export DYDX_PLATFORM="linux-amd64"
 curl -LO https://github.com/dydxprotocol/v4-chain/releases/download/protocol%2F$BINARY_VERSION/dydxprotocold-$BINARY_VERSION-$DYDX_PLATFORM.tar.gz
