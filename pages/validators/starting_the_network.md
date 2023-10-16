@@ -24,10 +24,10 @@ Feel free to inspect the content of the `genesis.json` file, and let us know if 
 
 ## Get Latest Binary
 
-💡💡💡 We have published a newer TODO in our now public repository `dydxprotocol/v4-chain`. This is different from the binary used for `gentx` submission process. Please make ensure you use this newer binary to avoid consensus failure. 💡💡💡
+💡💡💡 We have published a newer `v0.4.0` binary ([link](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv0.4.0)) in our now public repository `dydxprotocol/v4-chain`. This is different from the binary used for `gentx` submission process. Please make ensure you use this newer binary to avoid consensus failure. 💡💡💡
 
 ```bash
-export BINARY_VERSION="TODO"
+export BINARY_VERSION="0.4.0"
 # Choose a platform. Supported: linux-amd64, linux-arm64
 export DYDX_PLATFORM="linux-amd64"
 curl -LO https://github.com/dydxprotocol/v4-chain/releases/download/protocol%2F$BINARY_VERSION/dydxprotocold-$BINARY_VERSION-$DYDX_PLATFORM.tar.gz
@@ -52,12 +52,12 @@ dydxprotocold version --long
 The output should look like this (**make sure** the `version` and `commit` is correct):
 
 ```bash
-commit: TODO
+commit: a814748dfb39dc70302becbca95c19606e3bab8e
 cosmos_sdk_version: v0.47.3
 go: go version go1.19.9 <platform>
 name: dydxprotocol
 server_name: dydxprotocold
-version: TODO
+version: 0.4.0
 ```
 
 ## [💡💡💡IMPORTANT:💡💡💡] Verify Config 
@@ -127,18 +127,18 @@ cosmovisor run version --long
 The output should look like this (**make sure** the `version` is consistent):
 
 ```bash
-commit: TODO
+commit: a814748dfb39dc70302becbca95c19606e3bab8e
 cosmos_sdk_version: v0.47.3
 go: go version go1.19.9 <platform>
 name: dydxprotocol
 server_name: dydxprotocold
-version: TODO
+version: 0.4.0
 ```
 
 Run `dydxprotocold` with `cosmovisor` and connect to the seed node. 
 
 ```bash
-cosmovisor run start --p2p.seeds="TODO" --home="$HOME_TESTNET_4"
+cosmovisor run start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TESTNET_4"
 ```
 
 ### Backup: Start the network with Persistent Peers
