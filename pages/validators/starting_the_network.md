@@ -62,13 +62,17 @@ version: 0.4.0
 
 ## [💡💡💡IMPORTANT:💡💡💡] Verify Config 
 
-Please check that `timeout_commit` value under `$HOME_TESTNET_4/config/config.toml` is equal to
+In `$HOME_TESTNET_4/config/config.toml`, check that `timeout_commit` value under  is equal to
 ```
 timeout_commit = "500ms"
 ```
 
-The Cosmos gRPC service is used by various daemon processes, and **must be enabled** in order for the protocol to operate.
-Please make sure that grpc is enabled in `$HOME_TESTNET_4/config/app.toml`:
+In `$HOME_TESTNET_4/config/app.toml`, update the `minium-gas-prices` variable to accept `adv4tnt` (`1e-18 dv4tnt`):
+```
+minimum-gas-prices = "0.025ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5,25000000000adv4tnt"
+```
+
+In `$HOME_TESTNET_4/config/app.toml`, enable grpc. The Cosmos gRPC service is used by various daemon processes, and **must be enabled** in order for the protocol to operate:
 ```
 [grpc]
 
