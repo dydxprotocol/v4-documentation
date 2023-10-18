@@ -2,7 +2,7 @@ import { Tab, Tabs } from "nextra-theme-docs";
 
 # Faucet
 
-Faucet is only available on test environments for testers to get test funds
+Faucet is only available on test environments for testers to get test funds and test native tokens.
 
 ### Installation
 
@@ -40,6 +40,31 @@ client = FaucetClient(
 )
 address = /* your dYdX chain address */
 faucet_response = client.fill(address, 0, 2000)
+```
+</Tab>
+</Tabs>
+
+### Getting Test Native Tokens
+
+<Tabs items={["TypeScript", "Python"]}>
+<Tab>
+```typescript copy
+import { FaucetClient } from "@dydxprotocol/v4-client";
+
+const client = new FaucetClient(FaucetApiHost.TESTNET);
+const address = /* your dYdX chain address */;
+const faucetResponse = await client?.fill_native(address);
+```
+</Tab>
+<Tab>
+```python copy
+from dydx4 import FaucetClient
+
+client = FaucetClient(
+    host=FAUCET_API_HOST_TESTNET,
+)
+address = /* your dYdX chain address */
+faucet_response = client.fill_native(address)
 ```
 </Tab>
 </Tabs>
