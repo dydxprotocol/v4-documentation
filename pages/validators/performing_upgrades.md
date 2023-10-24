@@ -135,7 +135,7 @@ chmod 755 dydxprotocold
 ## Rollback
 
 
-In the case of an unsuccessful chain upgrade, an incorrect `AppHash` might get persisted by Tendermint. To move forward, validators will need to rollback to the previous state so that upon restart, Tendermint can replay the last block to get the correct `AppHash`.
+In the case of an unsuccessful chain upgrade, an incorrect `AppHash` might get persisted by Tendermint. To move forward, validators will need to rollback to the previous state so that upon restart, Tendermint can replay the last block to get the correct `AppHash`. **Please note:** validators should never rollback further than the last invalid block. In extreme edge cases, transactions could be reverted / re-applied for the last black and cause issues.
 
 
 ### ⚒️ Cosmovisor Users
