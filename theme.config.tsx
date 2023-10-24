@@ -47,7 +47,7 @@ const config: DocsThemeConfig = {
       <span className="banner">
         ✨ Looking for our old docs?{" "}
         <button
-          onClick={() => window.open("https://docs.dydx.exchange", "_blank")}
+          onClick={() => window.open("https://dydxprotocol.github.io/v3-teacher/", "_blank")}
           className="banner-button"
         >
           v3 Docs
