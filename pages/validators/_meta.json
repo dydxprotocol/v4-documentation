@@ -1,6 +1,9 @@
 {
   "requirements": "Validator requirements",
   "cosmovisor": "Setting up Cosmovisor",
+  "preparing_for_genesis": "Preparing for Genesis",
+  "starting_the_network": "Starting the network",
+  "running_full_node": "Running a full node",
   "types_of_upgrades": "Types of upgrades",
   "performing_upgrades": "Performing upgrades",
   "snapshots": "Snapshots",
