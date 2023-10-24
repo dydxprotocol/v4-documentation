@@ -2,9 +2,6 @@
 
 ***By using, recording, referencing, or downloading (i.e., any “action”) any information contained on this page or in any dYdX Trading Inc. ("dYdX") database, you hereby and thereby agree to the [v4 Terms of Use](https://dydx.exchange/v4-terms) and [Privacy Policy](https://dydx.exchange/privacy) governing such information, and you agree that such action establishes a binding agreement between you and dYdX.***
 
-## Timeline
-
-See `dydx-testnet-4` [Launch Schedule](https://v4-teacher.vercel.app/testnets/schedule). Please complete the following instructions by the scheduled time for `Network Launch`.
 
 ## Downloading `genesis.json`
 
