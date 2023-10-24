@@ -22,7 +22,7 @@ and call ValidatorClient with the correct quantums and subticks for you.
   </Tab>
   <Tab>
     ```bash copy
-    pip install dydx4 
+    pip install v4-client-py 
     ```
   </Tab>
 </Tabs>
@@ -39,8 +39,8 @@ and call ValidatorClient with the correct quantums and subticks for you.
   </Tab>
   <Tab>
     ```python copy
-    from dydx4.clients import CompositeClient
-    from dydx4.clients.constants import Network
+    from v4_client_py.clients import CompositeClient
+    from v4_client_py.clients.constants import Network
     client = CompositeClient(
         Network.testnet(),
     )
@@ -64,7 +64,7 @@ and call ValidatorClient with the correct quantums and subticks for you.
   </Tab>
   <Tab>
     ```python copy
-    from dydx4.chain.aerial.wallet import LocalWallet, BECH32_PREFIX
+    from v4_client_py.chain.aerial.wallet import LocalWallet, BECH32_PREFIX
     mnemonic = 'YOUR MNEMONIC HERE'
     wallet = LocalWallet.from_mnemonic(DYDX_TEST_MNEMONIC, BECH32_PREFIX);
     ```
@@ -113,7 +113,7 @@ and call ValidatorClient with the correct quantums and subticks for you.
   </Tab>
   <Tab>
     ```python copy
-    from dydx4 import {
+    from v4_client_py import {
       OrderExecution, OrderSide, OrderTimeInForce, OrderType
     }
 
