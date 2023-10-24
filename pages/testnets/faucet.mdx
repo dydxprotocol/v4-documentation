@@ -14,7 +14,7 @@ pnpm install @dydxprotocol/v4-client
 </Tab>
 <Tab>
 ```python copy
-pip install dydx4
+pip install v4-proto
 ```
 </Tab>
 </Tabs>
@@ -33,7 +33,7 @@ const faucetResponse = await client?.fill(address, 0, 2000);
 </Tab>
 <Tab>
 ```python copy
-from dydx4 import FaucetClient
+from v4_proto import FaucetClient
 
 client = FaucetClient(
     host=FAUCET_API_HOST_TESTNET,
@@ -58,7 +58,7 @@ const faucetResponse = await client?.fill_native(address);
 </Tab>
 <Tab>
 ```python copy
-from dydx4 import FaucetClient
+from v4_proto import FaucetClient
 
 client = FaucetClient(
     host=FAUCET_API_HOST_TESTNET,
