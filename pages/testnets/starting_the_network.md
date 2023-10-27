@@ -96,7 +96,7 @@ of the following flags: `--grpc.enable`, `--grpc.address`.
 
 For the chain to process bridge transactions from Ethereum, Ethereum testnet, or other chain that supports the `eth_getLogs` RPC method, the bridge daemon queries an RPC endpoint for logs emitted by the bridge contract. By default, a node will use a public testnet endpoint that may have rate-limiting, low reliability, or other restricted functionality.
 
-For your node to successfully ingest bridge transactions from the relevant blockchain, you should use your own private RPC endpoint and override the default by adding flag `--bridge-daemon-eth-rpc-endpoint <YOUR_PRIVATE_RPC_ENDPOINT>` to the command you run when starting the node.
+For your node to successfully ingest bridge transactions from the relevant blockchain, you are required to specify your own private RPC endpoint with flag `--bridge-daemon-eth-rpc-endpoint <YOUR_PRIVATE_RPC_ENDPOINT>` in the command you run when starting the node.
 
 💡IMPORTANT💡:The RPC endpoint you choose *MUST* satisfy the following requirements
 * supports `eth_chainId` method
@@ -112,7 +112,7 @@ For your node to successfully ingest bridge transactions from the relevant block
 Run `dydxprotocold` and connect to the seed node. The seed node info can be found in [Testnet Info](https://v4-teacher.vercel.app/testnets/testnet_info):
 
 ```bash
-dydxprotocold start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TESTNET_4"
+dydxprotocold start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TESTNET_4" --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
 ```
 
 **Note:** the seed node IP for testnet #3 is different from testnet #2.
@@ -139,7 +139,7 @@ version: 0.4.0
 Run `dydxprotocold` with `cosmovisor` and connect to the seed node. 
 
 ```bash
-cosmovisor run start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TESTNET_4"
+cosmovisor run start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TESTNET_4" --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
 ```
 
 ### Backup: Start the network with Persistent Peers
