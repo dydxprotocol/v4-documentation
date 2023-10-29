@@ -1,5 +1,5 @@
 {
-  "requirements": "Validator requirements",
+  "requirements": "Requirements",
   "cosmovisor": "Setting up Cosmovisor",
   "types_of_upgrades": "Types of upgrades",
   "performing_upgrades": "Performing upgrades",

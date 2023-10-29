@@ -5,7 +5,7 @@
 
 ## Downloading `genesis.json`
 
-After the `gentx` collection process is complete, the dYdX team will announce in the `#v-dydx-public-testnet-updates` channel that the finalized `genesis.json` file is ready for download. 
+After the `gentx` collection process is complete, the dYdX team will announce in the `#v-dydx-public-testnet-updates` channel that the finalized `genesis.json` file is ready for download.
 
 Download `genesis.json` file into `$HOME_TESTNET_4` , replacing the previous `genesis.json` file:
 
@@ -37,7 +37,7 @@ tar -xvzf dydxprotocold-$BINARY_VERSION-${DYDX_PLATFORM}.tar.gz
 mkdir -p "${HOME}/local/bin"
 export PATH="${HOME}/local/bin:$PATH"
 cp build/dydxprotocold-$BINARY_VERSION-${DYDX_PLATFORM} "${HOME}/local/bin/dydxprotocold"
-rm -R build 
+rm -R build
 ```
 
 Check that the binary version is correct:
@@ -57,7 +57,7 @@ server_name: dydxprotocold
 version: 0.4.0
 ```
 
-## [💡💡💡IMPORTANT:💡💡💡] Verify Config 
+## [💡💡💡IMPORTANT:💡💡💡] Verify Config
 
 In `$HOME_TESTNET_4/config/config.toml`, check that `timeout_commit` value under  is equal to
 ```
@@ -92,17 +92,6 @@ address = "0.0.0.0:9090"
 **Note** that grpc can be also be configured via start flags. Be careful not to change the default settings with either
 of the following flags: `--grpc.enable`, `--grpc.address`.
 
-## Ethereum RPC Endpoint
-
-For the chain to process bridge transactions from Ethereum, Ethereum testnet, or other chain that supports the `eth_getLogs` RPC method, the bridge daemon queries an RPC endpoint for logs emitted by the bridge contract. By default, a node will use a public testnet endpoint that may have rate-limiting, low reliability, or other restricted functionality.
-
-For your node to successfully ingest bridge transactions from the relevant blockchain, you are required to specify your own private RPC endpoint with flag `--bridge-daemon-eth-rpc-endpoint <YOUR_PRIVATE_RPC_ENDPOINT>` in the command you run when starting the node.
-
-💡IMPORTANT💡:The RPC endpoint you choose *MUST* satisfy the following requirements
-* supports `eth_chainId` method
-* supports `eth_getLogs` method
-    * supports `"finalized"` as an input to `toBlock` parameter (for example Alchemy supports this while Blast doesn't)
-
 ## Starting the Node
 
 💡💡💡The testnet genesis is **17:00 UTC (13:00 ET), Tuesday 10/17/2023.** Please complete the following instructions by this time.💡💡💡
@@ -136,7 +125,7 @@ server_name: dydxprotocold
 version: 0.4.0
 ```
 
-Run `dydxprotocold` with `cosmovisor` and connect to the seed node. 
+Run `dydxprotocold` with `cosmovisor` and connect to the seed node.
 
 ```bash
 cosmovisor run start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TESTNET_4" --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
@@ -172,7 +161,7 @@ If you see `This node is not a validator` instead, please let us know.
 You should also see that the binary is sleeping until genesis time:
 
 ```bash
-Genesis time is in the future. Sleeping until then... 
+Genesis time is in the future. Sleeping until then...
 ```
 
 While the binary is sleeping, some occasional errors from the price daemon are expected. If you see any critical error (e.g. the app is crashing), please let us know.
