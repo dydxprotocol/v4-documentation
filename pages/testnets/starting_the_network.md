@@ -59,6 +59,8 @@ version: 0.4.0
 
 ## [💡💡💡IMPORTANT:💡💡💡] Verify Config
 
+See [this requirement section](https://v4-teacher.vercel.app/validators/requirements#required-configs) to correctly configure the node.
+
 In `$HOME_TESTNET_4/config/config.toml`, check that `timeout_commit` value under  is equal to
 ```
 timeout_commit = "500ms"
@@ -91,6 +93,10 @@ address = "0.0.0.0:9090"
 
 **Note** that grpc can be also be configured via start flags. Be careful not to change the default settings with either
 of the following flags: `--grpc.enable`, `--grpc.address`.
+
+## [💡💡💡IMPORTANT:💡💡💡] Configure Ethereum RPC Endpoint
+
+See [this requirement section](https://v4-teacher.vercel.app/validators/requirements#ethereum-rpc-endpoint) to correctly configure the Ethereum RPC endpoint.
 
 ## Starting the Node
 

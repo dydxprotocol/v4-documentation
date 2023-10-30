@@ -1,4 +1,4 @@
-# Minimum Specs
+## Minimum Specs
 
 The minimum recommended specs for running a node is the following:
 
@@ -8,7 +8,8 @@ The minimum recommended specs for running a node is the following:
 
 For example, an AWS instance like the `r6id.2xlarge`, or equivalent.
 
-# Ethereum RPC Endpoint
+
+## Ethereum RPC Endpoint
 
 For the chain to process bridge transactions from Ethereum, Ethereum testnet, or other chain that supports the `eth_getLogs` RPC method, the bridge daemon queries an RPC endpoint for logs emitted by the bridge contract. By default, a node will use a public testnet endpoint that may have rate-limiting, low reliability, or other restricted functionality.
 
@@ -19,18 +20,19 @@ For your node to successfully ingest bridge transactions from the relevant block
 * supports `eth_getLogs` method
 * supports `"finalized"` as an input to `toBlock` parameter (Erigon is currently the only major Ethereum node software that does not support this.)
 
-# Required Configs
+
+## Required Configs
 
 The dYdX Chain has important node configurations required for normal chain operation. This includes:
 
-## `config.toml`
+### `config.toml`
 
 ```
 [consensus]
 timeout_commit = "500ms"
 ```
 
-## `app.toml`
+### `app.toml`
 
 ```
 # Set up correct minimum-gas-price correctly. 
