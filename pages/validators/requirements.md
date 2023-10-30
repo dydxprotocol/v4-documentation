@@ -21,7 +21,7 @@ For your node to successfully ingest bridge transactions from the relevant block
 
 # Required Configs
 
-💡IMPORTANT💡 The dYdX Chain has important node configurations required for normal chain operation. This includes:
+The dYdX Chain has important node configurations required for normal chain operation. This includes:
 
 ## `config.toml`
 
