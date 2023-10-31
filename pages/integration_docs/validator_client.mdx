@@ -9,7 +9,7 @@ import { Tab, Tabs } from "nextra-theme-docs";
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```bash copy
-    pnpm install @dydxprotocol/v4-client 
+    pnpm install @dydxprotocol/v4-client-js 
     ```
   </Tab>
   <Tab>
@@ -24,7 +24,7 @@ import { Tab, Tabs } from "nextra-theme-docs";
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```typescript copy
-    import { ValidatorClient } from "@dydxprotocol/v4-client";
+    import { ValidatorClient } from "@dydxprotocol/v4-client-js";
 
     const client = await ValidatorClient.connect(Network.testnet().validatorConfig);
     ```
@@ -45,7 +45,7 @@ import { Tab, Tabs } from "nextra-theme-docs";
     import {
       BECH32_PREFIX,
       LocalWallet,
-    } from '@dydxprotocol/v4-client';
+    } from '@dydxprotocol/v4-client-js';
 
     const mnemonic = 'YOUR MNEMONIC HERE';
     const wallet = await LocalWallet.fromMnemonic(mnemonic, BECH32_PREFIX);
@@ -140,7 +140,7 @@ import { Tab, Tabs } from "nextra-theme-docs";
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```typescript copy
-    import { SubaccountClient } from '@dydxprotocol/v4-client';
+    import { SubaccountClient } from '@dydxprotocol/v4-client-js';
 
     const subaccount = new SubaccountClient(wallet, 0);
     const recipientAddress = 'dydx...' // address of the recipient
@@ -183,7 +183,7 @@ import { Tab, Tabs } from "nextra-theme-docs";
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```typescript copy
-    import { SubaccountClient } from '@dydxprotocol/v4-client';
+    import { SubaccountClient } from '@dydxprotocol/v4-client-js';
 
     const subaccount = new SubaccountClient(wallet, 0);
     const assetId = 0 // asset id of the token you want to deposit
@@ -219,7 +219,7 @@ import { Tab, Tabs } from "nextra-theme-docs";
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```typescript copy
-    import { SubaccountClient } from '@dydxprotocol/v4-client';
+    import { SubaccountClient } from '@dydxprotocol/v4-client-js';
 
     const subaccount = new SubaccountClient(wallet, 0);
     const assetId = 0 // asset id of the token you want to withdraw
@@ -259,8 +259,8 @@ import { Tab, Tabs } from "nextra-theme-docs";
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```typescript copy
-    import { Order_Side, Order_TimeInForce } from '@dydxprotocol/dydxjs/src/codegen/dydxprotocol/clob/order';
-    import { OrderFlags, SubaccountClient } from '@dydxprotocol/v4-client';
+    import { Order_Side, Order_TimeInForce } from '@dydxprotocol/v4-proto/src/codegen/dydxprotocol/clob/order';
+    import { OrderFlags, SubaccountClient } from '@dydxprotocol/v4-client-js';
 
     const subaccount = new SubaccountClient(wallet, 0);
     const clientId = 123 // set to a number, can be used by the client to identify the order
@@ -288,7 +288,7 @@ import { Tab, Tabs } from "nextra-theme-docs";
   <Tab>
     ```python copy
     from v4_client_py import Subaccount, ORDER_FLAGS_SHORT_TERM
-    from dydxpy.proto.dydxprotocol.clob.order_pb2 import Order
+    from v4_proto.proto.dydxprotocol.clob.order_pb2 import Order
     
     subaccount = new Subaccount(wallet, 0)
     client_id = 123 // set to a number, can be used by the client to identify the order
