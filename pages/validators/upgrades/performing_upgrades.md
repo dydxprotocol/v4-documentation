@@ -17,6 +17,10 @@ See [here](../cosmovisor.md)  for installation instructions.
 
 ---
 
+## Voting for Upgrade Proposals
+
+See [Governance -> Voting](../../governance/voting.md)
+
 ## Upgrades
 
 

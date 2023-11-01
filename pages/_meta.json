@@ -9,7 +9,7 @@
   "security": "Security",
   "terms_and_policies": "Terms and Policies",
   "app": {
-    "title": "Testnet",
+    "title": "Testnet ↗",
     "type": "page",
     "href": "https://v4.testnet.dydx.exchange",
     "newWindow": true
