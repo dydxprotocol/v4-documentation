@@ -8,7 +8,7 @@
   "developers": "Developers",
   "governance": "Governance",
   "operational_checklist": "Operational checklist",
-  "security": "Security",
+  "other": "Other",
   "app": {
     "title": "Testnet",
     "type": "page",
