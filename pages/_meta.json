@@ -6,9 +6,9 @@
   "integration_docs": "Integration documents",
   "trading": "Trading",
   "developers": "Developers",
+  "operators": "Operators",
   "governance": "Governance",
-  "operational_checklist": "Operational checklist",
-  "other": "Other",
+  "security": "Security",
   "app": {
     "title": "Testnet",
     "type": "page",

@@ -1,4 +1,4 @@
-# Required Configs
+# Required Node Configs
 
 💡IMPORTANT:💡 failure to set up below configurations on a validator node may compromise chain functionality.
 
@@ -27,19 +27,23 @@ timeout_commit = "500ms"
 
 ### `app.toml`
 
+#### Min Gas Price
+
+For value of `$NATIVE_TOKEN_DENOM`, see [Network Constants](../networks/network1/network_constants.md#native-token-denom)
+
 ```
 # Set up correct minimum-gas-price correctly. 
-minimum-gas-prices = "0.025ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5,12500000000adv4tnt"
+minimum-gas-prices = "0.025ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5,12500000000$NATIVE_TOKEN_DENOM"
 ```
+
+#### gRPC Configs
 
 ```
 [grpc]
 # Enable grpc. The Cosmos gRPC service is used by various daemon processes, 
 # and must be enabled in order for the protocol to operate:
 enable = true
-```
 
-```
 # Non-standard gRPC ports are not supported at this time. Please run on port 9090, which is the default
 # port specified in the config file.
 # Note: grpc can be also be configured via start flags. Be careful not to change the default settings 

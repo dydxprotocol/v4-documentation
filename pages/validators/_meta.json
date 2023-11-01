@@ -1,8 +1,9 @@
 {
-  "requirements": "Requirements",
+  "hardware_requirements": "Hardware Requirements",
+  "required_node_configs": "Required Node Configs",
+  "running_validator": "Running a Validator",
+  "running_full_node": "Running a Full Node",
   "cosmovisor": "Setting up Cosmovisor",
-  "types_of_upgrades": "Types of upgrades",
-  "performing_upgrades": "Performing upgrades",
-  "snapshots": "Snapshots",
-  "voting_for_upgrade_proposals": "Voting for upgrade proposals"
+  "upgrades": "Upgrades",
+  "snapshots": "Snapshots"
 }

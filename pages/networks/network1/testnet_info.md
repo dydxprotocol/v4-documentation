@@ -1,12 +1,5 @@
 ## Testnets
 
-To join the testnet network, you need to:
-1. run the correct binary version and 
-2. specify the correct `genesis.json` and
-3. use the correct `seed node` info
-
-The info for 1 and 2 can be found in [`v4-testnets` repository](https://github.com/dydxprotocol/v4-testnets).
-
 ### Seed Node for `dydx-testnet-4`
 
 * AllThatNode: `19d38bb5cea1378db3e16615e63594dc26119a1a@dydx-testnet4-seednode.allthatnode.com:26656`

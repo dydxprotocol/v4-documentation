@@ -1,6 +1,6 @@
 **Welcome to dYdX V4 Software Documentatoin
 
-This site contains generic docuementation the dYdX V4 software, as well as docuemntation related to the dYdX Public Testnet.
+This site contains generic documentation the dYdX V4 software, as well as information related to the dYdX Public Testnet.
 
 🦔 💜
 
