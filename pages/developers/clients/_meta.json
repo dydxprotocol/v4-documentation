@@ -1,0 +1,6 @@
+{
+    "indexer_client": "Indexer Client",
+    "socket_client": "Socket Client",
+    "validator_client": "Validator Client",
+    "composite_client": "Composite Client"
+}

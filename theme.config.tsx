@@ -61,6 +61,11 @@ const config: DocsThemeConfig = {
   footer: {
     component: null,
   },
+
+  // sidebar
+  sidebar: {
+    defaultMenuCollapseLevel: 1,
+  },
 };
 
 export default config;

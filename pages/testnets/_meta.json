@@ -1,8 +1,0 @@
-{
-  "expectations": "Testnet Expectations",
-  "testnet_info": "Testnet Info",
-  "faucet": "Testnet Funds",
-  "preparing_for_genesis": "Preparing for Genesis",
-  "starting_the_network": "Starting the network",
-  "running_full_node": "Running a full node"
-}

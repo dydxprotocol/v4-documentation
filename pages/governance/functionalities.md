@@ -1,5 +1,3 @@
-# Governance
-
 # Governance Functionality
 
 Below is a current list of all module parameters that `x/gov` has the ability to update directly. Further documentation will be released which outlines overviews of each custom module, how modules interact with one another, and technical guides regarding how to properly submit governance proposals. 

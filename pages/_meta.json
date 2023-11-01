@@ -1,16 +1,15 @@
 {
   "index": "Introduction",
-  "general": "General",
   "validators": "Validators",
-  "testnets": "Testnets",
-  "integration_docs": "Integration documents",
+  "networks": "Networks",
   "trading": "Trading",
   "developers": "Developers",
+  "operators": "Operators",
   "governance": "Governance",
-  "operational_checklist": "Operational checklist",
   "security": "Security",
+  "terms_and_policies": "Terms and Policies",
   "app": {
-    "title": "Testnet",
+    "title": "Testnet ↗",
     "type": "page",
     "href": "https://v4.testnet.dydx.exchange",
     "newWindow": true

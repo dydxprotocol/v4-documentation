@@ -59,7 +59,7 @@ version: 0.4.0
 
 ## [💡💡💡IMPORTANT:💡💡💡] Verify Config
 
-See [this requirement section](https://v4-teacher.vercel.app/validators/requirements#required-configs) to correctly configure the node.
+See [this requirement section](../../../validators/required_node_configs.md) to correctly configure the node.
 
 In `$HOME_TESTNET_4/config/config.toml`, check that `timeout_commit` value under  is equal to
 ```
@@ -96,7 +96,7 @@ of the following flags: `--grpc.enable`, `--grpc.address`.
 
 ## [💡💡💡IMPORTANT:💡💡💡] Configure Ethereum RPC Endpoint
 
-See [this requirement section](https://v4-teacher.vercel.app/validators/requirements#ethereum-rpc-endpoint) to correctly configure the Ethereum RPC endpoint.
+See [this requirement section](../../../validators/required_node_configs.md#ethereum-rpc-endpoint) to correctly configure the Ethereum RPC endpoint.
 
 ## Starting the Node
 
@@ -104,7 +104,7 @@ See [this requirement section](https://v4-teacher.vercel.app/validators/requirem
 
 ### Option 1: Run `dydxprotocold` Directly
 
-Run `dydxprotocold` and connect to the seed node. The seed node info can be found in [Testnet Info](https://v4-teacher.vercel.app/testnets/testnet_info):
+Run `dydxprotocold` and connect to the seed node. The seed node info can be found [here](../resources.md#seed-nodes):
 
 ```bash
 dydxprotocold start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TESTNET_4" --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
@@ -114,7 +114,7 @@ dydxprotocold start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TES
 
 ### Option 2: Run `dydxprotocold` with `cosmovisor`
 
-Install and initialize `cosmovisor` with instructions [here](https://v4-teacher.vercel.app/validators/cosmovisor). To make sure `cosmovisor` is initialized with the correct binary, run the following to binary version:
+Install and initialize `cosmovisor` with instructions [here](../../../validators/cosmovisor.md). To make sure `cosmovisor` is initialized with the correct binary, run the following to binary version:
 
 ```bash
 cosmovisor run version --long
