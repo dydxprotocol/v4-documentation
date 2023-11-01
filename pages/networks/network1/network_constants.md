@@ -15,7 +15,6 @@ CHAIN_ID=dydx-testnet-4
 ## Chain Registry
 
 ```
-### Chain info
 ```json
 {
   "rpc": "https://dydx-testnet-archive.allthatnode.com:26657",

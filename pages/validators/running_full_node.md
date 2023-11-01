@@ -13,7 +13,7 @@ See [snapshot service](../networks/network1/resources.md#snapshot-service).
 
 ## Start a Full Node
 
-Find the seed node's ID and the IP address from the [testnet info page](../networks/network1/resources.md#seed-nodes). Then, run the following command to start a non-validating full node.
+Find the seed node's ID and the IP address from [Resources](../networks/network1/resources.md#seed-nodes). Then, run the following command to start a non-validating full node.
 
 For example,
 ```bash
