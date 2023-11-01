@@ -1,7 +1,7 @@
 # Running a full node
 ## Save your Chain ID in `dydxprotocold` config
 
-Save [chain-id](../network1/network_constants.md#chain-id). This will make it so you do not have to manually pass in the chain-id flag for every CLI command.
+Save the [chain-id](../networks/network1/network_constants.md#chain-id). This will make it so you do not have to manually pass in the chain-id flag for every CLI command.
 
 ```bash
 dydxprotocold config chain-id $CHAIN_ID
@@ -9,11 +9,11 @@ dydxprotocold config chain-id $CHAIN_ID
 
 ## Getting a Snapshot
 
-See [snapshot provider](../networks/network1/resources.md#snapshot-service).
+See [snapshot service](../networks/network1/resources.md#snapshot-service).
 
 ## Start a Full Node
 
-Find the seed node's ID and the IP address from the [testnet info page](..//networks/network1/resources.md#seed-nodes). Then, run the following command to start a non-validating full node.
+Find the seed node's ID and the IP address from the [testnet info page](../networks/network1/resources.md#seed-nodes). Then, run the following command to start a non-validating full node.
 
 For example,
 ```bash
