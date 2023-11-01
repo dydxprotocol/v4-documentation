@@ -4,6 +4,6 @@
   "running_validator": "Running a Validator",
   "running_full_node": "Running a Full Node",
   "cosmovisor": "Setting up Cosmovisor",
-  "upgrades": "Upgrades",
-  "snapshots": "Snapshots"
+  "snapshots": "Snapshots",
+  "upgrades": "Upgrades"
 }

@@ -1,6 +1,5 @@
 {
   "index": "Introduction",
-  "general": "General",
   "validators": "Validators",
   "networks": "Networks",
   "integration_docs": "Integration documents",
@@ -9,6 +8,7 @@
   "operators": "Operators",
   "governance": "Governance",
   "security": "Security",
+  "terms_and_policies": "Terms and Policies",
   "app": {
     "title": "Testnet",
     "type": "page",

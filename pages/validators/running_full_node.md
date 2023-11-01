@@ -9,11 +9,11 @@ dydxprotocold config chain-id $CHAIN_ID
 
 ## Getting a Snapshot
 
-See [snapshot provider](../network1/resources.md#snapshot-service).
+See [snapshot provider](../networks/network1/resources.md#snapshot-service).
 
 ## Start a Full Node
 
-Find the seed node's ID and the IP address from the [testnet info page](../network1/resources.md#seed-nodes). Then, run the following command to start a non-validating full node.
+Find the seed node's ID and the IP address from the [testnet info page](..//networks/network1/resources.md#seed-nodes). Then, run the following command to start a non-validating full node.
 
 For example,
 ```bash

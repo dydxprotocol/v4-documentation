@@ -1,6 +1,6 @@
 # Required Node Configs
 
-💡IMPORTANT:💡 failure to set up below configurations on a validator node may compromise chain functionality.
+💡Note: failure to set up below configurations on a validator node may compromise chain functionality.
 
 ## Ethereum RPC Endpoint
 

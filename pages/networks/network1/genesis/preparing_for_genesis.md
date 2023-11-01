@@ -20,10 +20,6 @@ This document contains instructions to do the following steps:
 
 These are necessary steps to register your validator in the genesis and prepare for network startup.
 
-## Timeline
-
-See the [Testnet Launch Schedule](https://v4-teacher.vercel.app/testnets/schedule) for `dydx-testnet-4`. Please make sure to submit your gentx by the deadline highlighted in the schedule.
-
 ## Get the Latest `dydxprotocold` Binary
 
 Download the latest release binaries from [dydxprotocol/v4-chain releases](https://github.com/dydxprotocol/v4-chain/releases), which is `v0.3.6` [here](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv0.3.6)
