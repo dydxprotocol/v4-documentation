@@ -12,8 +12,8 @@
 
 ## Indexer endpoints
 
-* API: https://indexer.v4testnet.dydx.exchange/v4
-* WS: wss://indexer.v4testnet.dydx.exchange/v4/ws
+* API: https://dydx-testnet.imperator.co/v4
+* WS: wss://dydx-testnet.imperator.co/v4/ws
 
 ## Snapshot Service
 
