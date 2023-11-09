@@ -10,6 +10,11 @@
 * StakingCabin: `182ab0015fb4b7d751b12a9c0162ac123445eac1@seed.dydx-testnet.stakingcabin.com:26656`
 * StakerSpace: `76b472b107ccf20c3d6c110c4a2a217306d2dedb@dydx-seed.staker.space:26656`
 
+## Indexer endpoints
+
+* API: https://indexer.v4testnet.dydx.exchange/v4
+* WS: wss://indexer.v4testnet.dydx.exchange/v4/ws
+
 ## Snapshot Service
 
 https://bwarelabs.com/snapshots
