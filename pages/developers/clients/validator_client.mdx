@@ -37,6 +37,50 @@ import { Tab, Tabs } from "nextra-theme-docs";
   </Tab>
 </Tabs>
 
+## Configuring a Network
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+        const indexerConfig = new IndexerConfig(
+            {INDEXER_REST_URL},
+            {INDEXER_WEBSOCKET_URL}
+        );
+
+        const denomConfig = {
+            USDC_DENOM: //string
+            USDC_DECIMALS: //integer,
+            USDC_GAS_DENOM: //string
+            CHAINTOKEN_DENOM: //string
+            CHAINTOKEN_DECIMALS: //integer
+        };
+
+        const validatorConfig = new ValidatorConfig(
+            {VALIDATOR_REST_URL},
+            {CHAIN_ID},
+            denomConfig
+        );
+
+        const custom_network = new Network(
+            'custom-network-name',
+            indexerConfig,
+            validatorConfig
+        );
+
+        const client = await ValidatorClient.connect(
+            custom_network.validatorConfig
+        );
+    ```
+
+  </Tab>
+  <Tab>
+    ```python copy
+
+    ```
+
+  </Tab>
+</Tabs>
+
 ## Creating a LocalWallet
 
 <Tabs items={["TypeScript", "Python"]}>
