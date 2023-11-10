@@ -42,17 +42,24 @@ import { Tab, Tabs } from "nextra-theme-docs";
 <Tabs items={["TypeScript"]}>
   <Tab>
     ```typescript copy
+        import {
+          Network,
+          ValidatorClient,
+          IndexerConfig,
+          ValidatorConfig
+        } from '@dydxprotocol/v4-client-js';
+
         const indexerConfig = new IndexerConfig(
             {INDEXER_REST_URL},
             {INDEXER_WEBSOCKET_URL}
         );
 
         const denomConfig = {
-            USDC_DENOM: //string
-            USDC_DECIMALS: //integer,
-            USDC_GAS_DENOM: //string
-            CHAINTOKEN_DENOM: //string
-            CHAINTOKEN_DECIMALS: //integer
+            USDC_DENOM: "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5",
+            USDC_DECIMALS: 6,
+            USDC_GAS_DENOM: "uusdc",
+            CHAINTOKEN_DENOM: {CHAIN_TOKEN_DENOM} //string
+            CHAINTOKEN_DECIMALS: {CHAIN_TOKEN_DECIMALS} //integer
         };
 
         const validatorConfig = new ValidatorConfig(
