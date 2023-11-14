@@ -2,7 +2,7 @@
 
 dYdX offers a WebSocket API for streaming v4 updates.
 
-You can connect to the v4 Testnet's webSockets at: `wss://indexer.v4testnet2.dydx.exchange/v4/ws`
+See the [Indexer API](../../networks/network1/resources.md#indexer-endpoints) section for the base URL of the indexer
 
 ## Overall
 
