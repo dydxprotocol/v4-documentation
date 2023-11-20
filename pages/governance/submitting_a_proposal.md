@@ -1,6 +1,6 @@
 # Submitting a Proposal
 
-## Obtaining the `protocold` Binary
+## Obtaining the `dydxprotocold` Binary
 For instructions on compiling the `protocold` binary locally, refer to the dYdX Protocol's [README](https://github.com/dydxprotocol/v4-chain/tree/main/protocol#readme).
 
 Alternatively, if your platform is supported by the prebuilt binaries found in the [releases section](https://github.com/dydxprotocol/v4-chain/releases) of the repository, you can opt to download and use these binaries directly.
