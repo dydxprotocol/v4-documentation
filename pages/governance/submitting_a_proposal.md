@@ -13,6 +13,20 @@ Save the [chain-id](../networks/network1/network_constants.md#chain-id). This wi
 dydxprotocold config chain-id [chain_id]
 ```
 
+## Confirming Connectivity
+To ensure that you are successfully connecting, use any of the RPC endpoints listed in the [resources](../networks/network1/resources.md). Remember to append `:443` to the end of the RPC URI for proper access. Execute the following command, replacing `[RPC ENDPOINT]` with your chosen endpoint:
+
+```bash
+dydxprotocold status --node https://[RPC ENDPOINT]:443
+```
+
+## Registering an Account in the Keychain
+- Choose a unique key name to replace `[KEY NAME]`. This name will be used to identify your key within the keychain.
+```bash
+dydxprotocold keys add [KEY NAME] --recover
+```
+- Input your MNEMONIC into the terminal when prompted.
+
 ## Crafting a Proposal File
 To create a proposal, follow the template provided below. This structure outlines the essential elements of a proposal, including its title, deposit amount, summary, and specific messages. 
 
@@ -34,20 +48,6 @@ To create a proposal, follow the template provided below. This structure outline
 ```
 
 Once you have filled in the necessary details, save this structure as a JSON file. This file will be used in the submission process of your proposal.
-
-## Confirming Connectivity
-To ensure that you are successfully connecting, use any of the RPC endpoints listed in the [resources](../networks/network1/resources.md). Remember to append `:443` to the end of the RPC URI for proper access. Execute the following command, replacing `[RPC ENDPOINT]` with your chosen endpoint:
-
-```bash
-dydxprotocold status --node https://[RPC ENDPOINT]:443
-```
-
-## Registering an Account in the Keychain
-- Choose a unique key name to replace `[KEY NAME]`. This name will be used to identify your key within the keychain.
-```bash
-dydxprotocold keys add [KEY NAME] --recover
-```
-- Input your MNEMONIC into the terminal when prompted.
 
 ## Submitting the Proposal
 ```bash
