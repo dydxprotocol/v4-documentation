@@ -1,30 +1,28 @@
 # Starting the network
 
-***By using, recording, referencing, or downloading (i.e., any “action”) any information contained on this page or in any dYdX Trading Inc. ("dYdX") database, you hereby and thereby agree to the [v4 Terms of Use](https://dydx.exchange/v4-terms) and [Privacy Policy](https://dydx.exchange/privacy) governing such information, and you agree that such action establishes a binding agreement between you and dYdX.***
+***By using, recording, referencing, or downloading (i.e., any “action”) any information contained on this page or in any dYdX Operations Services Ltd. ("dYdX Operations subDAO") database, you hereby and thereby agree to the [dYdX Chain Docs Terms of Use](../../../terms_and_policies/terms_of_use) governing such information, and you agree that such action establishes a binding agreement between you and dYdX Operations subDAO.***
 
 
 ## Downloading `genesis.json`
 
-After the `gentx` collection process is complete, the dYdX team will announce in the `#v-dydx-public-testnet-updates` channel that the finalized `genesis.json` file is ready for download.
+After the `gentx` collection process is complete, the dYdX Operations subDAO team will announce in the `#ext-dydx-v4-validators-updates` channel that the finalized `genesis.json` file is ready for download.
 
-Download `genesis.json` file into `$HOME_TESTNET_4` , replacing the previous `genesis.json` file:
+Download `genesis.json` file into `$HOME/.dydxprotocol`, replacing the previous `genesis.json` file:
 
 ```bash
-# Run at root of `v4-testnets`.
-export HOME_TESTNET_4=<your dir>
-git checkout main
-git pull origin main
-cp dydx-testnet-4/genesis.json $HOME_TESTNET_4/config/genesis.json
+curl -Ls https://raw.githubusercontent.com/dydxopsdao/networks/main/dydx-mainnet-1/genesis.json > $HOME/.dydxprotocol/config/genesis.json
 ```
 
 Feel free to inspect the content of the `genesis.json` file, and let us know if there’s any questions/concerns.
 
+
 ## Get Latest Binary
 
-💡💡💡 We have published a newer `v0.4.0` binary ([link](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv0.4.0)) in our now public repository `dydxprotocol/v4-chain`. This is different from the binary used for `gentx` submission process. Please make ensure you use this newer binary to avoid consensus failure. 💡💡💡
+The network launch binary is available at [dYdX Protocol repository](https://github.com/dydxprotocol/v4-chain/releases)
 
 ```bash
-export BINARY_VERSION="v0.4.0"
+# Set the correct version, e.g. "v1.0.0"
+export BINARY_VERSION=<version>
 # Choose a platform. Supported: linux-amd64, linux-arm64
 export DYDX_PLATFORM="linux-amd64"
 curl -LO https://github.com/dydxprotocol/v4-chain/releases/download/protocol%2F$BINARY_VERSION/dydxprotocold-$BINARY_VERSION-$DYDX_PLATFORM.tar.gz
@@ -46,33 +44,58 @@ Check that the binary version is correct:
 dydxprotocold version --long
 ```
 
-The output should look like this (**make sure** the `version` and `commit` is correct):
+The output should look like this (**make sure** the `version` and `commit` are consistent):
 
 ```bash
-commit: a814748dfb39dc70302becbca95c19606e3bab8e
-cosmos_sdk_version: v0.47.3
-go: go version go1.19.9 <platform>
+commit: bd3ff30248d271719c687cc10159de479fdd904d
+cosmos_sdk_version: v0.47.4
+go: go version go1.21.3 <platform>
 name: dydxprotocol
 server_name: dydxprotocold
-version: 0.4.0
+version: 1.0.0
 ```
 
 ## [💡💡💡IMPORTANT:💡💡💡] Verify Config
 
 See [this requirement section](../../../validators/required_node_configs.md) to correctly configure the node.
 
-In `$HOME_TESTNET_4/config/config.toml`, check that `timeout_commit` value under  is equal to
+### config.toml ###
+
+#### Timeout Commit
+
+Please check that `timeout_commit` value under `$HOME/.dydxprotocol/config/config.toml` is equal to
 ```
 timeout_commit = "500ms"
 ```
 
-In `$HOME_TESTNET_4/config/app.toml`, update the `minium-gas-prices` variable to accept `adv4tnt` (`1e-18 dv4tnt`):
-```
-minimum-gas-prices = "0.025ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5,25000000000adv4tnt"
+#### Add Seed Nodes
+
+Seed nodes are how the nodes within the network communicate. Adding them ensures nodes have healthy peers.
+
+You can find a list of seed nodes [here](../resources#seed-nodes)
+
+```bash
+seeds="<comma separated seed nodes>"
+sed -i -e "s|^seeds *=.*|seeds = \"$seeds\"|" $HOME/.dydxprotocol/config/config.toml
 ```
 
-In `$HOME_TESTNET_4/config/app.toml`, enable grpc. The Cosmos gRPC service is used by various daemon processes, and **must be enabled** in order for the protocol to operate:
+### app.toml ###
+
+#### Minimum Gas Price
+
+Setting a known minimum gas price ensures interacting with the network is consistent and reliable. The minumum gas prices **must be set** for USDC and DYDX. Please make sure the `minimum-gas-prices` parameter is configured with 
+the correct *denoms* in `$HOME/.dydxprotocol/config/app.toml`. The price itself is up to each validator, we suggest the 
+following initial values (both gas prices are represented in `Xe-18` full coin)
+
+```bash
+sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0.025ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5,12500000000adydx\"|" $HOME/.dydxprotocol/config/app.toml
 ```
+
+#### Enable gRPC
+
+The Cosmos gRPC service is used by various daemon processes, and **must be enabled** in order for the protocol to operate.
+Please make sure that grpc is enabled in `$HOME/.dydxprotocol/config/app.toml`:
+```toml
 [grpc]
 
 # Enable defines if the gRPC server should be enabled.
@@ -81,8 +104,7 @@ enable = true
 
 In addition, non-standard gRPC ports are not supported at this time. Please run on port 9090, which is the default
 port specified in the config file:
-
-```
+```toml
 [grpc]
 
 ...
@@ -100,17 +122,15 @@ See [this requirement section](../../../validators/required_node_configs.md#ethe
 
 ## Starting the Node
 
-💡💡💡The testnet genesis is **17:00 UTC (13:00 ET), Tuesday 10/17/2023.** Please complete the following instructions by this time.💡💡💡
+💡💡💡Please complete the following instructions before the mainnet genesis timestamp.💡💡💡
 
 ### Option 1: Run `dydxprotocold` Directly
 
-Run `dydxprotocold` and connect to the seed node. The seed node info can be found [here](../resources.md#seed-nodes):
+Run `dydxprotocold` and connect to the seed node. The seed node info can be found in [Mainnet Info](../resources#seed-nodes):
 
 ```bash
-dydxprotocold start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TESTNET_4" --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
+dydxprotocold start --p2p.seeds="<comma separated seed nodes>" --home $HOME/.dydxprotocol --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
 ```
-
-**Note:** the seed node IP for testnet #3 is different from testnet #2.
 
 ### Option 2: Run `dydxprotocold` with `cosmovisor`
 
@@ -120,38 +140,38 @@ Install and initialize `cosmovisor` with instructions [here](../../../validators
 cosmovisor run version --long
 ```
 
-The output should look like this (**make sure** the `version` is consistent):
+The output should look like this (**make sure** the `version` and `commit` are consistent):
 
 ```bash
-commit: a814748dfb39dc70302becbca95c19606e3bab8e
-cosmos_sdk_version: v0.47.3
-go: go version go1.19.9 <platform>
+commit: bd3ff30248d271719c687cc10159de479fdd904d
+cosmos_sdk_version: v0.47.4
+go: go version go1.21.3 <platform>
 name: dydxprotocol
 server_name: dydxprotocold
-version: 0.4.0
+version: 1.0.0
 ```
 
 Run `dydxprotocold` with `cosmovisor` and connect to the seed node.
 
 ```bash
-cosmovisor run start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TESTNET_4" --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
+cosmovisor run start --p2p.seeds="<comma separated seed nodes>" --home $HOME/.dydxprotocol --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
 ```
 
-### Backup: Start the network with Persistent Peers
+### Announcing yourself and cooperating with others
 
 <aside>
-💡 The seed node should be sufficient for public testnet startup. However, if for any reason you’re seeing network issues (can troubleshoot at `localhost:26657/net_info`), you can also add the following flag to use the dYdX internal validators as persistent peers:
+💡 The seed node should be sufficient for network startup. However, if for any reason you’re seeing network issues (can troubleshoot at `localhost:26657/net_info`), you can also add the following flag to use the dYdX internal validators as persistent peers:
 
-`—p2p.persistent_peers="TODO”`
+`—p2p.persistent_peers="<list of persistent peers>”`
 
 </aside>
 
-Validators are also encouraged to share their IPs in #v-dydx-public-testnet-discussion and use each other as persistent peers. Each p2p.persistent_peers are separated by comma and use the format `<node_id>@<public_ip_address>:<port>`.
+Validators are also encouraged to share their IPs in #ext-dydx-v4-validators-discussion and use each other as persistent peers. Each p2p.persistent_peers are separated by comma and use the format `<node_id>@<public_ip_address>:<port>`.
 
-To find your node id, run
+To find your peer information, run
 
 ```protobuf
-dydxprotocold tendermint show-node-id
+echo $(dydxprotocold tendermint show-node-id)@$(curl ifconfig.me):26656
 ```
 
 ### Sanity Check
