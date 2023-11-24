@@ -68,7 +68,8 @@ go run scripts/bridge_events/bridge_events.go \
   -toblock <last_block_inclusive>
 ```
 
-In case you would like to experiment with bridging on Sepolia first, you can use [testTOKEN](https://sepolia.etherscan.io/token/0x6D5Bb505A4f85C10B122cCC36E30F57E2B86A291) and [wrappedTestToken](https://sepolia.etherscan.io/address/0xcca9D5f0a3c58b6f02BD0985fC7F9420EA24C1f0).
+In case you would like to experiment with bridging on Sepolia first, you can use [testTOKEN](https://sepolia.etherscan.io/token/0x6D5Bb505A4f85C10B122cCC36E30F57E2B86A291) and [wrappedTestToken](https://sepolia.etherscan.io/address/0xf75012C350E4AD55bE2048BD67CE6E03B20dE82D)
+(there was a earlier version of [wrappedTestToken](https://sepolia.etherscan.io/address/0xcca9D5f0a3c58b6f02BD0985fC7F9420EA24C1f0) during genesis - it is no longer used).
 
 ## Get the Latest `dydxprotocold` Binary
 
