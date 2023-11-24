@@ -3,24 +3,24 @@
 ## Native Token Denom
 
 ```
-NATIVE_TOKEN_DENOM=adv4tnt
+NATIVE_TOKEN_DENOM=adydx
 ```
 
 ## Chain ID
 
 ```
-CHAIN_ID=dydx-testnet-4
+CHAIN_ID=dydx-mainnet-1
 ```
 
 ## Chain Registry
 
 ```json
 {
-  "rpc": "https://dydx-testnet-archive.allthatnode.com:26657",
-  "rest": "https://dydx-testnet-archive.allthatnode.com:1317",
-  "chainId": "dydx-testnet-4",
-  "chainName": "dYdX Public Testnet",
-  "chainSymbolImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/dydx-testnet-4/chain.png",
+  "rpc": "https://dydx-dao-rpc.polkachu.com:26657",
+  "rest": "https://dydx-dao-api.polkachu.com",
+  "chainId": "dydx-mainnet-1",
+  "chainName": "dYdX Chain",
+  "chainSymbolImageUrl": "https://raw.githubusercontent.com/cosmos/chain-registry/master/dydx/images/dydx.png",
   "bech32Config": {
     "bech32PrefixAccPub": "dydxpub",
     "bech32PrefixValPub": "dydxvaloperpub",
@@ -33,15 +33,15 @@ CHAIN_ID=dydx-testnet-4
     "coinType": 118
   },
   "stakeCurrency": {
-    "coinDenom": "DV4TNT",
+    "coinDenom": "DYDX",
     "coinDecimals": 18,
-    "coinMinimalDenom": "adv4tnt",
+    "coinMinimalDenom": "adydx",
   },
   "currencies": [
     {
-      "coinDenom": "DV4TNT",
+      "coinDenom": "DYDX",
       "coinDecimals": 18,
-      "coinMinimalDenom": "adv4tnt",
+      "coinMinimalDenom": "adydx",
     },
     {
       "coinDenom": "USDC",
@@ -51,9 +51,9 @@ CHAIN_ID=dydx-testnet-4
   ],
   "feeCurrencies": [
     {
-      "coinDenom": "DV4TNT",
+      "coinDenom": "DYDX",
       "coinDecimals": 18,
-      "coinMinimalDenom": "adv4tnt",
+      "coinMinimalDenom": "adydx",
     },
     {
       "coinDenom": "USDC",
