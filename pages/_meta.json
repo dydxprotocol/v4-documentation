@@ -11,9 +11,9 @@
   "security": "Security",
   "terms_and_policies": "Terms and Policies",
   "app": {
-    "title": "Testnet ↗",
+    "title": "dYdX Chain ↗",
     "type": "page",
-    "href": "https://v4.testnet.dydx.exchange",
+    "href": "https://dydx.trade",
     "newWindow": true
   }
 }
