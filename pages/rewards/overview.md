@@ -11,14 +11,14 @@ There are several reward mechanisms available with the protocol software.
 
 ## Staking Rewards
 
-- Rewards distributed to Validators and Stakers (= Delegators)
+- Rewards distributed to `Validators` and `Stakers` (= Delegators)
 - `Staking Rewards = Trading Fees + Gas Fees - Community Tax - Validator Commission`
 - Distributed automatically every block
 - Must be claimed manually
 
 ## Trading Rewards
 
-- Rewards distributed to Traders after each successful trade
+- Rewards distributed to `Traders` after each successful trade
 - Based on a specified `formula` with several inputs
 - Distributed automatically every block with successful trades
 - Claimed automatically
