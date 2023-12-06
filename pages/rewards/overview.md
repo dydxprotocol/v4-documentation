@@ -19,6 +19,6 @@ There are several reward mechanisms available with the protocol software.
 ## Trading Rewards
 
 - Rewards distributed to Traders after each successful trade
-- Based on a formula with several inputs
+- Based on a specified `formula` with several inputs
 - Distributed automatically every block with successful trades
 - Claimed automatically

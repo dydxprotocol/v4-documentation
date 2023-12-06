@@ -1,12 +1,12 @@
 # Trading Rewards
 
-Trading rewards are designed to incentivize Traders to trade on the protocol. The source of trading rewards is a configured Rewards Treasury account.
+Trading rewards are designed to incentivize `Traders` to trade on the protocol. The source of trading rewards is a configured `Rewards Treasury` account.
 
-For each successful trade, Traders will be rewarded in `NATIVE_TOKEN` based on the formula outlined in the below section. Trading rewards are distributed automatically and directly to the trader’s account per block. 
+For each successful trade, `Traders` will be rewarded in `NATIVE_TOKEN` based on the formula outlined in the below section. Trading rewards are distributed automatically and directly to the trader’s account per block.
 
 ## Motivation
 
-The primary goal behind trading rewards is to incentivize trading on the protocol.
+**The primary goal behind trading rewards is to incentivize trading on the protocol.**
 
 To facilitate fair trading behaviors and to preserve the protocol’s safety, trading rewards have the following secondary goals:
 
