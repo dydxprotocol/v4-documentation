@@ -13,4 +13,4 @@ Subaccounts may have a limited number of open orders at any one time determined 
 
 For example up to 10 open bids across all markets for a subaccount with a net collateral of $2,000.
 
-Note that short-term `Immediate-or-Cancel` and `Fill-or-Kill` orders are always allowed.
+Note that short-term `Immediate-or-Cancel` and `Fill-or-Kill` orders are allowed regardless of the net collateral of the subaccount.
