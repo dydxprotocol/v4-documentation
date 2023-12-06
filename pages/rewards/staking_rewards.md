@@ -22,9 +22,7 @@ The details of how the Staking Rewards are calculated can be found in the [Cosmo
 
 ## Parameters
 
-<aside>
-💡 The current configuration and parameters can be found by querying the network.
-</aside>
+>💡 The current configuration and parameters can be found by querying the network.
 
 - `x/distribution/community_tax` : specifies the proportion of fee pool that should be sent to `community_treasury` before staking rewards are distributed. This value can be configured via gov.
 - `x/staking/validator_commission` : specifies the proportion of the staking rewards that a given validator will take from delegator’s reward. This is configured per validator and can be updated by the validator.
