@@ -21,16 +21,24 @@ https://bwarelabs.com/snapshots
 
 ## Public Endpoints
 
-**All That Node dYdX Protocol Page:**\
-https://www.allthatnode.com/dydx.dsrv
+**Enigma**\
+RPC: https://dydx-rpc-testnet.enigma-validator.com\
+REST: https://dydx-lcd-testnet.enigma-validator.com\
+
+
+**Lavendar Five**\
+RPC: https://testnet-dydx-rpc.lavenderfive.com\
+REST: https://testnet-dydx-api.lavenderfive.com\
+gRPC: testnet-dydx-grpc.lavenderfive.com:443
 
 **King Nodes**\
 RPC: https://test-dydx.kingnodes.com\
-gRPC:test-dydx-grpc.kingnodes.com
+gRPC:test-dydx-grpc.kingnodes.com:443
 
-**Node Fleet**\
-RPC: https://dydx-public-mainnet.nodefleet.org\
-gRPC: dydx-public-mainnet.grpc.nodefleet.org:443
+**Polkachu**\
+RPC: https://dydx-testnet-rpc.polkachu.com\
+REST: https://dydx-testnet-api.polkachu.com\
+gRPC: dydx-testnet-grpc.polkachu.com:23890
 
 ## Other Links
 
