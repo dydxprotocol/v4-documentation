@@ -18,7 +18,6 @@ The above info can be found in this [`networks` repository](https://github.com/d
 | Crosnest       | `4f20c3e303c9515051b6276aeb89c0b88ee79f8f@seed.dydx.cros-nest.com:26656`              |
 | DSRV           | `a9cae4047d5c34772442322b10ef5600d8e54900@dydx-mainnet-seednode.allthatnode.com:26656`|
 | Luganodes      | `802607c6db8148b0c68c8a9ec1a86fd3ba606af6@64.227.38.88:26656`                         |
-| kjnodes        | `400f3d9e30b69e78a7fb891f60d76fa3c73f0ecc@dydx.rpc.kjnodes.com:17059`                 |
 | NodeStake      | `4c30c8a95e26b07b249813b677caab28bf0c54eb@rpc.dydx.nodestake.top:666`                 |
 | AutoStake      | `ebc272824924ea1a27ea3183dd0b9ba713494f83@dydx-mainnet-seed.autostake.com:27366`      |
 | genznodes      | `09ba537d6563018b97c502979c3478df4decf426@dydxprotocol-seed.genznodes.dev:22656`      |
@@ -34,16 +33,16 @@ The above info can be found in this [`networks` repository](https://github.com/d
 ## Snapshot service
 | Type      | URI                                                    |
 |-----------|--------------------------------------------------------|
-| StateSync | `https://dydx-mainnet-statesync-rpc.bwarelabs.com` <br> `https://polkachu.com/state_sync/dydx` <br> `https://services.lavenderfive.com/mainnet/dydx/statesync` <br> `https://services.kjnodes.com/mainnet/dydx/state-sync` <br> `https://nodestake.top/dydx` <br> `https://autostake.com/networks/dydx/#services` <br> `https://genznodes.dev/resources/statesync/dydx` |
-| Snapshots | `https://bwarelabs.com/snapshots/dydx` <br> `https://polkachu.com/tendermint_snapshots/dydx` <br> `https://services.lavenderfive.com/mainnet/dydx/snapshot` <br> `https://services.kjnodes.com/mainnet/dydx/snapshot` <br> `https://nodestake.top/dydx`  <br> `https://autostake.com/networks/dydx/#services` <br> `https://genznodes.dev/resources/snapshot/dydx` |
+| StateSync | `https://dydx-mainnet-statesync-rpc.bwarelabs.com` <br> `https://polkachu.com/state_sync/dydx` <br> `https://dydx-ops-statesync.kingnodes.com/` <br> `https://services.lavenderfive.com/mainnet/dydx/statesync` <br> `https://nodestake.top/dydx` <br> `https://autostake.com/networks/dydx/#services` <br> `https://genznodes.dev/resources/statesync/dydx` |
+| Snapshots | `https://bwarelabs.com/snapshots/dydx` <br> `https://polkachu.com/tendermint_snapshots/dydx` <br> `https://dydx-archive-snapshot.kingnodes.com/` <br> `https://services.lavenderfive.com/mainnet/dydx/snapshot` <br> `https://nodestake.top/dydx`  <br> `https://autostake.com/networks/dydx/#services` <br> `https://genznodes.dev/resources/snapshot/dydx` |
 
 
 ## RPC endpoints
 | Type  | URI                                                                                       |
 |-------|-------------------------------------------------------------------------------------------|
-| RPC   | `https://dydx-dao-rpc.polkachu.com` <br> `https://dydx-mainnet-full-rpc.public.blastapi.io` <br> `https://dydx-ops-rpc.kingnodes.com` <br> `https://dydx-rpc.lavenderfive.com` <br> `https://dydx.rpc.kjnodes.com` <br> `https://rpc.dydx.nodestake.top` <br> `https://dydx-mainnet-rpc.autostake.com:443` <br> `https://dydxprotocol-rpc.genznodes.dev` |
-| REST  | `https://dydx-dao-api.polkachu.com` <br> `https://dydx-mainnet-full-lcd.public.blastapi.io` <br> `https://dydx-ops-rest.kingnodes.com` <br> `https://dydx-api.lavenderfive.com` <br> `https://dydx.api.kjnodes.com` <br> `https://api.dydx.nodestake.top` <br> `https://dydx-mainnet-lcd.autostake.com:443` <br> `https://dydxprotocol-api.genznodes.dev` |
-| gRPC  | `dydx-dao-grpc-1.polkachu.com:23890` <br> `dydx-dao-grpc-2.polkachu.com:23890` <br> `dydx-dao-grpc-3.polkachu.com:23890` <br> `dydx-dao-grpc-4.polkachu.com:23890` <br> `dydx-dao-grpc-5.polkachu.com:23890` <br> `dydx-mainnet-full-grpc.public.blastapi.io:443` <br> `https://dydx-ops-grpc.kingnodes.com` <br> `https://dydx-grpc.lavenderfive.com` <br> `dydx.grpc.kjnodes.com:443` <br> `https://grpc.dydx.nodestake.top` <br> `dydx-mainnet-grpc.autostake.com:443` <br> `dydxprotocol-grpc.genznodes.dev:27090` |
+| RPC   | `https://dydx-dao-rpc.polkachu.com` <br> `https://dydx-mainnet-full-rpc.public.blastapi.io` <br> `https://dydx-ops-rpc.kingnodes.com` <br> `https://dydx-rpc.lavenderfive.com` <br> `https://rpc.dydx.nodestake.top` <br> `https://dydx-mainnet-rpc.autostake.com:443` <br> `https://dydxprotocol-rpc.genznodes.dev` <br> `https://rpc-dydx.ecostake.com:443` <br> `https://rpc-dydx.cosmos-spaces.cloud` <br> `https://dydx-rpc.publicnode.com:443` <br> `https://dydx-rpc.enigma-validator.com` |
+| REST  | `https://dydx-dao-api.polkachu.com` <br> `https://dydx-mainnet-full-lcd.public.blastapi.io` <br> `https://dydx-ops-rest.kingnodes.com` <br> `https://dydx-api.lavenderfive.com` <br> `https://dydx-mainnet-lcd.autostake.com:443` <br> `https://rest-dydx.ecostake.com:443` <br> `https://api-dydx.cosmos-spaces.cloud` <br> `https://api.dydx.nodestake.top` <br> `https://dydxprotocol-api.genznodes.dev` <br> `https://dydx-rest.publicnode.com` <br> `https://rest-dydx.cros-nest.com:443` <br> `https://dydx-lcd.enigma-validator.com` |
+| gRPC  | `dydx-dao-grpc-1.polkachu.com:23890` <br> `dydx-dao-grpc-2.polkachu.com:23890` <br> `dydx-dao-grpc-3.polkachu.com:23890` <br> `dydx-dao-grpc-4.polkachu.com:23890` <br> `dydx-dao-grpc-5.polkachu.com:23890` <br> `dydx-mainnet-full-grpc.public.blastapi.io:443` <br> `https://dydx-ops-grpc.kingnodes.com` <br> `https://dydx-grpc.lavenderfive.com` <br> `https://grpc.dydx.nodestake.top` <br> `dydx-mainnet-grpc.autostake.com:443` <br> `dydxprotocol-grpc.genznodes.dev:27090` <br> `grpc-dydx.cosmos-spaces.cloud:4990` <br> `dydx-grpc.publicnode.com:443` |
 
 
 ## Archival nodes endpoints
