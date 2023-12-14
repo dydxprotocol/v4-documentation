@@ -33,7 +33,7 @@ The following decribes how to set various parameters for a new market and assume
 
 - Ticker Symbol (e.g. `BTC-USD` )
 - Reference price (e.g. `40,000`) and `p` value
-  - Defines the exponent on the reference price as `log_price:=FLOOR(log10(reference_price))`. For example `log_price:=FLOOR(log10(40,000))=4`
+  - Defines the exponent on the reference price as `p:=FLOOR(log10(reference_price))`. For example: `p:=FLOOR(log10(40,000))=4`
 - Exchanges required for oracles (`exchange_config_json`)
 - Liquidity Tier (these are based on the liquidity tiers recommended, so mappings could change if these tiers change)
   - 0: Large Cap (BTC/ETH)
