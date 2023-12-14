@@ -47,13 +47,66 @@ The following decribes how to set various parameters for a new market and assume
 | `MsgCreateOracleMarket` | `exponent` | Denotes the number of decimals a value should be shifted in the price daemon | `p-9` |
 | `MsgCreateOracleMarket` | `min_exchanges` | Used for an index price to be valid. | `3` |
 | `MsgCreateOracleMarket` | `min_price_change_ppm` | The minimum amount the index price has to change for an oracle price update to be valid. | Liquidity Tier 0: `1000` <br> Liquidity Tier 1: `2500` <br> Liquidity Tier 2: `4000` |
-| `MsgCreateOracleMarket` | `exchange_config_json` | Spot exchange query configuration for the oracle price | TODO: documentation coming soon. |
+| `MsgCreateOracleMarket` | `exchange_config_json` | Spot exchange query configuration for the oracle price | See [below](#exchange-config-json) |
 | `MsgCreatePerpetual` | `atomic_resolution` | L the exponent for converting an atomic amount (`size = 1`) to a full coin. |  `-6 - p` |
 | `MsgCreatePerpetual`  | `default_funding_ppm` | The default funding payment if there is no price premium. In parts-per-million. | `0` |
 | `Msg[Update/Create]ClobPair` | `quantum_conversion_exponent` | `10^quantum_conversion_exponent` gives the number of quote quantum traded per base quantum. | `-9` |
 | `Msg[Update/Create]ClobPair` | `subticks_per_tick` | Defines the tick size of the orderbook by defining how many subticks are in one tick. | Liquidity Tier 0: `100000` <br> Liquidity Tier 1 and 2 : `1000000` |
 | `Msg[Update/Create]ClobPair` | `step_base_quantums` | (aka step size): min increment in the size of orders (number of coins) on the CLOB in base quantums. | `1000000` |
 | `MsgDelayMessage` | `delay_blocks` | number of blocks before which the `MsgUpdateClobPair` is executed and transitions the market to `ACTIVE` | `3600` (equal to an hour at `1 sec` blocktime) |
+
+### exchange_config_json
+
+Below is an example `json` string for `exchange_config_json`. To convert this string into a single-line, quote-escaped string:
+
+```bash
+cat exchange_config.json | jq -c . | sed 's/"/\\"/g'
+```
+
+```json
+{
+   "exchanges":[
+      {
+         "exchangeName":"Binance",
+         "ticker":"BTCUSDT",
+         "adjustByMarket":"USDT-USD"
+      },
+      {
+         "exchangeName":"Bybit",
+         "ticker":"BTCUSDT",
+         "adjustByMarket":"USDT-USD"
+      },
+      {
+         "exchangeName":"CoinbasePro",
+         "ticker":"BTC-USD"
+      },
+      {
+         "exchangeName":"Huobi",
+         "ticker":"btcusdt",
+         "adjustByMarket":"USDT-USD"
+      },
+      {
+         "exchangeName":"Kraken",
+         "ticker":"XXBTZUSD"
+      },
+      {
+         "exchangeName":"Kucoin",
+         "ticker":"BTC-USDT",
+         "adjustByMarket":"USDT-USD"
+      },
+      {
+         "exchangeName":"Mexc",
+         "ticker":"BTC_USDT",
+         "adjustByMarket":"USDT-USD"
+      },
+      {
+         "exchangeName":"Okx",
+         "ticker":"BTC-USDT",
+         "adjustByMarket":"USDT-USD"
+      }
+   ]
+}
+```
 
 ## Example Proposal Json
 
@@ -63,13 +116,13 @@ Below is an example proposal JSON file to propose adding `BTC-USD` as a new perp
 {
     "title": "Add BTC-USD perpetual market",
     "deposit": "10000000000000000000000adv4tnt",
-    "summary": "Add the `x/prices`, `x/perpetuals` and `x/clob` parameters needed for a BTC-UTC perpetual market. Create the market in `INITIALIZING` status and transition it to `ACTIVE` status after 3600 blocks."
+    "summary": "Add the `x/prices`, `x/perpetuals` and `x/clob` parameters needed for a BTC-UTC perpetual market. Create the market in `INITIALIZING` status and transition it to `ACTIVE` status after 3600 blocks.",
     "messages": [
       {
         "@type": "/dydxprotocol.prices.MsgCreateOracleMarket",
         "authority": "dydx10d07y265gmmuvt4z0w9aw880jnsr700jnmapky",
         "params": {
-            "exchange_config_json": '{"exchanges":[{"exchangeName":"Binance","ticker":"BTCUSDT","adjustByMarket":"USDT-USD"},{"exchangeName":"Bybit","ticker":"BTCUSDT","adjustByMarket":"USDT-USD"},{"exchangeName":"CoinbasePro","ticker":"BTC-USD"},{"exchangeName":"Huobi","ticker":"btcusdt","adjustByMarket":"USDT-USD"},{"exchangeName":"Kraken","ticker":"XXBTZUSD"},{"exchangeName":"Kucoin","ticker":"BTC-USDT","adjustByMarket":"USDT-USD"},{"exchangeName":"Mexc","ticker":"BTC_USDT","adjustByMarket":"USDT-USD"},{"exchangeName":"Okx","ticker":"BTC-USDT","adjustByMarket":"USDT-USD"}]}',
+            "exchange_config_json": "{\"exchanges\":[{\"exchangeName\":\"Binance\",\"ticker\":\"BTCUSDT\",\"adjustByMarket\":\"USDT-USD\"},{\"exchangeName\":\"Bybit\",\"ticker\":\"BTCUSDT\",\"adjustByMarket\":\"USDT-USD\"},{\"exchangeName\":\"CoinbasePro\",\"ticker\":\"BTC-USD\"},{\"exchangeName\":\"Huobi\",\"ticker\":\"btcusdt\",\"adjustByMarket\":\"USDT-USD\"},{\"exchangeName\":\"Kraken\",\"ticker\":\"XXBTZUSD\"},{\"exchangeName\":\"Kucoin\",\"ticker\":\"BTC-USDT\",\"adjustByMarket\":\"USDT-USD\"},{\"exchangeName\":\"Mexc\",\"ticker\":\"BTC_USDT\",\"adjustByMarket\":\"USDT-USD\"},{\"exchangeName\":\"Okx\",\"ticker\":\"BTC-USDT\",\"adjustByMarket\":\"USDT-USD\"}]}",
             "exponent": -5,
             "id": 1001,
             "min_exchanges": 3,
@@ -122,7 +175,7 @@ Below is an example proposal JSON file to propose adding `BTC-USD` as a new perp
         },
         "delay_blocks" : 3600
       }
-    ],
+    ]
   }
   ```
 
