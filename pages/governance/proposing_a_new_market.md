@@ -83,7 +83,7 @@ To select oracle sources, follow the procedure below:
 - Kucoin
 - MEXC
 
-(only consider on a discretionary basis) 
+(only consider on a discretionary basis)  
 
 - HTX (previously Huobi)
 - Bitstamp
