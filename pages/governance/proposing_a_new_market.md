@@ -55,7 +55,46 @@ The following decribes how to set various parameters for a new market and assume
 | `Msg[Update/Create]ClobPair` | `step_base_quantums` | (aka step size): min increment in the size of orders (number of coins) on the CLOB in base quantums. | `1000000` |
 | `MsgDelayMessage` | `delay_blocks` | number of blocks before which the `MsgUpdateClobPair` is executed and transitions the market to `ACTIVE` | `3600` (equal to an hour at `1 sec` blocktime) |
 
-### exchange_config_json
+### Determining liquidity tier
+
+Liquidity tier is used to determine various risk and market parameters. A new market should be 2: Long-tail unless there are strong reasons to think that it is safe, in which case it can 1: Mid-cap. Liquidity tier and associated parameters can be updated through governance vote at a later date. A market may be considered for 1: Mid-cap if there are at least 8 robust spot markets with reasonable liquidity and 30d daily trading volume is at least $100M across exchanges.
+
+
+## Choosing oracle sources
+
+To select oracle sources, follow the procedure below: 
+
+1. Find spot market tickers from eligible exchanges with the desired symbol as the base asset and USD or USDT as the quote asset. Eligible exchanges are listed [here](./proposing_a_new_market.md#List-of-eligible-exchanges) 
+  - If the quote asset is USDT, add the following flag `"adjustByMarket":"USDT-USD"`. This flag ensures that the base asset oracle price is adjusted by the USDT oracle price. 
+2. Currently the software supports only one ticker from an exchange per market. Among the tickers from an exchange, choose the most liquid market with the highest trading volume. If one market is more liquid but another has more trading volume, choose the one with deeper liquidity. 
+3. Exclude markets that do not meet the depth and daily trading volume threshold over the past month. 
+  - Both sides of liquidity at 2% from the midprice should be at least `$50,000`. 
+  - The average daily trading volume should be at least `$100,000`. 
+4. Ensure there are at least 6 sources. If there are less than 6 sources, this market should not be added to prevent potential market manipulation attacks and consensus failures from oracle price updates unless more robust oracle sources are available.
+
+### List of eligible exchanges
+
+- Binance
+- Coinbase
+- OKX
+- Bybit
+- Gate
+- Kraken
+- Kucoin
+- MEXC
+
+(only consider on a discretionary basis) 
+
+- HTX (previously Huobi)
+- Bitstamp
+
+Exchanges not included in the above list are not currently supported by the software. Furthermore, we do not recommend tickers from the following exchanges as oracle sources:
+
+- Bitfinex
+- BinanceUS
+- Crypto.com
+
+### `exchange_config_json`
 
 Below is an example `json` string for `exchange_config_json`. To convert this string into a single-line, quote-escaped string:
 
