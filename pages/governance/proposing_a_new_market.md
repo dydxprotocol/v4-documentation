@@ -35,10 +35,10 @@ The following decribes how to set various parameters for a new market and assume
 - Reference price (e.g. `40,000`) and `p` value
   - Defines the exponent on the reference price as `p:=FLOOR(log10(reference_price))`. For example: `p:=FLOOR(log10(40,000))=4`
 - Exchanges required for oracles (`exchange_config_json`)
-- Liquidity Tier (these are based on the liquidity tiers recommended, so mappings could change if these tiers change)
+- Liquidity Tier (can be updated through governance vote at a later date.)
   - 0: Large Cap (BTC/ETH)
-  - 1: Mid-Cap
-  - 2: Long-tail
+  - 1: Mid-Cap (Markets with at least 8 robust oracle sources with liquidity >= 50K on both sides and 30d daily spot trading volume >= $100M.)
+  - 2: Long-tail (All others)
 
 ### Outputs
 
@@ -47,7 +47,7 @@ The following decribes how to set various parameters for a new market and assume
 | `MsgCreateOracleMarket` | `exponent` | Denotes the number of decimals a value should be shifted in the price daemon | `p-9` |
 | `MsgCreateOracleMarket` | `min_exchanges` | Used for an index price to be valid. | `3` |
 | `MsgCreateOracleMarket` | `min_price_change_ppm` | The minimum amount the index price has to change for an oracle price update to be valid. | Liquidity Tier 0: `1000` <br> Liquidity Tier 1: `2500` <br> Liquidity Tier 2: `4000` |
-| `MsgCreateOracleMarket` | `exchange_config_json` | Spot exchange query configuration for the oracle price | See [below](#exchange-config-json) |
+| `MsgCreateOracleMarket` | `exchange_config_json` | Spot exchange query configuration for the oracle price | See [below](./proposing_a_new_market.md#Choosing-oracle-sources) |
 | `MsgCreatePerpetual` | `atomic_resolution` | L the exponent for converting an atomic amount (`size = 1`) to a full coin. |  `-6 - p` |
 | `MsgCreatePerpetual`  | `default_funding_ppm` | The default funding payment if there is no price premium. In parts-per-million. | `0` |
 | `Msg[Update/Create]ClobPair` | `quantum_conversion_exponent` | `10^quantum_conversion_exponent` gives the number of quote quantum traded per base quantum. | `-9` |
@@ -55,16 +55,11 @@ The following decribes how to set various parameters for a new market and assume
 | `Msg[Update/Create]ClobPair` | `step_base_quantums` | (aka step size): min increment in the size of orders (number of coins) on the CLOB in base quantums. | `1000000` |
 | `MsgDelayMessage` | `delay_blocks` | number of blocks before which the `MsgUpdateClobPair` is executed and transitions the market to `ACTIVE` | `3600` (equal to an hour at `1 sec` blocktime) |
 
-### Determining liquidity tier
-
-Liquidity tier is used to determine various risk and market parameters. A new market should be 2: Long-tail unless there are strong reasons to think that it is safe, in which case it can 1: Mid-cap. Liquidity tier and associated parameters can be updated through governance vote at a later date. A market may be considered for 1: Mid-cap if there are at least 8 robust spot markets with reasonable liquidity and 30d daily trading volume is at least $100M across exchanges.
-
-
 ## Choosing oracle sources
 
 To select oracle sources, follow the procedure below: 
 
-1. Find spot market tickers from eligible exchanges with the desired symbol as the base asset and USD or USDT as the quote asset. Eligible exchanges are listed [here](./proposing_a_new_market.md#List-of-eligible-exchanges) 
+1. Find spot market tickers from eligible exchanges with the desired symbol as the base asset and USD or USDT as the quote asset. See below for a list of eligible exchanges.
   - If the quote asset is USDT, add the following flag `"adjustByMarket":"USDT-USD"`. This flag ensures that the base asset oracle price is adjusted by the USDT oracle price. 
 2. Currently the software supports only one ticker from an exchange per market. Among the tickers from an exchange, choose the most liquid market with the highest trading volume. If one market is more liquid but another has more trading volume, choose the one with deeper liquidity. 
 3. Exclude markets that do not meet the depth and daily trading volume threshold over the past month. 
@@ -74,6 +69,7 @@ To select oracle sources, follow the procedure below:
 
 ### List of eligible exchanges
 
+Recommended Exchanges:
 - Binance
 - Coinbase
 - OKX
@@ -83,18 +79,18 @@ To select oracle sources, follow the procedure below:
 - Kucoin
 - MEXC
 
-(only consider on a discretionary basis)  
-
+Use at discretion:
 - HTX (previously Huobi)
 - Bitstamp
 
-Exchanges not included in the above list are not currently supported by the software. Furthermore, we do not recommend tickers from the following exchanges as oracle sources:
-
+Not recommended: 
 - Bitfinex
 - BinanceUS
 - Crypto.com
 
-### `exchange_config_json`
+Exchanges not included in the above list are not currently supported by the software. 
+
+`exchange_config_json`
 
 Below is an example `json` string for `exchange_config_json`. To convert this string into a single-line, quote-escaped string:
 
