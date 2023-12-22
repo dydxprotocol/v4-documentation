@@ -61,8 +61,8 @@ To select oracle sources, follow the procedure below:
 
 1. Find spot market tickers from eligible exchanges with the desired symbol as the base asset and USD or USDT as the quote asset. See below for a list of eligible exchanges.
   - If the quote asset is USDT, add the following flag `"adjustByMarket":"USDT-USD"`. This flag ensures that the base asset oracle price is adjusted by the USDT oracle price. 
-2. Currently the software supports only one ticker from an exchange per market. Among the tickers from an exchange, choose the most liquid market with the highest trading volume. If one market is more liquid but another has more trading volume, choose the one with deeper liquidity. 
-3. Exclude markets that do not meet the depth and daily trading volume threshold over the past month. 
+2. Currently the software supports only one source from an exchange per market. Among the tickers from an exchange, choose the most liquid spot market with the highest trading volume. If one market is more liquid but another has more trading volume, choose the one with deeper liquidity. 
+3. Exclude oracle sources that do not meet the depth and daily trading volume threshold over the past month. 
   - Both sides of liquidity at 2% from the midprice should be at least `$50,000`. 
   - The average daily trading volume should be at least `$100,000`. 
 4. Ensure there are at least 6 sources. If there are less than 6 sources, this market should not be added to prevent potential market manipulation attacks and consensus failures from oracle price updates unless more robust oracle sources are available.
@@ -79,7 +79,7 @@ Recommended Exchanges:
 - Kucoin
 - MEXC
 
-Use at discretion:
+Only use if necessary:
 - HTX (previously Huobi)
 - Bitstamp
 
