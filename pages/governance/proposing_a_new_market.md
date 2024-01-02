@@ -35,10 +35,10 @@ The following decribes how to set various parameters for a new market and assume
 - Reference price (e.g. `40,000`) and `p` value
   - Defines the exponent on the reference price as `p:=FLOOR(log10(reference_price))`. For example: `p:=FLOOR(log10(40,000))=4`
 - Exchanges required for oracles (`exchange_config_json`)
-- Liquidity Tier (these are based on the liquidity tiers recommended, so mappings could change if these tiers change)
+- Liquidity Tier (can be updated through governance vote at a later date.)
   - 0: Large Cap (BTC/ETH)
-  - 1: Mid-Cap
-  - 2: Long-tail
+  - 1: Mid-Cap (Markets with at least 8 robust oracle sources with liquidity >= 50K on both sides and 30d daily spot trading volume >= $100M.)
+  - 2: Long-tail (All others)
 
 ### Outputs
 
@@ -47,7 +47,7 @@ The following decribes how to set various parameters for a new market and assume
 | `MsgCreateOracleMarket` | `exponent` | Denotes the number of decimals a value should be shifted in the price daemon | `p-9` |
 | `MsgCreateOracleMarket` | `min_exchanges` | Used for an index price to be valid. | `3` |
 | `MsgCreateOracleMarket` | `min_price_change_ppm` | The minimum amount the index price has to change for an oracle price update to be valid. | Liquidity Tier 0: `1000` <br> Liquidity Tier 1: `2500` <br> Liquidity Tier 2: `4000` |
-| `MsgCreateOracleMarket` | `exchange_config_json` | Spot exchange query configuration for the oracle price | See [below](#exchange-config-json) |
+| `MsgCreateOracleMarket` | `exchange_config_json` | Spot exchange query configuration for the oracle price | See [below](./proposing_a_new_market.md#Choosing-oracle-sources) |
 | `MsgCreatePerpetual` | `atomic_resolution` | L the exponent for converting an atomic amount (`size = 1`) to a full coin. |  `-6 - p` |
 | `MsgCreatePerpetual`  | `default_funding_ppm` | The default funding payment if there is no price premium. In parts-per-million. | `0` |
 | `Msg[Update/Create]ClobPair` | `quantum_conversion_exponent` | `10^quantum_conversion_exponent` gives the number of quote quantum traded per base quantum. | `-9` |
@@ -55,7 +55,42 @@ The following decribes how to set various parameters for a new market and assume
 | `Msg[Update/Create]ClobPair` | `step_base_quantums` | (aka step size): min increment in the size of orders (number of coins) on the CLOB in base quantums. | `1000000` |
 | `MsgDelayMessage` | `delay_blocks` | number of blocks before which the `MsgUpdateClobPair` is executed and transitions the market to `ACTIVE` | `3600` (equal to an hour at `1 sec` blocktime) |
 
-### exchange_config_json
+## Choosing oracle sources
+
+To select oracle sources, follow the procedure below: 
+
+1. Find spot market tickers from eligible exchanges with the desired symbol as the base asset and USD or USDT as the quote asset. See below for a list of eligible exchanges.
+  - If the quote asset is USDT, add the following flag `"adjustByMarket":"USDT-USD"`. This flag ensures that the base asset oracle price is adjusted by the USDT oracle price. 
+2. Currently the software supports only one source from an exchange per market. Among the tickers from an exchange, choose the most liquid spot market with the highest trading volume. If one market is more liquid but another has more trading volume, choose the one with deeper liquidity. 
+3. Exclude oracle sources that do not meet the depth and daily trading volume threshold over the past month. 
+  - Both sides of liquidity at 2% from the midprice should be at least `$50,000`. 
+  - The average daily trading volume should be at least `$100,000`. 
+4. Ensure there are at least 6 sources. If there are less than 6 sources, this market should not be added to prevent potential market manipulation attacks and consensus failures from oracle price updates unless more robust oracle sources are available.
+
+### List of eligible exchanges
+
+Recommended Exchanges:
+- Binance
+- Coinbase
+- OKX
+- Bybit
+- Gate
+- Kraken
+- Kucoin
+- MEXC
+
+Only use if necessary:
+- HTX (previously Huobi)
+- Bitstamp
+
+Not recommended: 
+- Bitfinex
+- BinanceUS
+- Crypto.com
+
+Exchanges not included in the above list are not currently supported by the software. 
+
+`exchange_config_json`
 
 Below is an example `json` string for `exchange_config_json`. To convert this string into a single-line, quote-escaped string:
 
