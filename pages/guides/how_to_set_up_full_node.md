@@ -30,8 +30,7 @@ to get the applicable Genesis state of the network.
  - https://dydx.rpc.kjnodes.com/genesis
  - https://rpc.dydx.nodestake.top/genesis
  - https://dydx-mainnet-rpc.autostake.com:443/genesis
- - https://dydxprotocol-rpc.genznodes.dev/genesis
- - Also check [RPC endpoints → RPC](../networks/network1/resources.md#rpc-endpoints)
+ - Also check [Full node endpoints → RPC](../networks/network1/resources.md#full-node-endpoints)
 
 ## Install Bware’s snapshot (optional but saves days)
 1. From https://bwarelabs.com/snapshots/dydx
@@ -43,7 +42,7 @@ to get the applicable Genesis state of the network.
  - https://nodestake.top/dydx
  - https://autostake.com/networks/dydx/#services
  - https://genznodes.dev/resources/snapshot/dydx
- - Also check [“Snapshot service → Snapshots](../networks/network1/resources.md#snapshot-service)
+ - Also check [Snapshot service](../networks/network1/resources.md#snapshot-service)
 
 ## Start the full node
 1. Start the full node. Note that you may need to change the `--p2p.seeds` parameter depending on the applicable v4 software blockchain network – you can find an example on [Resources page under “Seed nodes”](../networks/network1/resources.md#seed-nodes)
