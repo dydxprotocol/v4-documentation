@@ -9,7 +9,7 @@ Faucet is only available on test environments for testers to get test funds and 
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-pnpm install @dydxprotocol/v4-client
+pnpm install @dydxprotocol/v4-client-js
 ```
 </Tab>
 <Tab>
@@ -24,7 +24,7 @@ pip install v4-client-py
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-import { FaucetClient } from "@dydxprotocol/v4-client";
+import { FaucetClient } from "@dydxprotocol/v4-client-js";
 
 const client = new FaucetClient(FaucetApiHost.TESTNET);
 const address = /* your dYdX chain address */;
@@ -49,7 +49,7 @@ faucet_response = client.fill(address, 0, 2000)
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-import { FaucetClient } from "@dydxprotocol/v4-client";
+import { FaucetClient } from "@dydxprotocol/v4-client-js";
 
 const client = new FaucetClient(FaucetApiHost.TESTNET);
 const address = /* your dYdX chain address */;
