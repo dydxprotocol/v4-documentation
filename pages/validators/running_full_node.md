@@ -22,3 +22,5 @@ dydxprotocold start --p2p.seeds="..." --bridge-daemon-eth-rpc-endpoint="<eth rpc
 
 💡**Note**: if you want to disable gRPC on your full node, it is important to start the node with the
 `--non-validating-full-node=true` flag. Otherwise, the application will require that gRPC be enabled.
+
+***To explore the steps in greater detail, [see the guide](../guides/how_to_set_up_full_node.md)***
