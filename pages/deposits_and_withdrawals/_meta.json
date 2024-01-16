@@ -1,5 +1,3 @@
 {
-  "rate_limits": "Rate Limits",
-  "other_limits": "Other Limits",
-  "short_term_vs_stateful": "Short-term vs Stateful"
+  "cli_commands": "CLI Commands"
 }
