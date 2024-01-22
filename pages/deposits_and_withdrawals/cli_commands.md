@@ -2,7 +2,8 @@
 
 ### Deposit to Subaccount
 
-The below cmd allows depositing funds into a subaccount from a sender. This can be a self deposit with the sender and recipient address being the same
+The below cmd allows depositing funds into a subaccount (`x/subaccounts`) from a sender's `x/bank` account. 
+Typically, this cmd is used to self deposit, which can be done by setting the sender and recipient address to be the same address, as in the provided example.
 ```bash
 dydxprotocold tx sending deposit-to-subaccount <sender_key_or_address> <recipient_address> <recipient_subaccount_number> <quantums> [flags]
 ```
@@ -17,7 +18,8 @@ Note: Token denoms for transfer amounts and fees can be found [here](https://doc
 
 ### Withdraw from Subaccount
 
-The below cmd allows withdrawing funds from a subaccount to a recipient. This can be a self withdraw with the sender and recipient address being the same
+The below cmd allows withdrawing funds from a subaccount (`x/subaccounts`) to a sender's `x/bank` account.
+Typically, this cmd is used to self withdraw, which can be done by setting the sender and recipient address to be the same address, as in the provided example.
 ```bash
 dydxprotocold tx sending withdraw-from-subaccount <sender_key_or_address> <sender_subaccount_number> <recipient_address> <quantums> [flags]
 ```
