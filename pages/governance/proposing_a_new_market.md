@@ -91,7 +91,7 @@ Not recommended:
 
 Exchanges not included in the above list are not currently supported by the software.
 
-##
+## Example
 
 ### Example of markets with robust oracle sources
 Here is a [list](https://docs.google.com/spreadsheets/d/1zjkV9R7R_7KMItuzqzvKGwefSBRfE-ZNAx1LH55OcqY/edit#gid=1489690476) of a few markets and their oracle sources evaluated based on the methodology above. 
