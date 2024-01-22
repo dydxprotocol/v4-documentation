@@ -17,7 +17,7 @@ and call ValidatorClient with the correct quantums and subticks for you.
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```bash copy
-    pnpm install @dydxprotocol/v4-client 
+    pnpm install @dydxprotocol/v4-client-js 
     ```
   </Tab>
   <Tab>
@@ -32,7 +32,7 @@ and call ValidatorClient with the correct quantums and subticks for you.
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```typescript copy
-    import { CompositeClient } from "@dydxprotocol/v4-client";
+    import { CompositeClient } from "@dydxprotocol/v4-client-js";
 
     const client = await CompositeClient.connect(Network.testnet());
     ```
@@ -56,7 +56,7 @@ and call ValidatorClient with the correct quantums and subticks for you.
     import {
       BECH32_PREFIX,
       LocalWallet,
-    } from '@dydxprotocol/v4-client';
+    } from '@dydxprotocol/v4-client-js';
 
     const mnemonic = 'YOUR MNEMONIC HERE';
     const wallet = await LocalWallet.fromMnemonic(mnemonic, BECH32_PREFIX);
@@ -80,7 +80,7 @@ and call ValidatorClient with the correct quantums and subticks for you.
     ```typescript copy
     import {
       OrderExecution, OrderSide, OrderTimeInForce, OrderType,
-    } from '@dydxprotocol/v4-client';
+    } from '@dydxprotocol/v4-client-js';
     const subaccount = new SubaccountClient(wallet, 0);
     const clientId = 123; // set to a number, can be used by the client to identify the order
     const market = "BTC-USD"; // perpertual market id
