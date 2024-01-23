@@ -1,5 +1,7 @@
 ## CLI commands
 
+Note: Native token denoms for transfer amounts and fees can be found [here](../networks/network1/network_constants#native-token-denom)
+
 ### Deposit to Subaccount
 
 The below cmd allows depositing funds into a subaccount (`x/subaccounts`) from a sender's `x/bank` account. 
@@ -12,7 +14,6 @@ Example:
 ```bash
 dydxprotocold tx sending deposit-to-subaccount dydx1g2ygh8ufgwwpg5clp2qh3tmcmlewuyt2z6px8k dydx1g2ygh8ufgwwpg5clp2qh3tmcmlewuyt2z6px8k 0 <usdc_quantum_uint64> --keyring-backend test --fees 5000000000000000<native_token_denom>
 ```
-Note: Token denoms for transfer amounts and fees can be found [here](../networks/network1/network_constants#native-token-denom)
 
 
 ### Withdraw from Subaccount
