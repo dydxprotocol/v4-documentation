@@ -89,9 +89,14 @@ Not recommended:
 - BinanceUS
 - Crypto.com
 
-Exchanges not included in the above list are not currently supported by the software. 
+Exchanges not included in the above list are not currently supported by the software.
 
-`exchange_config_json`
+## Example
+
+### Example of markets with robust oracle sources
+Here is a [list](https://docs.google.com/spreadsheets/d/1zjkV9R7R_7KMItuzqzvKGwefSBRfE-ZNAx1LH55OcqY/edit#gid=1489690476) of a few markets and their oracle sources evaluated based on the methodology above. 
+
+### `exchange_config_json`
 
 Below is an example `json` string for `exchange_config_json`. To convert this string into a single-line, quote-escaped string:
 
@@ -144,7 +149,7 @@ cat exchange_config.json | jq -c . | sed 's/"/\\"/g'
 }
 ```
 
-## Example Proposal Json
+### Example Proposal Json
 
 Below is an example proposal JSON file to propose adding `BTC-USD` as a new perpetual market (if it had not been added yet).
 
