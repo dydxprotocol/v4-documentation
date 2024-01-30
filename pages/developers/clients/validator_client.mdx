@@ -24,7 +24,7 @@ import { Tab, Tabs } from "nextra-theme-docs";
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```typescript copy
-    import { ValidatorClient } from "@dydxprotocol/v4-client-js";
+    import { ValidatorClient, Network } from "@dydxprotocol/v4-client-js";
 
     const client = await ValidatorClient.connect(Network.testnet().validatorConfig);
     ```
@@ -47,7 +47,7 @@ import { Tab, Tabs } from "nextra-theme-docs";
           ValidatorClient,
           IndexerConfig,
           ValidatorConfig
-        } from '@dydxprotocol/v4-client-js-js';
+        } from '@dydxprotocol/v4-client-js';
 
         const indexerConfig = new IndexerConfig(
             {INDEXER_REST_URL},
@@ -310,8 +310,7 @@ import { Tab, Tabs } from "nextra-theme-docs";
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```typescript copy
-    import { Order_Side, Order_TimeInForce } from '@dydxprotocol/dydxjs/src/codegen/dydxprotocol/clob/order';
-    import { OrderFlags, SubaccountClient } from '@dydxprotocol/v4-client-js';
+    import { OrderFlags, Order_Side, Order_TimeInForce, SubaccountClient } from '@dydxprotocol/v4-client-js';
 
     const subaccount = new SubaccountClient(wallet, 0);
     const clientId = 123 // set to a number, can be used by the client to identify the order
