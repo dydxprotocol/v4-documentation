@@ -104,7 +104,7 @@ chmod 755 dydxprotocold
 4. Restart the application using the **new binary from step 1**.
 
 ```bash
-./dydxprotocold start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656"
+./dydxprotocold start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656" --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
 ```
 
 #### Upgrading to a Patch Version (e.g. v0.0.2)
@@ -120,7 +120,7 @@ chmod 755 dydxprotocold
 4. Restart the application using the new binary from step 1.
 
 ```bash
-./dydxprotocold start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656"
+./dydxprotocold start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656" --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
 ```
 
 ---
@@ -163,5 +163,5 @@ If you don’t have a data backup:
 3. Restart your node.
 
 ```bash
-./dydxprotocold start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656"
+./dydxprotocold start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656" --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
 ```

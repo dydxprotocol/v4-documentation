@@ -17,7 +17,7 @@ Find the seed node's ID and the IP address from [Resources](../networks/network1
 
 For example,
 ```bash
-dydxprotocold start --p2p.seeds="..." --non-validating-full-node=true
+dydxprotocold start --p2p.seeds="..." --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>" --non-validating-full-node=true
 ```
 
 💡**Note**: if you want to disable gRPC on your full node, it is important to start the node with the
