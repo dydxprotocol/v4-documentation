@@ -50,7 +50,7 @@ pruning = "custom"
 # Larger numbers could be used for full-nodes if they are used for historical queries.
 pruning-keep-recent = "100"
 
-# Any prime number between "17" and "97", inclusive.
+# Any prime number between "13" and "97", inclusive.
 pruning-interval = "17"
 ```
 
