@@ -85,7 +85,7 @@ mv <path_to_patch_version> $DAEMON_HOME/cosmovisor/current/bin
 5. Restart `cosmovisor`
 
 ```bash
-cosmovisor run start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656"
+cosmovisor run start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656" --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
 ```
 
 ### 🦾 Manual Users
@@ -146,7 +146,7 @@ mv ~/.dydxprotocol/data-backup-YYYY-MM-DD ~/.dydxprotocol/data
 3. Restart your node.
 
 ```bash
-cosmovisor run start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656"
+cosmovisor run start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656" --bridge-daemon-eth-rpc-endpoint="<eth rpc endpoint>"
 ```
 
 ### 🦾 Manual Users
