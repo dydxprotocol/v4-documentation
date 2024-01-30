@@ -1,28 +1,17 @@
-# Performing upgrades
+# Performing Upgrades
 
-## Running a validator and managing upgrades
+## Managing Upgrades
 
 Validators can choose how to run a validator and manage software upgrades according to their preferred option:
 
-1. Using `cosmovisor`
+1. Using [Cosmovisor](./cosmovisor.md)
 2. Manual
-
-`cosmovisor` is a small process manager for Cosmos SDK application binaries that monitors the governance module for incoming chain upgrade proposals. If it sees a proposal that gets approved, `cosmovisor` can automatically download the new binary, stop the current binary, switch from the old binary to the new one, and finally restart the node with the new binary.
-
-We recommend validators to use `cosmovisor` to run their nodes. This will make low-downtime upgrades smoother, as validators don’t have to manually upgrade binaries during the upgrade. Instead, they can pre-install new binaries, and `cosmovisor` will automatically update them based on the on-chain software upgrade proposals.
-
-### Installation instructions
-
-See [here](../cosmovisor.md)  for installation instructions.
-
----
 
 ## Voting for Upgrade Proposals
 
 See [Governance -> Voting](../../governance/voting.md)
 
 ## Upgrades
-
 
 Releases for the dYdX chain will use [semantic versioning](https://semver.org/). See [here](./types_of_upgrades.md) for details.
 
@@ -37,7 +26,7 @@ Releases for the dYdX chain will use [semantic versioning](https://semver.org/).
 mv dydxprotocold.<version>-<platform> dydxprotocold
 ```
 
-2. Make sure that the new binary is executable. 
+2. Make sure that the new binary is executable.
 
 ```bash
 chmod 755 dydxprotocold
@@ -74,13 +63,13 @@ cosmovisor/
 
 #### Upgrading to a Patch Version (e.g. v0.0.2)
 
-1. Download the [binary](https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-1/binaries) for the new patch release, rename the binary to `dydxprotocold`. 
+1. Download the [binary](https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-1/binaries) for the new patch release, rename the binary to `dydxprotocold`.
 
 ```bash
 mv dydxprotocold.<version>-<platform> dydxprotocold
 ```
 
-2. Make sure that the new binary is executable. 
+2. Make sure that the new binary is executable.
 
 ```bash
 chmod 755 dydxprotocold
@@ -96,7 +85,7 @@ mv <path_to_patch_version> $DAEMON_HOME/cosmovisor/current/bin
 5. Restart `cosmovisor`
 
 ```bash
-cosmovisor run start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656" 
+cosmovisor run start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656"
 ```
 
 ### 🦾 Manual Users
@@ -105,7 +94,7 @@ cosmovisor run start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656"
 
 1. Download the [binary](https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-1/binaries) for the new release.
     1. Ideally also before the upgrade height to minimize downtime
-2. Make sure that the new binary is executable. 
+2. Make sure that the new binary is executable.
 
 ```bash
 chmod 755 dydxprotocold
@@ -157,7 +146,7 @@ mv ~/.dydxprotocol/data-backup-YYYY-MM-DD ~/.dydxprotocol/data
 3. Restart your node.
 
 ```bash
-cosmovisor run start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656" 
+cosmovisor run start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656"
 ```
 
 ### 🦾 Manual Users

@@ -3,7 +3,6 @@
   "required_node_configs": "Required Node Configs",
   "running_validator": "Running a Validator",
   "running_full_node": "Running a Full Node",
-  "cosmovisor": "Setting up Cosmovisor",
   "snapshots": "Snapshots",
   "upgrades": "Upgrades"
 }
