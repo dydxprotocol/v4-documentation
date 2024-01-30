@@ -114,7 +114,7 @@ dydxprotocold start --p2p.seeds="<comma separated seed nodes>" --home="$HOME_TES
 
 ### Option 2: Run `dydxprotocold` with `cosmovisor`
 
-Install and initialize `cosmovisor` with instructions [here](../../../validators/cosmovisor.md). To make sure `cosmovisor` is initialized with the correct binary, run the following to binary version:
+Install and initialize `cosmovisor` with instructions [here](../../../validators/upgrades/cosmovisor.md). To make sure `cosmovisor` is initialized with the correct binary, run the following to binary version:
 
 ```bash
 cosmovisor run version --long
