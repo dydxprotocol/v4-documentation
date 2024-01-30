@@ -33,7 +33,7 @@ git checkout cosmovisor/vx.x.x
 make cosmovisor
 ```
 
-This will build cosmovisor in `/cosmovisor`
+This will build Cosmovisor in `/cosmovisor`
  directory. Afterwards you may want to put it into your machine's PATH like as follows:
 
 ```bash
@@ -82,7 +82,7 @@ export DAEMON_HOME=<your directory>
 cosmovisor init <path to executable>
 ```
 
-- `DAEMON_HOME` should be set to the **validator’s home directory** since CosmoVisor polls `/data/` for upgrade info.
+- `DAEMON_HOME` should be set to the **validator’s home directory** since Cosmovisor polls `/data/` for upgrade info.
 - `DAEMON_NAME` should be set to `dydxprotocold`
 
 ## How to run
