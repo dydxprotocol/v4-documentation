@@ -2,7 +2,7 @@
 
 dYdX offers a WebSocket API for streaming v4 updates.
 
-See the [Indexer API](../../networks/network1/resources.md#indexer-endpoints) section for the base URL of the indexer
+You can connect to the v4 Testnet's webSockets at: `wss://indexer.v4testnet.dydx.exchange/v4/ws`
 
 ## Overall
 
@@ -38,7 +38,7 @@ Use a command-line websocket client such as [interactive-websocket-cli](https:/
 Example (with `interactive-websocket-cli`)
 
 ```tsx
-wscli connect wss://indexer.v4testnet2.dydx.exchange/v4/ws
+wscli connect wss://indexer.v4testnet.dydx.exchange/v4/ws
 <output from ws-cli>
 <type 's' to send> { "type": "subscribe", "channel": "v4_trades", "id": "BTC-USD" }
 ```
@@ -57,7 +57,7 @@ This channel provides realtime information about orders, fills, transfers, perpe
 
 ### Initial Response
 
-Returns everything from the `/v4/addresses/:address/subaccountNumber/:subaccountNumber`, and `/v4/orders?address=${address}&subaccountNumber=${subaccountNumber}&status=OPEN`.
+Returns everything from the `/v4/addresses/:address/subaccountNumber/:subaccountNumber`, and `/v4/orders?addresses=${address}&subaccountNumber=${subaccountNumber}&status=OPEN`.
 
 ### Example
 ```tsx
@@ -174,12 +174,15 @@ export interface OrderSubaccountMessageContents {
   status: APIOrderStatus;
   orderFlags: string;
   totalFilled?: string;
+  totalOptimisticFilled?: string;
   goodTilBlock?: string;
   goodTilBlockTime?: string;
   removalReason?: string;
   createdAtHeight?: string;
   clientMetadata: string;
   triggerPrice?: string;
+  updatedAt?: IsoString;
+  updatedAtHeight?: string;
 }
 
 export enum OrderSide {
@@ -248,8 +251,6 @@ export enum Liquidity {
 }
 
 export enum FillType {
-  // MARKET is the fill type for a fill with a market taker order.
-  MARKET = 'MARKET',
   // LIMIT is the fill type for a fill with a limit taker order.
   LIMIT = 'LIMIT',
   // LIQUIDATED is for the taker side of the fill where the subaccount was liquidated.
@@ -257,6 +258,21 @@ export enum FillType {
   LIQUIDATED = 'LIQUIDATED',
   // LIQUIDATION is for the maker side of the fill, never used for orders
   LIQUIDATION = 'LIQUIDATION',
+  // DELEVERAGED is for the subaccount that was deleveraged in a deleveraging event.
+  // The fill type will be set to taker.
+  DELEVERAGED = 'DELEVERAGED',
+  // OFFSETTING is for the offsetting subaccount in a deleveraging event.
+  // The fill type will be set to maker.
+  OFFSETTING = 'OFFSETTING',
+}
+
+export enum TradeType {
+  // LIMIT is the trade type for a fill with a limit taker order.
+  LIMIT = 'LIMIT',
+  // LIQUIDATED is the trade type for a fill with a liquidated taker order.
+  LIQUIDATED = 'LIQUIDATED',
+  // DELEVERAGED is the trade type for a fill with a deleveraged taker order.
+  DELEVERAGED = 'DELEVERAGED',
 }
 
 export interface TransferSubaccountMessageContents {
@@ -271,6 +287,8 @@ export interface TransferSubaccountMessageContents {
   symbol: string,
   size: string,
   type: TransferType,
+  createdAt: IsoString,
+  createdAtHeight: string,
   transactionHash: string,
 }
 
@@ -364,7 +382,7 @@ export enum TransferType {
 
 ### Initial Response
 
-Returns everything from `v4/orderbooks/perpetualMarket/${id}` endpoint.
+Returns everything from `v4/orderbooks/perpetualMarkets/${id}` endpoint.
 
 - Example
     
@@ -520,7 +538,6 @@ Returns everything from `v4/trades/perpetualMarkets/${id}` endpoint.
       "id": "BTC-USD",
       "contents": {
         "trades": [
-    
           {
             "side": "BUY",
             "size": "0.00396135",
@@ -704,7 +721,7 @@ interface TradeContent {
   price: string,
   side: string,
   createdAt: IsoString,
-  liquidation: boolean,
+  type: TradeType,
 }
 ```
 
@@ -726,7 +743,7 @@ interface TradeContent {
         "price": "27839",
         "side": "BUY",
         "createdAt": "2023-04-04T00:29:19.353Z",
-        "liquidation": false
+        "type": "LIQUIDATED"
       },
       {
         "id": "38e64479-af09-5417-a795-195f83879156",
@@ -734,7 +751,7 @@ interface TradeContent {
         "price": "27839",
         "side": "BUY",
         "createdAt": "2023-04-04T00:29:19.353Z",
-        "liquidation": false
+        "type": "LIQUIDATED"
       },
       {
         "id": "d310c32c-f066-5ba8-a97d-10a29d9a6c84",
@@ -742,7 +759,7 @@ interface TradeContent {
         "price": "27837",
         "side": "SELL",
         "createdAt": "2023-04-04T00:29:19.353Z",
-        "liquidation": false
+        "type": "LIMIT"
       },
       {
         "id": "dd1088b5-5cab-518f-a59c-4d5f735ab861",
@@ -750,7 +767,7 @@ interface TradeContent {
         "price": "27837",
         "side": "SELL",
         "createdAt": "2023-04-04T00:29:19.353Z",
-        "liquidation": false
+        "type": "LIMIT"
       },
     ],
   },
@@ -787,7 +804,6 @@ Returns everything from `v4/perpetualMarkets` endpoint.
         "status": "ACTIVE",
         "baseAsset": "",
         "quoteAsset": "",
-        "lastPrice": "0",
         "oraclePrice": "27752.92",
         "priceChange24H": "0",
         "volume24H": "63894023.044245577",
@@ -795,7 +811,6 @@ Returns everything from `v4/perpetualMarkets` endpoint.
         "nextFundingRate": "0",
         "initialMarginFraction": "0.050000",
         "maintenanceMarginFraction": "0.030000",
-        "basePositionNotional": "1000",
         "basePositionSize": "0",
         "incrementalPositionSize": "0",
         "maxPositionSize": "0",
@@ -805,8 +820,7 @@ Returns everything from `v4/perpetualMarkets` endpoint.
         "tickSize": "1",
         "stepSize": "0.000000001",
         "stepBaseQuantums": 10,
-        "subticksPerTick": 10000,
-        "minOrderBaseQuantums": 10
+        "subticksPerTick": 10000
       },
       "ETH-USD": {
         "clobPairId": "1",
@@ -814,7 +828,6 @@ Returns everything from `v4/perpetualMarkets` endpoint.
         "status": "ACTIVE",
         "baseAsset": "",
         "quoteAsset": "",
-        "lastPrice": "0",
         "oraclePrice": "1808.2",
         "priceChange24H": "0",
         "volume24H": "67487133.70842158",
@@ -822,7 +835,6 @@ Returns everything from `v4/perpetualMarkets` endpoint.
         "nextFundingRate": "0",
         "initialMarginFraction": "0.050000",
         "maintenanceMarginFraction": "0.030000",
-        "basePositionNotional": "1000",
         "basePositionSize": "0",
         "incrementalPositionSize": "0",
         "maxPositionSize": "0",
@@ -832,8 +844,7 @@ Returns everything from `v4/perpetualMarkets` endpoint.
         "tickSize": "0.01",
         "stepSize": "0.000001",
         "stepBaseQuantums": 1000,
-        "subticksPerTick": 10000,
-        "minOrderBaseQuantums": 1000
+        "subticksPerTick": 10000
       }
     }
   }
@@ -865,12 +876,11 @@ interface TradingPerpetualMarketMessage {
   clobPairId?: string;
   ticker?: string;
   marketId?: number;
-  status?: PerpetualMarketStatus; // 'ACTIVE', 'PAUSED', 'CANCEL_ONLY' or 'POST_ONLY'
+  status?: PerpetualMarketStatus; // 'ACTIVE', 'PAUSED', 'CANCEL_ONLY', 'POST_ONLY', or 'INITIALIZING'
   baseAsset?: string;
   quoteAsset?: string;
   initialMarginFraction?: string;
   maintenanceMarginFraction?: string;
-  basePositionNotional?: string;
   basePositionSize?: string;
   incrementalPositionSize?: string;
   maxPositionSize?: string;
@@ -878,9 +888,7 @@ interface TradingPerpetualMarketMessage {
   quantumConversionExponent?: number;
   atomicResolution?: number;
   subticksPerTick?: number;
-  minOrderBaseQuantums?: number;
   stepBaseQuantums?: number;
-  lastPrice?: string;
   priceChange24H?: string;
   volume24H?: string;
   trades24H?: number;
@@ -892,7 +900,7 @@ type OraclePriceMarketMessageContentsMapping = {
 };
 
 interface OraclePriceMarket {
-  price: string,
+  oraclePrice: string,
   effectiveAt: IsoString,
   effectiveAtHeight: string,
   marketId: number,
