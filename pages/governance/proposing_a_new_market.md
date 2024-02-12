@@ -43,6 +43,11 @@ The following decribes how to set various parameters for a new market and assume
 
 ### Outputs
 
+- See the [Parameter Calculator](https://docs.google.com/spreadsheets/d/1zjkV9R7R_7KMItuzqzvKGwefSBRfE-ZNAx1LH55OcqY/edit?usp=sharing) sheet to see an example of how output values are calculated from the input. 
+- Below formulas ensure that 
+  - Tick size is in the range of `[1, 10] bps` of the `reference_price` for markets in liquidity tier 1 and 2 and `[0.1, 1] bps` for markets in liquidity tier 0.
+  - Minimum order size is `>= $1` and position size increments by approximately `$1`.
+
 | Message Type | Field | Description | Value |
 |--------------|-------|-------------|-------|
 | `MsgCreateOracleMarket` | `exponent` | Denotes the number of decimals a value should be shifted in the price daemon | `p-9` |
@@ -55,6 +60,7 @@ The following decribes how to set various parameters for a new market and assume
 | `Msg[Update/Create]ClobPair` | `subticks_per_tick` | Defines the tick size of the orderbook by defining how many subticks are in one tick. | Liquidity Tier 0: `100000` <br> Liquidity Tier 1 and 2 : `1000000` |
 | `Msg[Update/Create]ClobPair` | `step_base_quantums` | (aka step size): min increment in the size of orders (number of coins) on the CLOB in base quantums. | `1000000` |
 | `MsgDelayMessage` | `delay_blocks` | number of blocks before which the `MsgUpdateClobPair` is executed and transitions the market to `ACTIVE` | `3600` (equal to an hour at `1 sec` blocktime) |
+
 
 ## Choosing oracle sources
 
