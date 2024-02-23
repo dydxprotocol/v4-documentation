@@ -367,15 +367,21 @@ import { Tab, Tabs } from "nextra-theme-docs";
 
 #### Replacing an Order
 
-Traders can replace Short-Term orders atomically using the [good-til-block field](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/clob/order.proto#L143-L146)
-of an order. Note that each Short-Term order has a good-til-block field which specifies the expiration of the order.
+Traders can replace Short-Term orders atomically by placing an order with the same order ID and a larger value for the [good-til-block field](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/clob/order.proto#L143-L146)
+of the order.
+
+Note that two orders have the same order ID if the following client-specified fields are equal (from [OrderId proto definition](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/clob/order.proto#L9-L41)):
+- Subaccount ID (note for the vast majority of usecases, this will be set to your account address and use the 0th subaccount ID).
+- Client ID.
+- Order flags (note this should always be set to 0 for placing Short-Term orders).
+- CLOB pair ID.
 
 Note that your order placement will fail if the good-til-block is invalid. When specifying the good-til-block on your order,
 verify that the following is true to ensure your order placement succeeds (where `ShortBlockWindow` is currently set to [20 blocks](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/protocol/x/clob/types/constants.go#L7-L9)):
 `currentBlockHeight < order.goodTilBlock <= currentBlockHeight + ShortBlockWindow`.
 
-Assuming the current block height is 10, the below sample code would place a Short-Term order that expires after block 11
-is validated and accepted by the chain.
+Assuming the current block height is 10, the below sample code would place a Short-Term order that is valid if it's placed on the book and matched
+by block 11, else it was not included in block 11 and will expire.
 
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
