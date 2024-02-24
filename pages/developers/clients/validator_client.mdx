@@ -434,14 +434,14 @@ Assuming the current block height is 9, the below example places an order with g
     from dydxpy.proto.dydxprotocol.clob.order_pb2 import Order
 
     subaccount = new Subaccount(wallet, 0)
-    client_id = 123 // set to a number, can be used by the client to identify the order
-    clobpair_id = 0 // perpertual market id
-    side = Order.SIDE_BUY // side of the order
-    quantums = 1_000_000_000 // quantums are calculated by the size if the order
-    subticks = 1_000_000_000 // subticks are calculated by the price of the order
-    time_in_force = Order.TIME_IN_FORCE_UNSPECIFIED // TimeInForce indicates how long an order will remain active before it is executed or expires
-    order_flags = ORDER_FLAGS_SHORT_TERM // either SHORT_TERM, LONG_TERM or CONDITIONAL
-    reduce_only = false // if true, the order will only reduce the position size
+    client_id = 123 # set to a number, can be used by the client to identify the order
+    clobpair_id = 0 # perpertual market id
+    side = Order.SIDE_BUY # side of the order
+    quantums = 1_000_000_000 # quantums are calculated by the size if the order
+    subticks = 1_000_000_000 # subticks are calculated by the price of the order
+    time_in_force = Order.TIME_IN_FORCE_UNSPECIFIED # TimeInForce indicates how long an order will remain active before it is executed or expires
+    order_flags = ORDER_FLAGS_SHORT_TERM # either SHORT_TERM, LONG_TERM or CONDITIONAL
+    reduce_only = false # if true, the order will only reduce the position size
 
     tx = client.post.place_order(
       subaccount,
