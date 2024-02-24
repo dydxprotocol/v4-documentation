@@ -367,7 +367,6 @@ import { Tab, Tabs } from "nextra-theme-docs";
 
 #### Setting the good-til-block
 
-Note that if you manually set the good-til-block on the order, the order placement will fail if the good-til-block is invalid.
 When specifying the good-til-block on your order, verify that the following is true to ensure your order placement succeeds (where `ShortBlockWindow` is currently set to [20 blocks](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/protocol/x/clob/types/constants.go#L7-L9)):
 
 `currentBlockHeight < order.goodTilBlock <= currentBlockHeight + ShortBlockWindow`.
