@@ -365,6 +365,116 @@ import { Tab, Tabs } from "nextra-theme-docs";
   </Tab>
 </Tabs>
 
+#### Setting the good-til-block
+
+When specifying the good-til-block on your order, verify that the following is true to ensure your order placement succeeds (where `ShortBlockWindow` is currently set to [20 blocks](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/protocol/x/clob/types/constants.go#L7-L9)):
+
+`currentBlockHeight < order.goodTilBlock <= currentBlockHeight + ShortBlockWindow`.
+
+#### Replacing an Order
+
+Traders can replace Short-Term orders atomically by placing an order with the same order ID and a larger value for the [good-til-block field](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/clob/order.proto#L143-L146)
+of the order.
+
+Note that two orders have the same order ID if the following client-specified fields are equal (from [OrderId proto definition](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/clob/order.proto#L9-L41)):
+- [Subaccount ID](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/subaccounts/subaccount.proto#L10-L17).
+    - order.subaccount_id.owner should be set to your address that is signing the order transaction.
+    - order.subaccount_id.number should be set to 0 unless you are using a different subaccount.
+- Client ID.
+- Order flags (note this should always be set to 0 for placing Short-Term orders).
+- CLOB pair ID.
+
+Assuming the current block height is 9, the below example places an order with good-til-block 10, then places a replacement order with a good-til-block of 11.
+
+<Tabs items={["TypeScript", "Python"]}>
+  <Tab>
+    ```typescript copy
+    import { OrderFlags, Order_Side, Order_TimeInForce, SubaccountClient } from '@dydxprotocol/v4-client-js';
+
+    const subaccount = new SubaccountClient(wallet, 0);
+    const clientId = 123 // set to a number, can be used by the client to identify the order
+    const clobPairId = 0 // perpertual market id
+    const side = Order_Side.SIDE_BUY // side of the order
+    const quantums = Long.fromNumber(1_000_000_000); // quantums are calculated by the size if the order
+    const subticks = Long.fromNumber(1_000_000_000); // subticks are calculated by the price of the order
+    const timeInForce = Order_TimeInForce.TIME_IN_FORCE_UNSPECIFIED; // TimeInForce indicates how long an order will remain active before it is executed or expires
+    const orderFlags = OrderFlags.SHORT_TERM; // either SHORT_TERM, LONG_TERM or CONDITIONAL
+    const reduceOnly = false; // if true, the order will only reduce the position size
+
+    const tx = await client.post.placeOrder(
+      subaccount,
+      clientId,
+      clobPairId,
+      side,
+      quantums,
+      subticks,
+      timeInForce,
+      orderFlags,
+      reduceOnly,
+      10,
+    );
+
+    const replacementTx = await client.post.placeOrder(
+      subaccount,
+      clientId,
+      clobPairId,
+      side,
+      quantums,
+      subticks,
+      timeInForce,
+      orderFlags,
+      reduceOnly,
+      11,
+    );
+    ```
+  </Tab>
+  <Tab>
+    ```python copy
+    from v4_client_py import Subaccount, ORDER_FLAGS_SHORT_TERM
+    from dydxpy.proto.dydxprotocol.clob.order_pb2 import Order
+
+    subaccount = new Subaccount(wallet, 0)
+    client_id = 123 # set to a number, can be used by the client to identify the order
+    clobpair_id = 0 # perpertual market id
+    side = Order.SIDE_BUY # side of the order
+    quantums = 1_000_000_000 # quantums are calculated by the size if the order
+    subticks = 1_000_000_000 # subticks are calculated by the price of the order
+    time_in_force = Order.TIME_IN_FORCE_UNSPECIFIED # TimeInForce indicates how long an order will remain active before it is executed or expires
+    order_flags = ORDER_FLAGS_SHORT_TERM # either SHORT_TERM, LONG_TERM or CONDITIONAL
+    reduce_only = false # if true, the order will only reduce the position size
+
+    tx = client.post.place_order(
+      subaccount,
+      client_id,
+      clobpair_id,
+      side,
+      quantums,
+      subticks,
+      time_in_force,
+      order_flags,
+      reduce_only,
+      10,
+    )
+
+    replacementTx = client.post.place_order(
+      subaccount,
+      client_id,
+      clobpair_id,
+      side,
+      quantums,
+      subticks,
+      time_in_force,
+      order_flags,
+      reduce_only,
+      11,
+    )
+    ```
+  </Tab>
+</Tabs>
+
+As of February 23rd, 2024, Typescript client source code for the above function is [here](https://github.com/dydxprotocol/v4-clients/blob/fd1e9d33913ef27a4c761cd66bca93057fe707e2/v4-client-js/src/clients/modules/post.ts#L353-L369),
+and Python client source code for the above function is [here](https://github.com/dydxprotocol/v4-clients/blob/fd1e9d33913ef27a4c761cd66bca93057fe707e2/v4-client-py/v4_client_py/clients/modules/post.py#L62-L79).
+
 ### Cancelling an Order
 
 All paramsters are from *<a id="orderObject" href="/integration_docs/indexer_api#getorder">Order</a>* object from indexer
