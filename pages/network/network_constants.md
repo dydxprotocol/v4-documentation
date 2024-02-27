@@ -9,7 +9,7 @@ NATIVE_TOKEN_DENOM=adv4tnt
 ## Chain ID
 
 ```
-CHAIN_ID=dydx-testnet-4e
+CHAIN_ID=dydx-testnet-4
 ```
 
 ## Chain Registry
