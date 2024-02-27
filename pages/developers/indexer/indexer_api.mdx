@@ -4,7 +4,8 @@
 
 Base URLs:
 
-* <a href="https://dydx-testnet.imperator.co/v4">https://dydx-testnet.imperator.co/v4</a>
+* For the deployment by DYDX token holders, use <a href="https://dydx-testnet.imperator.co/v4">https://dydx-testnet.imperator.co/v4</a>
+* For Testnet, use <a href="https://dydx-testnet.imperator.co/v4">https://dydx-testnet.imperator.co/v4</a>
 
 Note: Messages on Indexer WebSocket feeds are typically more recent than data fetched via Indexer's REST API, because the latter is backed by read replicas of the databases that feed the former. Ordinarily this difference is minimal (less than a second), but it might become prolonged under load. Please see [Indexer Architecture](https://dydx.exchange/blog/v4-deep-dive-indexer) for more information.
 
@@ -3573,3 +3574,6 @@ or
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |transfers|[[TransferResponseObject](#schematransferresponseobject)]|true|none|none|
+
+# Disclaimer
+Note that as of the date hereof, the testnet and dYdX Chain deployment by DYDX token holders are the only known deployments of the dYdX v4 software, and other deployment options may be added. For more information, please see https://dydx.exchange/dydx-chain-front-end-options

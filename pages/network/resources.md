@@ -2,6 +2,20 @@
 
 ## Seed Nodes
 
+For the deployment by DYDX token holders, use the below:
+| Team           |  URI                                                                                  |
+|----------------|---------------------------------------------------------------------------------------|
+| Polkachu       | `ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856`                   |
+| KingNodes      | `65b740ee326c9260c30af1f044e9cda63c73f7c1@seeds.kingnodes.net:23856`                  |
+| Bware Labs     | `f04a77b92d0d86725cdb2d6b7a7eb0eda8c27089@dydx-mainnet-seed.bwarelabs.com:36656`      |
+| Lavender.Five  | `20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856`               |
+| CryptoCrew     | `c2c2fcb5e6e4755e06b83b499aff93e97282f8e8@tenderseed.ccvalidators.com:26401`          |
+| Crosnest       | `4f20c3e303c9515051b6276aeb89c0b88ee79f8f@seed.dydx.cros-nest.com:26656`              |
+| DSRV           | `a9cae4047d5c34772442322b10ef5600d8e54900@dydx-mainnet-seednode.allthatnode.com:26656`|
+| Luganodes      | `802607c6db8148b0c68c8a9ec1a86fd3ba606af6@64.227.38.88:26656`                         |
+| AutoStake      | `ebc272824924ea1a27ea3183dd0b9ba713494f83@dydx-mainnet-seed.autostake.com:27366`      |
+
+For Testnet, use the below:
 * AllThatNode: `19d38bb5cea1378db3e16615e63594dc26119a1a@dydx-testnet4-seednode.allthatnode.com:26656`
 * Crosnest: `87ee8de5f0f82af6ee6740a30f8844bbe6434413@seed.dydx-testnet.cros-nest.com:26656`
 * CryptoCrew: `38e5a5ec34c578dc323cbdd9b98330abb448d586@tenderseed.ccvalidators.com:29104`
@@ -62,3 +76,6 @@ https://p.datadoghq.com/sb/dc160ddf0-05a98d2dbe2a01d8caa5783eb616f826
 
 **Keplr Staking Dashboard:**\
 https://testnet.keplr.app/chains/dydx-testnet
+
+# Disclaimer
+Note that as of the date hereof, the testnet and dYdX Chain deployment by DYDX token holders are the only known deployments of the dYdX v4 software, and other deployment options may be added. For more information, please see https://dydx.exchange/dydx-chain-front-end-options
