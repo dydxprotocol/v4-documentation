@@ -1,7 +1,7 @@
 {
   "index": "Introduction",
   "validators": "Validators",
-  "networks": "Networks",
+  "network": "Network Configuration",
   "trading": "Trading",
   "deposits_and_withdrawals": "Deposits and Withdrawals",
   "rewards": "Rewards",
