@@ -178,26 +178,26 @@ For **Testnet**, use the below:
 
 For **the deployment by DYDX token holders**, use the below:
 
-| Name                        | URI                                                                                                  |
-| --------------------------- | ---------------------------------------------------------------------------------------------------- |
-| dYdX Chain Web Frontend     | `https://dydx.trade/`                                                                                |
-| Status Page                 | https://status.dydx.trade                                                                            |
-| Mintscan                    | https://www.mintscan.io/dydx                                                                         |
-| Keplr                       | https://wallet.keplr.app/chains/dydx                                                                 |
-| Validator Metrics           | https://p.ap1.datadoghq.com/sb/610e1836-51dd-11ee-a995-da7ad0900009-78607847ff8632d8a96737ed3437f40c |
-| #validators Discord Channel | https://discord.com/channels/724804754382782534/1029585380170805379                                  |
+| Name                        | URI                                                                                                    |
+| --------------------------- | ------------------------------------------------------------------------------------------------------ |
+| dYdX Chain Web Frontend     | `https://dydx.trade/`                                                                                  |
+| Status Page                 | `https://status.dydx.trade`                                                                            |
+| Mintscan                    | `https://www.mintscan.io/dydx`                                                                         |
+| Keplr                       | `https://wallet.keplr.app/chains/dydx`                                                                 |
+| Validator Metrics           | `https://p.ap1.datadoghq.com/sb/610e1836-51dd-11ee-a995-da7ad0900009-78607847ff8632d8a96737ed3437f40c` |
+| #validators Discord Channel | `https://discord.com/channels/724804754382782534/1029585380170805379`                                  |
 
 For **Testnet**, use the below:
 
-| Name                       | URI                                                                                                 |
-| -------------------------- | --------------------------------------------------------------------------------------------------- |
-| Public Testnet Front-end   | `https://v4.testnet.dydx.exchange`                                                                  |
-| Status Page                | https://status.v4testnet.dydx.exchange                                                              |
-| Mintscan                   | https://testnet.mintscan.io/dydx-testnet                                                            |
-| Keplr                      | https://testnet.keplr.app/chains/dydx-testnet                                                       |
-| Validator Metrics          | https://p.datadoghq.com/sb/dc160ddf0-05a98d2dbe2a01d8caa5783eb616f826                               |
-| Discord Channel (Feedback) | https://discord.com/channels/724804754382782534/1117897181886677012                                 |
-| Google Form (Feedback)     | https://docs.google.com/forms/d/e/1FAIpQLSezLsWCKvAYDEb7L-2O4wOON1T56xxro9A2Azvl6IxXHP_15Q/viewform |
+| Name                       | URI                                                                                                   |
+| -------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Public Testnet Front-end   | `https://v4.testnet.dydx.exchange`                                                                    |
+| Status Page                | `https://status.v4testnet.dydx.exchange`                                                              |
+| Mintscan                   | `https://testnet.mintscan.io/dydx-testnet`                                                            |
+| Keplr                      | `https://testnet.keplr.app/chains/dydx-testnet`                                                       |
+| Validator Metrics          | `https://p.datadoghq.com/sb/dc160ddf0-05a98d2dbe2a01d8caa5783eb616f826`                               |
+| Discord Channel (Feedback) | `https://discord.com/channels/724804754382782534/1117897181886677012`                                 |
+| Google Form (Feedback)     | `https://docs.google.com/forms/d/e/1FAIpQLSezLsWCKvAYDEb7L-2O4wOON1T56xxro9A2Azvl6IxXHP_15Q/viewform` |
 
 # Disclaimer
 Note that as of the date hereof, the testnet and dYdX Chain deployment by DYDX token holders are the only known deployments of the dYdX v4 software, and other deployment options may be added. For more information, please see https://dydx.exchange/dydx-chain-front-end-options
