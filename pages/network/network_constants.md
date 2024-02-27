@@ -3,8 +3,9 @@
 ## Native Token Denom
 
 ```
-# for the deployment by DYDX token holders use 
+# For **the deployment by DYDX token holders** use 
 # NATIVE_TOKEN_DENOM=adydx
+
 
 NATIVE_TOKEN_DENOM=adv4tnt
 ```
@@ -12,10 +13,69 @@ NATIVE_TOKEN_DENOM=adv4tnt
 ## Chain ID
 
 ```
+# For **the deployment by DYDX token holders** use 
+# CHAIN_ID=dydx-mainnet-1
+
+
 CHAIN_ID=dydx-testnet-4
 ```
 
 ## Chain Registry
+
+For **the deployment by DYDX token holders**, use the below:
+
+```json
+{
+  "rpc": "https://dydx-dao-rpc.polkachu.com:26657",
+  "rest": "https://dydx-dao-api.polkachu.com",
+  "chainId": "dydx-mainnet-1",
+  "chainName": "dYdX Chain",
+  "chainSymbolImageUrl": "https://raw.githubusercontent.com/cosmos/chain-registry/master/dydx/images/dydx.png",
+  "bech32Config": {
+    "bech32PrefixAccPub": "dydxpub",
+    "bech32PrefixValPub": "dydxvaloperpub",
+    "bech32PrefixAccAddr": "dydx",
+    "bech32PrefixConsPub": "dydxvalconspub",
+    "bech32PrefixValAddr": "dydxvaloper",
+    "bech32PrefixConsAddr": "dydxvalcons"
+  },
+  "bip44": {
+    "coinType": 118
+  },
+  "stakeCurrency": {
+    "coinDenom": "DYDX",
+    "coinDecimals": 18,
+    "coinMinimalDenom": "adydx",
+  },
+  "currencies": [
+    {
+      "coinDenom": "DYDX",
+      "coinDecimals": 18,
+      "coinMinimalDenom": "adydx",
+    },
+    {
+      "coinDenom": "USDC",
+      "coinDecimals": 6,
+      "coinMinimalDenom": "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5",
+    }
+  ],
+  "feeCurrencies": [
+    {
+      "coinDenom": "DYDX",
+      "coinDecimals": 18,
+      "coinMinimalDenom": "adydx",
+    },
+    {
+      "coinDenom": "USDC",
+      "coinDecimals": 6,
+      "coinMinimalDenom": "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5",
+    }
+  ],
+  "features": []
+}
+```
+
+For **Testnet**, use the below:
 
 ```json
 {

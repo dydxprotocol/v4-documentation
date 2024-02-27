@@ -5,8 +5,9 @@ Please find the open source repositories on our [GitHub](https://github.com/dydx
 * [Monorepo](https://github.com/dydxprotocol/v4-chain)
     * [Protocol](https://github.com/dydxprotocol/v4-chain/tree/main/protocol)
     * [Indexer](https://github.com/dydxprotocol/v4-chain/tree/main/indexer)
-* [Frontend](https://github.com/dydxprotocol/v4-web)
 * [Clients](https://github.com/dydxprotocol/v4-clients)
+* [Frontend](https://github.com/dydxprotocol/v4-web)
+* [iOS](https://github.com/dydxprotocol/v4-native-ios)
 * [Terraform](https://github.com/dydxprotocol/v4-infrastructure)
 
 When contributing, please ensure your commits are verified. You can follow these steps to do so:
