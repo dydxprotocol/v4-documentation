@@ -16,17 +16,14 @@ For **the deployment by DYDX token holders**, use the below:
 | AutoStake     | `ebc272824924ea1a27ea3183dd0b9ba713494f83@dydx-mainnet-seed.autostake.com:27366`       |
 
 For **Testnet**, use the below:
-| Team           | URI                                                                                     |
-| -------------- | --------------------------------------------------------------------------------------- |
-| AllThatNode:   | `19d38bb5cea1378db3e16615e63594dc26119a1a@dydx-testnet4-seednode.allthatnode.com:26656` |
-| Crosnest:      | `87ee8de5f0f82af6ee6740a30f8844bbe6434413@seed.dydx-testnet.cros-nest.com:26656`        |
-| CryptoCrew:    | `38e5a5ec34c578dc323cbdd9b98330abb448d586@tenderseed.ccvalidators.com:29104`            |
-| KingNodes:     | `80a1a6cd086634c34008c6457d3f7441cfc05c47@seeds.kingnodes.com:27056`                    |
-| Lavender.Five: | `20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856`                 |
-| StakingCabin:  | `182ab0015fb4b7d751b12a9c0162ac123445eac1@seed.dydx-testnet.stakingcabin.com:26656`     |
-| StakerSpace:   | `76b472b107ccf20c3d6c110c4a2a217306d2dedb@dydx-seed.staker.space:26656`                 |
-| Luganodes      | `802607c6db8148b0c68c8a9ec1a86fd3ba606af6@64.227.38.88:26656`                           |
-| AutoStake      | `ebc272824924ea1a27ea3183dd0b9ba713494f83@dydx-mainnet-seed.autostake.com:27366`        |
+| Team          | URI                                                                                     |
+| ------------- | --------------------------------------------------------------------------------------- |
+| AllThatNode:  | `19d38bb5cea1378db3e16615e63594dc26119a1a@dydx-testnet4-seednode.allthatnode.com:26656` |
+| Crosnest:     | `87ee8de5f0f82af6ee6740a30f8844bbe6434413@seed.dydx-testnet.cros-nest.com:26656`        |
+| CryptoCrew:   | `38e5a5ec34c578dc323cbdd9b98330abb448d586@tenderseed.ccvalidators.com:29104`            |
+| KingNodes:    | `80a1a6cd086634c34008c6457d3f7441cfc05c47@seeds.kingnodes.com:27056`                    |
+| StakingCabin: | `182ab0015fb4b7d751b12a9c0162ac123445eac1@seed.dydx-testnet.stakingcabin.com:26656`     |
+| StakerSpace:  | `76b472b107ccf20c3d6c110c4a2a217306d2dedb@dydx-seed.staker.space:26656`                 |
 
 ## Indexer endpoints
 
@@ -76,8 +73,7 @@ For **Testnet**, use the below:
 
 ## Full node endpoints
 
-For **the deployment by DYDX token holders**, use the below:
-### RPC
+### RPC (For the deployment by DYDX token holders)
 | Team          | URI                                                    | Rate limit |
 | ------------- | ------------------------------------------------------ | ---------- |
 | Polkachu      | `https://dydx-dao-rpc.polkachu.com:443`                | 300 req/m  |
@@ -91,7 +87,7 @@ For **the deployment by DYDX token holders**, use the below:
 | Enigma        | `https://dydx-rpc.enigma-validator.com:443`            |            |
 | CosmosSpaces  | `https://rpc-dydx.cosmos-spaces.cloud:443`             |            |
 
-### REST
+### REST (For the deployment by DYDX token holders)
 | Team          | URI                                                    | Rate limit |
 | ------------- | ------------------------------------------------------ | ---------- |
 | Polkachu      | `https://dydx-dao-api.polkachu.com:443`                | 300 req/m  |
@@ -105,7 +101,7 @@ For **the deployment by DYDX token holders**, use the below:
 | Enigma        | `https://dydx-lcd.enigma-validator.com:443`            |            |
 | CosmosSpaces  | `https://api-dydx.cosmos-spaces.cloud:443`             |            |
 
-### gRPC
+### gRPC (For the deployment by DYDX token holders)
 | Team          | URI                                                                                                                                                                                                                                             | Rate limit |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
 | Polkachu      | `http://dydx-dao-grpc-1.polkachu.com:23890` <br> `http://dydx-dao-grpc-2.polkachu.com:23890` <br> `http://dydx-dao-grpc-3.polkachu.com:23890` <br> `http://dydx-dao-grpc-4.polkachu.com:23890` <br> `http://dydx-dao-grpc-5.polkachu.com:23890` | 300 req/m  |
@@ -118,8 +114,7 @@ For **the deployment by DYDX token holders**, use the below:
 | Cros-Nest     | `https://grpc-dydx.cros-nest.com:443`                                                                                                                                                                                                           |            |
 | CosmosSpaces  | `http://grpc-dydx.cosmos-spaces.cloud:4990`                                                                                                                                                                                                     |            |
 
-For **Testnet**, use the below:
-### RPC
+### RPC (For Testnet)
 | Team          | URI                                             |
 | ------------- | ----------------------------------------------- |
 | Enigma        | `https://dydx-rpc-testnet.enigma-validator.com` |
@@ -127,14 +122,14 @@ For **Testnet**, use the below:
 | King Nodes    | `https://test-dydx.kingnodes.com`               |
 | Polkachu      | `https://dydx-testnet-rpc.polkachu.com`         |
 
-### REST
+### REST (For Testnet)
 | Team          | URI                                              |
 | ------------- | ------------------------------------------------ |
 | Enigma        | `https://dydx-lcd-testnet.enigma-validator.com\` |
 | Lavendar Five | `https://testnet-dydx-api.lavenderfive.com`      |
 | Polkachu      | `https://dydx-testnet-api.polkachu.com`          |
 
-### gRPC
+### gRPC (For Testnet)
 | Team          | URI                                      |
 | ------------- | ---------------------------------------- |
 | Lavendar Five | `testnet-dydx-grpc.lavenderfive.com:443` |
@@ -143,40 +138,38 @@ For **Testnet**, use the below:
 
 ## Archival node endpoints
 
-For **the deployment by DYDX token holders**, use the below:
-### RPC
+### RPC (For the deployment by DYDX token holders)
 | Team       | URI                                                       | Rate limit |
 | ---------- | --------------------------------------------------------- | ---------- |
 | Polkachu   | `https://dydx-dao-archive-rpc.polkachu.com:443`           | 300 req/m  |
 | Bware Labs | `https://dydx-mainnet-archive-rpc.public.blastapi.io:443` | 20 req/s   |
 | KingNodes  | `https://dydx-ops-archive-rpc.kingnodes.com:443`          | 50 req/m   |
 
-### REST
+### REST (For the deployment by DYDX token holders)
 | Team       | URI                                                       | Rate limit |
 | ---------- | --------------------------------------------------------- | ---------- |
 | Polkachu   | `https://dydx-dao-archive-api.polkachu.com:443`           | 300 req/m  |
 | Bware Labs | `https://dydx-mainnet-archive-lcd.public.blastapi.io:443` | 20 req/s   |
 | KingNodes  | `https://dydx-ops-archive-rest.kingnodes.com:443`         | 50 req/m   |
 
-### gRPC
+### gRPC (For the deployment by DYDX token holders)
 | Team       | URI                                                                                                          | Rate limit |
 | ---------- | ------------------------------------------------------------------------------------------------------------ | ---------- |
 | Polkachu   | `http://dydx-dao-archive-grpc-1.polkachu.com:23890` <br> `http://dydx-dao-archive-grpc-2.polkachu.com:23890` | 300 req/m  |
 | Bware Labs | `https://dydx-mainnet-archive-grpc.public.blastapi.io:443`                                                   | 20 req/s   |
 | KingNodes  | `https://dydx-ops-archive-grpc.kingnodes.com:443`                                                            | 50 req/m   |
 
-For **Testnet**, use the below:
-### RPC
+### RPC (For Testnet)
 | Team       | URI                               |
 | ---------- | --------------------------------- |
 | King Nodes | `https://test-dydx.kingnodes.com` |
 
-### REST
+### REST (For Testnet)
 | Team       | URI                               |
 | ---------- | --------------------------------- |
 | King Nodes | `https://test-dydx.kingnodes.com` |
 
-### gRPC
+### gRPC (For Testnet)
 | Team       | URI                               |
 | ---------- | --------------------------------- |
 | King Nodes | `https://test-dydx.kingnodes.com` |
@@ -185,42 +178,26 @@ For **Testnet**, use the below:
 
 For **the deployment by DYDX token holders**, use the below:
 
-**dYdX Chain web frontend:**\
-[https://dydx.trade/](https://dydx.trade/)
-
-**Status Page:**\
-[https://status.dydx.trade](https://status.dydx.trade)
-
-**[Mintscan](https://www.mintscan.io/dydx)**
-
-**[Keplr](https://wallet.keplr.app/chains/dydx)**
-
-**[Validator Metrics](https://p.ap1.datadoghq.com/sb/610e1836-51dd-11ee-a995-da7ad0900009-78607847ff8632d8a96737ed3437f40c)**
-
-**[#validators Discord Channel](https://discord.com/channels/724804754382782534/1029585380170805379)**
+| Name                        | URI                                                                                                  |
+| --------------------------- | ---------------------------------------------------------------------------------------------------- |
+| dYdX Chain Web Frontend     | `https://dydx.trade/`                                                                                |
+| Status Page                 | https://status.dydx.trade                                                                            |
+| Mintscan                    | https://www.mintscan.io/dydx                                                                         |
+| Keplr                       | https://wallet.keplr.app/chains/dydx                                                                 |
+| Validator Metrics           | https://p.ap1.datadoghq.com/sb/610e1836-51dd-11ee-a995-da7ad0900009-78607847ff8632d8a96737ed3437f40c |
+| #validators Discord Channel | https://discord.com/channels/724804754382782534/1029585380170805379                                  |
 
 For **Testnet**, use the below:
 
-**Public Testnet Front-end:**\
-[https://v4.testnet.dydx.exchange](https://t.co/BZ57SvuXNv)
-
-**Status Page:**\
-[https://status.v4testnet.dydx.exchange](https://t.co/7vkrGZs9fx)
-
-**Datadog Metrics Dashboard**\
-https://p.datadoghq.com/sb/dc160ddf0-05a98d2dbe2a01d8caa5783eb616f826
-
-**Discord Channel for exchange feedback:**\
-[https://discord.com/channels/724804754382782534/1117897181886677012](https://t.co/aCHCl9XsjD)
-
-**Google Form for exchange feedback/bug tracking:**\
-[https://docs.google.com/forms/d/e/1FAIpQLSezLsWCKvAYDEb7L-2O4wOON1T56xxro9A2Azvl6IxXHP_15Q/viewform](https://t.co/y6dclgKPCk)
-
-**Block Explorer (Mintscan):**\
-[https://testnet.mintscan.io/dydx-testnet](https://t.co/zjwM64yxUO)
-
-**Keplr Staking Dashboard:**\
-https://testnet.keplr.app/chains/dydx-testnet
+| Name                       | URI                                                                                                 |
+| -------------------------- | --------------------------------------------------------------------------------------------------- |
+| Public Testnet Front-end   | `https://v4.testnet.dydx.exchange`                                                                  |
+| Status Page                | https://status.v4testnet.dydx.exchange                                                              |
+| Mintscan                   | https://testnet.mintscan.io/dydx-testnet                                                            |
+| Keplr                      | https://testnet.keplr.app/chains/dydx-testnet                                                       |
+| Validator Metrics          | https://p.datadoghq.com/sb/dc160ddf0-05a98d2dbe2a01d8caa5783eb616f826                               |
+| Discord Channel (Feedback) | https://discord.com/channels/724804754382782534/1117897181886677012                                 |
+| Google Form (Feedback)     | https://docs.google.com/forms/d/e/1FAIpQLSezLsWCKvAYDEb7L-2O4wOON1T56xxro9A2Azvl6IxXHP_15Q/viewform |
 
 # Disclaimer
 Note that as of the date hereof, the testnet and dYdX Chain deployment by DYDX token holders are the only known deployments of the dYdX v4 software, and other deployment options may be added. For more information, please see https://dydx.exchange/dydx-chain-front-end-options
