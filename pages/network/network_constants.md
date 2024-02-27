@@ -3,6 +3,9 @@
 ## Native Token Denom
 
 ```
+# for the deployment by DYDX token holders use 
+# NATIVE_TOKEN_DENOM=adydx
+
 NATIVE_TOKEN_DENOM=adv4tnt
 ```
 
@@ -64,3 +67,6 @@ CHAIN_ID=dydx-testnet-4
   "features": []
 }
 ```
+
+# Disclaimer
+Note that as of the date hereof, the testnet and dYdX Chain deployment by DYDX token holders are the only known deployments of the dYdX v4 software, and other deployment options may be added. For more information, please see https://dydx.exchange/dydx-chain-front-end-options
