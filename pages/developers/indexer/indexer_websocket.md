@@ -20,6 +20,10 @@ Upon connecting to v4 Websockets you will receive an initial connection message 
 }
 ```
 
+### Maintaining a Connection
+
+Every 30 seconds, the websocket API will send a ping event to the connected client. If a pong event is not received within 10 seconds back, the websocket API will disconnect.
+
 ### Subscribe
 
 You may subscribe to any channel following the subscribe instructions above. Subscribing to a channel has the following fields:
