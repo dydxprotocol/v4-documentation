@@ -6,14 +6,14 @@ For instructions on compiling the `protocold` binary locally, refer to the dYdX 
 Alternatively, if your platform is supported by the prebuilt binaries found in the [releases section](https://github.com/dydxprotocol/v4-chain/releases) of the repository, you can opt to download and use these binaries directly.
 
 ## Save your Chain ID in `dydxprotocold` config
-Save the [chain-id](../networks/network1/network_constants.md#chain-id). This will make it so you do not have to manually pass in the chain-id flag for every CLI command.
+Save the [chain-id](../network/network_constants.md#chain-id). This will make it so you do not have to manually pass in the chain-id flag for every CLI command.
 
 ```bash
 dydxprotocold config chain-id [chain_id]
 ```
 
 ## Confirming Connectivity
-To ensure that you are successfully connecting, use any of the RPC endpoints listed in the [resources](../networks/network1/resources.md). Remember to append `:443` to the end of the RPC URI for proper access. Execute the following command, replacing `[RPC ENDPOINT]` with your chosen endpoint:
+To ensure that you are successfully connecting, use any of the RPC endpoints listed in the [resources](../network/resources.md). Remember to append `:443` to the end of the RPC URI for proper access. Execute the following command, replacing `[RPC ENDPOINT]` with your chosen endpoint:
 
 ```bash
 dydxprotocold status --node https://[RPC ENDPOINT]:443
