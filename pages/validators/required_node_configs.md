@@ -35,7 +35,7 @@ timeout_commit = "500ms"
 
 #### Base Configuration
 
-For value of `$NATIVE_TOKEN_DENOM`, see [Network Constants](../networks/network1/network_constants.md#native-token-denom)
+For value of `$NATIVE_TOKEN_DENOM`, see [Network Constants](../network/network_constants.md#native-token-denom)
 
 ```
 ### Gas Prices ###
