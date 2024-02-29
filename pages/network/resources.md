@@ -198,6 +198,3 @@ For **Testnet**, use the below:
 | Validator Metrics          | `https://p.datadoghq.com/sb/dc160ddf0-05a98d2dbe2a01d8caa5783eb616f826`                               |
 | Discord Channel (Feedback) | `https://discord.com/channels/724804754382782534/1117897181886677012`                                 |
 | Google Form (Feedback)     | `https://docs.google.com/forms/d/e/1FAIpQLSezLsWCKvAYDEb7L-2O4wOON1T56xxro9A2Azvl6IxXHP_15Q/viewform` |
-
-# Disclaimer
-Note that as of the date hereof, the testnet and dYdX Chain deployment by DYDX token holders are the only known deployments of the dYdX v4 software, and other deployment options may be added. For more information, please see https://dydx.exchange/dydx-chain-front-end-options
