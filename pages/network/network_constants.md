@@ -131,6 +131,3 @@ For **Testnet**, use the below:
   "features": []
 }
 ```
-
-# Disclaimer
-Note that as of the date hereof, the testnet and dYdX Chain deployment by DYDX token holders are the only known deployments of the dYdX v4 software, and other deployment options may be added. For more information, please see https://dydx.exchange/dydx-chain-front-end-options

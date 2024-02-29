@@ -2,7 +2,8 @@
 
 dYdX offers a WebSocket API for streaming v4 updates.
 
-You can connect to the v4 Testnet's webSockets at: `wss://indexer.v4testnet.dydx.exchange/v4/ws`
+* For **the deployment by DYDX token holders**, use <a href="wss://indexer.dydx.trade/v4/ws">wss://indexer.dydx.trade/v4/ws</a>
+* For **Testnet**, use <a href="wss://indexer.dydx.trade/v4/ws">wss://indexer.dydx.trade/v4/ws</a>
 
 Note: Messages on Indexer WebSocket feeds are typically more recent than data fetched via Indexer's REST API, because the latter is backed by read replicas of the databases that feed the former. Ordinarily this difference is minimal (less than a second), but it might become prolonged under load. Please see [Indexer Architecture](https://dydx.exchange/blog/v4-deep-dive-indexer) for more information.
 
@@ -44,6 +45,8 @@ Use a command-line websocket client such as [interactive-websocket-cli](https:/
 Example (with `interactive-websocket-cli`)
 
 ```tsx
+# For the deployment by DYDX token holders, use
+# wscli connect wss://indexer.dydx.trade/v4/ws
 wscli connect wss://indexer.v4testnet.dydx.exchange/v4/ws
 <output from ws-cli>
 <type 's' to send> { "type": "subscribe", "channel": "v4_trades", "id": "BTC-USD" }

@@ -32,17 +32,64 @@ and call ValidatorClient with the correct quantums and subticks for you.
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```typescript copy
-    import { CompositeClient } from "@dydxprotocol/v4-client-js";
+    import { CompositeClient, Network } from "@dydxprotocol/v4-client-js";
 
-    const client = await CompositeClient.connect(Network.testnet());
+    /**
+    // For the deployment by DYDX token holders, use below:
+
+    import { IndexerConfig, ValidatorConfig } from "@dydxprotocol/v4-client-js";
+
+    const NETWORK: Network = new Network(
+      'mainnet',
+      new IndexerConfig(
+        'https://indexer.dydx.trade',
+        'wss://indexer.dydx.trade',
+      ),
+      new ValidatorConfig(
+        'https://dydx-ops-rpc.kingnodes.com', // or other node URL
+        'dydx-mainnet-1',
+        {
+          CHAINTOKEN_DENOM: 'adydx',
+          CHAINTOKEN_DECIMALS: 18,
+          USDC_DENOM: 'ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5',
+          USDC_GAS_DENOM: 'uusdc',
+          USDC_DECIMALS: 6,
+        },
+      ),
+    );
+    */
+    const NETWORK = Network.testnet();
+
+    const client = await CompositeClient.connect(NETWORK);
     ```
   </Tab>
   <Tab>
     ```python copy
     from v4_client_py.clients import CompositeClient
     from v4_client_py.clients.constants import Network
+
+    """
+    # For the deployment by DYDX token holders, use below:
+
+    from v4_client_py.clients.constants import ValidatorConfig, IndexerConfig
+    NETWORK=Network(
+        env='mainnet',
+        validator_config=ValidatorConfig(
+            grpc_endpoint='https://dydx-ops-rpc.kingnodes.com', # or other node URL
+            chain_id='dydx-mainnet-1', 
+            ssl_enabled=True
+        ),
+        indexer_config=IndexerConfig(
+            rest_endpoint='https://indexer.dydx.trade',
+            websocket_endpoint='wss://indexer.dydx.trade',
+        ),
+        faucet_endpoint='',
+    )
+    """
+    NETWORK = Network.testnet()
+
     client = CompositeClient(
-        Network.testnet(),
+        NETWORK,
     )
     ```
   </Tab>

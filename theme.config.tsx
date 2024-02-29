@@ -59,7 +59,14 @@ const config: DocsThemeConfig = {
 
   // Footer
   footer: {
-    component: null,
+    text: (
+      <span>
+        <strong>Disclaimer:</strong> Note that as of the date hereof, the testnet and dYdX Chain deployment by DYDX token holders are the only known deployments of the dYdX v4 software, and other deployment options may be added. For more information, please see{" "}
+        <a href="https://dydx.exchange/dydx-chain-front-end-options" target="_blank">
+          https://dydx.exchange/dydx-chain-front-end-options
+        </a>
+      </span>
+    )
   },
 
   // sidebar
