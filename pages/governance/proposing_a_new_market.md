@@ -43,6 +43,11 @@ The following decribes how to set various parameters for a new market and assume
 
 ### Outputs
 
+- See the [Parameter Calculator](https://docs.google.com/spreadsheets/d/1zjkV9R7R_7KMItuzqzvKGwefSBRfE-ZNAx1LH55OcqY/edit?usp=sharing) sheet to see an example of how output values are calculated from the input values of reference price and liquidity tier. 
+- Below formulas ensure that 
+  - Tick size is in the range of `[1, 10] bps` of the `reference_price` for markets in liquidity tier 1 and 2 and `[0.1, 1] bps` for markets in liquidity tier 0.
+  - Minimum order size is `>= $1` and position size increments by approximately `$1`.
+
 | Message Type | Field | Description | Value |
 |--------------|-------|-------------|-------|
 | `MsgCreateOracleMarket` | `exponent` | Denotes the number of decimals a value should be shifted in the price daemon | `p-9` |
@@ -56,17 +61,21 @@ The following decribes how to set various parameters for a new market and assume
 | `Msg[Update/Create]ClobPair` | `step_base_quantums` | (aka step size): min increment in the size of orders (number of coins) on the CLOB in base quantums. | `1000000` |
 | `MsgDelayMessage` | `delay_blocks` | number of blocks before which the `MsgUpdateClobPair` is executed and transitions the market to `ACTIVE` | `3600` (equal to an hour at `1 sec` blocktime) |
 
+
 ## Choosing oracle sources
 
-To select oracle sources, follow the procedure below: 
+One way of evaluating whether a new market is optimally compatible with the software is based on the number of 1. robust oracles and 2. queryable oracles. A market should have at least 6 robust oracles to deter oracle manipulation attacks and 5 queryable oracles to prevent consensus failures.
 
-1. Find spot market tickers from eligible exchanges with the desired symbol as the base asset and USD or USDT as the quote asset. See below for a list of eligible exchanges.
-  - If the quote asset is USDT, add the following flag `"adjustByMarket":"USDT-USD"`. This flag ensures that the base asset oracle price is adjusted by the USDT oracle price. 
+To select robust oracle sources, follow the procedure below: 
+
+1. Find spot market tickers from eligible exchanges with the desired symbol as the base asset. The quote asset should be USD, USDT, BTC, or ETH. See [below](./proposing_a_new_market.md###List-of-eligible-exchanges) for a list of eligible exchanges. Note that pools in certain DEXes are eligible to be considered a robust source but no DEXes is queryable as of 3/5/24. 
+  - If the quote asset is not USD, add the following flag `"adjustByMarket":"quote_asset-USD"`. This flag ensures that the base asset oracle price is adjusted by the oracle price of the quote asset. 
 2. Currently the software supports only one source from an exchange per market. Among the tickers from an exchange, choose the most liquid spot market with the highest trading volume. If one market is more liquid but another has more trading volume, choose the one with deeper liquidity. 
+  - When counting the number of robust oracles, two pools with different quote assets from one DEX can be considered as two independent sources. DEX pools can have quote assets that are not specified above. 
 3. Exclude oracle sources that do not meet the depth and daily trading volume threshold over the past month. 
   - Both sides of liquidity at 2% from the midprice should be at least `$50,000`. 
   - The average daily trading volume should be at least `$100,000`. 
-4. Ensure there are at least 6 sources. If there are less than 6 sources, this market should not be added to prevent potential market manipulation attacks and consensus failures from oracle price updates unless more robust oracle sources are available.
+4. Ensure there are at least 6 robust sources that meet the depth and trading volume requirement and 5 of them are queryable. If there are less than 6 sources, this market should not be added to prevent potential market manipulation attacks and consensus failures from oracle price updates unless more robust oracle sources are available and/or queryable.
 
 ### List of eligible exchanges
 
@@ -89,12 +98,28 @@ Not recommended:
 - BinanceUS
 - Crypto.com
 
+Recommended DEX sources (can be considered for robust oracles but are not queryable):
+- Uniswap V2/V3
+- Raydium
+- Orca
+- Osmosis
+
 Exchanges not included in the above list are not currently supported by the software.
+
+### Recently listed markets
+If a market is relatively new, one month of past liquidity and volume data may not be available. If the underlying token launched within 1 day, one can consider the modified requirement below to ensure compatibility and relevance without sufficient data.
+1. There should be at least 4 oracle sources that meet the following criteria:
+  - Both sides of liquidity at 2% from the midprice should be at least `$50,000`. 
+  - The 24 hour trading volume should be at least `$1,000,000`. 
+2. Additionally, there should be 2 oracle sources that meet the following criteria:
+  - Both sides of liquidity at 2% from the midprice should be at least `$30,000`. 
+  - The 24 hour trading volume should be at least `$1,000,000`. 
+3. At least 5 of the oracle sources should be queryable. 
 
 ## Example
 
 ### Example of markets with robust oracle sources
-Here is a [list](https://docs.google.com/spreadsheets/d/1zjkV9R7R_7KMItuzqzvKGwefSBRfE-ZNAx1LH55OcqY/edit#gid=1489690476) of a few markets and their oracle sources evaluated based on the methodology above. 
+Here is a [list](https://docs.google.com/spreadsheets/d/1zjkV9R7R_7KMItuzqzvKGwefSBRfE-ZNAx1LH55OcqY/edit#gid=1489690476) of certain markets and their oracle sources, likely compatibilility with optimal software performance, and parameters, based on the methodology above.  
 
 ### `exchange_config_json`
 
@@ -223,3 +248,13 @@ Below is an example proposal JSON file to propose adding `BTC-USD` as a new perp
 ## Submitting an Onchain Proposal
 
 Follow instructions [here](./submitting_a_proposal.md) to submit an onchain proposal.
+
+
+#### Disclaimer
+Users considering using the permissionless markets function of the dYdx v4 software are 
+encouraged to consult qualified legal counsel to ensure compliance with the laws of their 
+jurisdiction. The information on this page does not constitute and should not be relied on as 
+investment, legal, or any other form of professional advice. This page does not recommend 
+any specific market, and analyzes only compatibility and functionality from a technical 
+standpoint. Use of the v4 software is prohibited in the United States, Canada, and 
+sanctioned jurisdictions as described in the [v4 Terms of Use](https://dydx.exchange/v4-terms).
