@@ -1,5 +1,17 @@
 # Resources
 
+## `networks` repositories
+
+For **the deployment by DYDX token holders**, use the below:
+| Chain Id          | GitHub Folder                                                     |
+| ----------------- | ----------------------------------------------------------------- |
+| dydx-mainnet-1    | `https://github.com/dydxopsdao/networks/tree/main/dydx-mainnet-1` |
+
+For **Testnet**, use the below:
+| Chain Id          | GitHub Folder                                                             |
+| ----------------- | ------------------------------------------------------------------------- |
+| dydx-testnet-4    | `https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-4`    |
+
 ## Seed Nodes
 
 For **the deployment by DYDX token holders**, use the below:
