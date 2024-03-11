@@ -1,19 +1,26 @@
-# How to send USDC from Ethereum to dYdX Chain
+# How to send USDC from Ethereum to dYdX
+
+## Deployments
+| Deployment         | USDC Native Chain | USDC_ERC20_ADDRESS | TOKEN_MESSENGER_CONTRACT_ADDRESS |
+|--------------------|-------------------|--------------------|----------------------------------|
+| DYDX token holders | Ethereum          | [0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48](https://etherscan.io/address/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48) | [0xBd3fa81B58Ba92a82136038B25aDec7066af3155](https://etherscan.io/address/0xbd3fa81b58ba92a82136038b25adec7066af3155) |
+| Testnet            | Sepolia Testnet   | [0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238](https://sepolia.etherscan.io/address/0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238) | [0x9f3B8679c73C2Fef8b59B4f3444d4e156fb70AA5](https://sepolia.etherscan.io/address/0x9f3B8679c73C2Fef8b59B4f3444d4e156fb70AA5) |
+
+> **Note:** the example values in the steps below align with the **deployment by DYDX token holders**.
 
 ## Requirements
-1. This document refers to Mainnet.
-2. Your wallet is on the Ethereum network.
-3. You have sufficient ETH for gas and USDC.
+1. Your wallet is on the Ethereum network.
+2. You have sufficient ETH for gas and USDC.
 
 ## Prerequisite USDC Approval
-1. First, go to [https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48#writeProxyContract](https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48#writeProxyContract)
+1. First, go to `USDC_ERC20_ADDRESS`'s `writeProxyContract` tab [https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48#writeProxyContract](https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48#writeProxyContract)
 2. Click the “Connect to Web3” button
 ![Connect to Web3](../../artifacts/how_to_send_usdc_to_dydx_connect_web3_1.png)
 ![Connect to Web3 Disclaimer](../../artifacts/how_to_send_usdc_to_dydx_connect_web3_2.png)
 ![Connect Wallet](../../artifacts/how_to_send_usdc_to_dydx_connect_web3_3.png)
 3. Now it turns green.
 ![Connected](../../artifacts/how_to_send_usdc_to_dydx_connect_web3_4.png)
-4. Click on the first line `1. Approve (0x095ea7b3)` to expand it, input `0xbd3fa81b58ba92a82136038b25adec7066af3155` in the spender (address) box and `115792089237316195423570985008687907853269984665640564039457584007913129639935` in the second box (value (`uint256`)) for unlimited. You can specify a smaller number here as well.
+4. Click on the first line `1. Approve (0x095ea7b3)` to expand it, input `0xbd3fa81b58ba92a82136038b25adec7066af3155` (the `TOKEN_MESSENGER_CONTRACT_ADDRESS`) in the spender (address) box and `115792089237316195423570985008687907853269984665640564039457584007913129639935` in the second box (value (`uint256`)) for unlimited. You can specify a smaller number here as well.
 ![Approve](../../artifacts/how_to_send_usdc_to_dydx_approve.png)
 5. Click the `Write` button.
 
