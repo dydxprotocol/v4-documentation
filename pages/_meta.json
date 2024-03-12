@@ -1,15 +1,5 @@
 {
   "index": "Introduction",
-  "validators": "Validators",
-  "networks": "Networks",
-  "trading": "Trading",
-  "deposits_and_withdrawals": "Deposits and Withdrawals",
-  "rewards": "Rewards",
-  "developers": "Developers",
-  "operators": "Operators",
-  "governance": "Governance",
-  "security": "Security",
-  "guides":"Guides",
   "terms_and_policies": "Terms and Policies",
   "app": {
     "title": "dYdX Chain ↗",

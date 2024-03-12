@@ -1,8 +1,0 @@
-{
-  "hardware_requirements": "Hardware Requirements",
-  "required_node_configs": "Required Node Configs",
-  "running_validator": "Running a Validator",
-  "running_full_node": "Running a Full Node",
-  "snapshots": "Snapshots",
-  "upgrades": "Upgrades"
-}
