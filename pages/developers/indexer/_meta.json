@@ -1,4 +1,5 @@
 {
     "indexer_api": "Indexer API",
-    "indexer_websocket": "Indexer Websocket"
+    "indexer_websocket": "Indexer Websocket",
+    "subquery": "SubQuery Indexer"
 }
