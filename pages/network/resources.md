@@ -126,7 +126,7 @@ For **Testnet**, use the below:
 | ------------- | ----------------------------------------------- |
 | Enigma        | `https://dydx-rpc-testnet.enigma-validator.com` |
 | Lavendar Five | `https://testnet-dydx-rpc.lavenderfive.com`     |
-| King Nodes    | `https://test-dydx.kingnodes.com`               |
+| King Nodes    | `https://test-dydx-rpc.kingnodes.com`           |
 | Polkachu      | `https://dydx-testnet-rpc.polkachu.com`         |
 
 ### REST (For Testnet)
@@ -134,13 +134,14 @@ For **Testnet**, use the below:
 | ------------- | ------------------------------------------------ |
 | Enigma        | `https://dydx-lcd-testnet.enigma-validator.com\` |
 | Lavendar Five | `https://testnet-dydx-api.lavenderfive.com`      |
+| King Nodes    | `https://test-dydx-rest.kingnodes.com`           |
 | Polkachu      | `https://dydx-testnet-api.polkachu.com`          |
 
 ### gRPC (For Testnet)
 | Team          | URI                                      |
 | ------------- | ---------------------------------------- |
 | Lavendar Five | `testnet-dydx-grpc.lavenderfive.com:443` |
-| King Nodes    | `test-dydx-grpc.kingnodes.com:443`       |
+| King Nodes    | `https://test-dydx-grpc.kingnodes.com` <br> `https://test-dydx-grpc-web.kingnodes.com`   |
 | Polkachu      | `dydx-testnet-grpc.polkachu.com:23890`   |
 
 ## Archival node endpoints
@@ -166,20 +167,6 @@ For **Testnet**, use the below:
 | Bware Labs | `https://dydx-mainnet-archive-grpc.public.blastapi.io:443`                                                   | 20 req/s   |
 | KingNodes  | `https://dydx-ops-archive-grpc.kingnodes.com:443`                                                            | 50 req/m   |
 
-### RPC (For Testnet)
-| Team       | URI                               |
-| ---------- | --------------------------------- |
-| King Nodes | `https://test-dydx.kingnodes.com` |
-
-### REST (For Testnet)
-| Team       | URI                               |
-| ---------- | --------------------------------- |
-| King Nodes | `https://test-dydx.kingnodes.com` |
-
-### gRPC (For Testnet)
-| Team       | URI                               |
-| ---------- | --------------------------------- |
-| King Nodes | `https://test-dydx.kingnodes.com` |
 
 ## Other Links
 
