@@ -17,8 +17,8 @@ Notes:
 Below is an example proposal JSON file to propose a slashing a validator's total bonded tokens (= total stake, which includes both user delegated and self-delegated) by 0.2 at block height 5000. In other words:
 * assuming that the proposal passes governance vote
 * assuming that the validator has 1000 total bonded tokens at height 5000
-* once the proposal is passed, the validator will lose 2000 tokens
-* if there are unbonding undelegations and redelegations since height 5000, they will lose 0.2 of their stake, and the remaining 2000 will be taken from the validator
+* once the proposal is passed, the validator will lose 200 tokens
+* if there are unbonding undelegations and redelegations since height 5000, they will lose 0.2 of their stake, and the remaining will be taken from the validator for a total of 200 tokens lost
 ```json
 {
     "title": "Slash a validator",
@@ -30,8 +30,8 @@ Below is an example proposal JSON file to propose a slashing a validator's total
           "authority": "dydx10d07y265gmmuvt4z0w9aw880jnsr700jnmapky",
           "validator_address": "dydxvalcons1z79h40nmd777scs93qjxaeak8m2cl6hpqg2rx9",
           "slash_factor": "0.2",
-          "tokens_at_infraction_height": "5000",
-          "infraction_height": 7647362
+          "tokens_at_infraction_height": "1000",
+          "infraction_height": 5000
         }
     ]
 }
