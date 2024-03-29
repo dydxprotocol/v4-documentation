@@ -14,7 +14,7 @@ Notes:
 
 ### Example Proposal Json
 
-Below is an example proposal JSON file to propose a slashing a validator's total bonded tokens (= total stake, which includes both user delegated and self-delegated) by 0.2 at block height 5000. In other words:
+Below is an example proposal JSON file to propose a slashing a validator's total bonded tokens (both user delegated and self-delegated) by 0.2 at block height 5000. In other words:
 * assuming that the proposal passes governance vote
 * assuming that the validator has 1000 total bonded tokens at height 5000
 * once the proposal is passed, the validator will lose 200 tokens
