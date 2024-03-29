@@ -10,7 +10,10 @@ The proposal should contain a single [MsgSlashValiator](https://github.com/dydxp
 
 ### Example Proposal Json
 
-Below is an example proposal JSON file to propose a slashing a validator's stake by 0.2. After execution the validator will lose 20% of their `tokens_at_infraction_height`. 
+Below is an example proposal JSON file to propose a slashing a validator's total bonded tokens (= total stake, which includes both user delegated and self-delegated) by 0.2 at block height 5000. In other words:
+* assuming that the proposal passes governance vote
+* assuming that the validator has 1000 total bonded tokens at height 5000
+* once the block height reaches 5000, the validator will lose 200 tokens
 ```json
 {
     "title": "Slash a validator",
