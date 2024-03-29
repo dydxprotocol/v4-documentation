@@ -12,6 +12,23 @@ For **Testnet**, use the below:
 | ----------------- | ------------------------------------------------------------------------- |
 | dydx-testnet-4    | `https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-4`    |
 
+## Upgrades History
+
+For **the deployment by DYDX token holders**, use the below:
+| Block Height  | Compatible Versions | Comments |
+|---------------|---------------------| -------- |
+| 1 ~ 1,805,000 | [v2.0.1](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv2.0.1) <br> [v1.0.1](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv1.0.1) <br> [v1.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv1.0.0) | `v1.0.1` was a rolling upgrade; <br> `v2.0.1` was backported to enable easier syncing from block 1 |
+| 1,805,001 ~ 7,147,832 | [v2.0.1](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv2.0.1) <br> [v2.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv2.0.0) | `v2.0.0` was an emergency fix |
+| 7,147,833 ~ TBD | [v3.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv3.0.0) | |
+| TBD ~ | [v4.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv4.0.0) | |
+
+For **Testnet**, use the below:
+| Block Height  | Compatible Versions | Comments |
+|---------------|---------------------| -------- |
+| 1 ~ 5,000,000 | [v2.0.1](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv2.0.1) <br> [v2.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv2.0.0) <br> [v1.0.1](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv1.0.1) <br> [v1.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv1.0.0) | The chain was never upgraded to `v2.0.0` |
+| 5,000,001 ~ 6,880,000 | [v3.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv3.0.0) | |
+| 6,880,001 ~  | [v4.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv4.0.0) | |
+
 ## Seed Nodes
 
 For **the deployment by DYDX token holders**, use the below:
