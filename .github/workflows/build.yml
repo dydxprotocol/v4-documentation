@@ -15,6 +15,7 @@ jobs:
         ruby-version: [2.7.0]
 
     steps:
+    - uses: actions/checkout@v2
     - name: Move into slate-docs directory
       run: |
         pwd
@@ -22,7 +23,6 @@ jobs:
     - name: Move into slate-docs directory
       run: cd slate-docs
       working-directory: ${{ github.workspace }}
-    - uses: actions/checkout@v2
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
