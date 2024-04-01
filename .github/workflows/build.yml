@@ -9,6 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}/slate-docs
 
     strategy:
       matrix:
@@ -16,14 +19,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Move into slate-docs directory
-      run: |
-        cd slate-docs
-        ls -l
-      working-directory: ${{ github.workspace }}
-    - name: test
-      run: |
-        ls -l
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
