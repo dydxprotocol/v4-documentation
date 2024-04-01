@@ -1,0 +1,57 @@
+name: Deploy Slate docs
+
+on:
+  push:
+    branches: [ 'main' ]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}/slate-docs
+    env:
+      ruby-version: 2.7.0
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ env.ruby-version }}
+
+    - uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: gems-${{ runner.os }}-${{ env.ruby-version }}-${{ hashFiles('**/Gemfile.lock') }}
+
+    - name: Install
+      run: |
+        bundle config set deployment 'true'
+        bundle install
+
+    - name: Build
+      run: bundle exec middleman build
+
+    - name: Disable jekyll builds
+      run: touch build/.nojekyll
+
+    - name: Install Push Dependencies
+      run: npm i -g --silent gh-pages@2.0.1
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "github_actions"
+        git config --global user.email "ci@dydx.exchange"
+
+    - name: Deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        gh-pages --dotfiles --message "[skip ci] Updates" --dist build -u "github_actions <ci@dydx.exchange>"
+
