@@ -2,6 +2,8 @@
     "how_to_set_up_full_node": "How to set up a full node",
     "how_to_uncross_orderbook": "How to uncross the orderbook",
     "how_to_send_usdc_to_dydx": "How to send USDC from Ethereum to dYdX",
-    "how_to_interpret_block_data_for_trades": "How to interpret block data for trades"
+    "how_to_interpret_block_data_for_trades": "How to interpret block data for trades",
+    "maintaining_a_local_orderbook": "Maintaining a Local Orderbook",
+    "using_Cosmovisor_to_stage_dYdXChain": "Using Cosmovisor to stage dYdX Chain binary" 
   }
   
