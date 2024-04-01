@@ -16,7 +16,9 @@ jobs:
 
     steps:
     - name: Move into slate-docs directory
-      run: cd slate-docs
+      run: |
+        ls
+        cd slate-docs
     - uses: actions/checkout@v2
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
