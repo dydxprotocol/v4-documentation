@@ -1,0 +1,28 @@
+/**
+ * dYdX style overrides.
+ */
+
+// Allow <pre> blocks to be embedded in the main content.
+// https://github.com/slatedocs/slate/issues/855#issuecomment-686064294
+.content {
+  pre.center-column {
+    background-color: #d5d5d5;
+    color: #000000;
+    position: static;
+    float: none;
+    margin-bottom: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
+// Undo padding and margin overrides on mobile.
+@media (max-width: $phone-width) {
+  .content {
+    pre.center-column {
+      padding-top: 2em;
+      padding-bottom: 2em;
+      margin: 0;
+    }
+  }
+}
