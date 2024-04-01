@@ -12,14 +12,10 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: [2.7.0]
+        ruby-version: [3.5.7]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Move into slate-docs directory
-      run: |
-        pwd
-        ls -l
     - name: Move into slate-docs directory
       run: cd slate-docs
       working-directory: ${{ github.workspace }}
