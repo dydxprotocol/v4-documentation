@@ -18,7 +18,6 @@ jobs:
     - name: Move into slate-docs directory
       run: |
         ls
-        cd slate-docs
     - uses: actions/checkout@v2
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
