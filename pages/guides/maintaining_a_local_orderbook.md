@@ -1,7 +1,5 @@
 # Maintaining a local orderbook
 
-# NEED JAY TO ADD SHORT INTRO
-
 Building a local orderbook should be fairly straight forward. Here is a quick [example PR](https://github.com/dydxprotocol/v4-chain/pull/1268) for a Go GRPC client that subscribes to the orderbook updates and maintains an orderbook locally. 
 
 Specifically after subscribing to the orderbook updates:
