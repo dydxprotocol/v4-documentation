@@ -21,6 +21,10 @@ jobs:
         cd slate-docs
         ls -l
       working-directory: ${{ github.workspace }}
+    - name: test
+      run: |
+        cd slate-docs
+        ls -l
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
