@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "sync-protocol-docs": "sh ./scripts/sync-proto-swagger.sh"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,8 @@
     "nextra-theme-docs": "latest",
     "pnpm": "^8.3.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "dydx-widdershins": "^4.0.1"
   },
   "devDependencies": {
     "@types/node": "18.11.10",
