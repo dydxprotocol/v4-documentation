@@ -1,10 +1,10 @@
 # Indexer Deep Dive
 
-A good way to think about the indexer is as similar to Infura or Alchemy’s role in the Ethereum ecosystem. However, unlike Infura/Alchemy, and like everything else in dYdX v4, the Indexer is completely open source and can be run by anyone!
+A good way to think about the indexer is as similar to Infura or Alchemy’s role in the Ethereum ecosystem. However, unlike Infura/Alchemy, and like everything else in dYdX Chain, the Indexer is completely open source and can be run by anyone!
 
 ### What is the Indexer?
 
-As part of tooling for the dYdX ecosystem, we want to ensure that clients have access to performant data queries when using the dYdX v4 exchange. Cosmos SDK Full Nodes offer a number of APIs that can be used to request on-chain data. However, these Full Nodes are optimized for committing and executing blocks, not for serving high frequency, low-latency requests from web/mobile clients.
+As part of tooling for the dYdX ecosystem, we want to ensure that clients have access to performant data queries when using exchanges running on dYdX Chain software. Cosmos SDK Full Nodes offer a number of APIs that can be used to request on-chain data. However, these Full Nodes are optimized for committing and executing blocks, not for serving high frequency, low-latency requests from web/mobile clients.
 
 This is why we wrote software for an indexing service. The Indexer is a read-only service that serves off chain data to clients over REST APIs and Websockets. Its purpose is to store and serve data that exists on the dYdX Chain in an easier to use way. In other words, the purpose of an indexer is to index and serve data to clients in a more performant, efficient and web2-friendly way. For example the indexer will serve websockets that provide updates on the state of the orderbook and fills. These clients will include front-end applications (mobile and web), market makers, institutions, and any other parties looking to query dYdX Chain data via a traditional web2 API.
 
@@ -55,7 +55,7 @@ Vulcan is the Indexer’s off-chain data ingestion service. It will consume data
 
 Comlink is an API server that will expose REST API endpoints to read both on-chain and off-chain data. For example, a user could request their USDC balance or the size of a particular position through Comlink, and would receive a formatted JSON response.
 
-As an explicit goal set out by the dYdX team, we’re designing v4 APIs to closely match the [v3 exchange APIs](https://dydx.exchange/blog/v4-deep-dive-indexer#:~:text=closely%20match%20the-,v3%20exchange%20APIs,-.%20We%20have%20had). We have had time to gather feedback and iterate on these APIs over time with v3, and have confidence that they are reasonable at the product-level.
+As an explicit goal set out by the dYdX team, we’re designing v4 APIs to closely match the [v3 APIs](https://dydx.exchange/blog/v4-deep-dive-indexer#:~:text=closely%20match%20the-,v3%20exchange%20APIs,-.%20We%20have%20had). We have had time to gather feedback and iterate on these APIs over time with v3, and have confidence that they are reasonable at the product-level.
 
 ### Roundtable
 
