@@ -1,10 +1,12 @@
-# Orderbook Stream 
+# Orderbook Stream
 
-This feature aims to provide real-time and accurate orderbook updates. Complete orderbook activities are streamed to the client and can be used to construct a full depth L3 orderbook. Streams are implemented using the existing GRPC query service from Cosmos SDK. 
+This feature aims to provide real-time and accurate orderbook updates. Complete orderbook activities are streamed to the client and can be used to construct a full depth L3 orderbook. Streams are implemented using the existing GRPC query service from Cosmos SDK.
 
-The initial implementation only contains orders but not trades. Also note that by dYdX V4’s design, the orderbook can be slightly different across different nodes. 
+The initial implementation only contains orders but not trades. Also note that by dYdX V4’s design, the orderbook can be slightly different across different nodes.
 
-## Enabling GRPC Streaming 
+**Disclaimer:** It’s possible for the full node to block indefinitely when sending a message to an unresponsive client, so right now we recommend you use this exclusively with your own node and that the client always close the gRPC stream before shutting down. This issue will be fixed in the next version.
+
+## Enabling GRPC Streaming
 
 This feature can be enabled via a command line flag (--grpc-streaming-enabled=true) when starting your full node. This feature can only be used on non validating full nodes and when grpc is also enabled.
 
@@ -48,22 +50,21 @@ message StreamOrderbookUpdatesResponse {
 
 ## Example Scenario
 
-- Trader places a bid at price 100 for size 1 
-	- OrderPlace, price = 100, size = 1
-	- OrderUpdate, total filled amount = 0
-- Trader replaces that original bid to be price 99 at size 2 
-	- OrderRemove
-	- OrderPlace, price = 99, size = 2
-	- OrderUpdate, total filled amount = 0
-- Another trader submits an IOC ask at price 100 for size 1. 
-	- Full node doesn't see this matching anything so no updates. 
+- Trader places a bid at price 100 for size 1
+  - OrderPlace, price = 100, size = 1
+  - OrderUpdate, total filled amount = 0
+- Trader replaces that original bid to be price 99 at size 2
+  - OrderRemove
+  - OrderPlace, price = 99, size = 2
+  - OrderUpdate, total filled amount = 0
+- Another trader submits an IOC ask at price 100 for size 1.
+  - Full node doesn't see this matching anything so no updates.
 - Block is confirmed that there was a fill for the trader's original order at price 100 for size 1 (BP didn't see the order replacement)
-	- OrderUpdate, total filled amount = 1
-
+  - OrderUpdate, total filled amount = 1
 
 ## Maintaining a local orderbook
 
-Building a local orderbook should be fairly straight forward. Here is a quick [example PR](https://github.com/dydxprotocol/v4-chain/pull/1268) for a Go GRPC client that subscribes to the orderbook updates and maintains an orderbook locally. 
+Building a local orderbook should be fairly straight forward. Here is a quick [example PR](https://github.com/dydxprotocol/v4-chain/pull/1268) for a Go GRPC client that subscribes to the orderbook updates and maintains an orderbook locally.
 
 Specifically after subscribing to the orderbook updates:
 
