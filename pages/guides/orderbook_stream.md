@@ -1,6 +1,4 @@
-# Maintaining a local orderbook
-
-## Orderbook Stream 
+# Orderbook Stream 
 
 This feature aims to provide real-time and accurate orderbook updates. Complete orderbook activities are streamed to the client and can be used to construct a full depth L3 orderbook. Streams are implemented using the existing GRPC query service from Cosmos SDK. 
 
@@ -47,6 +45,8 @@ message StreamOrderbookUpdatesResponse {
   uint32 exec_mode = 4;
 }
 ```
+
+## Maintaining a local orderbook
 
 Building a local orderbook should be fairly straight forward. Here is a quick [example PR](https://github.com/dydxprotocol/v4-chain/pull/1268) for a Go GRPC client that subscribes to the orderbook updates and maintains an orderbook locally. 
 
