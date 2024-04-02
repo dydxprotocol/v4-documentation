@@ -46,6 +46,21 @@ message StreamOrderbookUpdatesResponse {
 }
 ```
 
+## Example Scenario
+
+- Trader places a bid at price 100 for size 1 
+	- OrderPlace, price = 100, size = 1
+	- OrderUpdate, total filled amount = 0
+- Trader replaces that original bid to be price 99 at size 2 
+	- OrderRemove
+	- OrderPlace, price = 99, size = 2
+	- OrderUpdate, total filled amount = 0
+- Another trader submits an IOC ask at price 100 for size 1. 
+	- Full node doesn't see this matching anything so no updates. 
+- Block is confirmed that there was a fill for the trader's original order at price 100 for size 1 (BP didn't see the order replacement)
+	- OrderUpdate, total filled amount = 1
+
+
 ## Maintaining a local orderbook
 
 Building a local orderbook should be fairly straight forward. Here is a quick [example PR](https://github.com/dydxprotocol/v4-chain/pull/1268) for a Go GRPC client that subscribes to the orderbook updates and maintains an orderbook locally. 
