@@ -31,7 +31,7 @@ In service of building an end-to-end decentralized experience, dYdX has built th
 - **Mobile**: The iOS and Android apps are built in native Swift and Kotlin, respectively. The mobile apps interact with the Indexer in the same way the web application does, and will send trades directly to the chain. The mobile apps have been open sourced as well, allowing anyone to deploy the mobile app to the App Store or Play store. Specifically for the App store, the deployer needs to have a developer account as well as a Bitrise account to go through the app submission process.
 
 ### Lifecycle of an Order
-Now that we have a better understanding of each of the components of dYdX v4, let’s take a look at how it all comes together when placing an order. When an order is placed on v4, it follows the flow below:
+Now that we have a better understanding of each of the components of dYdX Chain, let’s take a look at how it all comes together when placing an order. When an order is placed on v4, it follows the flow below:
 
 1. User places a trade on a decentralized front-end (e.g., website) or via API
 2. The order is routed to a validator. That validator gossips that transaction to other validators and full nodes to update their orderbooks with the new order.
