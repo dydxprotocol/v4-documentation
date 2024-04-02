@@ -29,3 +29,7 @@ Currently, dYdX natively hosts a TypeScript client. 3rd parties were also commis
 **Trading via Mobile**
 
 1. Download the dYdX Chain mobile app for [iOS](https://apps.apple.com/bg/app/dydx/id6475599596) or for Android _(coming soon)_
+
+
+
+_**dYdX does not control any aspects of any public deployments of dYdX chain. Any use of dYdX Chain is subject to the v4 Terms of Use. You can read more about v4 software in our blog post here.**_
