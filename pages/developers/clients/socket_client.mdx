@@ -69,7 +69,6 @@ const mySocket = new SocketClient(
 ```python copy
 def on_open(ws):
     print('WebSocket connection opened')
-    ws.send_ping_if_inactive_for(30)
     
 def on_message(ws, message):
     print(f'Received message: {message}')
