@@ -1,5 +1,53 @@
 # Maintaining a local orderbook
 
+## Orderbook Stream 
+
+This feature aims to provide real-time and accurate orderbook updates. Complete orderbook activities are streamed to the client and can be used to construct a full depth L3 orderbook. Streams are implemented using the existing GRPC query service from Cosmos SDK. 
+
+The initial implementation only contains orders but not trades. Also note that by dYdX V4’s design, the orderbook can be slightly different across different nodes. 
+
+## Enabling GRPC Streaming 
+
+This feature can be enabled via a command line flag (--grpc-streaming-enabled=true) when starting your full node. This feature can only be used on non validating full nodes and when grpc is also enabled.
+
+## Request / Response
+
+To subscribe to the stream, the client can send a 'StreamOrderbookUpdatesRequest' specifying the clob pair ids to subscribe to.
+
+```go
+// StreamOrderbookUpdatesRequest is a request message for the
+// StreamOrderbookUpdates method.
+message StreamOrderbookUpdatesRequest {
+  // Clob pair ids to stream orderbook updates for.
+  repeated uint32 clob_pair_id = 1;
+}
+```
+
+Response will contain the orderbook updates (Add/Remove/Update), whether the updates are coming from a snapshot, and a few fields used for debugging issues.
+
+```go
+// StreamOrderbookUpdatesResponse is a response message for the
+// StreamOrderbookUpdates method.
+message StreamOrderbookUpdatesResponse {
+  // Orderbook updates for the clob pair.
+  repeated dydxprotocol.indexer.off_chain_updates.OffChainUpdateV1 updates = 1
+      [ (gogoproto.nullable) = false ];
+
+  // Snapshot indicates if the response is from a snapshot of the orderbook.
+  // This is true for the initial response and false for all subsequent updates.
+  // Note that if the snapshot is true, then all previous entries should be
+  // discarded and the orderbook should be resynced.
+  bool snapshot = 2;
+
+  // ---Additional fields used to debug issues---
+  // Block height of the updates.
+  uint32 block_height = 3;
+
+  // Exec mode of the updates.
+  uint32 exec_mode = 4;
+}
+```
+
 Building a local orderbook should be fairly straight forward. Here is a quick [example PR](https://github.com/dydxprotocol/v4-chain/pull/1268) for a Go GRPC client that subscribes to the orderbook updates and maintains an orderbook locally. 
 
 Specifically after subscribing to the orderbook updates:
