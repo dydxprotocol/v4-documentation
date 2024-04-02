@@ -12,6 +12,23 @@ For **Testnet**, use the below:
 | ----------------- | ------------------------------------------------------------------------- |
 | dydx-testnet-4    | `https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-4`    |
 
+## Upgrades History
+
+For **the deployment by DYDX token holders**, use the below:
+| Block Height  | Compatible Versions | Comments |
+|---------------|---------------------| -------- |
+| 1 ~ 1,805,000 | [v2.0.1](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv2.0.1) <br> [v1.0.1](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv1.0.1) <br> [v1.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv1.0.0) | `v1.0.1` was a rolling upgrade; <br> `v2.0.1` was backported to enable easier syncing from block 1 |
+| 1,805,001 ~ 7,147,832 | [v2.0.1](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv2.0.1) <br> [v2.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv2.0.0) | `v2.0.0` was an emergency fix |
+| 7,147,833 ~ TBD | [v3.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv3.0.0) | |
+| TBD ~ | [v4.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv4.0.0) | |
+
+For **Testnet**, use the below:
+| Block Height  | Compatible Versions | Comments |
+|---------------|---------------------| -------- |
+| 1 ~ 5,000,000 | [v2.0.1](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv2.0.1) <br> [v2.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv2.0.0) <br> [v1.0.1](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv1.0.1) <br> [v1.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv1.0.0) | The chain was never upgraded to `v2.0.0` |
+| 5,000,001 ~ 6,880,000 | [v3.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv3.0.0) | |
+| 6,880,001 ~  | [v4.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv4.0.0) | |
+
 ## Seed Nodes
 
 For **the deployment by DYDX token holders**, use the below:
@@ -126,7 +143,7 @@ For **Testnet**, use the below:
 | ------------- | ----------------------------------------------- |
 | Enigma        | `https://dydx-rpc-testnet.enigma-validator.com` |
 | Lavendar Five | `https://testnet-dydx-rpc.lavenderfive.com`     |
-| King Nodes    | `https://test-dydx.kingnodes.com`               |
+| King Nodes    | `https://test-dydx-rpc.kingnodes.com`           |
 | Polkachu      | `https://dydx-testnet-rpc.polkachu.com`         |
 
 ### REST (For Testnet)
@@ -134,13 +151,14 @@ For **Testnet**, use the below:
 | ------------- | ------------------------------------------------ |
 | Enigma        | `https://dydx-lcd-testnet.enigma-validator.com\` |
 | Lavendar Five | `https://testnet-dydx-api.lavenderfive.com`      |
+| King Nodes    | `https://test-dydx-rest.kingnodes.com`           |
 | Polkachu      | `https://dydx-testnet-api.polkachu.com`          |
 
 ### gRPC (For Testnet)
 | Team          | URI                                      |
 | ------------- | ---------------------------------------- |
 | Lavendar Five | `testnet-dydx-grpc.lavenderfive.com:443` |
-| King Nodes    | `test-dydx-grpc.kingnodes.com:443`       |
+| King Nodes    | `https://test-dydx-grpc.kingnodes.com` <br> `https://test-dydx-grpc-web.kingnodes.com`   |
 | Polkachu      | `dydx-testnet-grpc.polkachu.com:23890`   |
 
 ## Archival node endpoints
@@ -166,20 +184,6 @@ For **Testnet**, use the below:
 | Bware Labs | `https://dydx-mainnet-archive-grpc.public.blastapi.io:443`                                                   | 20 req/s   |
 | KingNodes  | `https://dydx-ops-archive-grpc.kingnodes.com:443`                                                            | 50 req/m   |
 
-### RPC (For Testnet)
-| Team       | URI                               |
-| ---------- | --------------------------------- |
-| King Nodes | `https://test-dydx.kingnodes.com` |
-
-### REST (For Testnet)
-| Team       | URI                               |
-| ---------- | --------------------------------- |
-| King Nodes | `https://test-dydx.kingnodes.com` |
-
-### gRPC (For Testnet)
-| Team       | URI                               |
-| ---------- | --------------------------------- |
-| King Nodes | `https://test-dydx.kingnodes.com` |
 
 ## Other Links
 

@@ -33,6 +33,12 @@ You may subscribe to any channel following the subscribe instructions above. Sub
 - `channel` - Specifies the channel you are subscribing to. The specific string is specified in each channel’s documentation
 - `id` - required for all channels other than market. Specifies the market or subaccount you are subscribing to.
 
+### Rate Limiting
+
+The default rate limiting config for websockets is:
+- 2 subscriptions per (connection + channel + channel id) per second.
+- 2 invalid messages per connection per second.
+
 ### Unsubscribe
 
 Utilize the same message to subscribe but replace the type with `unsubscribe`. For example:
