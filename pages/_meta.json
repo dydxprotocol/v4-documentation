@@ -1,7 +1,7 @@
 {
   "index": "Introduction",
   "about": "About dYdX",
-  "architecture": "Architecture"
+  "architecture": "Architecture",
   "getting_started": "Getting Started",
   "validators": "Validators",
   "network": "Network Configuration",
@@ -12,7 +12,7 @@
   "operators": "Operators",
   "governance": "Governance",
   "security": "Security",
-  "guides":"Guides",
+  "guides": "Guides",
   "FAQ": "FAQs",
   "terms_and_policies": "Terms and Policies",
   "app": {
