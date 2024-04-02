@@ -1,14 +1,13 @@
 # Intro to dYdX v4 Architecture
 
-v4 (or dYdX Chain) is the next iteration of the dYdX protocol, which will consist of open-source software. The current version live in production today is known as v3 and can be found [here](https://trade.dydx.exchange/?utm_source=dydx-website&utm_medium=blog&utm_content=v4-technical-architecture-overview). v3 and past versions of dYdX were, at their core, smart contracts deployed to existing chains, combined with centralized services hosted in the cloud. v4 will be a standalone L1 blockchain, featuring a fully decentralized, off-chain orderbook and matching engine. The dYdX Chain will be based on the Cosmos SDK and CometBFT PoS consensus protocol.
-
 ### v4 System Architecture
 
-dYdX v4 is being designed to be completely decentralized end-to-end. The main components broadly include the protocol, the Indexer, and the front end. Each of these components are available as open source software. None of the components are run by dYdX Trading Inc.
+dYdX Chain has been designed to be completely decentralized end-to-end. The main components broadly include the protocol, the Indexer, and the front end. Each of these components are available as open source software. None of the components are run by dYdX Trading Inc.
 
 ![image](https://github.com/dydxprotocol/v4-documentation/assets/130097657/e9a54253-e7fa-44ab-97c5-ae1ce7cae320)
 
 ### Protocol (or “Application”)
+
 The open-source protocol is an L1 blockchain built on top of [CometBFT](https://dydx.exchange/blog/v4-technical-architecture-overview#:~:text=on%20top%20of-,CometBFT,-and%20using%20CosmosSDK) and using [CosmosSDK](https://v1.cosmos.network/sdk). The node software is written in Go, and compiles to a single binary. Like all CosmosSDK blockchains, v4 uses a proof-of-stake consensus mechanism. 
 
 The protocol is supported by a network of nodes. There are two types of nodes:
