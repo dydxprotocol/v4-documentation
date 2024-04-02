@@ -2,7 +2,7 @@
 
 <img width="639" alt="Screenshot 2024-03-29 at 2 34 06 PM" src="https://github.com/dydxprotocol/v4-documentation/assets/130097657/19bc0173-0d79-473f-b88a-f99b72c7065a">
 
-In dYdX trading, quantities and prices are represented in quantums (for quantities) and subticks (for prices), which need conversion for practical understanding.
+In dYdX Chain trading, quantities and prices are represented in quantums (for quantities) and subticks (for prices), which need conversion for practical understanding.
 
 ### Quantums
 
@@ -28,7 +28,7 @@ If BTC drops to 200 USDC/BTC, a `tick` being 100 USDC/BTC no longer makes sense,
 
 Result: Determined if this is a buy or a sell
 
-2. Next, look at column N.  The perpetual_id is 7, which maps to AVAX-USD market.  You can see all the mappings from this endpoint https://indexer.dydx.trade/v4/perpetualMarkets where the clobPairId is the perpetual_id.
+2. Next, look at column N.  The perpetual_id is 7, which maps to AVAX-USD market.  You can see all the mappings from this endpoint for the dYdX Chain deployment by dYdX Operations Services Ltd. https://indexer.dydx.trade/v4/perpetualMarkets where the clobPairId is the perpetual_id.
 
 Result: Determined the market
 
