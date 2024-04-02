@@ -2,7 +2,7 @@
 
 **Depositing on dYdX Chain**
 
-1. Connect your preferred Ethereum wallet to the dYdX Chain deployment of your choice (i.e. [dydx.trade](https://dydx.trade)). _Support for Cosmos native wallets such as Keplr and Leap coming soon_.
+1. Connect your preferred Ethereum wallet to the dYdX Chain deployment of your choice (e.g. the dYdX Operations Services Ltd. deployment [dydx.trade](https://dydx.trade)). _Support for Cosmos native wallets such as Keplr and Leap coming soon_.
 2. Deposit USDC to your DYDX chain address. The default onboarding path uses Circle's Cross Chain Transfer Protocol (CCTP) on Noble Chain. You can deposit USDC from many origination chains. Read more [here](https://dydx.exchange/blog/cctp).
 
 ## User Journeys 
@@ -24,12 +24,12 @@ Currently, dYdX natively hosts a TypeScript client. 3rd parties were also commis
  
 **Trading via Web**
 
-1. dYdX Operating SubDAO deployment of the dYdX web app at [dydx.trade](https://dydx.trade)
+1. dYdX Operations Services Ltd. deployment of the dYdX web app at [dydx.trade](https://dydx.trade)
 
 **Trading via Mobile**
 
-1. Download the dYdX Chain mobile app for [iOS](https://apps.apple.com/bg/app/dydx/id6475599596) or for Android _(coming soon)_
+1. Download the mobile app for the dYdX Operations Services Ltd. deployment of dYdX Chain [iOS](https://apps.apple.com/bg/app/dydx/id6475599596) or for Android _(coming soon)_
 
 
 
-_dYdX does not control any aspects of any public deployments of dYdX chain. Any use of dYdX Chain is subject to the [v4 Terms of Use](https://dydx.exchange/v4-terms). You can read more about v4 software in our blog post [here](https://dydx.exchange/blog/dydx-chain)._
+_dYdX Trading Inc. ("dYdX") does not control or operate any public deployments of dYdX Chain.  Any use of the dYdX Chain documentation hub and dYdX Chain software is subject to dYdX's [Terms and Policies](https://docs.dydx.exchange/terms_and_policies/terms_of_use_and_privacy_policy)._
