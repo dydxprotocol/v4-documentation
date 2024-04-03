@@ -66,9 +66,7 @@ message StreamOrderbookUpdatesResponse {
 
 ## Maintaining a local orderbook
 
-Building a local orderbook should be fairly straight forward. Here is a quick [example PR](https://github.com/dydxprotocol/v4-chain/pull/1268) for a Go GRPC client that subscribes to the orderbook updates and maintains an orderbook locally.
-
-Specifically after subscribing to the orderbook updates:
+After subscribing to the orderbook updates:
 
 - Use the orderbook in the snapshot as the starting orderbook.
 - Add the corresponding order to the end of the price level when `OrderPlaceV1` is received.
