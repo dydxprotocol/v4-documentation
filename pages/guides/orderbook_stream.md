@@ -10,6 +10,8 @@ The initial implementation only contains orders but not trades. Also note that b
 
 This feature can be enabled via a command line flag (--grpc-streaming-enabled=true) when starting your full node. This feature can only be used on non validating full nodes and when grpc is also enabled.
 
+Further, please ensure your full node binary is v3.0.1, or v4.0.1 when it becomes available on April 8th.
+
 ## Request / Response
 
 To subscribe to the stream, the client can send a 'StreamOrderbookUpdatesRequest' specifying the clob pair ids to subscribe to.
