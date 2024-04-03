@@ -35,15 +35,15 @@ Let A represent the amount of rewards that are distributed from this T to trader
 
 We define a trader X’s “rewards score” in a given block as:
 
-![FRP1](https://github.com/dydxprotocol/v4-documentation/blob/TG---Binary-Upgrade%2C-Interpret-Data%2C-Fees-Rewards-Parameters/artifacts/FRP1.png)
+![FRP1](../../artifacts/FRP1.png)
 
 Let S be the sum of all the rewards scores across all traders for a given block. S is given by:
 
-![FRP2](https://github.com/dydxprotocol/v4-documentation/blob/TG---Binary-Upgrade%2C-Interpret-Data%2C-Fees-Rewards-Parameters/artifacts/FRP2.png)
+![FRP2](../../artifacts/FRP2.png)
 
 Every block, the amount A of the native token that is distributed to traders is defined as:
 
-![FRP3](https://github.com/dydxprotocol/v4-documentation/blob/TG---Binary-Upgrade%2C-Interpret-Data%2C-Fees-Rewards-Parameters/artifacts/FRP3.png)
+![FRP3](../../artifacts/FRP3.png)
 
 Where C is a constant configurable by the applicable Governance Community. The open source software is configured for the constant to be initially set at 0. 
 
@@ -57,7 +57,7 @@ Once the Vesting Contract is funded, trading rewards will continue to run and se
 
 See below for a visual that summarizes trading rewards architecture.
 
-![FRP4](https://github.com/dydxprotocol/v4-documentation/blob/TG---Binary-Upgrade%2C-Interpret-Data%2C-Fees-Rewards-Parameters/artifacts/FRP4.png)
+![FRP4](../../artifacts/FRP4.png)
 
 ### Fee Schedule
 _The fee schedule is subject to adjustments by the applicable Governance Community_
@@ -68,7 +68,7 @@ The basic structure for fees have been developed to reflect the following charac
 2. Users are eligible for lower fees based on their 30 day trading volume across sub accounts and markets
 3. Fees are uniform across all markets
 
-![FRP5](https://github.com/dydxprotocol/v4-documentation/blob/TG---Binary-Upgrade%2C-Interpret-Data%2C-Fees-Rewards-Parameters/artifacts/FRP5.png)
+![FRP5](../../artifacts/FRP5.png)
 
 Initially, traders’ maker rebates will be developed to reflect -1.1bps. This initial setting can be adjusted by the applicable Governance Community.  The open-source software contemplates that after the 120-day period has concluded, the dYdX Chain would automatically revert to the other fee schedule shown in the schedule above. _Note that this ended in March 2024._
 
