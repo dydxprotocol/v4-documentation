@@ -50,20 +50,6 @@ message StreamOrderbookUpdatesResponse {
 }
 ```
 
-## Example Scenario
-
-- Trader places a bid at price 100 for size 1
-  - OrderPlace, price = 100, size = 1
-  - OrderUpdate, total filled amount = 0
-- Trader replaces that original bid to be price 99 at size 2
-  - OrderRemove
-  - OrderPlace, price = 99, size = 2
-  - OrderUpdate, total filled amount = 0
-- Another trader submits an IOC ask at price 100 for size 1.
-  - Full node doesn't see this matching anything so no updates.
-- Block is confirmed that there was a fill for the trader's original order at price 100 for size 1 (BP didn't see the order replacement)
-  - OrderUpdate, total filled amount = 1
-
 ## Maintaining a local orderbook
 
 After subscribing to the orderbook updates:
@@ -159,3 +145,33 @@ func (l *LocalOrderbook) RemoveOrder(orderId v1types.IndexerOrderId) {
 	delete(l.OrderIdToOrder, orderId)
 }
 ```
+
+## Example Scenario
+
+- Trader places a bid at price 100 for size 1
+  - OrderPlace, price = 100, size = 1
+  - OrderUpdate, total filled amount = 0
+- Trader replaces that original bid to be price 99 at size 2
+  - OrderRemove
+  - OrderPlace, price = 99, size = 2
+  - OrderUpdate, total filled amount = 0
+- Another trader submits an IOC ask at price 100 for size 1.
+  - Full node doesn't see this matching anything so no updates.
+- Block is confirmed that there was a fill for the trader's original order at price 100 for size 1 (BP didn't see the order replacement)
+  - OrderUpdate, total filled amount = 1
+ 
+## FAQs
+
+Q: Suppose the full node saw the cancellation of order X at t0 before the placement of the order X at t1. What would the updates be like?
+- **A: No updates because the order was never added to the book**
+
+Q: A few questions because it often results in crossed books:
+In which cases shall we not expect to see OrderRemove message?
+- Post only reject? → **PO reject won’t have a removal since they were never added to the book**
+- IOC/FIK auto cancel? → **IOC/FOK also won’t have a removal message for similar reason**
+- Order expired outside of block window? → **expired orders will generate a removal message**
+- Passive limit order was fully filled → **fully filled maker will generate a removal message**
+- Aggressive limit order was fully filled? → **fully filled taker won’t have a removal**
+
+Q: The update order message is only for trades? Shall we expect to see 2 updates for each trade because there are 2 orders together?
+- **A: Current implementation only sends an update for maker**
