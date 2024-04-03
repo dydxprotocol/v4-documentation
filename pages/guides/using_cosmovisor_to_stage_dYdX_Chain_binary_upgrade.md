@@ -1,53 +1,39 @@
-## dYdX v4: How to Interpret the Block Data for Trades
+# Using Cosmovisor to stage dYdX Chain binary upgrade 
 
-![Interpret1](https://github.com/dydxprotocol/v4-documentation/blob/Uncross-Orderbook-and-Cosmovisor-Binary/artifacts/interpret_block_data_1.png)
+## Prerequisite
 
-In dYdX Chain trading, quantities and prices are represented in quantums (for quantities) and subticks (for prices), which need conversion for practical understanding.
+1. Linux (Ubuntu Server 22.04.3 recommended)
+2. 8-cpu (ARM or x86_64), 64 GB RAM, 500 GB SSD NVME Storage
+3. Already installed dYdXChain full node
 
-### Quantums
+## Preparation
 
-The smallest increment of position size. Determined from `atomicResolution`.
+1. Install Go from https://go.dev/doc/install (Version tested is 1.22.1)
+2. Install Cosmovisor, with the following command:
+go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
+3. Copy cosmovisor from $HOME/go/bin/ to a directory in your $PATH
+4. Add two environment variables to $HOME/.profile.  The data directory is typically $HOME/.dydx-mainnet-1
+export DAEMON_NAME=dydxprotocold
+export DAEMON_HOME=<your data directory>
+5. Log out and log back in.
+6. Initialize Cosmovisor with the following command.  The <path to executable> is the the full path to dydxprotocold
+cosmovisor init <path to executable>
+7.Cosmovisor is now ready for use.
 
-atomicResolution - Determines the size of a quantum. [For example](https://github.com/dydxprotocol/v4/blob/08069ba905753158b9f390ca52e3f9f0fb2cb3d5/config.yml#L101), an `atomicResolution` of 10 for `BTC`, means that 1 quantum is `1e-10` `BTC`.
+## Running dydxprotocold under Cosmovisor
 
-### Subticks
+You have to change the way you currently run dydxprotocold to run under Cosmovisor.  This is done simply by specifying “cosmovisor run” in place of the “dydxprotocold” command you used previously.  Therefore, if you previously used “dydxprotocold start --p2p.seeds="ade4d8…”, you would change that to “cosmovisor run start --p2p.seeds="ade4d8…”
 
-Human-readable units: `USDC/<currency>` e.g. USDC/BTC
+## Staging upgrade
 
-Units in V4 protocol: `quote quantums/base quantums` e.g. (`1e-14 USDC/1e-10 BTC`)
+1. The Cosmovisor directory structure looks like this:
 
-Determined by `quantum_conversion_exponent`, this allows for flexibility in the case that an asset’s prices plummet, since prices are represent in subticks, decreasing `subticks_per_tick` would allow for ticks to denote smaller increments between prices.
+![Upgrade1](https://github.com/dydxprotocol/v4-documentation/blob/TG---Binary-Upgrade%2C-Interpret-Data%2C-Fees-Rewards-Parameters/artifacts/Staging_1.png) 
 
-E.g. 1 `subtick` = `1e-14 USDC/1e-10 BTC`  and if BTC was at 20,000 USDC/BTC, a `tick` being 100 USDC/BTC (`subtick_per_tick` = 10000) may make sense.
+2. To stage an upgrade, you would create a <name> directory inside the upgrades/ directory.  For example, as of 4/1/2024, the current version is v3.0.0 and the next upgrade version is v4.0.0.  Therefore you would create a directory called “v4.0.0” and then a bin directory inside it.
 
-If BTC drops to 200 USDC/BTC, a `tick` being 100 USDC/BTC no longer makes sense, and we may want a `tick` to be 1 USDC/BTC, which lets us set `subtick_per_tick` to 100 to get to a `tick` size of 1 USDC/BTC.
+![Upgrade2](https://github.com/dydxprotocol/v4-documentation/blob/TG---Binary-Upgrade%2C-Interpret-Data%2C-Fees-Rewards-Parameters/artifacts/Staging_2.png) 
 
-### Now back to the interpretation of the above image:
+3. Now, download the upgraded binary and put it inside the bin directory created previously.  It must be named dydxprotocold
 
-1. First, notice column I is negative.  That means this trade is a sell by the taker account.  If It was positive, it would be a buy.
-
-Result: Determined if this is a buy or a sell
-
-2. Next, look at column N.  The perpetual_id is 7, which maps to AVAX-USD market.  You can see all the mappings from this endpoint for the dYdX Chain deployment by dYdX Operations Services Ltd. https://indexer.dydx.trade/v4/perpetualMarkets where the clobPairId is the perpetual_id.
-
-Result: Determined the market
-
-3. Next, we need to get the decimals for this market.  First, get the atomicResolution from that endpoint above which we see is -7.  Now we can get the size of the trade.  From column I and J, take this number -500000000 and multiply by 10^(AtomicResolution) and you get: -500000000 x 10^-7 = 50, so the quantity is 50.
-
-Result: Determined the quantity
-
-4. Next, look at columns, E, F, G, H, I, and J
-
-![Interpret2](https://github.com/dydxprotocol/v4-documentation/blob/Uncross-Orderbook-and-Cosmovisor-Binary/artifacts/interpret_block_data_2.png)
-
-The price of the trade is either `abs((G+E)/I)*10e(-6 - AtomicResolution)`, or `abs((H+F)/J)*10e(-6 - AtomicResolution)`, either one is the same.  Note that the ‘-6’ is because the AtomicResolution of USDC is -6.
-
-`abs((1479130125 + 369875)/-500000000)*10e(-6 + 7) = 29.59`
-
-`abs((-1479337255 - 162745)/500000000)*10e(-6 +7) = 29.59`
-
-Result: Determined the price
-
-### Conclusion
-
-In conclusion, we have determined that this trade is SELL 50 AVAX-USD at price $29.59
+4. Restart dydxprotocold with Cosmovisor.  Now, Cosmovisor will automatically halt the current binary at the block activation height and start the upgrade binary.
