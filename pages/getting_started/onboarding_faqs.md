@@ -1,6 +1,12 @@
 # Onboarding FAQs
 
 ### Architecture Intro
+
+1. Can you give an overview of the structure of the network and the role full nodes/validators play in constructing the orderbook and participating in block building, and how trades are placed?
+    - A network run on v4 is composed of full nodes and each maintains an in-memory order book. Anyone can use the open source software to run a full node. Traders could submit order placements and cancellations to full nodes, which would gossip the transactions amongst themselves.
+    - Full nodes with enough delegated layer 1 governance tokens could participate in block building as validators. Validators on v4 will take turns proposing blocks of trades every 2-5 seconds. The validator whose turn it is to propose a block at a given height is called the proposer. The proposer uses its mempool orderbook to propose a block of matches, which validators could either accept or reject according to CometBFT (Tendermint) consensus.
+    - All full nodes could have visibility of the consensus process and the transactions in the mempool. Another component of v4 is the indexer software, an application that reads data from full nodes and exposes it via REST / WebSocket APIs for convenience. Instructions on how to set up a full node can be found here. 
+
 1. What is the difference between a full node and a validator?
     - A full node does not participate in consensus. It receives data from other full nodes and validators in the v4 network via the gossip protocol. A validator participates in consensus by broadcasting votes signed by each validator’s private keys. 
 2. What are the benefits of running a full node as a market maker?
