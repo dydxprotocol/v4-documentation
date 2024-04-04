@@ -10,7 +10,7 @@ The initial implementation only contains orders but not trades. Also note that b
 
 This feature can be enabled via a command line flag (--grpc-streaming-enabled=true) when starting your full node. This feature can only be used on non validating full nodes and when grpc is also enabled.
 
-Further, please ensure your full node binary is v3.0.1, or v4.0.1 when it becomes mandatory on April 8th (subject to governance vote).   
+Further, please ensure your full node binary is `v3.0.1`, or `v4.0.1` when it becomes mandatory on April 8, 2024 (subject to governance vote).   
 
 ## Request / Response
 
