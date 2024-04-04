@@ -12,8 +12,6 @@
 
 3. What are the benefits of running a full node as a market maker?
     - Running a full node will eliminate the latency between placing an order and when the actual order is gossipped throughout the network. Without your own node, your order will need to first be relayed to the nearest geographic node, which will then propagate it throughout the network for you. With your own node, your order will directly be gossiped. 
-    - Running a full node could reduce the latency between when the block is final and when you see your order fill. The indexer will try to do this efficiently, but you might be able to optimize this further by removing latency from node → indexer.
-    - You could make use of probabilistic data, so you also want to see the block when it is proposed, rather than just when it is confirmed, and develop your own model to determine the likelihood of the block’s confirmation.
     - Instructions on how to set up a full node can be found [here](https://docs.dydx.exchange/guides/how_to_set_up_full_node).
 
 4. What is the current block time?
