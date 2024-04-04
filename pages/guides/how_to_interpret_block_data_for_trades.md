@@ -1,6 +1,6 @@
 ## dYdX v4: How to Interpret the Block Data for Trades
 
-<img width="639" alt="Screenshot 2024-03-29 at 2 34 06 PM" src="https://github.com/dydxprotocol/v4-documentation/assets/130097657/19bc0173-0d79-473f-b88a-f99b72c7065a">
+![Interpret1](../../artifacts/interpret_block_data_1.png)
 
 In dYdX Chain trading, quantities and prices are represented in quantums (for quantities) and subticks (for prices), which need conversion for practical understanding.
 
@@ -38,13 +38,13 @@ Result: Determined the quantity
 
 4. Next, look at columns, E, F, G, H, I, and J
 
-<img width="619" alt="Screenshot 2024-03-29 at 2 37 28 PM" src="https://github.com/dydxprotocol/v4-documentation/assets/130097657/44661861-3ec0-40fb-951d-43c3ce9bb015">
+![Interpret2](../../artifacts/interpret_block_data_2.png)
 
-The price of the trade is either abs((G+E)/I)*10e(-6 - AtomicResolution), or abs((H+F)/J)*10e(-6 - AtomicResolution), either one is the same.  Note that the ‘-6’ is because the AtomicResolution of USDC is -6.
+The price of the trade is either `abs((G+E)/I)*10e(-6 - AtomicResolution)`, or `abs((H+F)/J)*10e(-6 - AtomicResolution)`, either one is the same.  Note that the ‘-6’ is because the AtomicResolution of USDC is -6.
 
-abs((1479130125 + 369875)/-500000000)*10e(-6 + 7) = 29.59
+`abs((1479130125 + 369875)/-500000000)*10e(-6 + 7) = 29.59`
 
-abs((-1479337255 - 162745)/500000000)*10e(-6 +7) = 29.59
+`abs((-1479337255 - 162745)/500000000)*10e(-6 +7) = 29.59`
 
 Result: Determined the price
 

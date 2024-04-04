@@ -10,6 +10,8 @@ The initial implementation only contains orders but not trades. Also note that b
 
 This feature can be enabled via a command line flag (--grpc-streaming-enabled=true) when starting your full node. This feature can only be used on non validating full nodes and when grpc is also enabled.
 
+Further, please ensure your full node binary is `v3.0.1`, or `v4.0.1` when it becomes mandatory on April 8, 2024 (subject to governance vote).   
+
 ## Request / Response
 
 To subscribe to the stream, the client can send a 'StreamOrderbookUpdatesRequest' specifying the clob pair ids to subscribe to.
@@ -48,25 +50,9 @@ message StreamOrderbookUpdatesResponse {
 }
 ```
 
-## Example Scenario
-
-- Trader places a bid at price 100 for size 1
-  - OrderPlace, price = 100, size = 1
-  - OrderUpdate, total filled amount = 0
-- Trader replaces that original bid to be price 99 at size 2
-  - OrderRemove
-  - OrderPlace, price = 99, size = 2
-  - OrderUpdate, total filled amount = 0
-- Another trader submits an IOC ask at price 100 for size 1.
-  - Full node doesn't see this matching anything so no updates.
-- Block is confirmed that there was a fill for the trader's original order at price 100 for size 1 (BP didn't see the order replacement)
-  - OrderUpdate, total filled amount = 1
-
 ## Maintaining a local orderbook
 
-Building a local orderbook should be fairly straight forward. Here is a quick [example PR](https://github.com/dydxprotocol/v4-chain/pull/1268) for a Go GRPC client that subscribes to the orderbook updates and maintains an orderbook locally.
-
-Specifically after subscribing to the orderbook updates:
+After subscribing to the orderbook updates:
 
 - Use the orderbook in the snapshot as the starting orderbook.
 - Add the corresponding order to the end of the price level when `OrderPlaceV1` is received.
@@ -159,3 +145,33 @@ func (l *LocalOrderbook) RemoveOrder(orderId v1types.IndexerOrderId) {
 	delete(l.OrderIdToOrder, orderId)
 }
 ```
+
+## Example Scenario
+
+- Trader places a bid at price 100 for size 1
+  - OrderPlace, price = 100, size = 1
+  - OrderUpdate, total filled amount = 0
+- Trader replaces that original bid to be price 99 at size 2
+  - OrderRemove
+  - OrderPlace, price = 99, size = 2
+  - OrderUpdate, total filled amount = 0
+- Another trader submits an IOC ask at price 100 for size 1.
+  - Full node doesn't see this matching anything so no updates.
+- Block is confirmed that there was a fill for the trader's original order at price 100 for size 1 (BP didn't see the order replacement)
+  - OrderUpdate, total filled amount = 1
+ 
+## FAQs
+
+Q: Suppose the full node saw the cancellation of order X at t0 before the placement of the order X at t1. What would the updates be like?
+- **A: No updates because the order was never added to the book**
+
+Q: A few questions because it often results in crossed books:
+In which cases shall we not expect to see OrderRemove message?
+- Post only reject? → **PO reject won’t have a removal since they were never added to the book**
+- IOC/FIK auto cancel? → **IOC/FOK also won’t have a removal message for similar reason**
+- Order expired outside of block window? → **expired orders will generate a removal message**
+- Passive limit order was fully filled → **fully filled maker will generate a removal message**
+- Aggressive limit order was fully filled? → **fully filled taker won’t have a removal**
+
+Q: The update order message is only for trades? Shall we expect to see 2 updates for each trade because there are 2 orders together?
+- **A: Current implementation only sends an update for maker**

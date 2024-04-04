@@ -1,8 +1,8 @@
 {
   "index": "Introduction",
   "about": "About dYdX",
-  "architecture": "Architecture",
   "getting_started": "Getting Started",
+  "architecture": "Architecture",
   "validators": "Validators",
   "network": "Network Configuration",
   "trading": "Trading",
