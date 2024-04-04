@@ -3,12 +3,12 @@
 ### Intro
 
 1. Can you give an overview of the structure of the network and the role full nodes/validators play in constructing the orderbook and participating in block building, and how trades are placed?
-    - A network run on v4 is composed of full nodes and each maintains an in-memory order book. Anyone can use the open source software to run a full node. Traders could submit order placements and cancellations to full nodes, which would gossip the transactions amongst themselves.
-    - Full nodes with enough delegated layer 1 governance tokens could participate in block building as validators. Validators on v4 will take turns proposing blocks of trades every 2-5 seconds. The validator whose turn it is to propose a block at a given height is called the proposer. The proposer uses its mempool orderbook to propose a block of matches, which validators could either accept or reject according to CometBFT (Tendermint) consensus.
-    - All full nodes could have visibility of the consensus process and the transactions in the mempool. Another component of v4 is the indexer software, an application that reads data from full nodes and exposes it via REST / WebSocket APIs for convenience. 
+    - dYdX Chain (or "v4") is composed of full nodes and each maintains an in-memory order book. Anyone can use the open source software to run a full node. Traders can submit order placements and cancellations to full nodes, which gossip the transactions amongst themselves.
+    - Full nodes with enough delegated layer 1 governance tokens participate in block building as validators. Validators on dYdX Chain take turns proposing blocks of trades every ~1 second. The validator whose turn it is to propose a block at a given height is called the proposer. The proposer uses its mempool orderbook to propose a block of matches, which validators either accept or reject according to CometBFT (Tendermint) consensus.
+    - All full nodes have visibility into the consensus process and the transactions in the mempool. Another component of dYdX Chain is the indexer software, an application that reads data from full nodes and exposes it via REST / WebSocket APIs for convenience. 
 
 2. What is the difference between a full node and a validator?
-    - A full node does not participate in consensus. It receives data from other full nodes and validators in the v4 network via the gossip protocol. A validator participates in consensus by broadcasting votes signed by each validator’s private keys. 
+    - A full node does not participate in consensus. It receives data from other full nodes and validators in the network via the gossip protocol. A validator participates in consensus by broadcasting votes signed by each validator’s private keys. 
 
 3. What are the benefits of running a full node as a market maker?
     - Running a full node will eliminate the latency between placing an order and when the actual order is gossipped throughout the network. Without your own node, your order will need to first be relayed to the nearest geographic node, which will then propagate it throughout the network for you. With your own node, your order will directly be gossiped. 
@@ -20,16 +20,16 @@
     - The current block time is ~1 second on average
 
 5. What is an indexer?
-    - The indexer is a read-only service that consumes real time data from v4 to a database for visibility to users. The indexer consumes data from v4 via a connection to a full node. The full node contains a copy of the blockchain and an in-memory order book. When the full node updates its copy of the blockchain and in-memory order book due to processing transactions, it will also stream these updates to the indexer. The indexer keeps the data in its database synced with the full-node using these updates. This data is made available to users querying through HTTPS REST APIs and streaming via websockets. More info can be found [here](https://dydx.exchange/blog/v4-deep-dive-indexer). 
+    - The indexer is a read-only service that consumes real time data from dYdX Chain to a database for visibility to users. The indexer consumes data from dYdX Chain via a connection to a full node. The full node contains a copy of the blockchain and an in-memory order book. When the full node updates its copy of the blockchain and in-memory order book due to processing transactions, it will also stream these updates to the indexer. The indexer keeps the data in its database synced with the full-node using these updates. This data is made available to users querying through HTTPS REST APIs and streaming via websockets. More info can be found [here](https://dydx.exchange/blog/v4-deep-dive-indexer).
 
 ## Trading on an Exchange Run on dYdX Chain
 
-1. What are the different order types in V4?
+1. What are the different order types in dYdX Chain?
     - There are two order types: Short-Term orders and stateful orders.
         - Short-Term orders are meant for programmatic, low-latency traders that want to place orders with shorter expirations.
         - Stateful orders are meant for retail that wants to place orders with longer expirations. These orders exist on chain.
 
-2. How does the orderbook work in V4 for short-term orders?
+2. How does the orderbook work in dYdX Chain for short-term orders?
     - Each validator runs their own in-memory orderbook (also known as mempool), and the set of orders each validator knows about is what order placement transactions are in their mempool.
     - User places a trade on a decentralized front end (e.g., website) or via the typescript or python client that places orders directly to a full node or validatorAPI
     - The consensus process picks one validator to be the block proposer. The selected validator will propose their view of the matches in the next proposed block.
@@ -80,6 +80,7 @@
         - This is why the status “BEST_EFFORT_OPENED” or “BEST_EFFORT_CANCELED” since the Indexer only knows that a full-node received the order / cancel, and it’s not guaranteed to be true across the whole network
     - For the orderbook updates, these are sent when the full-node the Indexer is listening to receives orders / cancels and not just when the block is finalized
         - For example, when the full-node receives a short term order it will be approximate how much is filled and how much would go on the orderbook. This is what the Indexer uses to stream orderbook updates. However, there is no guarantee that the orderbook looks the same in other nodes in the network
+    - Note that you can now stream the orderbook directly through your full node and you no longer need to rely on the indexer for the orderbook. Read more about that [here](https://docs.dydx.exchange/guides/orderbook_stream).
 
 10. Do orders get matched and removed from the book in between blocks?
     - For removal of short term orders, yes they can be removed in between blocks, however this is on a node-by-node basis and not across the whole network
@@ -126,9 +127,9 @@
         - If the order is fully filled, the order has status FILLED
         - If the cancelation of the order is included in a block, the order has status CANCELED the order can no longer be filled
 
-15. How do subaccounts work on v4?
-    - In v4, each address’s subaccounts all fall under a single address, but they are labeled subaccount0, subaccount1, etc. This is unlike v3, where each subaccount was a secondary address.
-    - To begin trading on v4, you need to make sure your funds are in your subaccount. You can do this two ways: 
+15. How do subaccounts work on dYdX Chain?
+    - Each address’s subaccounts all fall under a single address, but they are labeled subaccount0, subaccount1, etc. This is unlike v3, where each subaccount was a secondary address.
+    - To begin trading, you need to make sure your funds are in your subaccount. You can do this two ways: 
         - Frontend: Simply leave your frontend open and it will automatically sweep.
         - Backend: Simply transfer USDC to it like in [this example](https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/transfer_example_subaccount_transfer.ts).
 
@@ -200,10 +201,8 @@
 
 ## Rewards
 
-1. How will trading rewards work in v4?
-    - Trading rewards in v4 are not controlled by dYdX. dYdX recommends that trading rewards could be calculated primarily based on total taker fees paid, along with a few other variables. The full proposed formula can be found [here](https://docs.dydx.exchange/getting_started/fees_rewards_parameters). These rewards could be distributed on a block by block basis (1-2 seconds). 
+1. How will trading rewards work on dYdX Chain?
+    - Trading rewards are not controlled by dYdX. dYdX recommends that trading rewards could be calculated primarily based on total taker fees paid, along with a few other variables. The full proposed formula can be found [here](https://docs.dydx.exchange/getting_started/fees_rewards_parameters). These rewards could be distributed on a block by block basis (1-2 seconds). 
 
 2. Will liquidity provider rewards exist in v4?
     - Liquidity provider rewards in v4 are not controlled by dYdX. dYdX recommends that liquidity provider rewards should cease to exist in v4. Makers could be rewarded with a maker rebate ranging from 0.5bps to 1.1bps, based on their nominal volume and volume share. The full proposed fee schedule can be found [here](https://docs.dydx.exchange/getting_started/fees_rewards_parameters). 
-
-
