@@ -1,6 +1,6 @@
 # Onboarding FAQs
 
-### Intro
+## Intro
 
 1. Can you give an overview of the structure of the network and the role full nodes/validators play in constructing the orderbook and participating in block building, and how trades are placed?
     - dYdX Chain (or "v4") is composed of full nodes and each maintains an in-memory order book. Anyone can use the open source software to run a full node. Traders can submit order placements and cancellations to full nodes, which gossip the transactions amongst themselves.
