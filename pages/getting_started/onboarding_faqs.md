@@ -18,7 +18,7 @@
     - The current block time is ~1 second on average
 
 5. What is an indexer?
-    - The indexer is a read-only service that consumes real time data from dYdX Chain to a database for visibility to users. The indexer consumes data from dYdX Chain via a connection to a full node. The full node contains a copy of the blockchain and an in-memory order book. When the full node updates its copy of the blockchain and in-memory order book due to processing transactions, it will also stream these updates to the indexer. The indexer keeps the data in its database synced with the full-node using these updates. This data is made available to users querying through HTTPS REST APIs and streaming via websockets. More info can be found [here](https://dydx.exchange/blog/v4-deep-dive-indexer).
+    - The indexer is a read-only service that consumes real time data from dYdX Chain to a database for visibility to users. The indexer consumes data from dYdX Chain via a connection to a full node. The full node contains a copy of the blockchain and an in-memory order book. When the full node updates its copy of the blockchain and in-memory order book due to processing transactions, it will also stream these updates to the indexer. The indexer keeps the data in its database synced with the full-node using these updates. This data is made available to users querying through HTTPS REST APIs and streaming via websockets. More info can be found [here](https://docs.dydx.exchange/architecture/indexer).
 
 ## Trading on an Exchange Run on dYdX Chain
 
@@ -78,7 +78,7 @@
         - This is why the status “BEST_EFFORT_OPENED” or “BEST_EFFORT_CANCELED” since the Indexer only knows that a full-node received the order / cancel, and it’s not guaranteed to be true across the whole network
     - For the orderbook updates, these are sent when the full-node the Indexer is listening to receives orders / cancels and not just when the block is finalized
         - For example, when the full-node receives a short term order it will be approximate how much is filled and how much would go on the orderbook. This is what the Indexer uses to stream orderbook updates. However, there is no guarantee that the orderbook looks the same in other nodes in the network
-    - Note that you can now stream the orderbook directly through your full node and you no longer need to rely on the indexer for the orderbook. Read more about that [here](https://docs.dydx.exchange/guides/orderbook_stream).
+    - Note that you can now stream the orderbook directly through your full node for the orderbook. Read more about that [here](https://docs.dydx.exchange/guides/orderbook_stream).
 
 10. Do orders get matched and removed from the book in between blocks?
     - For removal of short term orders, yes they can be removed in between blocks, however this is on a node-by-node basis and not across the whole network
