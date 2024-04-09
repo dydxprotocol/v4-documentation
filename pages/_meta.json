@@ -6,6 +6,7 @@
   "validators": "Validators",
   "network": "Network Configuration",
   "trading": "Trading",
+  "api_trading": "API Trading",
   "deposits_and_withdrawals": "Deposits and Withdrawals",
   "rewards": "Rewards",
   "developers": "Developers",
