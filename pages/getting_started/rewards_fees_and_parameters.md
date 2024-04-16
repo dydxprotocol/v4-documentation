@@ -122,7 +122,7 @@ These parameters define how staking works on the protocol and norms around staki
 
 |                  | BondDenom | MaxValidators | MinCommissionRate | Unbonding Time |                          
 |------------------|-------- |------------|---------------|---------------|
-| Slashing Params  | Decided at Genesis, by validators | 60  | 5%         | 30 days | 
+| Staking Params  | Decided at Genesis, by validators | 60  | 5%         | 30 days | 
 
 _MaxValidators_: Every block, the top MaxValidators validators by stake weight are included in the active validator set.
 
