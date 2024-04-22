@@ -19,7 +19,7 @@ Support issues with Skip's Sidecar should be directed [here](https://discord.gg/
 
 For mainnet deployment by dYdX Operation Services, Ltd. run: `N/A`
 
-For testnet run: [`v0.3.2`](https://github.com/skip-mev/slinky/tree/v0.3.2) (`ghcr.io/skip-mev/slinky-sidecar:v0.3.2`)
+For testnet run: [`v0.4.0`](https://github.com/skip-mev/slinky/tree/v0.4.0) (`ghcr.io/skip-mev/slinky-sidecar:v0.4.0`)
 
 ## Start a Full Node
 
