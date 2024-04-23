@@ -10,15 +10,15 @@
 
 1. Install Go from https://go.dev/doc/install (Version tested is 1.22.1)
 2. Install Cosmovisor, with the following command:
-go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
+- `go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest`
 3. Copy cosmovisor from $HOME/go/bin/ to a directory in your $PATH
 4. Add two environment variables to $HOME/.profile.  The data directory is typically $HOME/.dydx-mainnet-1
-export DAEMON_NAME=dydxprotocold
-export DAEMON_HOME=<your data directory>
+- `export DAEMON_NAME=dydxprotocold`
+- `export DAEMON_HOME=<your data directory>`
 5. Log out and log back in.
 6. Initialize Cosmovisor with the following command.  The <path to executable> is the the full path to dydxprotocold
-cosmovisor init <path to executable>
-7.Cosmovisor is now ready for use.
+- `cosmovisor init <path to executable>`
+7. Cosmovisor is now ready for use.
 
 ## Running dydxprotocold under Cosmovisor
 
