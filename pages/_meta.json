@@ -1,19 +1,34 @@
 {
   "index": "Introduction",
   "about": "About dYdX",
+
+  "----------GETTING STARTED----------": { "type": "separator" },
+
   "getting_started": "Getting Started",
-  "architecture": "Architecture",
+
+  "----------INFRASTRUCTURE PROVIDERS----------": { "type": "separator" },
+
   "validators": "Validators",
   "network": "Network Configuration",
+  "operators": "Operators",
+
+  "----------USERS----------": { "type": "separator" },
+
   "trading": "Trading",
   "deposits_and_withdrawals": "Deposits and Withdrawals",
-  "rewards": "Rewards",
   "developers": "Developers",
-  "operators": "Operators",
-  "governance": "Governance",
-  "security": "Security",
   "guides": "Guides",
   "FAQ": "FAQs",
+
+  "----------ARCHITECTURE----------": { "type": "separator" },
+
+  "architecture": "Architecture",
+  "rewards": "Rewards",
+  "governance": "Governance",
+
+  "----------OTHER----------": { "type": "separator" },
+
+  "security": "Security",
   "terms_and_policies": "Terms and Policies",
   "app": {
     "title": "Testnet ↗",
