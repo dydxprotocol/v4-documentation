@@ -12,21 +12,27 @@
     "type": "separator"
   },
 
-  "validators": "Validators",
+  "validators": "Validators & Full-Nodes",
   "network": "Network Configuration",
-  "operators": "Operators",
+  "operators": "Indexer Operators",
 
-  "----------TRADERS----------": {
-    "title": "TRADERS",
+  "----------API INTEGRATION----------": {
+    "title": "API INTEGRATION",
     "type": "separator"
   },
 
   "trading": "Trading",
   "deposits_and_withdrawals": "Deposits and Withdrawals",
-  "guides": "Guides",
-  "FAQ": "FAQs",
+
+  "----------USERS----------": {
+    "title": "USERS",
+    "type": "separator"
+  },
+
   "rewards": "Rewards",
   "governance": "Governance",
+  "guides": "Guides",
+  "FAQ": "FAQs",
 
   "----------DEVELOPERS----------": {
     "title": "DEVELOPERS",
@@ -42,11 +48,19 @@
   },
 
   "security": "Security",
-  "terms_and_policies": "Terms and Policies",
-  "app": {
-    "title": "Testnet ↗",
+  "terms_of_use_and_privacy_policy": "Terms & Policies",
+
+  "testnet app": {
+    "title": "Testnet App ↗",
     "type": "page",
     "href": "https://v4.testnet.dydx.exchange",
+    "newWindow": true
+  },
+
+  "v3 docs": {
+    "title": "V3 Docs ↗",
+    "type": "page",
+    "href": "https://dydxprotocol.github.io/v3-teacher",
     "newWindow": true
   }
 }

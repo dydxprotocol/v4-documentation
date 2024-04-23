@@ -41,21 +41,6 @@ const config: DocsThemeConfig = {
   logo: <Logo />,
   project: {},
   chat: {},
-  banner: {
-    key: "v3-docs-redirect-mainnet",
-    text: (
-      <span className="banner">
-        ✨ Looking for dYdX Trading's v3 docs?{" "}
-        <button
-          onClick={() => window.open("https://dydxprotocol.github.io/v3-teacher", "_blank")}
-          className="banner-button"
-        >
-          v3 Docs
-        </button>
-      </span>
-    ),
-    dismissible: true,
-  },
 
   // Footer
   footer: {
