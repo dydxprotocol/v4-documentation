@@ -1,24 +1,66 @@
 {
+  "----------INTRODUCTION----------": {
+    "title": "INTRODUCTION",
+    "type": "separator"
+  },
+
   "index": "Introduction",
-  "about": "About dYdX",
   "getting_started": "Getting Started",
-  "architecture": "Architecture",
-  "validators": "Validators",
+
+  "----------INFRASTRUCTURE PROVIDERS----------": {
+    "title": "INFRASTRUCTURE PROVIDERS",
+    "type": "separator"
+  },
+
+  "validators": "Validators & Full-Nodes",
   "network": "Network Configuration",
+  "operators": "Indexer Operators",
+
+  "----------API INTEGRATION----------": {
+    "title": "API INTEGRATION",
+    "type": "separator"
+  },
+
   "trading": "Trading",
   "deposits_and_withdrawals": "Deposits and Withdrawals",
+
+  "----------USERS----------": {
+    "title": "USERS",
+    "type": "separator"
+  },
+
   "rewards": "Rewards",
-  "developers": "Developers",
-  "operators": "Operators",
   "governance": "Governance",
-  "security": "Security",
   "guides": "Guides",
   "FAQ": "FAQs",
-  "terms_and_policies": "Terms and Policies",
-  "app": {
-    "title": "Testnet ↗",
+
+  "----------DEVELOPERS----------": {
+    "title": "DEVELOPERS",
+    "type": "separator"
+  },
+
+  "architecture": "Architecture",
+  "developers": "Developers",
+
+  "----------OTHER----------": {
+    "title": "OTHER",
+    "type": "separator"
+  },
+
+  "security": "Security",
+  "terms_of_use_and_privacy_policy": "Terms & Policies",
+
+  "testnet app": {
+    "title": "Testnet App ↗",
     "type": "page",
     "href": "https://v4.testnet.dydx.exchange",
+    "newWindow": true
+  },
+
+  "v3 docs": {
+    "title": "V3 Docs ↗",
+    "type": "page",
+    "href": "https://dydxprotocol.github.io/v3-teacher",
     "newWindow": true
   }
 }
