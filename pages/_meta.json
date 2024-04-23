@@ -1,32 +1,45 @@
 {
+  "----------INTRODUCTION----------": {
+    "title": "INTRODUCTION",
+    "type": "separator"
+  },
+
   "index": "Introduction",
-  "about": "About dYdX",
-
-  "----------GETTING STARTED----------": { "type": "separator" },
-
   "getting_started": "Getting Started",
 
-  "----------INFRASTRUCTURE PROVIDERS----------": { "type": "separator" },
+  "----------INFRASTRUCTURE PROVIDERS----------": {
+    "title": "INFRASTRUCTURE PROVIDERS",
+    "type": "separator"
+  },
 
   "validators": "Validators",
   "network": "Network Configuration",
   "operators": "Operators",
 
-  "----------USERS----------": { "type": "separator" },
+  "----------TRADERS----------": {
+    "title": "TRADERS",
+    "type": "separator"
+  },
 
   "trading": "Trading",
   "deposits_and_withdrawals": "Deposits and Withdrawals",
-  "developers": "Developers",
   "guides": "Guides",
   "FAQ": "FAQs",
-
-  "----------ARCHITECTURE----------": { "type": "separator" },
-
-  "architecture": "Architecture",
   "rewards": "Rewards",
   "governance": "Governance",
 
-  "----------OTHER----------": { "type": "separator" },
+  "----------DEVELOPERS----------": {
+    "title": "DEVELOPERS",
+    "type": "separator"
+  },
+
+  "architecture": "Architecture",
+  "developers": "Developers",
+
+  "----------OTHER----------": {
+    "title": "OTHER",
+    "type": "separator"
+  },
 
   "security": "Security",
   "terms_and_policies": "Terms and Policies",
