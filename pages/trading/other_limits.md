@@ -13,4 +13,8 @@ Subaccounts may have a limited number of open orders at any one time determined 
 
 For example up to 10 open bids across all markets for a subaccount with a net collateral of $2,000.
 
-Note that short term orders via API And all limit `Immediate-or-Cancel`, `Fill-or-Kill`, and market orders on the frontend do not have this limitation.
+Note: This limitation does not apply to:
+- API short term orders
+- Frontend market orders
+- Frontend position closes
+- Frontend Immediate-or-Cancel and Fill-or-Kill orders
