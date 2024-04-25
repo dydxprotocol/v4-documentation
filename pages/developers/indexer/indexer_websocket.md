@@ -2,8 +2,8 @@
 
 dYdX offers a WebSocket API for streaming v4 updates.
 
-* For **the deployment by DYDX token holders**, use <a href="wss://indexer.dydx.trade/v4/ws">wss://indexer.dydx.trade/v4/ws</a>
-* For **Testnet**, use <a href="wss://indexer.dydx.trade/v4/ws">wss://indexer.dydx.trade/v4/ws</a>
+* For **the deployment by DYDX token holders**, use `wss://indexer.dydx.trade/v4/ws`
+* For **Testnet**, use `wss://indexer.v4testnet.dydx.exchange/v4/ws`
 
 Note: Messages on Indexer WebSocket feeds are typically more recent than data fetched via Indexer's REST API, because the latter is backed by read replicas of the databases that feed the former. Ordinarily this difference is minimal (less than a second), but it might become prolonged under load. Please see [Indexer Architecture](https://dydx.exchange/blog/v4-deep-dive-indexer) for more information.
 
