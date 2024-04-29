@@ -12,6 +12,18 @@ This feature can be enabled via a command line flag (--grpc-streaming-enabled=tr
 
 Further, please ensure your full node binary is `v3.0.1`, or `v4.0.1` when it becomes mandatory on April 8, 2024 (subject to governance vote).   
 
+## Consuming the gRPC Stream
+
+To follow along with [Google's documentation on gRPC streaming clients](https://grpc.io/docs/languages/go/basics/#client):
+
+1. Clone the [github.com/dydxprotocol/v4-chain](https://github.com/dydxprotocol/v4-chain) repository at same version as your full node.
+2. Generate the protos: `make proto-gen && make proto-export-deps`.
+3. The generated protos are now in the `.proto-export-deps` directory.
+4. Use the protobuf compiler (protoc) to [generate stubs](https://protobuf.dev/getting-started/) in any supported language.
+5. Follow the documentation to write a streaming client.
+
+For Python, the corresponding code is already generated in [the v4-proto PyPi package](https://pypi.org/project/v4-proto/).
+
 ## Request / Response
 
 To subscribe to the stream, the client can send a 'StreamOrderbookUpdatesRequest' specifying the clob pair ids to subscribe to.
