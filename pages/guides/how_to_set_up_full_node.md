@@ -114,3 +114,13 @@ sudo systemctl start dydxprotocold
 sudo journalctl -u dydxprotocold -f
 ```
 The full node is now syncing. To determine whether the full node is caught up with the chain head, please check the applicable block explorer to determine when it reaches the current block – an example block explorer is shown on https://www.mintscan.io/dydx
+
+## Things you can do with the full node
+GET CURRENT BLOCK: You can get the current block with this program https://github.com/chiwalfrm/dydxexamples/blob/main/v4block_subscribe.py 
+
+Run it with the full node IP address and port `26657`:
+```bash
+python3 v4block_subscribe.py ws://<IPADDRESS>:26657
+```
+Where `<IPADDRESS>` is the IP address of your full node.
+![Full node usage example](../../artifacts/how_to_set_up_full_node_usage_example.png)
