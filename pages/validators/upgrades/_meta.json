@@ -1,5 +1,6 @@
 {
     "types_of_upgrades": "Types of Upgrades",
     "performing_upgrades": "Performing Upgrades",
-    "cosmovisor": "Cosmovisor"
+    "cosmovisor": "Cosmovisor",
+    "using_cosmovisor_to_stage_dYdX_Chain_binary_upgrade": "Using Cosmovisor to stage dYdX Chain binary upgrade"
 }
