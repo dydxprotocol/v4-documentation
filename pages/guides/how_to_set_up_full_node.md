@@ -107,12 +107,8 @@ sudo systemctl enable dydxprotocold
 ### Step 8: Get Snapshot
 > **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Resources page](../network/resources.md).
 
-1. From https://bwarelabs.com/snapshots/dydx
+1. Choose a snapshot from https://docs.dydx.exchange/network/resources#snapshot-service
 2. Download and extract (using `lz4 -dc < snapshotfile.tar.lz4 | tar xf -`) the snapshot contents in the dydxprotocol home directory (make sure you are in this directory before running the tar command). In this example, the home directory is `$HOME/.dydxprotocol`
-3. (Alternatives): If the above is not available, there are these alternatives:
- - https://polkachu.com/tendermint_snapshots/dydx
- - https://dydx-archive-snapshot.kingnodes.com/
- - Also check [Snapshot service](../network/resources.md#snapshot-service)
 
 ### Step 9: Start Service
 
