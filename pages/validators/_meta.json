@@ -4,5 +4,6 @@
   "how_to_set_up_full_node": "How to set up a full node",
   "running_full_node": "Running a Full Node",
   "snapshots": "Snapshots",
+  "orderbook_stream": "Orderbook Stream",
   "upgrades": "Upgrades"
 }
