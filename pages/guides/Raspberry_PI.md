@@ -3,6 +3,7 @@
 ## Chapter 1: Initial Setup
 
 1. Note that one of the micro-USB ports is for power only.  Do not plug your keyboard/mouse/hub in this port.  It won’t damage it but it won’t work.
+![TestPi1](../../artifacts/TestPi1.png)
 
 2. After installation, enable SSH.  Instructions here: https://www.onlogic.com/company/io-hub/how-to-ssh-into-raspberry-pi/
 3. Use Terminal for all commands below.
