@@ -7,7 +7,8 @@
 2. After installation, enable SSH.  Instructions here: https://www.onlogic.com/company/io-hub/how-to-ssh-into-raspberry-pi/
 3. Use Terminal for all commands below.
 4. Get the IP address with this command:
-`ip addr show`
+
+   `ip addr show`
 
 5. Install the latest updates with:
    
