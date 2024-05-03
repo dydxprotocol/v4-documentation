@@ -3,7 +3,7 @@
 ## Chapter 1: Initial Setup
 
 1. Note that one of the micro-USB ports is for power only.  Do not plug your keyboard/mouse/hub in this port.  It won’t damage it but it won’t work.
-![RaspberryPi](../../artifacts/RaspberryPi1.png)
+![RaspberryPi1](../../artifacts/RaspberryPi1.png)
 
 2. After installation, enable SSH.  Instructions here: https://www.onlogic.com/company/io-hub/how-to-ssh-into-raspberry-pi/
 3. Use Terminal for all commands below.
@@ -23,11 +23,11 @@ https://www.redhat.com/sysadmin/introduction-vi-editor
 
 1. Install dependencies.
 
-  `sudo apt-get install python3-pip`
+`sudo apt-get install python3-pip`
 
-  `sudo apt-get install git`
+`sudo apt-get install git`
 
-  `pip3 install v4-proto`
+`pip3 install v4-proto`
 
 `pip3 install python-dateutil`
 
@@ -54,9 +54,15 @@ https://www.redhat.com/sysadmin/introduction-vi-editor
 
 `vi myapikeyfile.py`
 
+![RaspberryPi2](../../artifacts/RaspberryPi2.png)
+
 3. Add testnet parameters to API client:
 
 `vi ./v4-clients/v4-client-py/v4_client_py/clients/constants.py`
+
+![RaspberryPi3](../../artifacts/RaspberryPi3.png)
+
+![RaspberryPi4](../../artifacts/RaspberryPi4.png)
 
 `VALIDATOR_GRPC_ENDPOINT = 'test-dydx-grpc.kingnodes.com:443'`
 
@@ -75,6 +81,8 @@ https://www.redhat.com/sysadmin/introduction-vi-editor
 4. Test it out by checking your balance:
 
 `python3 v4dydxcli.py myapikeyfile.py balance`
+
+![RaspberryPi5](../../artifacts/RaspberryPi5.png)
 
 5. Note that you can get a list of commands by typing the following command.  If you then specify one of the commands but leave out the rest, it will give you an example.
 
