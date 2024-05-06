@@ -83,6 +83,16 @@ Current Liquidity Tiers include:
 | 2 | Long-Tail | 0.2 | 0.5 | 100_000 USDC | 500 USDC / IM | 0.1 | 2_500 USDC | 2.5 | 5 |
 | 3 | Safety | 1 | .02 | 1_000 USDC | 2500 USDC / IM | 0.2 | 2_500 USDC | 0.5 | 1 |
 
+- Each market has a `Lower Cap` and `Upper Cap` denominated in USDC.
+- Each market already has a `Base IMF`.
+- At any point in time, for each market:
+    - Define
+        - `Open Notional = Open Interest * Oracle Price`
+        - `Scaling Factor = (Open Notional - Lower Cap) / (Upper Cap - Lower Cap)`
+        - `IMF Increase = Scaling Factor * (1 - Base IMF)`
+    - Then a market’s `Effective IMF = Min(Base IMF + Max(IMF Increase, 0), 1.0)`
+- The effective IMF is the base IMF while the OI < lower cap, and increases linearly until OI = Upper Cap, at which point the IMF stays at 1.0 (requiring 1:1 collateral for trading)
+
 Governance has the ability to create and modify Liquidity Tiers as well as update existing markets’ Liquidity Tier placements. ([proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/perpetuals/perpetual.proto#L84-L113))
 
 ### Updating a Live Market
