@@ -1,5 +1,6 @@
 {
   "how_to_uncross_orderbook": "How to uncross the orderbook",
   "how_to_interpret_block_data_for_trades": "How to interpret block data for trades",
-  "setting_up_raspberry_pi_for_api_trading": "Setting up Raspberry Pi for API Trading"
+  "setting_up_raspberry_pi_for_api_trading": "Setting up Raspberry Pi for API Trading",
+  "running_a_full_node": "Running a Full Node"
 }
