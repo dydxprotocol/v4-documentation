@@ -76,12 +76,12 @@ Liquidity Tiers group markets of similar risk into standardized risk parameters.
 
 Current Liquidity Tiers include: 
 
-| ID | Name | initial margin fraction | maintenance fraction (what fraction MMF is of IMF) | base position notional | impact notional |  maintenance margin fraction (as is) | impact notional (as is) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 0 | Large-Cap | 0.05 | 0.6 | 1_000_000 USDC | 500 USDC / IM | 0.03 | 10_000 USDC |
-| 1 | Mid-Cap | 0.1 | 0.5 | 250_000 USDC | 500 USDC / IM | 0.05 | 5_000 USDC |
-| 2 | Long-Tail | 0.2 | 0.5 | 100_000 USDC | 500 USDC / IM | 0.1 | 2_500 USDC |
-| 3 | Safety | 1 | .02 | 1_000 USDC | 2500 USDC / IM | 0.2 | 2_500 USDC |
+| ID | Name | initial margin fraction | maintenance fraction (what fraction MMF is of IMF) | base position notional | impact notional |  maintenance margin fraction (as is) | impact notional (as is) | Lower Cap (USDC Millions) | Upper Cap (USDC Millions) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 0 | Large-Cap | 0.05 | 0.6 | 1_000_000 USDC | 500 USDC / IM | 0.03 | 10_000 USDC | None | None |
+| 1 | Mid-Cap | 0.1 | 0.5 | 250_000 USDC | 500 USDC / IM | 0.05 | 5_000 USDC | 15 | 25 |
+| 2 | Long-Tail | 0.2 | 0.5 | 100_000 USDC | 500 USDC / IM | 0.1 | 2_500 USDC | 2.5 | 5 |
+| 3 | Safety | 1 | .02 | 1_000 USDC | 2500 USDC / IM | 0.2 | 2_500 USDC | 0.5 | 1 |
 
 Governance has the ability to create and modify Liquidity Tiers as well as update existing markets’ Liquidity Tier placements. ([proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/perpetuals/perpetual.proto#L84-L113))
 
