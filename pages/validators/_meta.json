@@ -3,6 +3,7 @@
   "required_node_configs": "Required Node Configs",
   "how_to_set_up_full_node": "How to set up a full node",
   "running_full_node": "Running a Full Node",
+  "running_a_validator": "Running a Validator",
   "snapshots": "Snapshots",
   "orderbook_stream": "Orderbook Stream",
   "upgrades": "Upgrades"
