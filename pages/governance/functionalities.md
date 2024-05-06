@@ -91,7 +91,7 @@ Current Liquidity Tiers include:
         - `Scaling Factor = (Open Notional - Lower Cap) / (Upper Cap - Lower Cap)`
         - `IMF Increase = Scaling Factor * (1 - Base IMF)`
     - Then a market’s `Effective IMF = Min(Base IMF + Max(IMF Increase, 0), 1.0)`
-- The effective IMF is the base IMF while the OI < lower cap, and increases linearly until OI = Upper Cap, at which point the IMF stays at 1.0 (requiring 1:1 collateral for trading)
+- The effective IMF is the base IMF while the Open Notional < Lower Cap, and increases linearly until Open Notional = Upper Cap, at which point the IMF stays at 1.0 (requiring 1:1 collateral for trading)
 
 Governance has the ability to create and modify Liquidity Tiers as well as update existing markets’ Liquidity Tier placements. ([proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/perpetuals/perpetual.proto#L84-L113))
 
