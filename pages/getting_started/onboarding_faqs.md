@@ -194,9 +194,9 @@
     - The oracle price has five parts:
         - Skip Protocol Sidecar: side car that pulls price data from external sources and caches them for the validator to use [link](https://docs.skip.money/slinky/integrations/dydx)
         - Vote Extensions: Every block during the Precommit stage, all validators will submit vote extensions for what they believe the oracle price of all tracked assets should be.
-        - consensus: The block after VE are submitted, Slinky deterministically aggregates all VE from the previous block and proposes a new updated price which is voted into consensus.
-        - module: updates the state based on the new price, also has logic for validation and etc [link](https://github.com/dydxprotocol/v4-chain/tree/af8b6a46fdecc77ef154fd7b32377b4fea92b3f8/protocol/x/prices) 
-        - params: determines the external sources and sensitivity [link](https://github.com/dydxprotocol/v4-testnets/blob/aa1c7ac589d6699124942a66c2362acad2e6f50d/dydx-testnet-4/genesis.json#L6106), these are configured per network (testnet genesis example), but should query the network config for these `dydxprotocold query prices list-market-param`
+        - Consensus: The block after VE are submitted, Slinky deterministically aggregates all VE from the previous block and proposes a new updated price which is voted into consensus.
+        - Module: updates the state based on the new price, also has logic for validation and etc [link](https://github.com/dydxprotocol/v4-chain/tree/af8b6a46fdecc77ef154fd7b32377b4fea92b3f8/protocol/x/prices) 
+        - Params: determines the external sources and sensitivity [link](https://github.com/dydxprotocol/v4-testnets/blob/aa1c7ac589d6699124942a66c2362acad2e6f50d/dydx-testnet-4/genesis.json#L6106), these are configured per network (testnet genesis example), but should query the network config for these `dydxprotocold query prices list-market-param`
 
 ## Rewards
 
