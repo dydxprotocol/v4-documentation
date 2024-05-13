@@ -9,6 +9,7 @@ Lorem ipsum
 ### APIs
 ### Numbers and Units
 ### Running a Full Node
+(better to link to running a full node page)
 
 ## Full Node JSON RPC API
 ## Block Height
@@ -45,20 +46,35 @@ All the below orders are transactions and are signed. The client[4](https://docs
 Queries subaccount state by owner and id.
 
 Links: [request / response format](https://rest-dydx.ecostake.com/swagger/#/Query/Subaccount), [RPC method definition](https://github.com/dydxprotocol/v4-chain/blob/ddd17155662f5dab738af0805578264600de176a/proto/dydxprotocol/subaccounts/query.proto#L15-L18), [subaccount proto](https://github.com/dydxprotocol/v4-chain/blob/525bb6ff608d9b91c30db85fef68738ff8ec0d61/proto/dydxprotocol/subaccounts/subaccount.proto#L19-L33).
-
-
 #### Balances
+`GET /cosmos/bank/v1beta1/balances/{address}`
+Queries the balance of all coins for a single account.
+
+Links: [request / response format](https://rest-dydx.ecostake.com/swagger/#/Query/AllBalances), [RPC method definition](
 #### CLOB Pairs
+`GET /dydxprotocol/clob/clob_pair`
+Queries a list of ClobPair items
+
+Links: [request / response format](https://rest-dydx.ecostake.com/swagger/#/Query/ClobPairAll), [RPC method definition](https://github.com/dydxprotocol/v4-chain/blob/ddd17155662f5dab738af0805578264600de176a/proto/dydxprotocol/clob/query.proto#L24-L26), [ClobPair proto](https://github.com/dydxprotocol/v4-chain/blob/ddd17155662f5dab738af0805578264600de176a/proto/dydxprotocol/clob/clob_pair.proto#L31-L84).
 #### Perpetuals
+`GET /dydxprotocol/perpetuals/perpetual`
+Queries a list of Perpetual items.
+
+Links: [request / response format](https://rest-dydx.ecostake.com/swagger/#/Query/AllPerpetuals), [RPC method definition](https://github.com/dydxprotocol/v4-chain/blob/ddd17155662f5dab738af0805578264600de176a/proto/dydxprotocol/perpetuals/query.proto#L20-L23), [Perpetual proto](https://github.com/dydxprotocol/v4-chain/blob/ddd17155662f5dab738af0805578264600de176a/proto/dydxprotocol/perpetuals/perpetual.proto#L9-L27).
 #### Positions
+
 #### Prices
+`GET /dydxprotocol/prices/market`
+Queries a list of MarketPrice items.
+
+Links: [request / response format](https://rest-dydx.ecostake.com/swagger/#/Query/AllMarketPrices), [RPC method definition](https://github.com/dydxprotocol/v4-chain/blob/ddd17155662f5dab738af0805578264600de176a/proto/dydxprotocol/prices/query.proto#L20-L23), [MarketPrice proto](https://github.com/dydxprotocol/v4-chain/blob/ddd17155662f5dab738af0805578264600de176a/proto/dydxprotocol/prices/market_price.proto#L7-L18).
 
 ### Pagination
 
 TODO:
 - How do I paginate the queries via REST?
 - Via gRPC?
-- How can I ensure that the second page of data is from the same block height as the first? (Is this possible?)
+- How can I ensure that the second page of data is from the same block height as the first? (Is this possible? didnt see a way to do this)
 
 ### All Endpoints
 
