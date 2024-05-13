@@ -6,6 +6,7 @@
 
   "index": "Introduction",
   "getting_started": "Getting Started",
+  "architecture": "Architecture",
 
   "----------INFRASTRUCTURE PROVIDERS----------": {
     "title": "INFRASTRUCTURE PROVIDERS",
@@ -23,6 +24,7 @@
 
   "trading": "Trading",
   "deposits_and_withdrawals": "Deposits and Withdrawals",
+  "developers": "Developers",
   "guides": "Guides",
 
   "----------USERS----------": {
@@ -33,14 +35,6 @@
   "rewards": "Rewards",
   "governance": "Governance",
   "FAQ": "FAQs",
-
-  "----------DEVELOPERS----------": {
-    "title": "DEVELOPERS",
-    "type": "separator"
-  },
-
-  "architecture": "Architecture",
-  "developers": "Developers",
 
   "----------OTHER----------": {
     "title": "OTHER",
