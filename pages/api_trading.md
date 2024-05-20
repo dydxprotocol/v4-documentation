@@ -9,6 +9,7 @@ Lorem ipsum
 ### APIs
 ### Numbers and Units
 ### Running a Full Node
+(better to link to running a full node page)
 
 ## Full Node JSON RPC API
 ## Block Height
