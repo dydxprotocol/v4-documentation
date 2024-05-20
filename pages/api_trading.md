@@ -9,7 +9,6 @@ Lorem ipsum
 ### APIs
 ### Numbers and Units
 ### Running a Full Node
-(better to link to running a full node page)
 
 ## Full Node JSON RPC API
 ## Block Height
@@ -32,8 +31,30 @@ These are orders which have a finite lifetime and are valid for a short period o
 
 All the below orders are transactions and are signed. The client[4](https://docs.dydx.exchange/developers/clients/validator_client) can be used or the transaction can be placed manually by following conforming to the formats specified here[5](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/clob/tx.proto). For manual transactions, the transaction can be signed using the following documentation[6](https://docs.cosmos.network/v0.50/user/run-node/txs).
 #### Place
+To place an order, refer to the proto here[7](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/clob/tx.proto#L27) to understand the parameters required.
+
+For an example of placing an order with a the client, refer to the documentation here[8](https://docs.dydx.exchange/developers/clients/validator_client#placing-and-cancelling-orders).
 #### Replace/Amend
+Traders can replace Short-Term orders atomically by placing an order with the same order ID and a larger value for the [good-til-block field](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/clob/order.proto#L143-L146)
+of the order.
+
+Note that two orders have the same order ID if the following client-specified fields are equal (from [OrderId proto definition](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/clob/order.proto#L9-L41)):
+- [Subaccount ID](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/subaccounts/subaccount.proto#L10-L17).
+    - order.subaccount_id.owner should be set to your address that is signing the order transaction.
+    - order.subaccount_id.number should be set to 0 unless you are using a different subaccount.
+- Client ID.
+- Order flags (note this should always be set to 0 for placing Short-Term orders).
+- CLOB pair ID.
+
+Assuming the current block height is 9, the below example places an order with good-til-block 10, then places a replacement order with a good-til-block of 11.
+
+The proto for the replace order is the same as the place order[9](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/clob/tx.proto#L27)
+
+For an example of replacing an order with the client, refer to the documentation here[10](https://docs.dydx.exchange/developers/clients/validator_client#replacing-an-order).
 #### Cancel
+To cancel an order, refer to the proto here[11](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/clob/tx.proto#L29) to understand the parameters required.
+
+For an example of cancelling an order with the client, refer to the documentation here[12](https://docs.dydx.exchange/developers/clients/validator_client#cancelling-an-order).
 ### All Endpoints
 
 ## Full Node gRPC and HTTP APIs
@@ -50,7 +71,7 @@ Links: [request / response format](https://rest-dydx.ecostake.com/swagger/#/Quer
 `GET /cosmos/bank/v1beta1/balances/{address}`
 Queries the balance of all coins for a single account.
 
-Links: [request / response format](https://rest-dydx.ecostake.com/swagger/#/Query/AllBalances), [RPC method definition](
+Links: [request / response format](https://rest-dydx.ecostake.com/swagger/#/Query/AllBalances)
 #### CLOB Pairs
 `GET /dydxprotocol/clob/clob_pair`
 Queries a list of ClobPair items
