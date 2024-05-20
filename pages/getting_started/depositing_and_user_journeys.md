@@ -20,7 +20,7 @@ Currently, dYdX natively hosts a TypeScript client. 3rd parties were also commis
 | C++       | [3rd Party Repo](https://github.com/asnefedovv/dydx-v4-client-cpp)                 | FastForward                              |
 
 
-2. For the Python client please review this [setup guide](https://docs.google.com/document/d/1ZbVRpAjwdmJ4IOIU6QN0l0jt2sD8f4xGhE3RoCukkFc/edit#heading=h.dainanyxnyh6) and this [user manual](https://docs.google.com/document/d/13aZz9o4g0WyLrteelBYDUOUmzJgOaPouVwRrF0kn-to/edit).
+2. For the Python client please review this [setup guide](https://docs.dydx.exchange/guides/setting_up_raspberry_pi_for_api_trading) and this [user manual](https://docs.google.com/document/d/13aZz9o4g0WyLrteelBYDUOUmzJgOaPouVwRrF0kn-to/edit).
  
 **Trading via Web**
 
