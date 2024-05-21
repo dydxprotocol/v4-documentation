@@ -1,4 +1,4 @@
-# CLI for the Python Script
+# CLI Python Script
 
 ## Command syntax
 
