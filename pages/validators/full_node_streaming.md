@@ -58,7 +58,7 @@ Response will contain a `oneof` field that contains either:
 	- `fill_amounts` contains the absolute, total filled quantums of each order as stored in state.
 		- fill_amounts should be zipped together with the `orders` field. Both arrays should have the same length.
 
-as well as some debugging metadata about `block_height` and `exec_mode`. It is not advised to write business logic around this metadata.
+as well as some debugging metadata about `block_height` and `exec_mode`. It is not advised to write business logic around `exec_mode`, as some of these values are used by the underlying cosmos-sdk and are implementation-specific.
 
 <details>
 
@@ -109,7 +109,7 @@ message StreamOrderbookUpdate {
 // the full node GRPC stream.
 message StreamOrderbookFill {
   // Clob match. Provides information on which orders were matched
-  // and the type of order. Fill amounts here are relative.
+  // and the type of order.
   ClobMatch clob_match = 1;
 
   // All orders involved in the specified clob match. Used to look up
