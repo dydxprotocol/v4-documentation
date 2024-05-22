@@ -1,12 +1,14 @@
 
 
-# Orderbook Stream
+# Full Node GRPC Streaming
+
+Last updated for: `v4.1.3`
 
 This feature aims to provide real-time, accurate orderbook updates and fills. Complete orderbook activities and fills are streamed to the client and can be used to construct a full depth L3 orderbook. Streams are implemented using the existing GRPC query service from Cosmos SDK.
 
 The current implementation provides information on orders and fills. Note that by dYdX V4’s design, the orderbook can be slightly different across different nodes.
 
-**Disclaimer:** It’s possible for the full node to block indefinitely when sending a message to an unresponsive client, so right now we recommend you use this exclusively with your own node and that the client always close the gRPC stream before shutting down. This issue will be fixed in the next version.
+**Disclaimer:** We recommend you use this exclusively with your own self-hosted node.
 
 ## Enabling GRPC Streaming
 
@@ -46,8 +48,17 @@ message StreamOrderbookUpdatesRequest {
 &nbsp;
 
 Response will contain a `oneof` field that contains either:
-- an `OffChainUpdateV1` orderbook update (Add/Remove/Update), whether the updates are coming from a snapshot
-- a `ClobMatch` object describing a fill (order or liquidation), with full order information and order fill amounts
+- `StreamOrderbookUpdate`
+	- Contains one or more `OffChainUpdateV1` orderbook updates (Add/Remove/Update)
+	- boolean field indicating if the updates are coming from a snapshot or not.
+- `StreamOrderbookFill`
+	- Contains a singular `ClobMatch` object describing a fill (order or liquidation).
+		- Represents one taker order matched with 1 or more maker orders.
+		- Matched quantums are provided for each pair in the match.
+	- `orders` field contains full order information at time of matching. Contains all maker and taker orders involved in the `ClobMatch` object.
+		- Prices within a Match are matched at the maker order price.
+	- `fill_amounts` contains the absolute, total filled quantums of each order as stored in state.
+		- fill_amounts should be zipped together with the `orders` field. Both arrays should have the same length.
 
 as well as some debugging metadata about `block_height` and `exec_mode`. It is not advised to write business logic around this metadata.
 
@@ -120,6 +131,7 @@ After subscribing to the orderbook updates, use the orderbook in the snapshot as
 
 ### OrderPlaceV1
 When `OrderPlaceV1` is received,  add the corresponding order to the end of the price level.
+- This message is only used to modify the orderbook data structure (Bids, Asks).
 - This message is sent out whenever an order is added to the in-memory orderbook.
 - This may occur in various places such as when an order is initially placed, or when an order is replayed during the ProcessCheckState step.
 - A Placement message will always be followed by an Update message.
@@ -158,7 +170,7 @@ func (l *LocalOrderbook) AddOrder(order v1types.IndexerOrder) {
 
 ### OrderUpdateV1
 When `OrderUpdateV1` is received, update the order's fill amount to the amount specified.
-- This message only carries information about an order's updated fill amount.
+- This message is only used to update fill amounts (Fill Amounts). It carries information about an order's updated fill amount.
 - This message is sent out whenever an an order's fill amount changes from an action that isn't a `ClobMatch`.
 - This includes when deliverState is reset to the checkState from last block, or when branched state is written to and then discarded if there was a matching error.
 - An update message will always accompany an order placement message.
@@ -187,6 +199,7 @@ func (l *LocalOrderbook) SetOrderFillAmount(
 
 ### OrderRemoveV1
 When `OrderRemoveV1` is received, remove the order from the orderbook.
+- This message is only used to modify the orderbook data structure (Bids, Asks).
 - This message is emitted when an order is removed from the in-memory orderbook.
 - Note that this does not mean the fills are removed from state yet.
 	- When fills are removed from state, a separate Update message will be sent with 0 quantum.
@@ -242,11 +255,13 @@ func (l *LocalOrderbook) RemoveOrder(orderId v1types.IndexerOrderId) {
 
 ## Maintaining Order Fill Amounts
 
+This message is only used to update fill amounts (Fill Amounts), it does not cause any modifications to the orderbook data structure (Bids, Asks).
+
 The `ClobMatch` data structure exposed contains either a `MatchOrders` or a `MatchPerpetualLiquidation` object. Match Deleveraging events are not emitted. Within each Match object, a `MakerFill` array contains the various maker orders that matched with the singular taker order and the amount of quantums matched.
 
-Note that prices are always matched at the maker order price.  The `orders` field in the `StreamOrderbookFill` object allow for price lookups based on order id.
+Note that prices are always matched at the maker order price.  The `orders` field in the `StreamOrderbookFill` object allow for price lookups based on order id. It contains all the maker order ids, and in the case of non-liquidation orders, it has the taker order.
 
-Mapping each order in `orders` to the corresponding value in the `fill_amounts` field provides the absolute filled amount of quantums that each order is filled to after the ClobMatch was processed.
+Mapping each order in `orders` to the corresponding value in the `fill_amounts` field provides the absolute filled amount of quantums that each order is filled to after the ClobMatch was processed. 
 
 
 <details>
@@ -254,7 +269,8 @@ Mapping each order in `orders` to the corresponding value in the `fill_amounts` 
 <summary>Code Snippet</summary>
 
 ```go
-// fillAmountMap is a zipped map of `orders` and `fill_amounts` mapping order ids to fill amounts.
+// fillAmountMap is a map of order ids to fill amounts.
+// The SetOrderFillAmount code can be found in `the `OrderUpdateV1` section.
 func (c *GrpcClient) ProcessMatchOrders(
 	matchOrders *clobtypes.MatchOrders,
 	orderMap map[clobtypes.OrderId]clobtypes.Order,
@@ -289,6 +305,13 @@ func (c *GrpcClient) ProcessMatchPerpetualLiquidation(
 ```
 
 </details>
+
+
+## Optimistic Orderbook Execution
+
+By protocol design, each validator has their own version of the orderbook and optimistically processes orderbook matches. As a result, you may see interleaved sequences of order removals, placements, and state fill amount updates when optimistically processed orderbook matches are removed and later replayed on the local orderbook.
+
+![full node streaming diagram](../../artifacts/full_node_streaming_diagram.jpg)
 
 ## Example Scenario
 
@@ -330,16 +353,13 @@ Q: What are the exec modes?
 <summary>Exec Modes</summary>
 
 ```go
-	const (
-		execModeCheck           execMode = iota // Check a transaction
-		execModeReCheck                         // Recheck a (pending) transaction after a commit
-		execModeSimulate                        // Simulate a transaction
-		execModePrepareProposal                 // Prepare a block proposal
-		execModeProcessProposal                 // Process a block proposal
-		execModeVoteExtension                   // Extend or verify a pre-commit vote
-		execModeFinalize                        // Finalize a block proposal
-	)
-
+	execModeCheck             = 0
+	execModeReCheck           = 1 // Recheck a (pending) transaction after a commit
+	execModeSimulate          = 2 // Simulate a transaction
+	execModePrepareProposal   = 3 // Prepare a block proposal
+	execModeProcessProposal   = 4 // Process a block proposal
+	execModeVoteExtension     = 5 // Extend or verify a pre-commit vote
+	execModeFinalize          = 6 // Finalize a block proposal
 	ExecModeBeginBlock        = 100
 	ExecModeEndBlock          = 101
 	ExecModePrepareCheckState = 102
