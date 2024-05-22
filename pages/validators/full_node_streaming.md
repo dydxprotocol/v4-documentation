@@ -353,15 +353,16 @@ Q: What are the exec modes?
 <summary>Exec Modes</summary>
 
 ```go
-	execModeCheck             = 0
-	execModeReCheck           = 1 // Recheck a (pending) transaction after a commit
-	execModeSimulate          = 2 // Simulate a transaction
-	execModePrepareProposal   = 3 // Prepare a block proposal
-	execModeProcessProposal   = 4 // Process a block proposal
-	execModeVoteExtension     = 5 // Extend or verify a pre-commit vote
-	execModeFinalize          = 6 // Finalize a block proposal
-	ExecModeBeginBlock        = 100
-	ExecModeEndBlock          = 101
-	ExecModePrepareCheckState = 102
+	execModeCheck               = 0 // Check a transaction
+	execModeReCheck             = 1 // Recheck a (pending) transaction after a commit
+	execModeSimulate            = 2 // Simulate a transaction
+	execModePrepareProposal     = 3 // Prepare a block proposal
+	execModeProcessProposal     = 4 // Process a block proposal
+	execModeVoteExtension       = 5 // Extend or verify a pre-commit vote
+	execModeVerifyVoteExtension = 6 // Verify a vote extension
+	execModeFinalize            = 7 // Finalize a block proposal
+	ExecModeBeginBlock          = 100
+	ExecModeEndBlock            = 101
+	ExecModePrepareCheckState   = 102
 ```
 </details>
