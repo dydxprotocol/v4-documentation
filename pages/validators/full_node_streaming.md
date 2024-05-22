@@ -14,8 +14,6 @@ The current implementation provides information on orders and fills. Note that b
 
 This feature can be enabled via a command line flag (`--grpc-streaming-enabled=true`) when starting your full node. This feature can only be used on non validating full nodes and when grpc is also enabled.
 
-Further, please ensure your full node binary is `v3.0.1`, or `v4.0.1` when it becomes mandatory on April 8, 2024 (subject to governance vote).   
-
 ## Consuming the gRPC Stream
 
 To follow along with [Google's documentation on gRPC streaming clients](https://grpc.io/docs/languages/go/basics/#client):
