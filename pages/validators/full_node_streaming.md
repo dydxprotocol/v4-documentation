@@ -12,7 +12,7 @@ The current implementation provides information on orders and fills. Note that b
 
 ## Enabling GRPC Streaming
 
-This feature can be enabled via a command line flag (`--grpc-streaming-enabled=true`) when starting your full node. This feature can only be used on non validating full nodes and when grpc is also enabled.
+This feature can be enabled via a command line flag (`--grpc-streaming-enabled=true`) when starting your full node. This feature can only be used when grpc is also enabled.
 
 ## Consuming the gRPC Stream
 
