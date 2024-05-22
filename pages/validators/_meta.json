@@ -5,6 +5,6 @@
   "running_full_node": "Running a Full Node",
   "running_a_validator": "Running a Validator",
   "snapshots": "Snapshots",
-  "orderbook_stream": "Orderbook Stream",
+  "full_node_streaming": "Full Node Streaming",
   "upgrades": "Upgrades"
 }
