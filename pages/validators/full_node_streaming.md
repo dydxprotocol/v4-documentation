@@ -8,7 +8,7 @@ This feature aims to provide real-time, accurate orderbook updates and fills. Co
 
 The current implementation provides information on orders and fills. Note that by dYdX V4’s design, the orderbook can be slightly different across different nodes.
 
-**Disclaimer:** We recommend you use this exclusively with your own self-hosted node.
+**Disclaimer:** It’s possible for the full node to block indefinitely when sending a message to an unresponsive client, so right now we recommend you use this exclusively with your own node and that the client always close the gRPC stream before shutting down. This issue will be fixed in the next version (v4.1.4)
 
 ## Enabling GRPC Streaming
 
