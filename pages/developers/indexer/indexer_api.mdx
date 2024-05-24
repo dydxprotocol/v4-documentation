@@ -207,62 +207,68 @@ fetch(`${baseURL}/addresses/${address}/subaccountNumber/${subaccountNumber}`,
 
 ```json
 {
-  "address": "string",
-  "subaccountNumber": 0,
-  "equity": "string",
-  "freeCollateral": "string",
-  "openPerpetualPositions": {
-    "property1": {
-      "market": "string",
-      "status": "OPEN",
-      "side": "LONG",
-      "size": "string",
-      "maxSize": "string",
-      "entryPrice": "string",
-      "realizedPnl": "string",
-      "createdAt": "string",
-      "createdAtHeight": "string",
-      "sumOpen": "string",
-      "sumClose": "string",
-      "netFunding": "string",
-      "unrealizedPnl": "string",
-      "closedAt": "string",
-      "exitPrice": "string"
-    },
-    "property2": {
-      "market": "string",
-      "status": "OPEN",
-      "side": "LONG",
-      "size": "string",
-      "maxSize": "string",
-      "entryPrice": "string",
-      "realizedPnl": "string",
-      "createdAt": "string",
-      "createdAtHeight": "string",
-      "sumOpen": "string",
-      "sumClose": "string",
-      "netFunding": "string",
-      "unrealizedPnl": "string",
-      "closedAt": "string",
-      "exitPrice": "string"
-    }
-  },
-  "assetPositions": {
-    "property1": {
-      "symbol": "string",
-      "side": "LONG",
-      "size": "string",
-      "assetId": "string"
-    },
-    "property2": {
-      "symbol": "string",
-      "side": "LONG",
-      "size": "string",
-      "assetId": "string"
-    }
-  },
-  "marginEnabled": true
+	"subaccounts": [
+		{
+			"address": "string",
+			"subaccountNumber": 0,
+			"equity": "string",
+			"freeCollateral": "string",
+			"openPerpetualPositions": {
+				"property1": {
+					"market": "string",
+					"status": "OPEN",
+					"side": "LONG",
+					"size": "string",
+					"maxSize": "string",
+					"entryPrice": "string",
+					"realizedPnl": "string",
+					"createdAt": "string",
+					"createdAtHeight": "string",
+					"sumOpen": "string",
+					"sumClose": "string",
+					"netFunding": "string",
+					"unrealizedPnl": "string",
+					"closedAt": "string",
+					"exitPrice": "string"
+				},
+				"property2": {
+					"market": "string",
+					"status": "OPEN",
+					"side": "LONG",
+					"size": "string",
+					"maxSize": "string",
+					"entryPrice": "string",
+					"realizedPnl": "string",
+					"createdAt": "string",
+					"createdAtHeight": "string",
+					"sumOpen": "string",
+					"sumClose": "string",
+					"netFunding": "string",
+					"unrealizedPnl": "string",
+					"closedAt": "string",
+					"exitPrice": "string"
+				}
+			},
+			"assetPositions": {
+				"property1": {
+					"symbol": "string",
+					"side": "LONG",
+					"size": "string",
+					"assetId": "string"
+				},
+				"property2": {
+					"symbol": "string",
+					"side": "LONG",
+					"size": "string",
+					"assetId": "string"
+				}
+			},
+			"marginEnabled": true
+		}
+	],
+  "totalTradingRewards": "string"
 }
+
 ```
 
 ### Responses
