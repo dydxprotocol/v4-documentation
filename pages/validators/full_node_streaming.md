@@ -6,9 +6,9 @@ Last updated for: `v4.1.3`
 
 This feature aims to provide real-time, accurate orderbook updates and fills. Complete orderbook activities and fills are streamed to the client and can be used to construct a full depth L3 orderbook. Streams are implemented using the existing GRPC query service from Cosmos SDK.
 
-The current implementation provides information on orders and fills. Note that by dYdX V4’s design, the orderbook can be slightly different across different nodes.
+The current implementation provides information on orders and fills. Note that by dYdX V4’s optimistic orderbook design, the orderbook can be slightly different across different nodes.
 
-**Disclaimer:** We recommend you use this exclusively with your own self-hosted node.
+**Disclaimer:** It’s possible for the full node to block indefinitely when sending a message to an unresponsive client, so right now we recommend you use this exclusively with your own node and that the client always close the gRPC stream before shutting down. This issue will be fixed in the next version (v4.1.4)
 
 ## Enabling GRPC Streaming
 
@@ -168,7 +168,7 @@ func (l *LocalOrderbook) AddOrder(order v1types.IndexerOrder) {
 
 ### OrderUpdateV1
 When `OrderUpdateV1` is received, update the order's fill amount to the amount specified.
-- This message is only used to update fill amounts (Fill Amounts). It carries information about an order's updated fill amount.
+- This message is only used to update fill amounts. It carries information about an order's updated fill amount.
 - This message is sent out whenever an an order's fill amount changes from an action that isn't a `ClobMatch`.
 - This includes when deliverState is reset to the checkState from last block, or when branched state is written to and then discarded if there was a matching error.
 - An update message will always accompany an order placement message.
@@ -253,9 +253,10 @@ func (l *LocalOrderbook) RemoveOrder(orderId v1types.IndexerOrderId) {
 
 ## Maintaining Order Fill Amounts
 
-This message is only used to update fill amounts (Fill Amounts), it does not cause any modifications to the orderbook data structure (Bids, Asks).
+### StreamOrderbookFill/ClobMatch
+This message is only used to update fill amounts, it does not cause any modifications to the orderbook data structure (Bids, Asks).
 
-The `ClobMatch` data structure exposed contains either a `MatchOrders` or a `MatchPerpetualLiquidation` object. Match Deleveraging events are not emitted. Within each Match object, a `MakerFill` array contains the various maker orders that matched with the singular taker order and the amount of quantums matched.
+The `ClobMatch` data structure contains either a `MatchOrders` or a `MatchPerpetualLiquidation` object. Match Deleveraging events are not emitted. Within each Match object, a `MakerFill` array contains the various maker orders that matched with the singular taker order and the amount of quantums matched.
 
 Note that prices are always matched at the maker order price.  The `orders` field in the `StreamOrderbookFill` object allow for price lookups based on order id. It contains all the maker order ids, and in the case of non-liquidation orders, it has the taker order.
 
