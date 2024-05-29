@@ -2,7 +2,7 @@
 
 ### Save your Chain ID in `dydxprotocold` config
 
-Save the [chain-id](../network/network_constants.md#chain-id). This will make it so you do not have to manually pass in the chain-id flag for every CLI command.
+Save the [chain-id](../infrastructure_providers-network/network_constants.mdx#chain-id). This will make it so you do not have to manually pass in the chain-id flag for every CLI command.
 
 ```bash
 dydxprotocold config chain-id $CHAIN_ID
@@ -10,11 +10,11 @@ dydxprotocold config chain-id $CHAIN_ID
 
 ### Getting a Snapshot
 
-See [snapshot service](../network/resources.md#snapshot-service).
+See [snapshot service](../infrastructure_providers-network/resources.mdx#snapshot-service).
 
 ### Starting a Full Node
 
-Find the seed node's ID and the IP address from [Resources](../network/resources.md#seed-nodes). Then, run the following command to start a non-validating full node.
+Find the seed node's ID and the IP address from [Resources](../infrastructure_providers-network/resources.mdx#seed-nodes). Then, run the following command to start a non-validating full node.
 
 For example,
 ```bash
@@ -39,7 +39,7 @@ Update `persistent_peers`  in the config.toml file to include a randomly selecte
 
 ### Snapshots
 
-Snapshots contain a compressed copy of the chain data which allow the full node to bootstrap to a recent state in the blockchain. A list of snapshot services can be found here https://docs.dydx.exchange/network/resources#snapshot-service. 
+Snapshots contain a compressed copy of the chain data which allow the full node to bootstrap to a recent state in the blockchain. A list of snapshot services can be found [here](../infrastructure_providers-network/resources.mdx#snapshot-service).
 
 ### State sync (Alternative to snapshots)
 

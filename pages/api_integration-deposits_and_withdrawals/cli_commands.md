@@ -1,6 +1,6 @@
 ## CLI commands
 
-Note: Native token denoms for transfer amounts and fees can be found [here](../network/network_constants.md#native-token-denom)
+Note: Native token denoms for transfer amounts and fees can be found [here](../infrastructure_providers-network/network_constants.mdx#native-token-denom)
 
 ### Deposit to Subaccount
 

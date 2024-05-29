@@ -6,12 +6,12 @@
 
 The proposal should consist of 4 messages to be executed **atomically and in order** when the proposal passes onchain.
 
-| Message Index | Message | Description | Params Documentation |
-|---------------|---------|-------------|----------------------|
-| 0 | [MsgCreateOracleMarket](https://github.com/dydxprotocol/v4-chain/blob/0a01da5ba17b6ca26cef6c0e183c6676a1a4e5dc/proto/dydxprotocol/prices/tx.proto#L28) | Sets the oracle list and other parameters in `x/prices`, used by the protocol to track an oracle price | [MarketParams](https://github.com/dydxprotocol/v4-chain/blob/0a01da5ba17b6ca26cef6c0e183c6676a1a4e5dc/proto/dydxprotocol/prices/market_param.proto#L10) |
-| 1 | [MsgCreatePerpetual](https://github.com/dydxprotocol/v4-chain/blob/316473cf115ee901a1371151512a8e97987f66da/proto/dydxprotocol/perpetuals/tx.proto#L31) | Sets the perpetual parameters in `x/perpetuals`, used by the protocol to represent a perpetual market. | [Params](https://github.com/dydxprotocol/v4-chain/blob/316473cf115ee901a1371151512a8e97987f66da/proto/dydxprotocol/perpetuals/params.proto#L7) |
-| 2 | [MsgCreateClobPair](https://github.com/dydxprotocol/v4-chain/blob/35b87db422b0ef4138101ba73b0f00d16780ba89/proto/dydxprotocol/clob/tx.proto#L50) | Sets the orderbook parameters in `x/clob`, used by protocol to set up the market orderbook (in `INITIALIZING` status). | [ClobPair](https://github.com/dydxprotocol/v4-chain/blob/35b87db422b0ef4138101ba73b0f00d16780ba89/proto/dydxprotocol/clob/clob_pair.proto#L25) |
-| 3 | [MsgDelayMessage](https://github.com/dydxprotocol/v4-chain/blob/35b87db422b0ef4138101ba73b0f00d16780ba89/proto/dydxprotocol/delaymsg/tx.proto#L18) | Transitions the orderbook created by `MsgCreateClobPair` to `ACTIVE` status, after some amount of blocks| [delay_blocks](https://github.com/dydxprotocol/v4-chain/blob/35b87db422b0ef4138101ba73b0f00d16780ba89/proto/dydxprotocol/delaymsg/tx.proto#L27) |
+| Message Index | Message                                                                                                                                                 | Description                                                                                                            | Params Documentation                                                                                                                                    |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0             | [MsgCreateOracleMarket](https://github.com/dydxprotocol/v4-chain/blob/0a01da5ba17b6ca26cef6c0e183c6676a1a4e5dc/proto/dydxprotocol/prices/tx.proto#L28)  | Sets the oracle list and other parameters in `x/prices`, used by the protocol to track an oracle price                 | [MarketParams](https://github.com/dydxprotocol/v4-chain/blob/0a01da5ba17b6ca26cef6c0e183c6676a1a4e5dc/proto/dydxprotocol/prices/market_param.proto#L10) |
+| 1             | [MsgCreatePerpetual](https://github.com/dydxprotocol/v4-chain/blob/316473cf115ee901a1371151512a8e97987f66da/proto/dydxprotocol/perpetuals/tx.proto#L31) | Sets the perpetual parameters in `x/perpetuals`, used by the protocol to represent a perpetual market.                 | [Params](https://github.com/dydxprotocol/v4-chain/blob/316473cf115ee901a1371151512a8e97987f66da/proto/dydxprotocol/perpetuals/params.proto#L7)          |
+| 2             | [MsgCreateClobPair](https://github.com/dydxprotocol/v4-chain/blob/35b87db422b0ef4138101ba73b0f00d16780ba89/proto/dydxprotocol/clob/tx.proto#L50)        | Sets the orderbook parameters in `x/clob`, used by protocol to set up the market orderbook (in `INITIALIZING` status). | [ClobPair](https://github.com/dydxprotocol/v4-chain/blob/35b87db422b0ef4138101ba73b0f00d16780ba89/proto/dydxprotocol/clob/clob_pair.proto#L25)          |
+| 3             | [MsgDelayMessage](https://github.com/dydxprotocol/v4-chain/blob/35b87db422b0ef4138101ba73b0f00d16780ba89/proto/dydxprotocol/delaymsg/tx.proto#L18)      | Transitions the orderbook created by `MsgCreateClobPair` to `ACTIVE` status, after some amount of blocks               | [delay_blocks](https://github.com/dydxprotocol/v4-chain/blob/35b87db422b0ef4138101ba73b0f00d16780ba89/proto/dydxprotocol/delaymsg/tx.proto#L27)         |
 
 Notes:
 
@@ -48,18 +48,18 @@ The following decribes how to set various parameters for a new market and assume
   - Tick size is in the range of `[1, 10] bps` of the `reference_price` for markets in liquidity tier 1 and 2 and `[0.1, 1] bps` for markets in liquidity tier 0.
   - Minimum order size is `>= $1` and position size increments by approximately `$1`.
 
-| Message Type | Field | Description | Value |
-|--------------|-------|-------------|-------|
-| `MsgCreateOracleMarket` | `exponent` | Denotes the number of decimals a value should be shifted in the price daemon | `p-9` |
-| `MsgCreateOracleMarket` | `min_exchanges` | Used for an index price to be valid. | `3` |
-| `MsgCreateOracleMarket` | `min_price_change_ppm` | The minimum amount the index price has to change for an oracle price update to be valid. | Liquidity Tier 0: `1000` <br> Liquidity Tier 1: `2500` <br> Liquidity Tier 2: `4000` |
-| `MsgCreateOracleMarket` | `exchange_config_json` | Spot exchange query configuration for the oracle price | See [below](./proposing_a_new_market.md#Choosing-oracle-sources) |
-| `MsgCreatePerpetual` | `atomic_resolution` | L the exponent for converting an atomic amount (`size = 1`) to a full coin. |  `-6 - p` |
-| `MsgCreatePerpetual`  | `default_funding_ppm` | The default funding payment if there is no price premium. In parts-per-million. | `0` |
-| `Msg[Update/Create]ClobPair` | `quantum_conversion_exponent` | `10^quantum_conversion_exponent` gives the number of quote quantum traded per base quantum. | `-9` |
-| `Msg[Update/Create]ClobPair` | `subticks_per_tick` | Defines the tick size of the orderbook by defining how many subticks are in one tick. | Liquidity Tier 0: `100000` <br> Liquidity Tier 1 and 2 : `1000000` |
-| `Msg[Update/Create]ClobPair` | `step_base_quantums` | (aka step size): min increment in the size of orders (number of coins) on the CLOB in base quantums. | `1000000` |
-| `MsgDelayMessage` | `delay_blocks` | number of blocks before which the `MsgUpdateClobPair` is executed and transitions the market to `ACTIVE` | `3600` (equal to an hour at `1 sec` blocktime) |
+| Message Type                 | Field                         | Description                                                                                              | Value                                                                                |
+| ---------------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `MsgCreateOracleMarket`      | `exponent`                    | Denotes the number of decimals a value should be shifted in the price daemon                             | `p-9`                                                                                |
+| `MsgCreateOracleMarket`      | `min_exchanges`               | Used for an index price to be valid.                                                                     | `3`                                                                                  |
+| `MsgCreateOracleMarket`      | `min_price_change_ppm`        | The minimum amount the index price has to change for an oracle price update to be valid.                 | Liquidity Tier 0: `1000` <br> Liquidity Tier 1: `2500` <br> Liquidity Tier 2: `4000` |
+| `MsgCreateOracleMarket`      | `exchange_config_json`        | Spot exchange query configuration for the oracle price                                                   | See [below](./proposing_a_new_market.md#Choosing-oracle-sources)                     |
+| `MsgCreatePerpetual`         | `atomic_resolution`           | L the exponent for converting an atomic amount (`size = 1`) to a full coin.                              | `-6 - p`                                                                             |
+| `MsgCreatePerpetual`         | `default_funding_ppm`         | The default funding payment if there is no price premium. In parts-per-million.                          | `0`                                                                                  |
+| `Msg[Update/Create]ClobPair` | `quantum_conversion_exponent` | `10^quantum_conversion_exponent` gives the number of quote quantum traded per base quantum.              | `-9`                                                                                 |
+| `Msg[Update/Create]ClobPair` | `subticks_per_tick`           | Defines the tick size of the orderbook by defining how many subticks are in one tick.                    | Liquidity Tier 0: `100000` <br> Liquidity Tier 1 and 2 : `1000000`                   |
+| `Msg[Update/Create]ClobPair` | `step_base_quantums`          | (aka step size): min increment in the size of orders (number of coins) on the CLOB in base quantums.     | `1000000`                                                                            |
+| `MsgDelayMessage`            | `delay_blocks`                | number of blocks before which the `MsgUpdateClobPair` is executed and transitions the market to `ACTIVE` | `3600` (equal to an hour at `1 sec` blocktime)                                       |
 
 
 ## Choosing oracle sources

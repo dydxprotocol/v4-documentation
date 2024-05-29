@@ -9,12 +9,11 @@ Validators can choose how to run a validator and manage software upgrades accord
 
 ## Voting for Upgrade Proposals
 
-See [Governance -> Voting](../../governance/voting.md)
+See [Governance -> Voting](../../users-governance/voting.md)
 
 ## Upgrades
 
 Releases for the dYdX chain will use [semantic versioning](https://semver.org/). See [here](./types_of_upgrades.md) for details.
-
 
 ### ⚒️ Cosmovisor Users
 
