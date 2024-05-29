@@ -9,27 +9,26 @@
 
 **Trading via API**
 
-Currently, dYdX natively hosts a TypeScript client. 3rd parties were also commissioned to build working Python and C++ clients.
+Currently, dYdX natively hosts a TypeScript client. 3rd parties were also commissioned to build working Python and C++ clients. All clients are hosted in the [dydxprotocol/v4-clients](https://github.com/dydxprotocol/v4-clients) repo.
 
-1. Links to the correct clients can be found in the chart below:
-
-| Client Type | Location | Built By |
-| -------------- | ----------------- | ------------------------------- |
-| TypeScript         | [dYdX Repo](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-js)                 | dYdX Trading Inc.                               |
-| Python         | [3rd Party Repo](https://github.com/dydxprotocol/v4-chain/blob/main/README.md)                 | Raven DAO                               |
-| C++       | [3rd Party Repo](https://github.com/asnefedovv/dydx-v4-client-cpp)                 | FastForward                              |
-
-
-2. For the Python client please review this [setup guide](https://docs.dydx.exchange/guides/setting_up_raspberry_pi_for_api_trading) and this [user manual](https://docs.dydx.exchange/guides/cli_python_script).
+| Client Type                                                                     | Built By          |
+| ------------------------------------------------------------------------------- | ----------------- |
+| [TypeScript](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-js) | dYdX Trading Inc. |
+| [Python](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-py)     | Raven DAO         |
+| [C++](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-cpp)       | FastForward       |
  
 **Trading via Web**
 
-1. dYdX Operations Services Ltd. deployment of the dYdX web app at [dydx.trade](https://dydx.trade)
+| Deployment | Web App Site                                                  | Deployed By                   |
+| ---------- | ------------------------------------------------------------- | ----------------------------- |
+| Mainnet    | [dydx.trade](https://dydx.trade)                              | dYdX Operations Services Ltd. |
+| Testnet    | [v4.testnet.dydx.exchange](https://v4.testnet.dydx.exchange/) | dYdX Trading Inc.             |
 
 **Trading via Mobile**
 
-1. Download the mobile app for the dYdX Operations Services Ltd. deployment of dYdX Chain [iOS](https://apps.apple.com/bg/app/dydx/id6475599596) or for Android _(coming soon)_
-
-
+| Platform       | Link                                                                 | Deployed By                   |
+| -------------- | -------------------------------------------------------------------- | ----------------------------- |
+| iOS            | https://apps.apple.com/bg/app/dydx/id6475599596                      | dYdX Operations Services Ltd. |
+| Android (Beta) | https://play.google.com/store/apps/details?id=trade.opsdao.dydxchain | dYdX Operations Services Ltd. |
 
 _dYdX Trading Inc. ("dYdX") does not control or operate any public deployments of dYdX Chain.  Any use of the dYdX Chain documentation hub and dYdX Chain software is subject to dYdX's [Terms and Policies](./other-terms_of_use_and_privacy_policy.md#native-token-denom)._
