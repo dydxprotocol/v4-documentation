@@ -2,17 +2,21 @@
 
 # Full Node GRPC Streaming
 
-Last updated for: `v4.1.3`
+Last updated for: `v4.1.4`
 
-This feature aims to provide real-time, accurate orderbook updates and fills. Complete orderbook activities and fills are streamed to the client and can be used to construct a full depth L3 orderbook. Streams are implemented using the existing GRPC query service from Cosmos SDK.
+This feature aims to provide real-time, accurate orderbook updates and fills. Complete orderbook activities and fills are streamed to the client and can be used to construct a full depth L3 orderbook. Streams are implemented using the existing GRPC query service from Cosmos SDK. Note that by dYdX V4’s optimistic orderbook design, the orderbook can be slightly different across different nodes.
 
-The current implementation provides information on orders and fills. Note that by dYdX V4’s optimistic orderbook design, the orderbook can be slightly different across different nodes.
-
-**Disclaimer:** It’s possible for the full node to block indefinitely when sending a message to an unresponsive client, so right now we recommend you use this exclusively with your own node and that the client always close the gRPC stream before shutting down. This issue will be fixed in the next version (v4.1.4)
+This implementation maintains a length-configurable buffered queue of streaming updates to ensure slow or unresponsive clients do not induce full node lag during bursts of updates. If the buffer reaches maximum capacity, all connections and updates are dropped, and subscribers will have to re-subscribe. Metrics and logs are emitted on buffer length to help tune this parameter.
 
 ## Enabling GRPC Streaming
 
-This feature can be enabled via a command line flag (`--grpc-streaming-enabled=true`) when starting your full node. This feature can only be used when grpc is also enabled.
+
+| CLI Flag | Type | Default | Short Explanation |
+| -------- | ----- | ------- | -------- |
+| grpc-streaming-enabled | bool | false | Toggle on to enable full node streaming. <br>Can only be used when grpc is enabled. |
+| grpc-streaming-buffer-size | int | 1000 | Size of protocol-side updates buffer to <br> maintain before dropping all messages and connections |
+
+**Disclaimer:** We recommend you use this exclusively with your own node, as supporting multiple public GRPC streams with unknown client subscriptions may result in degredated performance.
 
 ## Consuming the gRPC Stream
 
@@ -312,6 +316,8 @@ By protocol design, each validator has their own version of the orderbook and op
 
 ![full node streaming diagram](../../artifacts/full_node_streaming_diagram.jpg)
 
+Note that DeliverTx maps to exec mode `execModeFinalize`.
+
 ## Example Scenario
 
 - Trader places a bid at price 100 for size 1
@@ -327,6 +333,15 @@ By protocol design, each validator has their own version of the orderbook and op
   - OrderUpdate, set total fill amount to be 0 (no-op) from checkState -> deliverState reset
   - MatchOrder emitted for block proposer's original order match, total filled amount = 1
  
+## Metrics and Logs
+
+| Metric | Type | Explanation |
+| -------- | ----- | ------- |
+| grpc_streaming_buffer_size | gauge | protocol-side update buffer size |
+| grpc_streaming_num_connections | gauge | number of grpc stream subscriptions |
+
+All logs from grpc streaming are tagged with `module: grpc-streaming`.
+
 ## FAQs
 
 Q: Suppose the full node saw the cancellation of order X at t0 before the placement of the order X at t1. What would the updates be like?
@@ -362,3 +377,10 @@ Q: What are the exec modes?
 	ExecModePrepareCheckState   = 102
 ```
 </details>
+<br>
+
+Q: I only want to listen to confirmed updates. I do not want to process optimistic fills.
+- A: You will want to only process messages from DeliverTx stage (`execModeFinalize`). This step is when we save proposed matches from the block proposer into state. These updates will have exec mode execModeFinalize.
+
+Q: Why do I see an Order Update message for a new OrderId before an Order Place message?
+- A: During DeliverTx, the first step we do is to reset fill amounts (via OrderUpdate messages) for all orders involved in the proposed and local operations queue due to the deliver state being reset to the check state from last block. We "reset" fill order amounts to 0 for orders that the block proposer has seen but has not gossiped to our full node yet. In the future, we may reduce the number of messages that are sent, but for now we are optimizing for orderbook correctness.
