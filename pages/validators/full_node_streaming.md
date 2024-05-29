@@ -380,7 +380,7 @@ Q: What are the exec modes?
 <br>
 
 Q: I only want to listen to confirmed updates. I do not want to process optimistic fills.
-- A: You will want to only process messages from `MsgProposedOperations` DeliverTx stage. These updates will have exec mode execModeFinalize.
+- A: You will want to only process messages from DeliverTx stage (`execModeFinalize`). This step is when we save proposed matches from the block proposer into state. These updates will have exec mode execModeFinalize.
 
 Q: Why do I see an Order Update message for a new OrderId before an Order Place message?
 - A: During DeliverTx, the first step we do is to reset fill amounts (via OrderUpdate messages) for all orders involved in the proposed and local operations queue due to the deliver state being reset to the check state from last block. We "reset" fill order amounts to 0 for orders that the block proposer has seen but has not gossiped to our full node yet. In the future, we may reduce the number of messages that are sent, but for now we are optimizing for orderbook correctness.
