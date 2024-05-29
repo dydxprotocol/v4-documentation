@@ -1,9 +1,9 @@
 # How to send USDC from Ethereum to dYdX
 
 ## Deployments
-| Deployment         | USDC Native Chain | USDC_ERC20_ADDRESS | TOKEN_MESSENGER_CONTRACT_ADDRESS |
-|--------------------|-------------------|--------------------|----------------------------------|
-| DYDX token holders | Ethereum          | [0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48](https://etherscan.io/address/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48) | [0xBd3fa81B58Ba92a82136038B25aDec7066af3155](https://etherscan.io/address/0xbd3fa81b58ba92a82136038b25adec7066af3155) |
+| Deployment         | USDC Native Chain | USDC_ERC20_ADDRESS                                                                                                            | TOKEN_MESSENGER_CONTRACT_ADDRESS                                                                                              |
+| ------------------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| DYDX token holders | Ethereum          | [0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48](https://etherscan.io/address/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)         | [0xBd3fa81B58Ba92a82136038B25aDec7066af3155](https://etherscan.io/address/0xbd3fa81b58ba92a82136038b25adec7066af3155)         |
 | Testnet            | Sepolia Testnet   | [0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238](https://sepolia.etherscan.io/address/0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238) | [0x9f3B8679c73C2Fef8b59B4f3444d4e156fb70AA5](https://sepolia.etherscan.io/address/0x9f3B8679c73C2Fef8b59B4f3444d4e156fb70AA5) |
 
 > **Note:** the example values in the steps below align with the **deployment by DYDX token holders**.

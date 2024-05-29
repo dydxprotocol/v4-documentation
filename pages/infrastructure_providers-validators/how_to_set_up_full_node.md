@@ -5,7 +5,7 @@
 2. 8-cpu (ARM or x86_64), 64 GB RAM, 500 GB SSD NVME Storage
 
 ## Get the dydxprotocold binary and initialize the data directory
-> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Constants page](https://docs.dydx.exchange/network/network_constants).
+> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Constants page](../infrastructure_providers-network/network_constants.mdx).
 
 1. From https://github.com/dydxprotocol/v4-chain/releases/ | Look for the `protocol` assets.
 2. For example, as of `10/19/2023`, this was the correct binary to use:
@@ -20,7 +20,7 @@ dydxprotocold init --chain-id=$CHAIN_ID --home=$DYDX_HOME $NODE_NICKNAME
 ```
 
 ## Get the latest applicable genesis.json file and install
-> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Resources page](../network/resources.md).
+> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Resources page](../infrastructure_providers-network/resources.mdx).
 
 1. Use 
 ```bash
@@ -32,7 +32,7 @@ to get the applicable Genesis state of the network.
 3. (Alternatives): If the RPC endpoint above does not work, there are these alternatives:
  - https://dydx-dao-rpc.polkachu.com/genesis
  - https://dydx-mainnet-full-rpc.public.blastapi.io/genesis
- - Also check [Full node endpoints → RPC](../network/resources.md#full-node-endpoints)
+ - Also check [Full node endpoints → RPC](../infrastructure_providers-network/resources.mdx#full-node-endpoints)
 
 ## Install Bware’s snapshot (optional but saves days)
 > **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Resources page](../network/resources.md).
@@ -42,12 +42,12 @@ to get the applicable Genesis state of the network.
 3. (Alternatives): If the above is not available, there are these alternatives:
  - https://polkachu.com/tendermint_snapshots/dydx
  - https://dydx-archive-snapshot.kingnodes.com/
- - Also check [Snapshot service](../network/resources.md#snapshot-service)
+ - Also check [Snapshot service](../infrastructure_providers-network/resources.mdx#snapshot-service)
 
 ## Start the full node
-> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Resources page](../network/resources.md).
+> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Resources page](../infrastructure_providers-network/resources.mdx).
 
-1. Start the full node. Note that you may need to change the `--p2p.seeds` parameter depending on the applicable v4 software blockchain network – you can find an example on [Resources page under “Seed nodes”](../network/resources.md#seed-nodes)
+1. Start the full node. Note that you may need to change the `--p2p.seeds` parameter depending on the applicable v4 software blockchain network – you can find an example on [Resources page under “Seed nodes”](../infrastructure_providers-network/resources.mdx#seed-nodes)
 ```bash
 DYDX_HOME=/home/vmware/.dydx-mainnet-1
 

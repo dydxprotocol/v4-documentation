@@ -12,13 +12,13 @@
 
 3. What are the benefits of running a full node as a market maker?
     - Running a full node will eliminate the latency between placing an order and when the actual order is gossipped throughout the network. Without your own node, your order will need to first be relayed to the nearest geographic node, which will then propagate it throughout the network for you. With your own node, your order will directly be gossiped. 
-    - Instructions on how to set up a full node can be found [here](https://docs.dydx.exchange/validators/how_to_set_up_full_node).
+    - Instructions on how to set up a full node can be found [here](./infrastructure_providers-validators/how_to_set_up_full_node.md).
 
 4. What is the current block time?
     - The current block time is ~1 second on average
 
 5. What is an indexer?
-    - The indexer is a read-only service that consumes real time data from dYdX Chain to a database for visibility to users. The indexer consumes data from dYdX Chain via a connection to a full node. The full node contains a copy of the blockchain and an in-memory order book. When the full node updates its copy of the blockchain and in-memory order book due to processing transactions, it will also stream these updates to the indexer. The indexer keeps the data in its database synced with the full-node using these updates. This data is made available to users querying through HTTPS REST APIs and streaming via websockets. More info can be found [here](https://docs.dydx.exchange/architecture/indexer).
+    - The indexer is a read-only service that consumes real time data from dYdX Chain to a database for visibility to users. The indexer consumes data from dYdX Chain via a connection to a full node. The full node contains a copy of the blockchain and an in-memory order book. When the full node updates its copy of the blockchain and in-memory order book due to processing transactions, it will also stream these updates to the indexer. The indexer keeps the data in its database synced with the full-node using these updates. This data is made available to users querying through HTTPS REST APIs and streaming via websockets. More info can be found [here](./concepts-architecture/indexer.md).
 
 ## Trading on an Exchange Run on dYdX Chain
 
@@ -54,7 +54,7 @@
 5. How can I place a short-term order?
     - Please use the latest dYdX Chain [typescript client](https://www.npmjs.com/package/@dydxprotocol/v4-client-js) to place orders
     - Please refer to the [order.proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/clob/order.proto) for parameter and field definitions
-    - For more advanced order placements, please refer to the validator client [v4-proto-js](https://github.com/dydxprotocol/v4-chain/tree/76ef1aefc1bc7ab393c20512e0940ea2be018cdc/v4-proto-js) or [v4-proto-py](https://github.com/dydxprotocol/v4-chain/tree/76ef1aefc1bc7ab393c20512e0940ea2be018cdc/v4-proto-py).
+    - For more advanced order placements, please refer to the validator client [v4-proto-js](https://github.com/dydxprotocol/v4-chain/tree/main/v4-proto-js) or [v4-proto-py](https://github.com/dydxprotocol/v4-chain/tree/main/v4-proto-py).
 
 6. How can I tell if the block proposer has placed my short-term order?
     - The block proposer has proposed and filled the order in the block.
@@ -68,7 +68,7 @@
     - This is lower latency than what a websocket notification could provide
 
 8. How can I replace an order?
-    - Replacing an order reuses the short-term order placement function with the [same order ID](https://github.com/dydxprotocol/v4-chain/blob/76ef1aefc1bc7ab393c20512e0940ea2be018cdc/proto/dydxprotocol/clob/order.proto#L10) and an equal-to-or-greater good til block
+    - Replacing an order reuses the short-term order placement function with the [same order ID](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/clob/order.proto#L10) and an equal-to-or-greater good til block
     - Note: when replacing partially-filled orders, the previous fill amount is counted towards your current order.
         - Example: Buy 1 BTC order @ $20k is filled for 0.5 BTC. After replacing that order with a Buy 2 BTC order @ $25k, that order can only be filled for a maximum of 1.5 BTC. This is because the previously replaced order was already filled for 0.5 BTC.
 
@@ -78,7 +78,7 @@
         - This is why the status “BEST_EFFORT_OPENED” or “BEST_EFFORT_CANCELED” since the Indexer only knows that a full-node received the order / cancel, and it’s not guaranteed to be true across the whole network
     - For the orderbook updates, these are sent when the full-node the Indexer is listening to receives orders / cancels and not just when the block is finalized
         - For example, when the full-node receives a short term order it will be approximate how much is filled and how much would go on the orderbook. This is what the Indexer uses to stream orderbook updates. However, there is no guarantee that the orderbook looks the same in other nodes in the network
-    - Note that you can now stream the orderbook directly through your full node for the orderbook. Read more about that [here](https://docs.dydx.exchange/guides/orderbook_stream).
+    - Note that you can now stream the orderbook directly through your full node for the orderbook. Read more about that [here](./infrastructure_providers-validators/full_node_streaming.md).
 
 10. Do orders get matched and removed from the book in between blocks?
     - For removal of short term orders, yes they can be removed in between blocks, however this is on a node-by-node basis and not across the whole network
@@ -195,13 +195,13 @@
         - Skip Protocol Sidecar: side car that pulls price data from external sources and caches them for the validator to use [link](https://docs.skip.money/slinky/integrations/dydx)
         - Vote Extensions: Every block during the Precommit stage, all validators will submit vote extensions for what they believe the oracle price of all tracked assets should be.
         - Consensus: The block after VE are submitted, Slinky deterministically aggregates all VE from the previous block and proposes a new updated price which is voted into consensus.
-        - Module: updates the state based on the new price, also has logic for validation and etc [link](https://github.com/dydxprotocol/v4-chain/tree/af8b6a46fdecc77ef154fd7b32377b4fea92b3f8/protocol/x/prices) 
-        - Params: determines the external sources and sensitivity [link](https://github.com/dydxprotocol/v4-testnets/blob/aa1c7ac589d6699124942a66c2362acad2e6f50d/dydx-testnet-4/genesis.json#L6106), these are configured per network (testnet genesis example), but should query the network config for these `dydxprotocold query prices list-market-param`
+        - Module: updates the state based on the new price, also has logic for validation and etc [link](https://github.com/dydxprotocol/v4-chain/tree/main/protocol/x/prices) 
+        - Params: determines the external sources and sensitivity [link](https://github.com/dydxprotocol/v4-testnets/blob/main/dydx-testnet-4/genesis.json#L6106), these are configured per network (testnet genesis example), but should query the network config for these `dydxprotocold query prices list-market-param`
 
 ## Rewards
 
 1. How will trading rewards work on dYdX Chain?
-    - Trading rewards are not controlled by dYdX. dYdX recommends that trading rewards could be calculated primarily based on total taker fees paid, along with a few other variables. The full proposed formula can be found [here](https://docs.dydx.exchange/getting_started/fees_rewards_parameters). These rewards could be distributed on a block by block basis (1-2 seconds). 
+    - Trading rewards are not controlled by dYdX. dYdX recommends that trading rewards could be calculated primarily based on total taker fees paid, along with a few other variables. The full proposed formula can be found [here](./concepts-trading/rewards_fees_and_parameters.md). These rewards could be distributed on a block by block basis (1-2 seconds). 
 
 2. Will liquidity provider rewards exist in v4?
-    - Liquidity provider rewards in v4 are not controlled by dYdX. dYdX recommends that liquidity provider rewards should cease to exist in v4. Makers could be rewarded with a maker rebate ranging from 0.5bps to 1.1bps, based on their nominal volume and volume share. The full proposed fee schedule can be found [here](https://docs.dydx.exchange/getting_started/fees_rewards_parameters). 
+    - Liquidity provider rewards in v4 are not controlled by dYdX. dYdX recommends that liquidity provider rewards should cease to exist in v4. Makers could be rewarded with a maker rebate ranging from 0.5bps to 1.1bps, based on their nominal volume and volume share. The full proposed fee schedule can be found [here](./concepts-trading/rewards_fees_and_parameters.md). 

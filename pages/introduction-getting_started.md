@@ -32,4 +32,4 @@ Currently, dYdX natively hosts a TypeScript client. 3rd parties were also commis
 
 
 
-_dYdX Trading Inc. ("dYdX") does not control or operate any public deployments of dYdX Chain.  Any use of the dYdX Chain documentation hub and dYdX Chain software is subject to dYdX's [Terms and Policies](https://docs.dydx.exchange/terms_and_policies/terms_of_use_and_privacy_policy)._
+_dYdX Trading Inc. ("dYdX") does not control or operate any public deployments of dYdX Chain.  Any use of the dYdX Chain documentation hub and dYdX Chain software is subject to dYdX's [Terms and Policies](./other-terms_of_use_and_privacy_policy.md#native-token-denom)._
