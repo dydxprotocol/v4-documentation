@@ -6,6 +6,7 @@
 
   "index": "Introduction",
   "introduction-getting_started": "Getting Started",
+  "introduction-onboarding_faqs": "Onboarding FAQs",
 
   "----------INFRASTRUCTURE PROVIDERS----------": {
     "title": "🏘️ INFRASTRUCTURE PROVIDERS",
@@ -48,7 +49,6 @@
     "type": "separator"
   },
 
-  "other-onboarding_faqs": "Onboarding FAQs",
   "other-security": "Security",
   "other-terms_of_use_and_privacy_policy": "Terms & Policies",
 
