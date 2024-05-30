@@ -21,3 +21,6 @@ Start development server on localhost:3000:
 ```bash
 pnpm dev
 ```
+
+## Formatting
+To format .mdx files, you can use the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension in VSCode.

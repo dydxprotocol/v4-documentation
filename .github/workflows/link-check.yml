@@ -10,12 +10,6 @@ jobs:
         extension: ['.md', '.mdx']
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
         file-extension: ${{ matrix.extension }}
