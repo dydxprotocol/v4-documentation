@@ -91,7 +91,7 @@
 <summary>5. How can I place a short-term order?</summary>
 
 - Please use the latest dYdX Chain [typescript client](https://www.npmjs.com/package/@dydxprotocol/v4-client-js) to place orders.
-- Please refer to the [order.proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/clob/order.proto) for parameter and field definitions.
+- Please refer to the [order.proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/clob/order.proto) for parameter and field definitions.
 - For more advanced order placements, please refer to one of the [validator clients](./introduction-getting_started.md#Trading-Via-Api).
 
 </details>
@@ -118,7 +118,7 @@
 <details>
 <summary>8. How can I replace an order?</summary>
 
-- Replacing an order reuses the short-term order placement function with the [same order ID](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/clob/order.proto#L10) and an equal-to-or-greater good til block.
+- Replacing an order reuses the short-term order placement function with the [same order ID](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/clob/order.proto#L10) and an equal-to-or-greater good til block.
 - Note: when replacing partially-filled orders, the previous fill amount is counted towards your current order.
   - Example: Buy 1 BTC order @ $20k is filled for 0.5 BTC. After replacing that order with a Buy 2 BTC order @ $25k, that order can only be filled for a maximum of 1.5 BTC. This is because the previously replaced order was already filled for 0.5 BTC.
 
@@ -207,7 +207,7 @@
 - Each address’s subaccounts all fall under a single address, but they are labeled subaccount0, subaccount1, etc. This is unlike v3, where each subaccount was a secondary address.
 - To begin trading, you need to make sure your funds are in your subaccount. You can do this two ways:
   - Frontend: Simply leave your frontend open and it will automatically sweep.
-  - Backend: Simply transfer USDC to it like in [this example](https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/transfer_example_subaccount_transfer.ts).
+  - Backend: Simply transfer USDC to it like in [this example](https://github.com/dydxprotocol/v4-clients/blob/123cd819939fe47ff80dda04b1ac1144dffa4fda/v4-client-js/examples/transfer_example_subaccount_transfer.ts).
 
 </details>
 
@@ -334,7 +334,7 @@
   - Vote Extensions: Every block during the Precommit stage, all validators will submit vote extensions for what they believe the oracle price of all tracked assets should be.
   - Consensus: The block after VE are submitted, Slinky deterministically aggregates all VE from the previous block and proposes a new updated price which is voted into consensus.
   - Module: updates the state based on the new price, also has logic for validation and etc. [link](https://github.com/dydxprotocol/v4-chain/tree/main/protocol/x/prices).
-  - Params: determines the external sources and sensitivity [link](https://github.com/dydxprotocol/v4-testnets/blob/main/dydx-testnet-4/genesis.json#L6106), these are configured per network (testnet genesis example), but should query the network config for these `dydxprotocold query prices list-market-param`.
+  - Params: determines the external sources and sensitivity [link](https://github.com/dydxprotocol/v4-testnets/blob/aa1c7ac589d6699124942a66c2362acad2e6f50d/dydx-testnet-4/genesis.json#L6106), these are configured per network (testnet genesis example), but should query the network config for these `dydxprotocold query prices list-market-param`.
 
 </details>
 
