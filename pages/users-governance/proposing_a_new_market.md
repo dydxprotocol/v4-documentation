@@ -16,7 +16,7 @@ The proposal should consist of 4 messages to be executed **atomically and in ord
 Notes:
 
 - For guideline on choosing values for individual params, see next [section](./proposing_a_new_market.md#choosing-market-parameters).
-- Liquidity tiers are mentioned throughout this page. The liquidity tier documentation can be found [here](./functionalities#liquidity-tiers). 
+- Liquidity tiers are mentioned throughout this page. The liquidity tier documentation can be found [here](../users-governance/functionalities.md#liquidity-tiers). 
 - The exact ordering of messages above is necessary for successful onchain execution.
 - Each of the 4 top-level messages should have `Authority = dydx10d07y265gmmuvt4z0w9aw880jnsr700jnmapky`, the [gov module](https://github.com/dydxprotocol/v4-chain/blob/5e72896719e2f8d2fe6e10fddbde18b363a6bbe3/protocol/app/module_accounts_test.go#L28).
 - The `MsgCreateClobPair` message wrapped in `messages[3]: MsgDelayMessage` should have `Authority = dydx1mkkvp26dngu6n8rmalaxyp3gwkjuzztq5zx6tr`, the [delaymsg module](https://github.com/dydxprotocol/v4-chain/blob/5e72896719e2f8d2fe6e10fddbde18b363a6bbe3/protocol/app/module_accounts_test.go#L36).

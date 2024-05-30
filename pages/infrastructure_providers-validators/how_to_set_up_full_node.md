@@ -35,7 +35,7 @@ to get the applicable Genesis state of the network.
  - Also check [Full node endpoints → RPC](../infrastructure_providers-network/resources.mdx#full-node-endpoints)
 
 ## Install Bware’s snapshot (optional but saves days)
-> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Resources page](../network/resources.md).
+> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Resources page](../infrastructure_providers-network/resources.mdx).
 
 1. From https://bwarelabs.com/snapshots/dydx
 2. Download and extract (using `lz4 -dc < snapshotfile.tar.lz4 | tar xf -`) the snapshot contents in the data directory (make sure you are in the data directory before running the tar command).  Important: The home directory (`$DYDX_HOME` or `/home/vmware/.dydx-mainnet-1` in our example) contains another `data/` directory.
