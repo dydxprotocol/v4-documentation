@@ -8,7 +8,7 @@ In dYdX Chain trading, quantities and prices are represented in quantums (for qu
 
 The smallest increment of position size. Determined from `atomicResolution`.
 
-atomicResolution - Determines the size of a quantum. [For example](https://github.com/dydxprotocol/v4-testnets/blob/main/dydx-testnet-4/genesis.json#L5776), an `atomicResolution` of 10 for `BTC`, means that 1 quantum is `1e-10` `BTC`.
+atomicResolution - Determines the size of a quantum. [For example](https://github.com/dydxprotocol/v4-testnets/blob/aa1c7ac589d6699124942a66c2362acad2e6f50d/dydx-testnet-4/genesis.json#L5776), an `atomicResolution` of 10 for `BTC`, means that 1 quantum is `1e-10` `BTC`.
 
 ### Subticks
 

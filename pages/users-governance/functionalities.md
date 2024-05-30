@@ -8,11 +8,11 @@ Below is a current list of all module parameters that `x/gov` has the ability to
 
 The Stats Module tracks user maker and taker volumes over a period of time (aka look-back window). This is currently set to 30 days. The maker and taker volume info is used to place users in corresponding fee-tiers. 
 
-Governance has the ability to update the params of the Stats Module, which defines the look-back window (measured in seconds). [Proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/stats/params.proto#L10-L14)
+Governance has the ability to update the params of the Stats Module, which defines the look-back window (measured in seconds). [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/stats/params.proto#L10-L14)
 
 ### FeeTiers Module
 
-Governance has the ability to update fee tiers ([proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/feetiers/params.proto#L6-L10)). To read more about fee tiers head to [V4 Deep Dive: Rewards and Parameters](https://dydx.exchange/blog/v4-rewards-and-parameters). 
+Governance has the ability to update fee tiers ([proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/feetiers/params.proto#L6-L10)). To read more about fee tiers head to [V4 Deep Dive: Rewards and Parameters](https://dydx.exchange/blog/v4-rewards-and-parameters). 
 
 ## Trading Core
 
@@ -24,7 +24,7 @@ Note: any account has the ability to send assets to the Insurance Fund.
 
 ### Liquidations Config
 
-Governance has the ability to adjust how liquidations are processed. [Proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/clob/liquidations_config.proto#L8-L34)
+Governance has the ability to adjust how liquidations are processed. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/clob/liquidations_config.proto#L8-L34)
 
 - Max Insurance Fund quantums for deleveraging: The maximum number of quote quantums (exclusive) that the insurance fund can have for deleverages to be enabled.
 - The maximum liquidation fee, in parts-per-million. 100% of this fee goes to the Insurance Fund
@@ -36,9 +36,9 @@ Governance has the ability to adjust how liquidations are processed. [Proto](htt
 
 Governance has the ability to adjust Funding Rate parameters: 
 
-- Funding rate clamp factor, premium vote clamp factor, and min number of votes per premium sample. [Proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/perpetuals/params.proto#L6-L19)
-- Epoch information, which defines the funding interval and premium sampling interval. [Proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/epochs/epoch_info.proto#L6-L43)
-- Liquidity Tier, which defines the impact notional value. [Proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/perpetuals/perpetual.proto#L84-L113)
+- Funding rate clamp factor, premium vote clamp factor, and min number of votes per premium sample. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/params.proto#L6-L19)
+- Epoch information, which defines the funding interval and premium sampling interval. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/epochs/epoch_info.proto#L6-L43)
+- Liquidity Tier, which defines the impact notional value. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/perpetual.proto#L84-L113)
 
 ## Trading Rewards
 
@@ -46,7 +46,7 @@ Governance has the ability to adjust Funding Rate parameters:
 
 The Vest Module is responsible for determining the rate of tokens that vest from Vester Accounts to other accounts such as a Community Treasury Account and a Rewards Treasury Account. The rate of token transfers is linear with respect to time. Thus, block timestamps are used to vest tokens.
 
-Governance has the ability to create, update, or delete a `VestEntry` ([proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/vest/vest_entry.proto#L9-L30)), which defines:   
+Governance has the ability to create, update, or delete a `VestEntry` ([proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/vest/vest_entry.proto#L9-L30)), which defines:   
 
 - The start and end time of vesting
 - The token that is vested
@@ -55,7 +55,7 @@ Governance has the ability to create, update, or delete a `VestEntry` ([proto](h
 
 ### Rewards Module
 
-The Rewards Module distributes trading rewards to traders (previously written about [V4 Deep Dive: Rewards and Parameters](https://dydx.exchange/blog/v4-rewards-and-parameters)). Governance has the ability to adjust the following ([proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/rewards/params.proto#L6-L26)): 
+The Rewards Module distributes trading rewards to traders (previously written about [V4 Deep Dive: Rewards and Parameters](https://dydx.exchange/blog/v4-rewards-and-parameters)). Governance has the ability to adjust the following ([proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/rewards/params.proto#L6-L26)): 
 
 - Which account Trading Rewards are funded from
 - The token Trading Rewards are funded in
@@ -66,7 +66,7 @@ The Rewards Module distributes trading rewards to traders (previously written ab
 
 ### Oracles
 
-Governance has the ability to adjust the list of oracles used for each market. [Proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/prices/market_param.proto#L31-L33) 
+Governance has the ability to adjust the list of oracles used for each market. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/prices/market_param.proto#L31-L33) 
 
 Note that this functionality does not include creating / removing an exchange-source supported by the protocol as a whole, which will require a binary upgrade. 
 
@@ -93,7 +93,7 @@ Current Liquidity Tiers include:
     - Then a market’s `Effective IMF = Min(Base IMF + Max(IMF Increase, 0), 1.0)`
 - The effective IMF is the base IMF while the Open Notional < Lower Cap, and increases linearly until Open Notional = Upper Cap, at which point the IMF stays at 1.0 (requiring 1:1 collateral for trading)
 
-Governance has the ability to create and modify Liquidity Tiers as well as update existing markets’ Liquidity Tier placements. ([proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/perpetuals/perpetual.proto#L84-L113))
+Governance has the ability to create and modify Liquidity Tiers as well as update existing markets’ Liquidity Tier placements. ([proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/perpetual.proto#L84-L113))
 
 ### Updating a Live Market
 
@@ -101,7 +101,7 @@ This functionality allows the community to update parameters of a live market, w
 
 - Updating a liquidity tier
 - Perpetual (`x/perpetuals`), governance-updatable through `MsgUpdatePerpetualFeeParams` ([proto definition](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/feetiers/tx.proto#L19))
-- Market (`x/prices`), governance-updatable through `MsgUpdateMarketParam` ([proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/prices/market_param.proto#L6-L34))
+- Market (`x/prices`), governance-updatable through `MsgUpdateMarketParam` ([proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/prices/market_param.proto#L6-L34))
 - Clob pair (`x/clob`), governance-updatable through `MsgUpdateClobPair` ([proto](https://github.com/dydxprotocol/v4-chain/blob/b2c6062b4e588b98a51454f50da9e8e712cfc2d9/proto/dydxprotocol/clob/tx.proto#L102))
 
 ### Adding New Markets
@@ -121,8 +121,8 @@ MsgDelayMessage (schedule a MsgSetClobPairStatus to enable trading in x/clob)
 
 To prevent spam on the orderbook and prevent the blockchain state from getting too large, governance has the ability to adjust: 
 
-- How many open orders a subaccount can have based on its equity tier. [Proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/clob/equity_tier_limit_config.proto#L8-L19)
-- Order placement rate limits. [Proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/clob/block_rate_limit_config.proto#L8-L35)
+- How many open orders a subaccount can have based on its equity tier. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/clob/equity_tier_limit_config.proto#L8-L19)
+- Order placement rate limits. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/clob/block_rate_limit_config.proto#L8-L35)
 
 ## Bridge
 
@@ -132,9 +132,9 @@ The Bridge Module is responsible for receiving bridged tokens from the Ethereum 
 
 Governance has the ability to update: 
 
-- Event Parameters: Specifies which events to recognize and which tokens to mint. [Proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/bridge/params.proto#L9-L20)
-- Proposal Parameters: Determines how long a validator should wait until it proposes a bridge event to other validators, and how many or often to propose new bridge events. [Proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/bridge/params.proto#L22-L45)
-- Safety Parameters: Determines if bridging is enabled/disabled and how many blocks mints are delayed after being accepted by consensus. [Proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/bridge/params.proto#L47-L55)
+- Event Parameters: Specifies which events to recognize and which tokens to mint. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/bridge/params.proto#L9-L20)
+- Proposal Parameters: Determines how long a validator should wait until it proposes a bridge event to other validators, and how many or often to propose new bridge events. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/bridge/params.proto#L22-L45)
+- Safety Parameters: Determines if bridging is enabled/disabled and how many blocks mints are delayed after being accepted by consensus. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/bridge/params.proto#L47-L55)
 
 ## Community Assets
 

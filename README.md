@@ -3,7 +3,7 @@
 <h1 align="center">dYdX Chain Documentation</h1>
 
 <div align="center">
-  <a href='https://github.com/dydxprotocol/v4-documentation/blob/main/LICENSE'>
+  <a href='https://github.com/dydxprotocol/v4-documentation/blob/024e1b35537ba619b79576d07464a8cb4eb2de66/LICENSE'>
     <img src='https://img.shields.io/badge/License-AGPL_v3-blue.svg' alt='License' />
   </a>
 </div>
