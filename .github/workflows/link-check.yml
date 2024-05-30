@@ -12,6 +12,7 @@ jobs:
         file-extension: '.md'
         folder-path: 'pages'
         base-branch: 'main'
+        use-quiet-mode: 'yes'
 
   markdown-link-check-mdx:
     runs-on: ubuntu-latest
@@ -22,3 +23,4 @@ jobs:
         file-extension: '.mdx'
         folder-path: 'pages'
         base-branch: 'main'
+        use-quiet-mode: 'yes'
