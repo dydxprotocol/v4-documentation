@@ -22,9 +22,12 @@
     "type": "separator"
   },
 
+  "api_integration-clients": "Client Documentation",
+  "api_integration-indexer": "Indexer Documentation",
+  "api_integration-repositories": "Repositories",
   "api_integration-trading": "Trading",
   "api_integration-deposits_and_withdrawals": "Deposits and Withdrawals",
-  "api_integration-developers": "Developers",
+  "api_integration-constants": "Constants",
   "api_integration-guides": "Guides",
 
   "----------USERS----------": {
