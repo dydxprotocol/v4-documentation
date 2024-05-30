@@ -12,3 +12,4 @@ jobs:
         file-extension: '.md, .mdx'
         folder-path: 'pages'
         base-branch: 'main'
+        use-verbose-mode: 'yes'
