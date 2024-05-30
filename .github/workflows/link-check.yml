@@ -3,13 +3,22 @@ name: Check Markdown links
 on: push
 
 jobs:
-  markdown-link-check:
+  markdown-link-check-md:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
-        file-extension: '.md,.mdx'
+        file-extension: '.md'
         folder-path: 'pages'
-        file-path: 'README.md'
+        base-branch: 'main'
+
+  markdown-link-check-mdx:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        file-extension: '.mdx'
+        folder-path: 'pages'
         base-branch: 'main'
