@@ -49,7 +49,7 @@ https://polkachu.com/state_sync/dydx
 
 https://services.lavenderfive.com/mainnet/dydx/statesync
 
-https://autostake.com/networks/dydx/ca
+https://autostake.com/networks/dydx/#state-sync
 
 ### Address Book
 
