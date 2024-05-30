@@ -13,7 +13,7 @@ dydxprotocold config chain-id [chain_id]
 ```
 
 ## Confirming Connectivity
-To ensure that you are successfully connecting, use any of the RPC endpoints listed in the [resources](../infrastructure_providers-network/resources.mdx/resources.md). Remember to append `:443` to the end of the RPC URI for proper access. Execute the following command, replacing `[RPC ENDPOINT]` with your chosen endpoint:
+To ensure that you are successfully connecting, use any of the RPC endpoints listed in the [resources](../infrastructure_providers-network/resources.mdx#full-node-endpoints). Remember to append `:443` to the end of the RPC URI for proper access. Execute the following command, replacing `[RPC ENDPOINT]` with your chosen endpoint:
 
 ```bash
 dydxprotocold status --node https://[RPC ENDPOINT]:443

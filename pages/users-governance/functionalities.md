@@ -100,7 +100,7 @@ Governance has the ability to create and modify Liquidity Tiers as well as updat
 This functionality allows the community to update parameters of a live market, which can be composed of 4 parts
 
 - Updating a liquidity tier
-- Perpetual (`x/perpetuals`), governance-updatable through `MsgUpdatePerpetual` ([proto definition](https://www.notion.so/Governance-Parameter-Updates-ff8be9ebd380424d8fdd337e2bb1b355?pvs=21))
+- Perpetual (`x/perpetuals`), governance-updatable through `MsgUpdatePerpetualFeeParams` ([proto definition](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/feetiers/tx.proto#L19))
 - Market (`x/prices`), governance-updatable through `MsgUpdateMarketParam` ([proto](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/prices/market_param.proto#L6-L34))
 - Clob pair (`x/clob`), governance-updatable through `MsgUpdateClobPair` ([proto](https://github.com/dydxprotocol/v4-chain/blob/b2c6062b4e588b98a51454f50da9e8e712cfc2d9/proto/dydxprotocol/clob/tx.proto#L102))
 

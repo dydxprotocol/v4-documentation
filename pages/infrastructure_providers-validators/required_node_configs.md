@@ -25,7 +25,7 @@ timeout_commit = "500ms"
 
 #### Base Configuration
 
-Replace `$NATIVE_TOKEN_DENOM` at the end of the field with the correct value from [Network Constants](../infrastructure_providers-network/network_constants.md#native-token-denom)
+Replace `$NATIVE_TOKEN_DENOM` at the end of the field with the correct value from [Network Constants](../infrastructure_providers-network/network_constants.mdx#native-token-denom)
 
 ```
 ### Gas Prices ###

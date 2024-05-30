@@ -1,0 +1,26 @@
+name: Check Markdown links
+
+on: push
+
+jobs:
+  markdown-link-check-md:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        file-extension: '.md'
+        folder-path: 'pages'
+        base-branch: 'main'
+        use-quiet-mode: 'yes'
+
+  markdown-link-check-mdx:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        file-extension: '.mdx'
+        folder-path: 'pages'
+        base-branch: 'main'
+        use-quiet-mode: 'yes'

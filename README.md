@@ -21,3 +21,11 @@ Start development server on localhost:3000:
 ```bash
 pnpm dev
 ```
+
+## Formatting
+To format .mdx files, you can use the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension in VSCode.
+
+## Github Actions
+Upon push of a commit, the following checks are made:
+* [markdown-link-check](https://github.com/gaurav-nelson/github-action-markdown-link-check) checks that all links work.
+  * If you are configuring a link that is erroring out, considering adding something to the [mlc_config.json](./mlc_config.json) using [these options](https://github.com/tcort/markdown-link-check#config-file-format).
