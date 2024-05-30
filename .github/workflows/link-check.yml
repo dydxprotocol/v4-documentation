@@ -9,7 +9,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
-        file-extension: '.md, .mdx'
+        file-extension: '.md,.mdx'
         folder-path: 'pages'
+        file-path: 'README.md'
         base-branch: 'main'
-        use-verbose-mode: 'yes'
