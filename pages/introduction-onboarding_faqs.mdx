@@ -22,6 +22,7 @@
 <summary>3. What are the benefits of running a full node as a market maker?</summary>
 
 - Running a full node will eliminate the latency between placing an order and when the actual order is gossiped throughout the network. Without your own node, your order will need to first be relayed to the nearest geographic node, which will then propagate it throughout the network for you. With your own node, your order will directly be gossiped.
+- Additionally, running a full node allows you to use [full node streaming](./infrastructure_providers-validators/full_node_streaming.md), a feature that aims to provide real-time, accurate orderbook updates and fills.
 - Instructions on how to set up a full node can be found [here](./infrastructure_providers-validators/how_to_set_up_full_node.md).
 
 </details>
@@ -43,7 +44,15 @@
 ## Trading on an Exchange Run on dYdX Chain
 
 <details>
-<summary>1. What are the different order types in dYdX Chain?</summary>
+<summary>1. How can I understand how finality works on dYdX Chain?</summary>
+
+- When your order fills, a block proposer will propose a block containing the fill (visible to the whole network), and then the block will go through consensus. If the block is valid it will be finalized a couple seconds later (in Cosmos-speak this happens at the “commit” stage of consensus after all validators have voted). At that point, an indexer service will communicate the fill to you.
+- It is recommended to post orders with a “Good-Til-Block” of the current block height, and adjusting prices once per block. If the block is published without a match to your order, you know that it is no longer active and did not fill.
+
+</details>
+
+<details>
+<summary>2. What are the different order types in dYdX Chain?</summary>
 
 - There are two order types: Short-Term orders and stateful orders.
   - Short-Term orders are meant for programmatic, low-latency traders that want to place orders with shorter expirations.
@@ -52,7 +61,7 @@
 </details>
 
 <details>
-<summary>2. How does the orderbook work in dYdX Chain for short-term orders?</summary>
+<summary>3. How does the orderbook work in dYdX Chain for short-term orders?</summary>
 
 - Each validator runs their own in-memory orderbook (also known as mempool), and the set of orders each validator knows about is what order placement transactions are in their mempool.
 - User places a trade on a decentralized front end (e.g., website) or via the typescript or python client that places orders directly to a full node or validator API.
@@ -66,7 +75,7 @@
 </details>
 
 <details>
-<summary>3. Why should market makers only use short-term orders?</summary>
+<summary>4. Why should market makers only use short-term orders?</summary>
 
 - Short-Term orders are placed and can be immediately matched after they’re added to the mempool, while stateful orders can only be placed and matched after they’re added to a block.
   - Short-Term orders should always have superior time priority to stateful orders.
@@ -76,14 +85,6 @@
 - Short-Term orders can be canceled immediately after they’re placed, while stateful orders can only be canceled after they’ve been included in a block.
 - Short-Term orders can be received by validators in any order, while stateful orders have an ordering requirement and will fail to be placed if they’re received out of order.
   - This is because stateful orders use a “sequence number”, which is equivalent to a nonce on Ethereum. Short-Term orders don’t use this.
-
-</details>
-
-<details>
-<summary>4. How can I understand how finality works on dYdX Chain?</summary>
-
-- When your order fills, a block proposer will propose a block containing the fill (visible to the whole network), and then the block will go through consensus. If the block is valid it will be finalized a couple seconds later (in Cosmos-speak this happens at the “commit” stage of consensus after all validators have voted). At that point, an indexer service will communicate the fill to you.
-- It is recommended to post orders with a “Good-Til-Block” of the current block height, and adjusting prices once per block. If the block is published without a match to your order, you know that it is no longer active and did not fill.
 
 </details>
 
@@ -305,7 +306,7 @@
 <details>
 <summary>1. How will dYdX Chain handle MEV?</summary>
 
-- Unlike general-purpose smart contract environments, the Cosmos infrastructure enables unique MEV solutions to be built that align a validator’s incentives with a user’s incentives. dYdX Chain has a framework where MEV is measured via a [dashboard](https://dydx.exchange/blog/distinguishing-mev-from-expected-noise) created by Skip Protocol. The first step would be to punish validators with slashing. Further proposed solutions are still being considered, and will be announced once finalized.
+- Unlike general-purpose smart contract environments, the Cosmos infrastructure enables unique MEV solutions to be built that align a validator’s incentives with a user’s incentives. dYdX Chain has a framework where MEV is measured via a [dashboard](https://dydx.skip.money/) created by Skip Protocol. The first step would be to punish validators with slashing. Further proposed solutions are still being considered, and will be announced once finalized.
 
 </details>
 
@@ -333,7 +334,7 @@
   - Skip Protocol Sidecar: side car that pulls price data from external sources and caches them for the validator to use [link](https://docs.skip.money/slinky/integrations/dydx).
   - Vote Extensions: Every block during the Precommit stage, all validators will submit vote extensions for what they believe the oracle price of all tracked assets should be.
   - Consensus: The block after VE are submitted, Slinky deterministically aggregates all VE from the previous block and proposes a new updated price which is voted into consensus.
-  - Module: updates the state based on the new price, also has logic for validation and etc. [link](https://github.com/dydxprotocol/v4-chain/tree/main/protocol/x/prices).
+  - `x/prices` Module: updates the state based on the new price, also has logic for validation and etc. [link](https://github.com/dydxprotocol/v4-chain/tree/main/protocol/x/prices).
   - Params: determines the external sources and sensitivity [link](https://github.com/dydxprotocol/v4-testnets/blob/aa1c7ac589d6699124942a66c2362acad2e6f50d/dydx-testnet-4/genesis.json#L6106), these are configured per network (testnet genesis example), but should query the network config for these `dydxprotocold query prices list-market-param`.
 
 </details>
