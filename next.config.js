@@ -5,6 +5,17 @@ const withNextra = require('nextra')({
     remarkPlugins: [],
     rehypePlugins: [],
   },
+
+  async redirects() {
+    return [
+      {
+        source: '/rewards',
+        destination: '/concepts-trading',
+        permanent: true, // Set to false for temporary redirects
+      },
+      // Add more redirects here
+    ]
+  },
 })
 
 module.exports = withNextra()
