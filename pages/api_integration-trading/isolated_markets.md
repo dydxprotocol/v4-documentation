@@ -2,7 +2,18 @@
 
 In v5.0.0 the Isolated Markets feature was added to the V4 chain software. The below is an overview of how trading will work on Isolated Markets on the V4 chain software.
 
->Note: This document covers how the feature works from the protocol point of view and not the front-end or the indexer.
+>Note: This document covers how the feature works from the protocol point of view and not the front-end or the indexer. For more details on what isolated markets are see the [blog post](https://dydx.exchange/blog/introducing-isolated-markets-and-isolated-margin).
+
+# Trading Isolated Markets
+
+Positions in isolated markets can only be opened on a subaccount with no open perpetual positions or a subaccount with an existing perpetual position in the same isolated market. Once a perpetual position for an isolated market is opened on a subaccount, no positions in any other markets can be opened until the perpetual position is closed.
+
+The above restriction only applies to positions, orders can still be placed for different markets on a subaccount while it holds an open position for an isolated market. The orders will fail and be canceled when they match if the subaccount still holds an open position for a different isolated market. A new [error code](https://github.com/dydxprotocol/v4-chain/blob/protocol/v5.0.0/protocol/x/clob/types/errors.go#L364-L368) `2005` has been added to indicate such a failure.
+
+Other than the above caveat, isolated markets can be traded in the same way as before v5.0.0. 
+
+>Note: The maximum number of subaccounts per address was increased from 127 to 128000 in v5.0.0 to address the need for a separate subaccount per isolated market.
+
 
 # Querying for Isolated Markets
 
@@ -54,13 +65,3 @@ An example of how each type of market looks when queried using the `/dydxprotoco
   }
 }
 ```
-
-# Trading Isolated Markets
-
-Positions in isolated markets can only be opened on a subaccount with no open perpetual positions or a subaccount with an existing perpetual position in the same isolated market. Once a perpetual position for an isolated market is opened on a subaccount, no positions in any other markets can be opened until the perpetual position is closed.
-
-The above restriction only applies to positions, orders can still be placed for different markets on a subaccount while it holds an open position for an isolated market. The orders will fail and be canceled when they match if the subaccount still holds an open position for a different isolated market. A new [error code](https://github.com/dydxprotocol/v4-chain/blob/protocol/v5.0.0/protocol/x/clob/types/errors.go#L364-L368) `2005` has been added to indicate such a failure.
-
-Other than the above caveat, isolated markets can be traded in the same way as before v5.0.0. 
-
->Note: The maximum number of subaccounts per address was increased from 127 to 128000 in v5.0.0 to address the need for a separate subaccount per isolated market.
