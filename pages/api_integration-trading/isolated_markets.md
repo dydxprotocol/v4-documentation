@@ -11,7 +11,7 @@ There is a new `market_type` parameter in the `PerpetualParams` proto struct tha
 There are 2 possible values for this parameter:
 
 - `PERPETUAL_MARKET_TYPE_CROSS` - markets where subaccounts can have positions cross-margined with other `PERPETUAL_MARKET_TYPE_CROSS` markets, all markets created before the v5.0.0 upgrade are `PERPETUAL_MARKET_TYPE_CROSS` markets
-- `PERPETUAL_MARKET_TYPE_SOLATED` - markets where subaccounts can only have a single position in, no cross-margining is possible
+- `PERPETUAL_MARKET_TYPE_ISOLATED` - markets that can only be margined in isolated, no cross-margining with other markets is possible
 
 An example of how each type of market looks when queried using the `/dydxprotocol/perpetuals/perpetual/:id` REST endpoint.
 
@@ -57,7 +57,7 @@ An example of how each type of market looks when queried using the `/dydxprotoco
 
 # Trading Isolated Markets
 
-Positions in isolated markets can only be opened on a subaccount with no open perpetual positions. Once a perpetual position for an isolated market is opened on a subaccount, no positions in any other markets can be opened until the perpetual position is closed.
+Positions in isolated markets can only be opened on a subaccount with no open perpetual positions or a subaccount with an existing perpetual position in the same isolated market. Once a perpetual position for an isolated market is opened on a subaccount, no positions in any other markets can be opened until the perpetual position is closed.
 
 The above restriction only applies to positions, orders can still be placed for different markets on a subaccount while it holds an open position for an isolated market. The orders will fail and be canceled when they match if the subaccount still holds an open position for a different isolated market. A new [error code](https://github.com/dydxprotocol/v4-chain/blob/protocol/v5.0.0/protocol/x/clob/types/errors.go#L364-L368) `2005` has been added to indicate such a failure.
 
