@@ -13,7 +13,7 @@
 `sudo apt-get update`
 `sudo apt-get upgrade`
 6. Add more swap memory: Instructions here, except use “CONF_SWAPSIZE=4096” (your microSD memory card should be 16GB or more)
-https://web.archive.org/web/20240228194730/https://nebl.io/neblio-university/enabling-increasing-raspberry-pi-swap/
+https://web.archive.org/web/20220326020133/https://nebl.io/neblio-university/enabling-increasing-raspberry-pi-swap/
 7. Reboot with:
 `sudo shutdown -r 0`
 8. For the next part, you will need to know how to use the ‘vi’ text editor.  Take the simple tutorial here:
