@@ -2,10 +2,7 @@
 
 In v5.0.0 the Isolated Markets feature was added to the V4 chain software. The below is an overview of how trading will work on Isolated Markets on the V4 chain software.
 
-<aside>
-Note: This document covers how the feature works from the protocol point of view and not the front-end or the indexer.
-
-</aside>
+>Note: This document covers how the feature works from the protocol point of view and not the front-end or the indexer.
 
 # Querying for Isolated Markets
 
@@ -66,7 +63,4 @@ The above restriction only applies to positions, orders can still be placed for 
 
 Other than the above caveat, isolated markets can be traded in the same way as before v5.0.0. 
 
-<aside>
-Note: The maximum number of subaccounts per address was increased from 127 to 128000 in v5.0.0 to address the need for a separate subaccount per isolated market.
-
-</aside>
+>Note: The maximum number of subaccounts per address was increased from 127 to 128000 in v5.0.0 to address the need for a separate subaccount per isolated market.
