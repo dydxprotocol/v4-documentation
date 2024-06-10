@@ -23,3 +23,5 @@ Support issues with Skip's Sidecar should be directed [here](https://discord.gg/
 For mainnet deployment by dYdX Operation Services, Ltd. run: [`v0.4.6`](https://github.com/skip-mev/slinky/tree/v0.4.6) (`ghcr.io/skip-mev/slinky-sidecar:v0.4.6`)
 
 For testnet run: [`v0.4.6`](https://github.com/skip-mev/slinky/tree/v0.4.6) (`ghcr.io/skip-mev/slinky-sidecar:v0.4.6`)
+
+Instructions on upgrading sidecar can be found [here](./upgrades/upgrading_sidecar.md).
