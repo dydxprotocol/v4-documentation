@@ -1,8 +1,5 @@
 # Order Execution Options
 
-## Fill or Kill Order (FOK)
-A Fill or Kill order is an immediate execution order that will either be fulfilled in its entirety or completely cancelled. Fill or Kill can only be set on non-long term orders ([short-term or stateful](./short_term_vs_stateful.mdx)). Fill or Kill orders cannot be maker orders.
-
 ## Immediate or Cancel Order (IOC)
 An Immediate or Cancel order is an immediate execution order that will be filled against the book. Any remaining size will be cancelled. Immediate or Cancel can only be set on non-long term orders ([short-term or stateful](../api_integration-trading/short_term_vs_stateful.mdx)). Immediate or cancel orders cannot be maker orders.
 
