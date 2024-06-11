@@ -33,9 +33,9 @@ Here is an example response:
 
 ### Active Fields
 
-`max_stateful_orders_per_n_blocks`: How many stateful order attempts (successful and failed) are allowed for an account per N blocks. Note that the rate limits are applied in an AND fashion such that an order placement must pass all rate limit configurations.
+`max_stateful_orders_per_n_blocks`: How many stateful order **place** attempts (successful and failed) are allowed for an account per N blocks. Note that the rate limits are applied in an AND fashion such that an order placement must pass all rate limit configurations.
 
-`max_short_term_orders_and_cancels_per_n_blocks`: How many short term order place and cancel attempts (successful and failed) are allowed for an account per N blocks. Note that the rate limits are applied in an AND fashion such that an order placement must pass all rate limit configurations.
+`max_short_term_orders_and_cancels_per_n_blocks`: How many short term order **place and cancel** attempts (successful and failed) are allowed for an account per N blocks. Note that the rate limits are applied in an AND fashion such that an order placement must pass all rate limit configurations.
 
 ### Deprecated Fields
 
