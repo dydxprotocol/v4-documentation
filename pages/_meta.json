@@ -25,7 +25,7 @@
   "trading": "Trading",
   "deposits_and_withdrawals": "Deposits and Withdrawals",
   "developers": "Developers",
-  "guides": "Guides",
+  "developer_guides": "Guides",
 
   "----------USERS----------": {
     "title": "USERS",
@@ -34,6 +34,7 @@
 
   "rewards": "Rewards",
   "governance": "Governance",
+  "user_guides": "Guides",
   "FAQ": "FAQs",
 
   "----------OTHER----------": {
