@@ -1,49 +1,60 @@
 {
   "----------INTRODUCTION----------": {
-    "title": "INTRODUCTION",
+    "title": "🦔 INTRODUCTION",
     "type": "separator"
   },
 
   "index": "Introduction",
-  "getting_started": "Getting Started",
-  "architecture": "Architecture",
+  "introduction-getting_started": "Getting Started",
+  "introduction-onboarding_faqs": "Onboarding FAQs",
 
   "----------INFRASTRUCTURE PROVIDERS----------": {
-    "title": "INFRASTRUCTURE PROVIDERS",
+    "title": "🏘️ INFRASTRUCTURE PROVIDERS",
     "type": "separator"
   },
 
-  "validators": "Validators & Full-Nodes",
-  "network": "Network Configuration",
-  "operators": "Indexer Operators",
+  "infrastructure_providers-validators": "Validators & Full-Nodes",
+  "infrastructure_providers-network": "Network Configuration",
+  "infrastructure_providers-operators": "Indexer Operators",
 
   "----------API INTEGRATION----------": {
-    "title": "API INTEGRATION",
+    "title": "🔗 API INTEGRATION",
     "type": "separator"
   },
 
-  "trading": "Trading",
-  "deposits_and_withdrawals": "Deposits and Withdrawals",
-  "developers": "Developers",
-  "developer_guides": "Guides",
+  "api_integration-clients": "Client Documentation",
+  "api_integration-indexer": "Indexer Documentation",
+  "api_integration-repositories": "Repositories",
+  "api_integration-trading": "Trading",
+  "api_integration-deposits_and_withdrawals": "Deposits and Withdrawals",
+  "api_integration-constants": "Constants",
+  "api_integration-developer_guides": "Guides",
 
   "----------USERS----------": {
-    "title": "USERS",
+    "title": "👥 USERS",
     "type": "separator"
   },
 
-  "rewards": "Rewards",
-  "governance": "Governance",
-  "user_guides": "Guides",
-  "FAQ": "FAQs",
+  "users-rewards": "Rewards",
+  "users-governance": "Governance",
+  "user-guides": "Guides",
+  "users-faqs": "FAQs",
+
+  "----------CONCEPTS----------": {
+    "title": "🤔 CONCEPTS",
+    "type": "separator"
+  },
+
+  "concepts-architecture": "Architecture",
+  "concepts-trading": "Trading",
 
   "----------OTHER----------": {
-    "title": "OTHER",
+    "title": "💬 OTHER",
     "type": "separator"
   },
 
-  "security": "Security",
-  "terms_of_use_and_privacy_policy": "Terms & Policies",
+  "other-security": "Security",
+  "other-terms_of_use_and_privacy_policy": "Terms & Policies",
 
   "testnet app": {
     "title": "Testnet App ↗",
