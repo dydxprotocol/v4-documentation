@@ -28,7 +28,7 @@
   "api_integration-trading": "Trading",
   "api_integration-deposits_and_withdrawals": "Deposits and Withdrawals",
   "api_integration-constants": "Constants",
-  "api_integration-guides": "Guides",
+  "api_integration-developer_guides": "Guides",
 
   "----------USERS----------": {
     "title": "👥 USERS",
@@ -37,6 +37,7 @@
 
   "users-rewards": "Rewards",
   "users-governance": "Governance",
+  "user-guides": "Guides",
   "users-faqs": "FAQs",
 
   "----------CONCEPTS----------": {
