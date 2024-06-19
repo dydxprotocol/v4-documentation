@@ -1,0 +1,214 @@
+import { Tab, Tabs } from "nextra-theme-docs";
+
+# How to transfer
+
+## Account types
+
+**Main Account**
+* Otherwise known as your wallet/address account.
+* This account holds tokens that are sent to/from the chain, including tokens used for gas and collateral.
+* Gas for transactions is used from the main account.
+* Main accounts cannot trade.
+
+**Subaccount**
+* Subaccounts are used to trade.
+* Each main account can have 128,001 subaccounts.
+* Each subaccount is uniquely identified using as subaccount ID of `(main account address, integer)`
+* Once you deposit funds to a valid subaccount ID, the subaccount will automatically be created.
+* Only the main account can send transactions on behalf of a subaccount.
+* Subaccounts do not require gas (no gas is used for trading).
+* Subaccounts require collateral token (currently USDC) in order to trade.
+
+## Subaccount types
+
+**Cross-margin Subaccount**
+* Cross-margin subaccounts are able to trade positions for all cross markets.
+* Cross-margin subaccounts share a single collateral pool for all positions.
+* Cross-margin subaccounts are not able to trade isolated markets.
+* Frontends (Web, Mobile) will use subaccount number `0` for all cross-margin trading.
+
+**Isolated Subaccount**
+* Isolated subaccounts are able to trade positions for single isolated market at a time.
+* Isolated subaccounts are not able to trade cross markets.
+* Frontends (Web, Mobile) will use subaccount numbers `128 - 128_000` for isolated market trading.
+
+## Transfer from main account to subaccounts
+The `deposit` transaction must be used to perform this transfer.
+
+Parameters ([link](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/sending/transfer.proto#L31))
+
+Example: depositing 100 USDC into subaccount number `0`.
+
+<Tabs items={["TypeScript", "Python"]}>
+<Tab>
+```typescript copy
+import { FaucetClient } from "@dydxprotocol/v4-client-js";
+
+const NETWORK = <insert_network_here>;
+const USDC_AMOUNT = 100;
+const USDC_ASSET_ID = 0;
+const SUBACCOUNT_NUMBER = 0;
+
+const wallet = await LocalWallet.fromMnemonic(DYDX_MNEMONIC, BECH32_PREFIX);
+const client = await ValidatorClient.connect(NETWORK);
+
+const subaccount = new SubaccountInfo(wallet, SUBACCOUNT_NUMBER);
+
+const quantums = new Long(USDC_AMOUNT * 1_000_000);
+const tx = await client.post.deposit(subaccount, USDC_ASSET_ID, quantums);
+```
+</Tab>
+<Tab>
+```python copy
+from v4_client_py import Subaccount
+
+NETWORK = <insert_network_here>
+USDC_AMOUNT = 100
+USDC_ASSET_ID = 0
+SUBACCOUNT_NUMBER = 0
+
+wallet = LocalWallet.from_mnemonic(DYDX_MNEMONIC, BECH32_PREFIX)
+client = ValidatorClient.connect(NETWORK)
+
+subaccount = Subaccount(wallet, SUBACCOUNT_NUMBER)
+
+quantums = USDC_AMOUNT * 1_000_000
+tx = client.post.transfer(
+    subaccount,
+    wallet.address,
+    SUBACCOUNT_NUMBER,
+    USDC_ASSET_ID,
+    quantums,
+)
+```
+</Tab>
+</Tabs>
+
+## Transfer from subaccount to main account
+The `withdraw` transaction must be used to perform this transfer.
+
+Parameters ([link](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/sending/transfer.proto#L50))
+
+Example: withdrawing 100 USDC from subaccount number `0`.
+
+<Tabs items={["TypeScript", "Python"]}>
+<Tab>
+```typescript copy
+import { FaucetClient } from "@dydxprotocol/v4-client-js";
+
+const NETWORK = <insert_network_here>;
+const USDC_AMOUNT = 100;
+const USDC_ASSET_ID = 0;
+const SUBACCOUNT_NUMBER = 0;
+
+const wallet = await LocalWallet.fromMnemonic(DYDX_MNEMONIC, BECH32_PREFIX);
+const client = await ValidatorClient.connect(NETWORK);
+
+const subaccount = new SubaccountInfo(wallet, SUBACCOUNT_NUMBER);
+
+const quantums = new Long(USDC_AMOUNT * 1_000_000);
+const tx = await client.post.withdraw(subaccount, USDC_ASSET_ID, quantums);
+```
+</Tab>
+<Tab>
+```python copy
+from v4_client_py import Subaccount
+
+NETWORK = <insert_network_here>
+USDC_AMOUNT = 100
+USDC_ASSET_ID = 0
+SUBACCOUNT_NUMBER = 0
+
+wallet = LocalWallet.from_mnemonic(DYDX_MNEMONIC, BECH32_PREFIX)
+client = ValidatorClient.connect(NETWORK)
+
+subaccount = Subaccount(wallet, SUBACCOUNT_NUMBER)
+
+quantums = USDC_AMOUNT * 1_000_000
+tx = client.post.withdraw(
+    subaccount,
+    wallet.address,
+    SUBACCOUNT_NUMBER,
+    USDC_ASSET_ID,
+    quantums,
+)
+```
+</Tab>
+</Tabs>
+
+## Transfer from subaccount to subaccount
+The `transfer` transaction must be used to perform this transfer.
+
+Parameters ([link](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/sending/transfer.proto#L13))
+
+Example: transferring 100 USDC from subaccount number `0` to `100`.
+
+<Tabs items={["TypeScript", "Python"]}>
+<Tab>
+```typescript copy
+import { FaucetClient } from "@dydxprotocol/v4-client-js";
+
+const NETWORK = <insert_network_here>;
+const USDC_AMOUNT = 100;
+const USDC_ASSET_ID = 0;
+const SUBACCOUNT_NUMBER_FROM = 0;
+const SUBACCOUNT_NUMBER_TO = 1;
+
+const wallet = await LocalWallet.fromMnemonic(DYDX_MNEMONIC, BECH32_PREFIX);
+const client = await ValidatorClient.connect(NETWORK);
+
+const subaccount = new SubaccountInfo(wallet, SUBACCOUNT_NUMBER_FROM);
+
+const quantums = new Long(USDC_AMOUNT * 1_000_000);
+const tx = await client.post.transfer(
+  subaccount,
+  wallet.address,
+  SUBACCOUNT_NUMBER_TO,
+  USDC_ASSET_ID,
+  quantums
+);
+```
+</Tab>
+<Tab>
+```python copy
+from v4_client_py import Subaccount
+
+NETWORK = <insert_network_here>
+USDC_AMOUNT = 100
+USDC_ASSET_ID = 0
+SUBACCOUNT_NUMBER_FROM = 0
+SUBACCOUNT_NUMBER_TO = 1
+
+wallet = LocalWallet.from_mnemonic(DYDX_MNEMONIC, BECH32_PREFIX)
+client = ValidatorClient.connect(NETWORK)
+
+subaccount = Subaccount(wallet, SUBACCOUNT_NUMBER_FROM)
+
+quantums = USDC_AMOUNT * 1_000_000
+tx = client.post.transfer(
+    subaccount,
+    wallet.address,
+    SUBACCOUNT_NUMBER_TO,
+    USDC_ASSET_ID,
+    quantums,
+)
+```
+</Tab>
+</Tabs>
+
+## Determining parameters
+
+* Asset
+Asset ID can be fetched using the `/dydxprotocol/assets/asset` endpoint. [Example](https://dydx-api.lavenderfive.com:443/dydxprotocol/assets/asset)
+Collateral token (USDC) will have an asset ID `0`.
+
+* Quantums
+For collateral token, multiply by 10^6. For example, `100 USDC = 100_000_000 quantums`
+  
+## Pulling current balance
+
+**Main Account**
+* Token balances can be fetched via `/cosmos/bank/v1beta1/balances/{address}` endpoint. [Example](https://dydx-rest.publicnode.com:443/cosmos/bank/v1beta1/balances/dydx100l9m6g70j28g2tk3jj4plmge8vsmj6jdrlzhk)
+
+**Subaccounts**
+* Collateral token position/balance can be fetched via `/dydxprotocol/subaccounts/subaccount/{address}/{subaccountNumber}` endpoint. [Example](https://dydx-api.lavenderfive.com:443/dydxprotocol/subaccounts/subaccount/dydx100l9m6g70j28g2tk3jj4plmge8vsmj6jdrlzhk/0)
