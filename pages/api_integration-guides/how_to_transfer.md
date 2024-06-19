@@ -27,19 +27,31 @@
 **Isolated Subaccount**
 * Isolated subaccounts are able to trade positions for single isolated market at a time.
 * Isolated subaccounts are not able to trade cross markets.
-* Frontends (Web, Mobile) will use subaccount numbers `TODO` for isolated market trading.
+* Frontends (Web, Mobile) will use subaccount numbers `(TODOx - TODOy)` for isolated market trading.
 
 ## Transfer from main account to subaccounts
-Use deposit transaction
+The `deposit` transaction must be used to perform this transfer.
+
+Parameters ([link](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/sending/transfer.proto#L31))
 
 ## Transfer from subaccount to main account
-Use withdraw transaction
+The `withdraw` transaction must be used to perform this transfer.
+
+Parameters ([link](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/sending/transfer.proto#L50))
 
 ## Transfer from subaccount to subaccount
-Use transfer transaction
+The `transfer` transaction must be used to perform this transfer.
 
-Note: Transactions (which require gas requires native token) in your main account, which has a separate balance from your subaccount.
+Parameters ([link](https://github.com/dydxprotocol/v4-chain/blob/main/proto/dydxprotocol/sending/transfer.proto#L13))
 
-Things to mention:
-* How to determine quantums
-* How to pull current balance (main account vs subaccount)
+## Determining parameters
+
+* Asset
+Asset ID can be fetched using the `/dydxprotocol/assets/asset` endpoint. [Example](https://dydx-api.lavenderfive.com:443/dydxprotocol/assets/asset)
+
+* Quantums
+For collateral token, multiply by 10^6. For example, `100 USDC = 100_000_000 quantums`
+  
+## Pulling current balance
+
+TODO
