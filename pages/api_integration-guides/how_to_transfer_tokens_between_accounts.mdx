@@ -1,6 +1,6 @@
 import { Tab, Tabs } from "nextra-theme-docs";
 
-# How to transfer
+# How to transfer tokens between accounts
 
 ## Account types
 
@@ -200,7 +200,7 @@ tx = client.post.transfer(
 
 * Asset
 
-Asset ID can be fetched using the `/dydxprotocol/assets/asset` endpoint. [Example](https://dydx-api.lavenderfive.com:443/dydxprotocol/assets/asset)
+Asset ID can be fetched using the `/dydxprotocol/assets/asset` endpoint ([Example](https://dydx-api.lavenderfive.com:443/dydxprotocol/assets/asset)).
 Collateral token (USDC) will have an asset ID `0`.
 
 * Quantums
@@ -210,7 +210,7 @@ For collateral token, multiply by 10^6. For example, `100 USDC = 100_000_000 qua
 ## Pulling current balance
 
 **Main Account**
-* Token balances can be fetched via `/cosmos/bank/v1beta1/balances/{address}` endpoint. [Example](https://dydx-rest.publicnode.com:443/cosmos/bank/v1beta1/balances/dydx100l9m6g70j28g2tk3jj4plmge8vsmj6jdrlzhk)
+* Token balances can be fetched via `/cosmos/bank/v1beta1/balances/{address}` endpoint ([Example](https://dydx-rest.publicnode.com:443/cosmos/bank/v1beta1/balances/dydx100l9m6g70j28g2tk3jj4plmge8vsmj6jdrlzhk)).
 
 **Subaccounts**
 * Collateral token position/balance can be fetched via `/dydxprotocol/subaccounts/subaccount/{address}/{subaccountNumber}` endpoint. [Example](https://dydx-api.lavenderfive.com:443/dydxprotocol/subaccounts/subaccount/dydx100l9m6g70j28g2tk3jj4plmge8vsmj6jdrlzhk/0)

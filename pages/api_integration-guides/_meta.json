@@ -2,5 +2,6 @@
   "how_to_uncross_orderbook": "How to uncross the orderbook",
   "how_to_interpret_block_data_for_trades": "How to interpret block data for trades",
   "setting_up_raspberry_pi_for_api_trading": "Setting up Raspberry Pi for API Trading",
-  "cli_python_script": "CLI Python Script"  
+  "cli_python_script": "CLI Python Script",
+  "how_to_transfer_tokens_between_accounts": "How to transfer tokens between accounts"
 }
