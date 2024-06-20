@@ -14,7 +14,7 @@ Currently, dYdX natively hosts a TypeScript client. 3rd parties were also commis
 | Client Type                                                                     | Built By          |
 | ------------------------------------------------------------------------------- | ----------------- |
 | [TypeScript](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-js) | dYdX Trading Inc. |
-| [Python](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-py)     | Raven DAO         |
+| [Python](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-py-v2)  | Nethermind        |
 | [C++](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-cpp)       | FastForward       |
  
 **Trading via Web**
