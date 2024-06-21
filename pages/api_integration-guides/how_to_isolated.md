@@ -10,9 +10,11 @@ Isolated positions on the dYdX V4 front-end are perpetual positions held in suba
 The dYdX V4 front-end implementation separates subaccounts (0 - 128,000) into 2 separate types:
 
 **Parent subaccounts**
+
 Subaccounts 0 to 127 are parent subaccounts. Parent subaccounts can have multiple positions opened and all positions are cross-margined.
 
 **Child subaccounts**
+
 Subaccounts 128 to 128,000 are child subaccounts. Child subaccounts will only ever have up to 1 position open. Each open isolated position on the front-end is held by a separate child subaccount.
 Once an isolated position is closed in the front-end, the subaccount associated with isolated position can be re-used for the next isolated position.
 Child subaccounts are mapped to parent subaccounts using the formula:
