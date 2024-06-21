@@ -24,7 +24,7 @@ parent_subaccount_number = child_subaccount_number % 128
 
 > Note that currently only parent subaccount 0 is exposed via the front-end and so isolated positions will be held in subaccounts number 128, 256, ...
 
-> Note that the above "types" of subaccounts are not enforced at a protocol level, and only on the front-end. Any subaccount can hold any number of positions in cross-marginable markets which all will cross-margined.
+> Note that the above "types" of subaccounts are not enforced at a protocol level, and only on the front-end. Any subaccount can hold any number of positions in cross-marginable markets which all will cross-margined at the protocol level.
 
 ### Getting data for parent subaccount
 API endpoints exist to get data for a parent subaccount and all it's child subaccounts on the Indexer.
