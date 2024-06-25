@@ -2,19 +2,18 @@
 
 # Full Node GRPC Streaming
 
-Last updated for: `v4.1.4`
+Last updated for: `v5.0.5`
 
 This feature aims to provide real-time, accurate orderbook updates and fills. Complete orderbook activities and fills are streamed to the client and can be used to construct a full depth L3 orderbook. Streams are implemented using the existing GRPC query service from Cosmos SDK. Note that by dYdX V4’s optimistic orderbook design, the orderbook can be slightly different across different nodes.
 
-This implementation maintains a length-configurable buffered queue of streaming updates to ensure slow or unresponsive clients do not induce full node lag during bursts of updates. If the buffer reaches maximum capacity, all connections and updates are dropped, and subscribers will have to re-subscribe. Metrics and logs are emitted on buffer length to help tune this parameter.
-
 ## Enabling GRPC Streaming
-
 
 | CLI Flag | Type | Default | Short Explanation |
 | -------- | ----- | ------- | -------- |
-| grpc-streaming-enabled | bool | false | Toggle on to enable full node streaming. <br>Can only be used when grpc is enabled. |
-| grpc-streaming-buffer-size | int | 1000 | Size of protocol-side updates buffer to <br> maintain before dropping all messages and connections |
+| grpc-streaming-enabled | bool | false | Toggle on to enable full node streaming. Can only be used when grpc is enabled. |
+| grpc-streaming-flush-interval-ms | int | 50 | Buffer flush interval for batch emission of protocol-side updates |
+| grpc-streaming-max-batch-size | int | 2000 | Maximum protocol-side update buffer before dropping all streaming connections|
+| grpc-streaming-max-channel-buffer-size | int | 2000 | Maximum channel size before dropping slow or erroring grpc connections. Decreasing this will more aggressively drop slow client connections. |
 
 **Disclaimer:** We recommend you use this exclusively with your own node, as supporting multiple public GRPC streams with unknown client subscriptions may result in degredated performance.
 
@@ -72,15 +71,8 @@ as well as some debugging metadata about `block_height` and `exec_mode`. It is n
 // StreamOrderbookUpdatesResponse is a response message for the
 // StreamOrderbookUpdates method.
 message StreamOrderbookUpdatesResponse {
-  // Orderbook updates for the clob pair.
+  // Batch of updates for the clob pair.
   repeated StreamUpdate updates = 1 [ (gogoproto.nullable) = false ];
-
-  // ---Additional fields used to debug issues---
-  // Block height of the updates.
-  uint32 block_height = 2;
-
-  // Exec mode of the updates.
-  uint32 exec_mode = 3;
 }
 
 // StreamUpdate is an update that will be pushed through the
@@ -92,6 +84,12 @@ message StreamUpdate {
     StreamOrderbookUpdate orderbook_update = 1;
     StreamOrderbookFill order_fill = 2;
   }
+
+  // Block height of the update.
+  uint32 block_height = 3;
+
+  // Exec mode of the update.
+  uint32 exec_mode = 4;
 }
 
 // StreamOrderbookUpdate provides information on an orderbook update. Used in
@@ -337,10 +335,22 @@ Note that DeliverTx maps to exec mode `execModeFinalize`.
 
 | Metric | Type | Explanation |
 | -------- | ----- | ------- |
-| grpc_streaming_buffer_size | gauge | protocol-side update buffer size |
-| grpc_streaming_num_connections | gauge | number of grpc stream subscriptions |
+| grpc_stream_num_updates_buffered | gauge | number of updates in the full node's buffer cache of updates. Once this hits `grpc-streaming-max-batch-size`, all subscriptions will be dropped. |
+| grpc_stream_subscriber_count | gauge | number of streaming connections currently connected to the full node |
+| grpc_subscription_channel_length.quantile | histogram | histogram of channel size across all subscriptions. Once this hits `grpc-streaming-max-channel-buffer-size`, the offending subscription will be dropped. |
+| grpc_flush_updates_latency.count | count | number of times the buffer cache is flushed. |
+| grpc_flush_updates_latency.quantile | histogram | Latency of each buffer cache flush call into subscription channel. |
+| grpc_send_response_to_subscriber_count | counter | number of messages emitted across all grpc streams. |
 
 All logs from grpc streaming are tagged with `module: grpc-streaming`.
+
+## Protocol-side buffering and Slow GRPC Client Connections
+
+The full node maintains a length-configurable buffer cache of streaming updates to ensure bursts of protocol updates do not induce full node lag. If the buffer reaches maximum capacity, all connections and updates are dropped, and subscribers will have to re-subscribe. The buffer is periodically flushed into each per-subscription golang channel at a configurable set interval of time, defaulting to 50ms.
+
+To ensure slow client connections do not induce full node lag, each client subscription has a unique goroutine and golang channel that pushes updates through the grpc stream. If the channel buffer grows beyond the configurable `grpc-streaming-max-channel-buffer-size` parameter, the goroutine will be stopped. With the poller gone, the channel buffer will eventually grow and hit the max buffer size, at which the lagging subscription is pruned.
+
+Metrics and logs are emitted to help tune both of these parameters.
 
 ## FAQs
 
@@ -384,3 +394,11 @@ Q: I only want to listen to confirmed updates. I do not want to process optimist
 
 Q: Why do I see an Order Update message for a new OrderId before an Order Place message?
 - A: During DeliverTx, the first step we do is to reset fill amounts (via OrderUpdate messages) for all orders involved in the proposed and local operations queue due to the deliver state being reset to the check state from last block. We "reset" fill order amounts to 0 for orders that the block proposer has seen but has not gossiped to our full node yet. In the future, we may reduce the number of messages that are sent, but for now we are optimizing for orderbook correctness.
+
+
+## Changelog
+
+### v5.0.5
+- added update batching and per-channel channel/goroutines to not block full node on laggy subscriptions
+- Protobuf breaking change: Shifted block height and exec mode from `StreamOrderbookUpdatesResponse` to `StreamUpdate`
+- Metrics
