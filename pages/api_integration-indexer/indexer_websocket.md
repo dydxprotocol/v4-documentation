@@ -23,7 +23,7 @@ Upon connecting to v4 Websockets you will receive an initial connection message 
 
 ### Maintaining a Connection
 
-Every 30 seconds, the websocket API will send a ping event to the connected client. If a pong event is not received within 10 seconds back, the websocket API will disconnect.
+Every 30 seconds, the websocket API will send a [heartbeat ping control frame](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#pings_and_pongs_the_heartbeat_of_websockets) to the connected client. If a pong event is not received within 10 seconds back, the websocket API will disconnect.
 
 ### Subscribe
 
