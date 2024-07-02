@@ -27,7 +27,7 @@ The binary contains the software you need to operate a full node. Initializing a
    NODE_NICKNAME=my-dydx-fullnode
    ```
 
-When you initialize your data directory, your full node can write to it.
+After you initialize your data directory, your full node can write to it.
 
 ## Fetch and install the latest `genesis.json` file
 The `genesis.json` file defines an initial state for the dYdX chain.
@@ -46,7 +46,7 @@ The `genesis.json` file defines an initial state for the dYdX chain.
 
 2. Copy `genesis.json` to your data directory’s `/config` folder.
 
-Once you have defined an initial state, you can download the history of the dYdX chain with a snapshot and use it to sync your full node with the network.
+After you have defined an initial state, you can download the history of the dYdX chain with a snapshot and use it to sync your full node with the network.
 
 ## Install Bware’s dYdX snapshot (Recommended)
 Bware’s dYdX snapshot saves you time by syncing your full node to the history of the dYdX chain. This avoids downloading and validating the entire blockchain.
@@ -68,10 +68,10 @@ Bware’s dYdX snapshot saves you time by syncing your full node to the history 
    $SNAPSHOT_FILENAME=dydx2024example
    ```
 
-When you start your full node and provide it the path to your data directory, it will automatically use the snapshot you saved there.
+When you start your full node it will automatically use the snapshot you saved to its data directory.
 
 ## Start your full node
-Configuring and starting your full node for the first time allows it to sync with the dYdX chain network.
+Configuring and starting your full node for the first time allows it to sync with the dYdX chain network. If you saved a dYdX snapshot to your data directory, starting your node will first use that snapshot to quickly recreate most of the chain's history.
 
 1. Configure parameters in your command line. Use the following syntax:
    ```
