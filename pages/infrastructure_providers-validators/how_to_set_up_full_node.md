@@ -81,7 +81,8 @@ When you start your full node it will automatically use the snapshot you saved t
 Configuring and starting your full node for the first time allows it to sync with the dYdX chain network. If you saved a dYdX snapshot to your data directory, starting your node will first use that snapshot to quickly recreate most of the chain's history.
 
 1. Configure parameters in your command line. Use the following syntax:
-   ```
+
+   ```bash
    nohup dydxprotocold start
    --p2p.seed=$SEED_LIST
    --home=$DYDX_HOME
