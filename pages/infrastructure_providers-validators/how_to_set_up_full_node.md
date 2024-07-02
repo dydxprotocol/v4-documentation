@@ -110,13 +110,13 @@ Configuring and starting your full node for the first time allows it to sync wit
    ```
 3. Confirm that your full node has finished syncing by comparing its current block to the dYdX chain.
    
-   The full node is caught up with the dYdX chain head when it reaches the chains current block.
+   The full node is caught up with the dYdX chain head when it reaches the dYdX chain's current block.
 
-   ### Find your full node current block
+   ### Find your full node's current block
    To determine your full node's current block, use a block explorer like this example on [mintscan.io](https://www.mintscan.io/dydx).
 
-   ### Find the dYdX chain current block
-   To determine the dYdX chain current block, use the following program: https://github.com/chiwalfrm/dydxexamples/blob/1d46b7a75499205d9c1c1986ae4ae8f21b6c1385/v4block_subscribe.py
+   ### Find the dYdX chain's current block
+   To determine the dYdX chain's current block, use the following program: https://github.com/chiwalfrm/dydxexamples/blob/1d46b7a75499205d9c1c1986ae4ae8f21b6c1385/v4block_subscribe.py
 
    Run the program with your full node IP address and port `26657`:
    ```bash
