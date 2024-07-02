@@ -1,14 +1,9 @@
 # Set Up a Full Node
 
----
-**NOTE**
-
-Examples on this page are for mainnet deployments by dYdX token holders. For information on alternative deployment types, including testnet deployments in the United States, see the [Network Constants page](../infrastructure_providers-network/network_constants.mdx).
-
----
+> Examples on this page are for mainnet deployments by dYdX token holders. For information on alternative deployment types, including testnet deployments in the United States, see the [Network Constants page](../infrastructure_providers-network/network_constants.mdx).
 
 ## Prerequisites
-- Linux (Ubuntu Server version 22.04.3 or later recommended)
+- Linux (Ubuntu Server 22.04.3 or later recommended)
 - 8-core CPU (ARM or x86_64)
 - 64 GB RAM
 - 500 GB SSD NVME Storage
@@ -18,7 +13,7 @@ The binary contains the software you need to operate a full node. Initializing a
 
 1. Find the latest `Release protocol` from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed source code file appropriate for your system.
    
-   > For example, to use `Release protocol/v5.0.5` on Ubuntu, download `Source code.tar.gz`.
+   For example, to use `Release protocol/v5.0.5` on Ubuntu, download `Source code.tar.gz`.
 
 2. Extract and rename the binary from `Source code` to `dydxprotocold`.  Move the file to a directory in your `$PATH` so that you can initialize it with your command line.
 
@@ -112,10 +107,8 @@ Configuring and starting your full node for the first time allows it to sync wit
    
    The full node is caught up with the dYdX chain head when it reaches the dYdX chain's current block.
 
-   ### Find your full node's current block
    To determine your full node's current block, use a block explorer like this example on [mintscan.io](https://www.mintscan.io/dydx).
 
-   ### Find the dYdX chain's current block
    To determine the dYdX chain's current block, use the following program: https://github.com/chiwalfrm/dydxexamples/blob/1d46b7a75499205d9c1c1986ae4ae8f21b6c1385/v4block_subscribe.py
 
    Run the program with your full node IP address and port `26657`:
@@ -127,4 +120,4 @@ Configuring and starting your full node for the first time allows it to sync wit
    ```
 
 When you have confirmed that your full node is up to date with the rest of the dYdX 
-network, configure advanced settings and learn about best practices on the [Running a Full Node](../infrastructure_providers-validators/running_full_node) page.
+network, you can configure advanced settings and learn about best practices on the [Running a Full Node](../infrastructure_providers-validators/running_full_node) page.
