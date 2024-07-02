@@ -53,7 +53,7 @@ The `genesis.json` file defines an initial state for the dYdX chain.
 
 2. Copy `genesis.json` to your data directory’s `/config` subfolder.
 
-After you have saved the initial state definition to your `/config` folder, you can download the history to date of the dYdX chain with a snapshot and use it to bring your full node up to speed with most of the chain's history.
+After you save the initial state definition to your `/config` folder, you can download the history to date of the dYdX chain with a snapshot and use it to bring your full node up to speed with most of the chain's history.
 
 ## Install Bware’s dYdX snapshot (Recommended)
 Bware’s dYdX snapshot saves you time by syncing your full node to the history of the dYdX chain. This avoids downloading and validating the entire blockchain.
