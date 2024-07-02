@@ -17,13 +17,20 @@ The binary contains the software you need to operate a full node. Initializing a
 
 2. Extract and rename the binary from `Source code` to `dydxprotocold`.  Move the file to a directory in your `$PATH` so that you can initialize it with your command line.
 
-3. Create and initialize your data directory by running the following command:
+3. If you don't already have one, create a data directory for your deployment. 
+
+   For example: 
+   ```bash
+   mkdir /home/vmware/.dydx-mainnet-1
+   ```
+
+4. Initialize your data directory by running the following command:
    ```bash
    dydxprotocold init --chain-id=$CHAIN_ID --home=$DYDX_HOME $NODE_NICKNAME
    
    # Example values
    CHAIN_ID=my-dydx-deployment
-   DYDX_HOME=/path/to/data/directory
+   DYDX_HOME=/path/to/your/data/directory
    NODE_NICKNAME=my-dydx-fullnode
    ```
 
@@ -44,9 +51,9 @@ The `genesis.json` file defines an initial state for the dYdX chain.
    - https://dydx-mainnet-full-rpc.public.blastapi.io/genesis
    - Also check [Full node endpoints → RPC](../infrastructure_providers-network/resources.mdx#full-node-endpoints)
 
-2. Copy `genesis.json` to your data directory’s `/config` folder.
+2. Copy `genesis.json` to your data directory’s `/config` subfolder.
 
-After you have defined an initial state, you can download the history of the dYdX chain with a snapshot and use it to sync your full node with the network.
+After you have saved the initial state definition to your `/config` folder, you can download the history to date of the dYdX chain with a snapshot and use it to bring your full node up to speed with most of the chain's history.
 
 ## Install Bware’s dYdX snapshot (Recommended)
 Bware’s dYdX snapshot saves you time by syncing your full node to the history of the dYdX chain. This avoids downloading and validating the entire blockchain.
