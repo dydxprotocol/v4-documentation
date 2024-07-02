@@ -1,22 +1,20 @@
 # Set Up a Full Node
 
-Setting up a Full Node... TODO
-
 ---
 **NOTE**
 
-Examples on this page are for mainnet deployments by dYdX token holders. For alternative deployment types, including testnet deployments in the United States, see the [Network Constants page](../infrastructure_providers-network/network_constants.mdx).
+Examples on this page are for mainnet deployments by dYdX token holders. For information on alternative deployment types, including testnet deployments in the United States, see the [Network Constants page](../infrastructure_providers-network/network_constants.mdx).
 
 ---
 
 ## Prerequisites
-- Linux (Ubuntu Server version 22.04.3 or later)
+- Linux (Ubuntu Server version 22.04.3 or later recommended)
 - 8-core CPU (ARM or x86_64)
 - 64 GB RAM
 - 500 GB SSD NVME Storage
 
 ## Download the `dydxprotocold` binary and initialize the data directory
-TODO
+The binary contains the software you need to operate a full node. Initializing a data directory dedicates a folder on your system to recordkeeping, such as logging.
 
 1. Find the latest `Release protocol` from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed source code file appropriate for your system.
    
@@ -34,8 +32,10 @@ TODO
    NODE_NICKNAME=my-dydx-fullnode
    ```
 
+When you initialize your data directory, your full node can write to it.
+
 ## Fetch and install the latest `genesis.json` file
-TODO
+The `genesis.json` file defines an initial state for the dYdX chain.
 
 1. Fetch the genesis state of the network and save it as a `.json` file. 
    
@@ -51,25 +51,32 @@ TODO
 
 2. Copy `genesis.json` to your data directory’s `/config` folder.
 
-## Install Bware’s Snapshot (Recommended)
-TODO Beware’s snapshot <is this> and <saves days of your time because…>. 
+Once you have defined an initial state, you can download the history of the dYdX chain with a snapshot and use it to sync your full node with the network.
+
+## Install Bware’s dYdX snapshot (Recommended)
+Bware’s dYdX snapshot saves you time by syncing your full node to the history of the dYdX chain. This avoids downloading and validating the entire blockchain.
 
 1. Download the snapshot contents from https://bwarelabs.com/snapshots/dydx. 
 
    If you can’t download the snapshot contents from Bware, you can download the snapshot contents from the following alternative sources:
    - https://polkachu.com/tendermint_snapshots/dydx
    - https://dydx-archive-snapshot.kingnodes.com
-   - Also check 
+   - Also check [Snapshot service](/infrastructure_providers-network/resources#snapshot-service)
 
 2. Extract the snapshot to your data directory.
 
-   Use the command line to navigate to your data directory and run the following command using your own snapshot filename:
+   In your data directory, run the following command using your own snapshot filename:
    ```bash
-   lz4 -dc < your-snapshot-filename.tar.lz4 | tar xf -
+   lz4 -dc < $SNAPSHOT_FILENAME.tar.lz4 | tar xf -
+
+   # Example value
+   $SNAPSHOT_FILENAME=dydx2024example
    ```
 
-## Start the full node
-TODO
+When you start your full node and provide it the path to your data directory, it will automatically use the snapshot you saved there.
+
+## Start your full node
+Configuring and starting your full node for the first time allows it to sync with the dYdX chain network.
 
 1. Configure parameters in your command line. Use the following syntax:
    ```
@@ -101,21 +108,23 @@ TODO
    ```bash
    tail -f /tmp/fullnode.log
    ```
-3. Confirm that your full node has finished syncing.
+3. Confirm that your full node has finished syncing by comparing its current block to the dYdX chain.
    
-   The full node is caught up with the dYdX chain head when it reaches the current block. 
-   
-   To get the dYdX chain current block, use this program: https://github.com/chiwalfrm/dydxexamples/blob/1d46b7a75499205d9c1c1986ae4ae8f21b6c1385/v4block_subscribe.py
+   The full node is caught up with the dYdX chain head when it reaches the chains current block.
 
-   Run it with the full node IP address and port `26657`:
-```bash
-python3 v4block_subscribe.py ws://<IPADDRESS>:26657
-```
-Where `<IPADDRESS>` is the IP address of your full node.
-![Full node usage example](../../artifacts/how_to_set_up_full_node_usage_example.png)
-
+   ### Find your full node current block
    To determine your full node's current block, use a block explorer like this example on [mintscan.io](https://www.mintscan.io/dydx).
 
-## Next Steps
+   ### Find the dYdX chain current block
+   To determine the dYdX chain current block, use the following program: https://github.com/chiwalfrm/dydxexamples/blob/1d46b7a75499205d9c1c1986ae4ae8f21b6c1385/v4block_subscribe.py
 
-Do something with your full node
+   Run the program with your full node IP address and port `26657`:
+   ```bash
+   python3 v4block_subscribe.py ws://$FULL_NODE_IP_ADDRESS:26657
+
+   # Example values
+   FULL_NODE_IP_ADDRESS=192.168.0.150
+   ```
+
+When you have confirmed that your full node is up to date with the rest of the dYdX 
+network, configure advanced settings and learn about best practices on the [Running a Full Node](../infrastructure_providers-validators/running_full_node) page.
