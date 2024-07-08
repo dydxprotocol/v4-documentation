@@ -10,29 +10,30 @@ To run a full node, the system that hosts the node must meet the following minim
 - 64 GB RAM
 - 500 GB SSD NVMe Storage
 
-## Download the current `dydxprotocold` binary for the dYdX chain network and initialize a directory to store node data and configuration settings
-The binary contains the software you need to operate a full node. You must use the version that the dYdX chain network uses. Typically this is the latest version of the protocol, 
+## Install `dydxprotocold`
 
-Initializing the node data/config dedicates a folder on your system for node's state, data, and configurations.
+The `dydxprotocold` binary contains the software you need to operate a full node. You must use the same version of the software as the network to which you want to connect.
 
-### 1. Find the latest `Release protocol` from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed `dydxprotocold` file appropriate for your system.
+1. Find the current version of the dYdX network.
+
+2. Find the matching `Release protocol` version from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed `dydxprotocold` file for your system.
    
-   For example, for protocol version 5.0.5 on an AMD system, download `dydxprotocold-v5.0.5-linux-amd64.tar.gz`.
+   > For example, for protocol version 5.0.5 on an AMD system, download `dydxprotocold-v5.0.5-linux-amd64.tar.gz`.
 
-   Alternatively, you can install the latest `Release protocol` by using [this curl command](https://gist.github.com/steinwaywhw/a4cd19cda655b8249d908261a62687f8).
+   Alternatively, you can install the latest release protocol by modifying [this curl command](https://gist.github.com/steinwaywhw/a4cd19cda655b8249d908261a62687f8) for your case.
 
-### 2. Extract the binary. To run the binary from the command line with the command `dydxprotocold`, either:
-   - Rename the file, or
-   - Create a symbolic link to the file.
+3. Extract the binary.
 
-   To rename the file, edit the filename from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`. 
+   Extract the `.tar.gz` file that you downloaded. To run `dydxprotocold` from the command line, either rename the extracted file or create a symbolic link to the file:
 
-   To create a symbolic link to the file using the name `dydxprotocold`, run the following command:
-   ```bash
-   ln -s /path/to/binary dydxprotocold
-   ```
+   **Option 1:** Rename the file. Edit the filename from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`. You might need to add your current directory to your $PATH or move the file to a directory in your $PATH.
 
-3. Initialize your data directory.
+   **Option 2:** Create a symbolic link to the file using the name `dydxprotocold`. Run the following command:
+  ```bash
+  ln -s /path/to/your/binary dydxprotocold
+  ```
+
+4. Initialize your data directory.
 
    First, make sure that your data directory is empty. In the example below, `DYDX_HOME` contains the path to the directory that must be empty.
 
@@ -43,13 +44,13 @@ Initializing the node data/config dedicates a folder on your system for node's s
    CHAIN_ID=my-dydx-deployment
    DYDX_HOME=/path/to/your/data/directory
    NODE_MONIKER=my-dydx-fullnode
-
+   
    dydxprotocold init --chain-id=$CHAIN_ID --home=$DYDX_HOME $NODE_MONIKER
    ```
 
 After you initialize your data directory, your full node can write to it.
 
-## Install a Snapshot of the dYdX chain
+## Install a snapshot of the dYdX chain's history
 Installing a snapshot saves time by syncing your full node to the history of the dYdX chain. This avoids downloading and validating the entire blockchain.
 
 1. Download the latest snapshot contents from https://bwarelabs.com/snapshots/dydx. 
