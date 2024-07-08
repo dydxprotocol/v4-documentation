@@ -9,7 +9,7 @@
 - 500 GB SSD NVME Storage
 
 ## Download the latest `dydxprotocold` binary and initialize the node data/config directory
-The binary contains the software you need to operate a full node. Initializing a data directory dedicates a folder on your system to recordkeeping, such as logging.
+The binary contains the software you need to operate a full node. Initializing the node data/config dedicates a folder on your system for node's state, data and configurations.
 
 1. Find the latest `Release protocol` from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed source code file appropriate for your system.
    
