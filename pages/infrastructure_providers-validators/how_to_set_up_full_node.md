@@ -10,36 +10,38 @@ To run a full node, the system that hosts the node must meet the following minim
 - 64 GB RAM
 - 500 GB SSD NVMe Storage
 
-## Download the latest `dydxprotocold` binary and initialize the node data/config directory
-The binary contains the software you need to operate a full node. Initializing the node data/config dedicates a folder on your system for node's state, data, and configurations.
+## Download the current `dydxprotocold` binary for the dYdX chain network and initialize a directory to store node data and configuration settings
+The binary contains the software you need to operate a full node. You must use the version that the dYdX chain network uses. Typically this is the latest version of the protocol, 
 
-1. Find the latest `Release protocol` from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed `dydxprotocold` file appropriate for your system.
+Initializing the node data/config dedicates a folder on your system for node's state, data, and configurations.
+
+### 1. Find the latest `Release protocol` from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed `dydxprotocold` file appropriate for your system.
    
    For example, for protocol version 5.0.5 on an AMD system, download `dydxprotocold-v5.0.5-linux-amd64.tar.gz`.
 
    Alternatively, you can install the latest `Release protocol` by using [this curl command](https://gist.github.com/steinwaywhw/a4cd19cda655b8249d908261a62687f8).
 
-2. Extract the binary. To run the binary from the command line with the command `dydxprotocold`, either:
+### 2. Extract the binary. To run the binary from the command line with the command `dydxprotocold`, either:
    - Rename the file, or
    - Create a symbolic link to the file.
 
-  To rename the file, edit the filename from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`. 
+   To rename the file, edit the filename from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`. 
 
-  To create a symbolic link to the file using the name `dydxprotocold`, run the following command:
-  ```bash
-  ln -s /path/to/binary dydxprotocold
-  ```
+   To create a symbolic link to the file using the name `dydxprotocold`, run the following command:
+   ```bash
+   ln -s /path/to/binary dydxprotocold
+   ```
 
 3. Initialize your data directory.
 
-  First, make sure that your data directory is empty. In the example below, `DYDX_HOME` contains the path to the directory that must be empty.
+   First, make sure that your data directory is empty. In the example below, `DYDX_HOME` contains the path to the directory that must be empty.
 
-  Then, run the `dydxprotocold init` command, supplying a chain ID, a path to a data directory, and a moniker for your node:
+   Then, run the `dydxprotocold init` command, supplying a chain ID, a path to a data directory, and a moniker for your node:
 
    ```bash
    # Example values
    CHAIN_ID=my-dydx-deployment
-   DYDX_HOME=/path/to/your/data/directory # This can be the same as your $PATH
+   DYDX_HOME=/path/to/your/data/directory
    NODE_MONIKER=my-dydx-fullnode
 
    dydxprotocold init --chain-id=$CHAIN_ID --home=$DYDX_HOME $NODE_MONIKER
@@ -67,7 +69,7 @@ Installing a snapshot saves time by syncing your full node to the history of the
    lz4 -dc < $SNAPSHOT_FILENAME.tar.lz4 | tar xf -
    ```
 
-When you start your full node it will automatically use the snapshot you saved to its data directory.
+When you start your full node, it will automatically use the snapshot you saved to its data directory.
 
 ## Start your full node
 Configuring and starting your full node for the first time allows it to sync with the dYdX chain network. If you saved a dYdX snapshot to your data directory, starting your node will first use that snapshot to quickly recreate most of the chain's history.
