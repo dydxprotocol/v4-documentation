@@ -65,7 +65,7 @@ Installing a snapshot saves time by syncing your full node to the history of the
    In your data directory, run the following command using your own snapshot filename:
    ```bash
    # Example value
-   $SNAPSHOT_FILENAME=dydx2024example
+   SNAPSHOT_FILENAME=dydx2024example
 
    lz4 -dc < $SNAPSHOT_FILENAME.tar.lz4 | tar xf -
    ```
