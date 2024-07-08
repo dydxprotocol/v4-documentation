@@ -1,70 +1,124 @@
-# How to set up a full node
+# Set Up a Full Node
 
-## Pre-requisite
-1. Linux (Ubuntu Server 22.04.3 recommended)
-2. 8-cpu (ARM or x86_64), 64 GB RAM, 500 GB SSD NVME Storage
+> Examples on this page are for mainnet deployments by dYdX token holders. For information on alternative deployment types, including testnet deployments in the United States, see the [Network Constants page](../infrastructure_providers-network/network_constants.mdx).
 
-## Get the dydxprotocold binary and initialize the data directory
-> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Constants page](../infrastructure_providers-network/network_constants.mdx).
+## System requirements
+To run a full node, the system that hosts the node must meet the following minimum requirements:
 
-1. From https://github.com/dydxprotocol/v4-chain/releases/ | Look for the `protocol` assets.
-2. For example, as of `10/19/2023`, this was the correct binary to use:
-![dYdX Protocol Binary](../../artifacts/how_to_set_up_full_node_binary_download.png)
-3. Download, extract, and rename the binary to `dydxprotocold`.  Move it to a directory in your `$PATH`.  Now, initialize the data directory (create the directory first if it doesn’t exist).
-```bash
-CHAIN_ID=dydx-mainnet-1
-DYDX_HOME=/home/vmware/.dydx-mainnet-1
-NODE_NICKNAME=mydydxfullnode
+- Linux (Ubuntu Server 22.04.3 or later recommended)
+- 8-core CPU (ARM or x86_64 architecture)
+- 64 GB RAM
+- 500 GB SSD NVMe Storage
 
-dydxprotocold init --chain-id=$CHAIN_ID --home=$DYDX_HOME $NODE_NICKNAME
-```
+## Install `dydxprotocold`
 
-## Get the latest applicable genesis.json file and install
-> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Resources page](../infrastructure_providers-network/resources.mdx).
+The `dydxprotocold` binary contains the software you need to operate a full node. You must use the same version of the software as the network to which you want to connect.
 
-1. Use 
-```bash
-curl https://dydx-ops-rpc.kingnodes.com/genesis | python3 -c 'import json,sys;print(json.dumps(json.load(sys.stdin)["result"]["genesis"], indent=2))' > genesis.json 
-```
-to get the applicable Genesis state of the network.
+1. Find the current version of the dYdX network.
 
-2. Copy the applicable `genesis.json` file to the data directory’s `config/` directory
-3. (Alternatives): If the RPC endpoint above does not work, there are these alternatives:
- - https://dydx-dao-rpc.polkachu.com/genesis
- - https://dydx-mainnet-full-rpc.public.blastapi.io/genesis
- - Also check [Full node endpoints → RPC](../infrastructure_providers-network/resources.mdx#full-node-endpoints)
+2. Find the matching `Release protocol` version from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed `dydxprotocold` file for your system.
+   
+   > For example, for protocol version 5.0.5 on an AMD system, download `dydxprotocold-v5.0.5-linux-amd64.tar.gz`.
 
-## Install Bware’s snapshot (optional but saves days)
-> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Resources page](../infrastructure_providers-network/resources.mdx).
+   Alternatively, you can install the latest release protocol by modifying [this curl command](https://gist.github.com/steinwaywhw/a4cd19cda655b8249d908261a62687f8) for your case.
 
-1. From https://bwarelabs.com/snapshots/dydx
-2. Download and extract (using `lz4 -dc < snapshotfile.tar.lz4 | tar xf -`) the snapshot contents in the data directory (make sure you are in the data directory before running the tar command).  Important: The home directory (`$DYDX_HOME` or `/home/vmware/.dydx-mainnet-1` in our example) contains another `data/` directory.
-3. (Alternatives): If the above is not available, there are these alternatives:
- - https://polkachu.com/tendermint_snapshots/dydx
- - https://dydx-archive-snapshot.kingnodes.com/
- - Also check [Snapshot service](../infrastructure_providers-network/resources.mdx#snapshot-service)
+3. Extract the binary.
 
-## Start the full node
-> **Note:** the example values below align with the **deployment by DYDX token holders**. For alternatives, please visit the [Network Resources page](../infrastructure_providers-network/resources.mdx).
+   Extract the `.tar.gz` file that you downloaded. To run `dydxprotocold` from the command line, either rename the extracted file or create a symbolic link to the file:
 
-1. Start the full node. Note that you may need to change the `--p2p.seeds` parameter depending on the applicable v4 software blockchain network – you can find an example on [Resources page under “Seed nodes”](../infrastructure_providers-network/resources.mdx#seed-nodes)
-```bash
-DYDX_HOME=/home/vmware/.dydx-mainnet-1
+   **Option 1:** Rename the file. Edit the filename from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`. You might need to add your current directory to your $PATH or move the file to a directory in your $PATH.
 
-nohup dydxprotocold start --p2p.seeds="ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856,65b740ee326c9260c30af1f044e9cda63c73f7c1@seeds.kingnodes.net:23856,f04a77b92d0d86725cdb2d6b7a7eb0eda8c27089@dydx-mainnet-seed.bwarelabs.com:36656,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856,c2c2fcb5e6e4755e06b83b499aff93e97282f8e8@tenderseed.ccvalidators.com:26401,4f20c3e303c9515051b6276aeb89c0b88ee79f8f@seed.dydx.cros-nest.com:26656,a9cae4047d5c34772442322b10ef5600d8e54900@dydx-mainnet-seednode.allthatnode.com:26656,802607c6db8148b0c68c8a9ec1a86fd3ba606af6@64.227.38.88:26656,4c30c8a95e26b07b249813b677caab28bf0c54eb@rpc.dydx.nodestake.top:666,ebc272824924ea1a27ea3183dd0b9ba713494f83@dydx-mainnet-seed.autostake.com:27366" --home=$DYDX_HOME --non-validating-full-node=true > /tmp/fullnode.log 2>&1 &
-```
-2. You can tail the log to see the progress.
-```bash
-tail -f /tmp/fullnode.log
-```
-3. The full node is now syncing. To determine whether the full node is caught up with the chain head, please check the applicable block explorer to determine when it reaches the current block – an example block explorer is shown on https://www.mintscan.io/dydx
+   **Option 2:** Create a symbolic link to the file using the name `dydxprotocold`. Run the following command:
+   ```bash
+   ln -s /path/to/your/binary dydxprotocold
+   ```
 
-## Things you can do with the full node
-GET CURRENT BLOCK: You can get the current block with this program https://github.com/chiwalfrm/dydxexamples/blob/1d46b7a75499205d9c1c1986ae4ae8f21b6c1385/v4block_subscribe.py
+4. Initialize your data directory.
 
-Run it with the full node IP address and port `26657`:
-```bash
-python3 v4block_subscribe.py ws://<IPADDRESS>:26657
-```
-Where `<IPADDRESS>` is the IP address of your full node.
-![Full node usage example](../../artifacts/how_to_set_up_full_node_usage_example.png)
+   First, make sure that your data directory is empty. In the example below, `DYDX_HOME` contains the path to the directory that must be empty.
+
+   Then, run the `dydxprotocold init` command, supplying a chain ID, a path to a data directory, and a moniker for your node:
+
+   ```bash
+   # Example values
+   CHAIN_ID=my-dydx-deployment
+   DYDX_HOME=/path/to/your/data/directory
+   NODE_MONIKER=my-dydx-fullnode
+   
+   dydxprotocold init --chain-id=$CHAIN_ID --home=$DYDX_HOME $NODE_MONIKER
+   ```
+
+After you initialize your data directory, your full node can write to it.
+
+## Install a snapshot of the dYdX chain's history
+Installing a snapshot saves time by syncing your full node to the history of the dYdX chain. This avoids downloading and validating the entire blockchain.
+
+1. Download the latest snapshot contents from https://bwarelabs.com/snapshots/dydx. 
+
+   If you can’t download the snapshot contents from Bware, you can download the snapshot contents from the following alternative sources:
+   - https://polkachu.com/tendermint_snapshots/dydx
+   - https://dydx-archive-snapshot.kingnodes.com
+   - Also check [Snapshot service](/infrastructure_providers-network/resources#snapshot-service)
+
+2. Extract the snapshot to your data directory.
+
+   In your data directory, run the following command using your own snapshot filename:
+   ```bash
+   # Example value
+   SNAPSHOT_FILENAME=dydx2024example
+
+   lz4 -dc < $SNAPSHOT_FILENAME.tar.lz4 | tar xf -
+   ```
+
+When you start your full node, it will automatically use the snapshot you saved to its data directory.
+
+## Start your full node
+
+Configuring and starting your full node for the first time allows it to sync with the dYdX chain network. If you saved a dYdX snapshot to your data directory, starting your node will first use that snapshot to quickly recreate most of the chain's history.
+
+1. Configure parameters in your command line. Use the following syntax:
+
+   ```bash
+   # Example values
+   SEED_LIST="123@seeds.polkachu.com:123,123@seeds.kingnodes.net:123"
+   DYDX_HOME=/path/to/your/data/directory
+
+   dydxprotocold start
+   --p2p.seed=$SEED_LIST
+   --home=$DYDX_HOME
+   --non-validating-full-node=true
+   ```
+
+   Using the `--p2p.seeds` command line flag, provide a comma-separated list of node URIs in the blockchain network that you are connecting to. For a list of node URIs, see the Resources page section for [Seed Nodes](../infrastructure_providers-network/resources.mdx#seed-nodes).
+   
+   Using the `--home` command line flag, provide the path to your data directory.
+
+   Once you have entered your parameters, your command should resemble the following:
+   ```bash
+   dydxprotocold start --p2p.seeds="ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856,65b740ee326c9260c30af1f044e9cda63c73f7c1@seeds.kingnodes.net:23856,f04a77b92d0d86725cdb2d6b7a7eb0eda8c27089@dydx-mainnet-seed.bwarelabs.com:36656,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856,c2c2fcb5e6e4755e06b83b499aff93e97282f8e8@tenderseed.ccvalidators.com:26401,4f20c3e303c9515051b6276aeb89c0b88ee79f8f@seed.dydx.cros-nest.com:26656,a9cae4047d5c34772442322b10ef5600d8e54900@dydx-mainnet-seednode.allthatnode.com:26656,802607c6db8148b0c68c8a9ec1a86fd3ba606af6@64.227.38.88:26656,4c30c8a95e26b07b249813b677caab28bf0c54eb@rpc.dydx.nodestake.top:666,ebc272824924ea1a27ea3183dd0b9ba713494f83@dydx-mainnet-seed.autostake.com:27366" --home=$DYDX_HOME --non-validating-full-node=true > /tmp/fullnode.log 2>&1 &
+   ```
+   
+   Run your command to start the full node.
+
+2. Monitor your full node's progress by tailing the log (optional).
+   
+   To tail the log, run the following command: 
+   ```bash
+   tail -f /tmp/fullnode.log
+   ```
+3. Confirm that your full node has finished syncing by comparing its current block to the dYdX chain. The full node is caught up with the dYdX chain head when it reaches the dYdX chain's current block.
+
+   To determine your full node's current block, use a block explorer like this example on [mintscan.io](https://www.mintscan.io/dydx).
+
+   To determine the dYdX chain's current block, use the program [v4block_subscribe.py](https://github.com/chiwalfrm/dydxexamples/blob/1d46b7a75499205d9c1c1986ae4ae8f21b6c1385/v4block_subscribe.py).
+
+   Run the program with your full node IP address and port `26657`:
+   ```bash
+   # Example values
+   FULL_NODE_IP_ADDRESS=192.168.0.150
+
+   python3 v4block_subscribe.py ws://$FULL_NODE_IP_ADDRESS:26657
+   ```
+
+When you have confirmed that your full node is up to date with the rest of the dYdX 
+network, you can configure advanced settings and learn about best practices on the [Running a Full Node](../infrastructure_providers-validators/running_full_node) page.
