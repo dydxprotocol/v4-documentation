@@ -11,7 +11,7 @@ To run a full node, the system that hosts the node must meet the following minim
 - 500 GB SSD NVME Storage
 
 ## Download the latest `dydxprotocold` binary and initialize the node data/config directory
-The binary contains the software you need to operate a full node. Initializing the node data/config dedicates a folder on your system for node's state, data and configurations.
+The binary contains the software you need to operate a full node. Initializing the node data/config dedicates a folder on your system for node's state, data, and configurations.
 
 1. Find the latest `Release protocol` from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed `dydxprotocold` file appropriate for your system.
    
@@ -28,12 +28,12 @@ The binary contains the software you need to operate a full node. Initializing t
 
 4. Initialize your data directory by running the following command:
    ```bash
-   dydxprotocold init --chain-id=$CHAIN_ID --home=$DYDX_HOME $NODE_NICKNAME
-   
    # Example values
    CHAIN_ID=my-dydx-deployment
    DYDX_HOME=/path/to/your/data/directory
    NODE_MONIKER=my-dydx-fullnode
+
+   dydxprotocold init --chain-id=$CHAIN_ID --home=$DYDX_HOME $NODE_NICKNAME
    ```
 
 After you initialize your data directory, your full node can write to it.
@@ -71,10 +71,10 @@ Bware’s dYdX snapshot saves you time by syncing your full node to the history 
 
    In your data directory, run the following command using your own snapshot filename:
    ```bash
-   lz4 -dc < $SNAPSHOT_FILENAME.tar.lz4 | tar xf -
-
    # Example value
    $SNAPSHOT_FILENAME=dydx2024example
+
+   lz4 -dc < $SNAPSHOT_FILENAME.tar.lz4 | tar xf -
    ```
 
 When you start your full node it will automatically use the snapshot you saved to its data directory.
@@ -85,15 +85,15 @@ Configuring and starting your full node for the first time allows it to sync wit
 1. Configure parameters in your command line. Use the following syntax:
 
    ```bash
-   nohup dydxprotocold start
+   # Example values
+   SEED_LIST="123@seeds.polkachu.com:123,123@seeds.kingnodes.net:123"
+   DYDX_HOME=/path/to/your/data/directory
+
+   dydxprotocold start
    --p2p.seed=$SEED_LIST
    --home=$DYDX_HOME
    --non-validating-full-node=true
    > /tmp/fullnode.log 2>&1 &
-   
-   # Example values
-   SEED_LIST="123@seeds.polkachu.com:123,123@seeds.kingnodes.net:123"
-   DYDX_HOME=/path/to/your/data/directory
    ```
 
    Using the `--p2p.seeds` command line flag, provide a comma-separated list of node URIs in the blockchain network that you are connecting to. For a list of node URIs, see the Resources page section for [Seed Nodes](../infrastructure_providers-network/resources.mdx#seed-nodes).
@@ -102,7 +102,7 @@ Configuring and starting your full node for the first time allows it to sync wit
 
    Once you have entered your parameters, your command should resemble the following:
    ```bash
-   nohup dydxprotocold start --p2p.seeds="ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856,65b740ee326c9260c30af1f044e9cda63c73f7c1@seeds.kingnodes.net:23856,f04a77b92d0d86725cdb2d6b7a7eb0eda8c27089@dydx-mainnet-seed.bwarelabs.com:36656,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856,c2c2fcb5e6e4755e06b83b499aff93e97282f8e8@tenderseed.ccvalidators.com:26401,4f20c3e303c9515051b6276aeb89c0b88ee79f8f@seed.dydx.cros-nest.com:26656,a9cae4047d5c34772442322b10ef5600d8e54900@dydx-mainnet-seednode.allthatnode.com:26656,802607c6db8148b0c68c8a9ec1a86fd3ba606af6@64.227.38.88:26656,4c30c8a95e26b07b249813b677caab28bf0c54eb@rpc.dydx.nodestake.top:666,ebc272824924ea1a27ea3183dd0b9ba713494f83@dydx-mainnet-seed.autostake.com:27366" --home=$DYDX_HOME --non-validating-full-node=true > /tmp/fullnode.log 2>&1 &
+   dydxprotocold start --p2p.seeds="ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856,65b740ee326c9260c30af1f044e9cda63c73f7c1@seeds.kingnodes.net:23856,f04a77b92d0d86725cdb2d6b7a7eb0eda8c27089@dydx-mainnet-seed.bwarelabs.com:36656,20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856,c2c2fcb5e6e4755e06b83b499aff93e97282f8e8@tenderseed.ccvalidators.com:26401,4f20c3e303c9515051b6276aeb89c0b88ee79f8f@seed.dydx.cros-nest.com:26656,a9cae4047d5c34772442322b10ef5600d8e54900@dydx-mainnet-seednode.allthatnode.com:26656,802607c6db8148b0c68c8a9ec1a86fd3ba606af6@64.227.38.88:26656,4c30c8a95e26b07b249813b677caab28bf0c54eb@rpc.dydx.nodestake.top:666,ebc272824924ea1a27ea3183dd0b9ba713494f83@dydx-mainnet-seed.autostake.com:27366" --home=$DYDX_HOME --non-validating-full-node=true > /tmp/fullnode.log 2>&1 &
    ```
    
    Run your command to start the full node.
@@ -123,10 +123,10 @@ Configuring and starting your full node for the first time allows it to sync wit
 
    Run the program with your full node IP address and port `26657`:
    ```bash
-   python3 v4block_subscribe.py ws://$FULL_NODE_IP_ADDRESS:26657
-
    # Example values
    FULL_NODE_IP_ADDRESS=192.168.0.150
+
+   python3 v4block_subscribe.py ws://$FULL_NODE_IP_ADDRESS:26657
    ```
 
 When you have confirmed that your full node is up to date with the rest of the dYdX 
