@@ -58,7 +58,7 @@ After you save the initial state definition to your `/config` folder, you can do
 ## Install Bware’s dYdX snapshot (Recommended)
 Bware’s dYdX snapshot saves you time by syncing your full node to the history of the dYdX chain. This avoids downloading and validating the entire blockchain.
 
-1. Download the snapshot contents from https://bwarelabs.com/snapshots/dydx. 
+1. Download the latest snapshot contents from https://bwarelabs.com/snapshots/dydx. 
 
    If you can’t download the snapshot contents from Bware, you can download the snapshot contents from the following alternative sources:
    - https://polkachu.com/tendermint_snapshots/dydx
