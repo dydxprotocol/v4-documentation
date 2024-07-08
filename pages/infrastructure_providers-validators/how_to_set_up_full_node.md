@@ -2,20 +2,22 @@
 
 > Examples on this page are for mainnet deployments by dYdX token holders. For information on alternative deployment types, including testnet deployments in the United States, see the [Network Constants page](../infrastructure_providers-network/network_constants.mdx).
 
-## Prerequisites
-- Linux (Ubuntu Server 22.04.3 or later recommended)
-- 8-core CPU (ARM or x86_64)
+## Sytstem requirements
+To run a full node, the system that hosts the node must meet the following minimum requirements:
+
+- Uses an ARM or x86_64 architecture
+- 8-core CPU
 - 64 GB RAM
 - 500 GB SSD NVME Storage
 
 ## Download the latest `dydxprotocold` binary and initialize the node data/config directory
 The binary contains the software you need to operate a full node. Initializing the node data/config dedicates a folder on your system for node's state, data and configurations.
 
-1. Find the latest `Release protocol` from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed source code file appropriate for your system.
+1. Find the latest `Release protocol` from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed `dydxprotocold` file appropriate for your system.
    
-   For example, to use `Release protocol/v5.0.5` on Ubuntu, download `Source code.tar.gz`.
+   For example, for protocol version 5.0.5 on an AMD system, download `dydxprotocold-v5.0.5-linux-amd64.tar.gz`.
 
-2. Extract and rename the binary from `Source code` to `dydxprotocold`.  Move the file to a directory in your `$PATH` so that you can initialize it with your command line.
+2. Extract and rename the binary from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`.  Move the file to a directory in your `$PATH` so that you can initialize it with your command line.
 
 3. If you don't already have one, create a data directory for your deployment. 
 
