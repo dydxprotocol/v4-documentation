@@ -122,3 +122,4 @@ Configuring and starting your full node for the first time allows it to sync wit
 
 When you have confirmed that your full node is up to date with the rest of the dYdX 
 network, you can configure advanced settings and learn about best practices on the [Running a Full Node](../infrastructure_providers-validators/running_full_node) page.
+
