@@ -5,10 +5,10 @@
 ## Sytstem requirements
 To run a full node, the system that hosts the node must meet the following minimum requirements:
 
-- Uses an ARM or x86_64 architecture
-- 8-core CPU
+- Linux (Ubuntu Server 22.04.3 or later recommended)
+- 8-core CPU (ARM or x86_64 architecture)
 - 64 GB RAM
-- 500 GB SSD NVME Storage
+- 500 GB SSD NVMe Storage
 
 ## Download the latest `dydxprotocold` binary and initialize the node data/config directory
 The binary contains the software you need to operate a full node. Initializing the node data/config dedicates a folder on your system for node's state, data, and configurations.
@@ -17,11 +17,13 @@ The binary contains the software you need to operate a full node. Initializing t
    
    For example, for protocol version 5.0.5 on an AMD system, download `dydxprotocold-v5.0.5-linux-amd64.tar.gz`.
 
+   Alternatively, you can install the latest `Release protocol` by using [this curl command](https://gist.github.com/steinwaywhw/a4cd19cda655b8249d908261a62687f8).
+
 2. Extract the binary. To run the binary from the command line with the command `dydxprotocold`, either:
    - Rename the file, or
    - Create a symbolic link to the file.
 
-  To rename the file, edit the filename from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`.
+  To rename the file, edit the filename from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`. 
 
   To create a symbolic link to the file using the name `dydxprotocold`, run the following command:
   ```bash
@@ -81,7 +83,6 @@ Configuring and starting your full node for the first time allows it to sync wit
    --p2p.seed=$SEED_LIST
    --home=$DYDX_HOME
    --non-validating-full-node=true
-   > /tmp/fullnode.log 2>&1 &
    ```
 
    Using the `--p2p.seeds` command line flag, provide a comma-separated list of node URIs in the blockchain network that you are connecting to. For a list of node URIs, see the Resources page section for [Seed Nodes](../infrastructure_providers-network/resources.mdx#seed-nodes).
