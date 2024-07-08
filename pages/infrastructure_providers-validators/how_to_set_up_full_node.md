@@ -117,7 +117,7 @@ Configuring and starting your full node for the first time allows it to sync wit
 
    To determine your full node's current block, use a block explorer like this example on [mintscan.io](https://www.mintscan.io/dydx).
 
-   To determine the dYdX chain's current block, use the following program: https://github.com/chiwalfrm/dydxexamples/blob/1d46b7a75499205d9c1c1986ae4ae8f21b6c1385/v4block_subscribe.py
+   To determine the dYdX chain's current block, use the following program: [link](https://github.com/chiwalfrm/dydxexamples/blob/1d46b7a75499205d9c1c1986ae4ae8f21b6c1385/v4block_subscribe.py)
 
    Run the program with your full node IP address and port `26657`:
    ```bash
