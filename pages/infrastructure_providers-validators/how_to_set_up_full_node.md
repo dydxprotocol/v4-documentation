@@ -2,7 +2,7 @@
 
 > Examples on this page are for mainnet deployments by dYdX token holders. For information on alternative deployments, including testnet deployments, see the [Network Constants page](../infrastructure_providers-network/network_constants.mdx).
 
-## Sytstem requirements
+## System requirements
 To run a full node, the system that hosts the node must meet the following minimum requirements:
 
 - Linux (Ubuntu Server 22.04.3 or later recommended)
