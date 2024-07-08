@@ -17,48 +17,36 @@ The binary contains the software you need to operate a full node. Initializing t
    
    For example, for protocol version 5.0.5 on an AMD system, download `dydxprotocold-v5.0.5-linux-amd64.tar.gz`.
 
-2. Extract and rename the binary from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`.  Move the file to a directory in your `$PATH` so that you can initialize it with your command line.
+2. Extract the binary. To run the binary from the command line with the command `dydxprotocold`, either:
+   - Rename the file, or
+   - Create a symbolic link to the file.
 
-3. If you don't already have one, create a data directory for your deployment. 
+  To rename the file, edit the filename from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`.
 
-   For example: 
-   ```bash
-   mkdir /home/vmware/.dydx-mainnet-1
-   ```
+  To create a symbolic link to the file using the name `dydxprotocold`, run the following command:
+  ```bash
+  ln -s /path/to/binary dydxprotocold
+  ```
 
-4. Initialize your data directory by running the following command:
+3. Initialize your data directory.
+
+  First, make sure that your data directory is empty. In the example below, `DYDX_HOME` contains the path to the directory that must be empty.
+
+  Then, run the `dydxprotocold init` command, supplying a chain ID, a path to a data directory, and a moniker for your node:
+
    ```bash
    # Example values
    CHAIN_ID=my-dydx-deployment
-   DYDX_HOME=/path/to/your/data/directory
+   DYDX_HOME=/path/to/your/data/directory # This can be the same as your $PATH
    NODE_MONIKER=my-dydx-fullnode
 
-   dydxprotocold init --chain-id=$CHAIN_ID --home=$DYDX_HOME $NODE_NICKNAME
+   dydxprotocold init --chain-id=$CHAIN_ID --home=$DYDX_HOME $NODE_MONIKER
    ```
 
 After you initialize your data directory, your full node can write to it.
 
-## Fetch and install the latest `genesis.json` file
-The `genesis.json` file defines an initial state for the dYdX chain.
-
-1. Fetch the genesis state of the network and save it as a `.json` file. 
-   
-   To fetch and save `genesis.json` to your current directory, run the following command:
-   ```bash
-   curl https://dydx-ops-rpc.kingnodes.com/genesis | python3 -c 'import json,sys;print(json.dumps(json.load(sys.stdin)["result"]["genesis"], indent=2))' > genesis.json
-   ```
-
-   If you can’t download the file from the RPC endpoint, try the following alternative sources:
-   - https://dydx-dao-rpc.polkachu.com/genesis
-   - https://dydx-mainnet-full-rpc.public.blastapi.io/genesis
-   - Also check [Full node endpoints → RPC](../infrastructure_providers-network/resources.mdx#full-node-endpoints)
-
-2. Copy `genesis.json` to your data directory’s `/config` subfolder.
-
-After you save the initial state definition to your `/config` folder, you can download the history to date of the dYdX chain with a snapshot and use it to bring your full node up to speed with most of the chain's history.
-
-## Install Bware’s dYdX snapshot (Recommended)
-Bware’s dYdX snapshot saves you time by syncing your full node to the history of the dYdX chain. This avoids downloading and validating the entire blockchain.
+## Install a Snapshot of the dYdX chain
+Installing a snapshot saves time by syncing your full node to the history of the dYdX chain. This avoids downloading and validating the entire blockchain.
 
 1. Download the latest snapshot contents from https://bwarelabs.com/snapshots/dydx. 
 
