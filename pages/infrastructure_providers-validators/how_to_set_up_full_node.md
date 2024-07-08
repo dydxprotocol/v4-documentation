@@ -29,9 +29,9 @@ The `dydxprotocold` binary contains the software you need to operate a full node
    **Option 1:** Rename the file. Edit the filename from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`. You might need to add your current directory to your $PATH or move the file to a directory in your $PATH.
 
    **Option 2:** Create a symbolic link to the file using the name `dydxprotocold`. Run the following command:
-  ```bash
-  ln -s /path/to/your/binary dydxprotocold
-  ```
+   ```bash
+   ln -s /path/to/your/binary dydxprotocold
+   ```
 
 4. Initialize your data directory.
 
@@ -73,6 +73,7 @@ Installing a snapshot saves time by syncing your full node to the history of the
 When you start your full node, it will automatically use the snapshot you saved to its data directory.
 
 ## Start your full node
+
 Configuring and starting your full node for the first time allows it to sync with the dYdX chain network. If you saved a dYdX snapshot to your data directory, starting your node will first use that snapshot to quickly recreate most of the chain's history.
 
 1. Configure parameters in your command line. Use the following syntax:
@@ -105,13 +106,11 @@ Configuring and starting your full node for the first time allows it to sync wit
    ```bash
    tail -f /tmp/fullnode.log
    ```
-3. Confirm that your full node has finished syncing by comparing its current block to the dYdX chain.
-   
-   The full node is caught up with the dYdX chain head when it reaches the dYdX chain's current block.
+3. Confirm that your full node has finished syncing by comparing its current block to the dYdX chain. The full node is caught up with the dYdX chain head when it reaches the dYdX chain's current block.
 
    To determine your full node's current block, use a block explorer like this example on [mintscan.io](https://www.mintscan.io/dydx).
 
-   To determine the dYdX chain's current block, use the following program: [link](https://github.com/chiwalfrm/dydxexamples/blob/1d46b7a75499205d9c1c1986ae4ae8f21b6c1385/v4block_subscribe.py)
+   To determine the dYdX chain's current block, use the program [v4block_subscribe.py](https://github.com/chiwalfrm/dydxexamples/blob/1d46b7a75499205d9c1c1986ae4ae8f21b6c1385/v4block_subscribe.py).
 
    Run the program with your full node IP address and port `26657`:
    ```bash
