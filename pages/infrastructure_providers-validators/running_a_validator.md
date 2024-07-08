@@ -26,8 +26,8 @@ Starting in `v5.0.0`, running a validating full node requires a Skip Protocol's 
 
 Support issues with Skip's Sidecar should be directed [here](https://discord.gg/7hxEThEaRQ).
 
-For mainnet deployment by dYdX Operation Services, Ltd. run: [`v0.4.6`](https://github.com/skip-mev/slinky/tree/v0.4.6) (`ghcr.io/skip-mev/slinky-sidecar:v0.4.6`)
+For mainnet deployment by dYdX Operation Services, Ltd. run: [`v1.0.3`](https://github.com/skip-mev/slinky/tree/v1.0.3) (`ghcr.io/skip-mev/slinky-sidecar:v1.0.3`)
 
-For testnet run: [`v0.4.6`](https://github.com/skip-mev/slinky/tree/v0.4.6) (`ghcr.io/skip-mev/slinky-sidecar:v0.4.6`)
+For testnet run: [`v1.0.3`](https://github.com/skip-mev/slinky/tree/v1.0.3) (`ghcr.io/skip-mev/slinky-sidecar:v1.0.3`)
 
 Instructions on upgrading sidecar can be found [here](./upgrades/upgrading_sidecar.md).
