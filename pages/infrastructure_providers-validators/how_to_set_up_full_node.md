@@ -31,7 +31,7 @@ The binary contains the software you need to operate a full node. Initializing t
    # Example values
    CHAIN_ID=my-dydx-deployment
    DYDX_HOME=/path/to/your/data/directory
-   NODE_NICKNAME=my-dydx-fullnode
+   NODE_MONIKER=my-dydx-fullnode
    ```
 
 After you initialize your data directory, your full node can write to it.
