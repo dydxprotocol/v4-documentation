@@ -1,6 +1,6 @@
 # Set Up a Full Node
 
-> Examples on this page are for mainnet deployments by dYdX token holders. For information on alternative deployment types, including testnet deployments in the United States, see the [Network Constants page](../infrastructure_providers-network/network_constants.mdx).
+> Examples on this page are for mainnet deployments by dYdX token holders. For information on alternative deployments, including testnet deployments, see the [Network Constants page](../infrastructure_providers-network/network_constants.mdx).
 
 ## Sytstem requirements
 To run a full node, the system that hosts the node must meet the following minimum requirements:
