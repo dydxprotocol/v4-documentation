@@ -74,7 +74,7 @@ When you start your full node, it will automatically use the snapshot you saved 
 
 ## Start your full node
 
-Configuring and starting your full node for the first time allows it to sync with the dYdX chain network. If you saved a dYdX snapshot to your data directory, starting your node will first use that snapshot to quickly recreate most of the chain's history.
+When starting your full node, it will try to sync to the network's latest block height. The starting point for the sync depends on your full node's local state. If you initialized your full node's state using a snapshot (using the instructions above), you have effectively set your full node's state to the state when the snapshot was taken and your node will be able to sync much faster because the number of blocks to sync will be relatively small (i.e. blocks to sync = latest block height - snapshot's height). Otherwise, your full node will have to sync from height 0, which will take a much longer time.
 
 1. Configure parameters in your command line. Use the following syntax:
 
