@@ -50,8 +50,8 @@ The `dydxprotocold` binary contains the software you need to operate a full node
 
 After you initialize your data directory, your full node can write to it.
 
-## Install a snapshot of the dYdX chain's history
-Installing a snapshot saves time by syncing your full node to the history of the dYdX chain. This avoids downloading and validating the entire blockchain.
+## Initialize node state using a snapshot
+Using snapshots to restore or sync your full node's state saves time and effort. This avoids having to replay all the previous blocks from genesis (height = 0) and having to use multiple binary versions for network upgrades.
 
 1. Download the latest snapshot contents from https://bwarelabs.com/snapshots/dydx. 
 
