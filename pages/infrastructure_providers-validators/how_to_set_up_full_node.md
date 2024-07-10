@@ -70,7 +70,7 @@ Using snapshots to restore or sync your full node's state saves time and effort.
    lz4 -dc < $SNAPSHOT_FILENAME.tar.lz4 | tar xf -
    ```
 
-When you start your full node, it will automatically use the snapshot you saved to its data directory.
+When you start your full node, it will automatically use the snapshot you saved to its state directory.
 
 ## Start your full node
 
