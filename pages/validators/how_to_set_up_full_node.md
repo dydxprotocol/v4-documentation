@@ -38,7 +38,7 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@v1.5.0
 ![dYdX Protocol Binary](../../artifacts/how_to_set_up_full_node_binary_download.png)
 3. Download, extract, and rename the binary to `dydxprotocold`.  Move it to a directory in your `$PATH`.  Now, initialize the dydx home  directory (create the directory first if it doesn’t exist).
 ```bash
-CHAIN_ID=dydx-mainnet-1
+CHAIN_ID=dydx-testnet-4 # or dydx-mainnet-1 for the deployment by DYDX token holders
 NODE_NAME=mydydxfullnode
 dydxprotocold init --chain-id=$CHAIN_ID $NODE_NAME
 
@@ -79,7 +79,7 @@ We will create a systemd service to start the full node.  This will allow the fu
 ```bash
 sudo tee /etc/systemd/system/dydxprotocold.service > /dev/null << EOF
 [Unit]
-Description=osmosis node service
+Description=dydxprotocol node service
 After=network-online.target
 
 [Service]
@@ -114,6 +114,7 @@ sudo systemctl enable dydxprotocold
 
 ```bash
 sudo systemctl start dydxprotocold
+# To stop service use sudo systemctl stop dydxprotocold
 ```
 
 ### Check logs for the service to ensure it is running
