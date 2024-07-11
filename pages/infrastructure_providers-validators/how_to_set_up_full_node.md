@@ -36,21 +36,27 @@ To install the appropriate `dydxprotocold` binary:
 
 3. Extract the binary.
 
-   Extract the `.tar.gz` file that you downloaded. Rename the extracted file or create a symbolic link to the file:
+   Extract the `.tar.gz` file that you downloaded. Rename the extracted file or create a symbolic link to the file.
 
-   **Option 1:** Rename the file. Edit the filename from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`. For example:
+   **Option 1:** Rename the extracted file. Edit the filename from `dydxprotocold-<version>-<architecture>` to simply `dydxprotocold`. For example:
 
    ```bash
    mv /path/to/dydxprotocold-<version>-<architecture> dydxprotocold
    ```
 
-   **Option 2:** Create a symbolic link to the file using the name `dydxprotocold`. For example:
+   **Option 2:** Create a symbolic link to the extracted file using the name `dydxprotocold`. For example:
 
    ```bash
    ln -s /path/to/dydxprotocold-<version>-<architecture> dydxprotocold
    ```
 
-   > To run `dydxprotocold` from your command line, you might need to add your current directory to your system $PATH or move the file to a directory in your system $PATH.
+   You can test your configuration with the following command:
+
+   ```bash
+   dydxprotocold --version
+   ```
+
+   If the command above returns the version that you intend to use, the binary is properly configured. If you get an error, ensure that your system $PATH includes the directory with the executable or the symbolic link you create.
 
 4. Initialize your data directory.
 
@@ -109,9 +115,9 @@ To start your node:
    --non-validating-full-node=true
    ```
 
-   - You must include the flag `--non-validating-full-node=true` to start a full node.
    - Using the `--p2p.seeds` command line flag, provide a comma-separated list of node URIs in the blockchain network that you are connecting to. For a list of node URIs, see the Resources page section for [Seed Nodes](../infrastructure_providers-network/resources.mdx#seed-nodes).
    - Using the `--home` command line flag, provide the path to your data directory.
+   - You must include the flag `--non-validating-full-node=true` to start a full node.
 
 2. Confirm that your full node has finished syncing by comparing its current block to the dYdX chain. The full node is caught up with the dYdX chain head when it reaches the dYdX chain's current block.
 
@@ -128,4 +134,3 @@ To start your node:
    ```
 
 When your full node is up to date with the network you can use it to read live data. You can also configure additional settings. Learn more on the [Running a Full Node](../infrastructure_providers-validators/running_full_node) page.
-
