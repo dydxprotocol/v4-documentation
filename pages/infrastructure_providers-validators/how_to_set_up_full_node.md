@@ -14,18 +14,25 @@ To run a full node, the system that hosts the node must meet the following minim
 
 The `dydxprotocold` binary contains the software you need to operate a full node. You must use the same version of the software as the network to which you want to connect.
 
+To install the appropriate `dydxprotocold` binary:
+
 1. Find the current version of the dYdX network.
 
-2. Find the matching `Release protocol` version from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page. Download the compressed `dydxprotocold` file for your system.
+2. Find the matching release protocol version and download the compressed `dydxprotocold` file for your system.
+
+   **Option 1**: Find and download the protocol binary from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page.
    
    > For example, for protocol version 5.0.5 on an AMD system, download `dydxprotocold-v5.0.5-linux-amd64.tar.gz`.
 
-   Alternatively, you can download a release with `curl -L -O` by specifying a binary in the URL. Use the format `https://github.com/dydxprotocol/v4-chain/releases/download/protocol/<v0.0.0>/dydxprotocold-<v0.0.0>-<system>-<architecture>.<file>`.
-
+   **Option 2**: Specify the protocol binary and download it with `curl -L -O`. Use the base URL `https://github.com/dydxprotocol/v4-chain/releases/download/protocol/`
+   and append the binary information in the following format:
+   `<v0.0.0>/dydxprotocold-<v0.0.0>-<architecture>.tar.gz`
+  
    > For example, for protocol version 5.0.5 on an AMD system, run:
-     ```bash
-     curl -L -O https://github.com/dydxprotocol/v4-chain/releases/download/protocol/v5.0.5/dydxprotocold-v5.0.5-linux-amd64.tar.gz
-    ```
+   
+   ```bash
+   curl -L -O https://github.com/dydxprotocol/v4-chain/releases/download/protocol/v5.0.5/dydxprotocold-v5.0.5-linux-amd64.tar.gz
+   ```
 
 3. Extract the binary.
 
@@ -60,10 +67,12 @@ The `dydxprotocold` binary contains the software you need to operate a full node
    dydxprotocold init --chain-id=$CHAIN_ID --home=$DYDX_HOME $NODE_MONIKER
    ```
 
-Your machine can now host a full node using the `dydxprotocold` CLI to interface with any dYdX chain deployment. To connect to a chain, you must first sync your node with that chain's history. dYdX recommends doing this with a snapshot.
+The `dydxprotocold` is installed. Your system can now host a full node using the `dydxprotocold` executable to interface with a dYdX chain deployment. To connect to a chain, you must first sync your node with that chain's history. dYdX recommends doing this by using a snapshot.
 
-## Initialize node state using a snapshot
-Using snapshots to restore or sync your full node's state saves time and effort. Using a snapshot avoids replaying all the previous blocks from genesis (height = 0) and needing multiple binary versions for network upgrades. Instead, your node reads most of the chain's history directly from the snapshot.
+## Initialize your node's state using a snapshot
+Using snapshots to restore or sync your full node's state saves time and effort. Using a snapshot avoids replaying all the blocks from genesis (height = 0) and does not require multiple binary versions for network upgrades. Instead, your node reads most of the chain's history directly from the snapshot.
+
+To install a dYdX snapshot:
 
 1. Download the latest snapshot contents from a [snapshot service](/infrastructure_providers-network/resources#snapshot-service).
 
@@ -80,11 +89,12 @@ Using snapshots to restore or sync your full node's state saves time and effort.
    lz4 -dc < $SNAPSHOT_FILENAME.tar.lz4 | tar xf - $DYDX_HOME/data
    ```
 
-When you start your full node, it will automatically use the snapshot in its data directory to begin syncing your full node's state with the network.
+The snapshot is installed. When you start your full node, it automatically uses the snapshot in its data directory to begin syncing your full node's state with the network.
 
 ## Start your full node
+When you start your full node it must sync with the history of the network. If you initialized your full node using a snapshot, your node must update its state only with blocks created after the snapshot was taken. If your node's state is empty, it must sync with the entire history of the network.
 
-When starting your full node, it will try to sync to the network's latest block height. The starting point for the sync depends on your full node's local state. If you initialized your full node's state using a snapshot (using the instructions above), you have effectively set your full node's state to the state when the snapshot was taken and your node will be able to sync much faster because the number of blocks to sync will be relatively small (i.e. blocks to sync = latest block height - snapshot's height). Otherwise, your full node will have to sync from height 0, which will take a much longer time.
+To start your node:
 
 1. Configure parameters in your command line. Use the following syntax:
 
@@ -117,6 +127,5 @@ When starting your full node, it will try to sync to the network's latest block 
    python3 v4block_subscribe.py ws://$FULL_NODE_IP_ADDRESS:26657
    ```
 
-When you have confirmed that your full node is up to date with the rest of the dYdX 
-network, you can configure advanced settings and learn about best practices on the [Running a Full Node](../infrastructure_providers-validators/running_full_node) page.
+When your full node is up to date with the network you can use it to read live data. You can also configure additional settings. Learn more on the [Running a Full Node](../infrastructure_providers-validators/running_full_node) page.
 
