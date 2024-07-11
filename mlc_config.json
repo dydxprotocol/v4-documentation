@@ -1,0 +1,19 @@
+{
+  "aliveStatusCodes": [0, 200, 403, 429],
+  "httpHeaders": [
+    {
+      "urls": ["https://github.com/", "https://guides.github.com/", "https://help.github.com/", "https://docs.github.com/"],
+      "headers": {
+        "Accept-Encoding": "zstd, br, gzip, deflate"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    {
+      "pattern": "^https://indexer.dydx.trade"
+    },
+    {
+      "pattern": "^https://github.com/dydxprotocol/v4-chain/releases/"
+    }
+  ]
+}
