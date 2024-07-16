@@ -177,15 +177,15 @@ sudo journalctl -u dydxprotocold -f
 
 If your node is still syncing, it returns (TODO)
 
-If your node is finished syncing, it returns (TODO). Confirm that your full node is properly synchronized by comparing its current block to the dYdX chain. The full node is caught up with the dYdX chain head when it reaches the dYdX chain's current block.
+If your node is finished syncing, it returns (TODO). Confirm that your full node is properly synchronized by comparing its current block to the dYdX chain.
 
-- To determine the network's current block, you can use the block explorer [mintscan.io](https://www.mintscan.io/dydx).
-
-- To determine your full node's height, query your node with the following command:
-   
+- To find the network's current block, you can use the block explorer [mintscan.io](https://www.mintscan.io/dydx).
+- To find your full node's height, query your node with the following command:
 ```bash
 curl localhost:26657/status
 ```
+
+When your full node's latest block is the same as the network's latest block, your full node is ready to participate in the network.
 
 ## Next Steps
 When your full node is up to date with the network, you can use it to read live data and configure additional settings. Learn more on the [Running a Full Node](../infrastructure_providers-validators/running_full_node) page.
