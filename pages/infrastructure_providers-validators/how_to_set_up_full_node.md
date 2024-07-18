@@ -28,19 +28,19 @@ sudo apt-get install -y curl jq lz4
 
 ### Step 2: Install Go
 To install [Go](https://go.dev/) and add its directory to your system `$PATH`, run the following commands with the latest version of Go:
+
 ```bash
 # Example for AMD64 architecture and Go version 1.22.2
 wget https://golang.org/dl/go1.22.2.linux-amd64.tar.gz # Download the compressed file
-sudo tar -C /usr/local -xzf go1.22.2.linux-amd64.tar.gz # Extract the file to your current directory
+sudo tar -C /usr/local -xzf go1.22.2.linux-amd64.tar.gz # Extract the file to /usr/local
 rm go1.22.2.linux-amd64.tar.gz # Delete the installer package
-echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bashrc # Add to your $PATH
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bashrc # Add Go to your $PATH
 ```
 
 ### Step 3: Install Cosmovisor and create data directories
 [Cosmovisor](https://docs.cosmos.network/main/build/tooling/cosmovisor) is a process manager for Cosmos SDK-based blockchains that enables automatic binary updates without downtime. To install Cosmovisor, run the following command with the latest Cosmovisor version:
 ```bash
-# This example downloads Cosmovisor version 1.5.0
-go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@v1.5.0
+go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 ```
 
 To create data directories for Cosmovisor, run the following commands:
@@ -56,14 +56,10 @@ The `dydxprotocold` binary contains the software you need to operate a full node
 Find and download that protocol binary from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page.
 > For example, for protocol version 5.0.5 on an AMD system, download `dydxprotocold-v5.0.5-linux-amd64.tar.gz`.
 
-You can also download the binary with `curl` or `wget`.
+You can also download the binary with `curl`:
 ```bash
 # curl example for protocol version 5.0.5
 curl -L -O https://github.com/dydxprotocol/v4-chain/releases/download/protocol/v5.0.5/dydxprotocold-v5.0.5-linux-amd64.tar.gz
-```
-```bash
-# wget example for protocol version 5.0.5
-wget https://github.com/dydxprotocol/v4-chain/releases/download/protocol/v5.0.5/dydxprotocold-v5.0.5-linux-amd64.tar.gz
 ```
 
 Extract the binary and rename it "dydxprotocold", removing the version and architecture information from the filename. Add its directory to your system `$PATH`.
@@ -75,6 +71,11 @@ rm dydxprotocold-v5.0.5-linux-amd64.tar.gz # Delete the installer package
 echo 'export PATH=$PATH:/usr/local/bin:$HOME/bin' >> $HOME/.bashrc # Add to your $PATH
 ```
 
+<!-- 
+sudo tar -xzvf dydxprotocold-v5.0.5-linux-amd64.tar.gz
+mv ./build/dydxprotocold-v5.0.5-linux-amd64 dydxprotocold
+ -->
+
 ### Step 5: Initialize your node
 To initialize your node, provide the ID of the chain to which you want to connect and name your node. By default, the dYdX home directory is created in `$HOME/.dydxprotocol`.
 ```bash
@@ -82,6 +83,8 @@ CHAIN_ID=dydx-testnet-0
 NODE_NAME=mydydxfullnode
 dydxprotocold init --chain-id=$CHAIN_ID $NODE_NAME
 ```
+
+<!-- had to run ./dydxprotocold, fix path -->
 
 ### Step 6: Move `dydxprotocold` to your Cosmovisor `/genesis` directory
 Your dYdX home directory will remain the same. Moving `dydxprotold` into your Cosmovisor data directory allows you to use Cosmovisor for no-downtime binary upgrades.
@@ -91,6 +94,8 @@ To move the file to your Cosmovisor data directory, run the following command:
 ```bash
 mv dydxprotocold $HOME/.dydxprotocol/cosmovisor/genesis/bin/
 ```
+
+<!-- used current directory -->
 
 ### Step 7: Update your configuration with the Genesis Block of the network in which you want to participate
 The Genesis Block is the initial state of a dYdX chain. To download it and update your node's configuration, run the following command:
@@ -111,6 +116,9 @@ SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856",
 sed -i 's/seeds = ""/seeds = "'"${SEED_NODES[*]}"'"/' $HOME/.dydxprotocol/config/config.toml
 ```
 
+<!-- failing to write output
+is this needed? -->
+
 For an up-to-date list of seed nodes, see [Resources](https://docs.dydx.exchange/network/resources#seed-nodes).
 
 ### Step 8: Download and extract a snapshot of the chain's history since genesis
@@ -122,10 +130,14 @@ Find and download the latest snapshot from the [Snapshot Service](https://docs.d
 lz4 -dc < snapshotfile.tar.lz4 | tar xf -
 ```
 
-You can specify a different directory by appending it to the end of the command:
-```bash
-lz4 -dc < snapshotfile.tar.lz4 | tar xf - your/new/dir
-```
+<!-- wget https://snapshots.bwarelabs.com/dydx/testnet/dydx20240717.tar.lz4
+
+
+clarify HOME directory and data directory -->
+
+<!-- lz4 -c -d dydx20240717.tar.lz4 | tar -x -C <DYDX_HOME>/data <dont use /data, command creates it>
+
+ -->
 
 After extracting the snapshot to your dydxprotocl home directory, when you start your full node, it will automatically use the snapshot in its data directory to begin syncing your full node's state with the network.
 
