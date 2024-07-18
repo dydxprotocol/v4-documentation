@@ -182,9 +182,9 @@ When you start your full node it must sync with the history of the network. If y
 ```bash
 sudo journalctl -u dydxprotocold -f
 ```
+If your system service is running, the preceding command continuously returns node updates to your terminal. 
 
-If your node is finished syncing, the preceding command returns TODO. Confirm that your full node is properly synchronized by comparing its current block to the dYdX chain.
-
+Finally, confirm that your full node is properly synchronized by comparing its current block to the dYdX chain:
 - To find the network's current block, you can use the block explorer [mintscan.io](https://www.mintscan.io/dydx).
 - To find your full node's height, query your node with the following command:
 ```bash
