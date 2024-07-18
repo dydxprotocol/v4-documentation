@@ -92,7 +92,7 @@ To initialize your node, provide the ID of the chain to which you want to connec
 dydxprotocold init --chain-id=$YOUR_TARGET_CHAIN $YOUR_NODE_NAME
 ```
 
-### Step 7: Update your configuration with the Genesis Block of the network in which you want to participate
+### Step 7: Update your node configuration with the Genesis Block of the network in which you want to participate
 <!-- confirm that this step is necessary along with snapshot -->
 The Genesis Block is the initial state of a dYdX chain. To download it and save it as a JSON file, run the following command:
 
@@ -100,8 +100,8 @@ The Genesis Block is the initial state of a dYdX chain. To download it and save 
 curl https://dydx-rpc.lavenderfive.com/genesis | python3 -c 'import json,sys;print(json.dumps(json.load(sys.stdin)["result"]["genesis"], indent=2))' > $HOME/.dydxprotocol/config/genesis.json
 ```
 
-<!-- todo command below not working 
-make this more general and link to seed lists-->
+### Step 8: Update your node configuration with a list of seed nodes
+Seed nodes provide trustworthy data about the history of the network to your full node. For an up-to-date list of seed nodes, see [Resources](https://docs.dydx.exchange/network/resources#seed-nodes). To update `config.toml` with a list of seed nodes, run the following command using your own comma-separated list of strings:
 
 ```bash
 SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856", 
@@ -117,7 +117,7 @@ SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856",
 sed -i 's/seeds = ""/seeds = "'"${SEED_NODES[*]}"'"/' $HOME/.dydxprotocol/config/config.toml
 ```
 
-For an up-to-date list of seed nodes, see [Resources](https://docs.dydx.exchange/network/resources#seed-nodes).
+The preceding command updates the `seeds` variable of `config.toml` with the list you provide.
 
 ### Step 8: Download and extract a snapshot of the chain's history since genesis
 Using snapshots to restore or sync your full node's state saves time and effort. Using a snapshot avoids replaying all the blocks from genesis and does not require multiple binary versions for network upgrades. Instead, your node reads most of the chain's history directly from the snapshot.
@@ -162,8 +162,6 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable dydxprotocold
 ```
-<!-- todo test this script, simplify if possible 
-not sure about /go/cosmovisor -->
 
 The command above saves a file `dydxprotocold.service` to the  directory `/etc/systemd/system/`. The file contains a command to run on startup, `ExecStart`, and related environment variables. **The flag `--non-validating-full-node=true` must be included, as it specifies that you are creating a full node.**
 
@@ -184,11 +182,8 @@ When you start your full node it must sync with the history of the network. If y
 ```bash
 sudo journalctl -u dydxprotocold -f
 ```
-<!-- todo test this command and detail output -->
 
-If your node is still syncing, it returns...
-
-If your node is finished syncing, it returns... . Confirm that your full node is properly synchronized by comparing its current block to the dYdX chain.
+If your node is finished syncing, the preceding command returns TODO. Confirm that your full node is properly synchronized by comparing its current block to the dYdX chain.
 
 - To find the network's current block, you can use the block explorer [mintscan.io](https://www.mintscan.io/dydx).
 - To find your full node's height, query your node with the following command:
