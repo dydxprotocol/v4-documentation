@@ -37,7 +37,7 @@ To install [Go](https://go.dev/), run the following commands using the latest ve
 ```bash
 # Example for AMD64 architecture and Go version 1.22.2
 wget https://golang.org/dl/go1.22.2.linux-amd64.tar.gz # Download the compressed file
-sudo tar -C /usr/local -xzf go1.22.2.linux-amd64.tar.gz # Extract the file to /usr/local TODO
+sudo tar -C /usr/local -xzf go1.22.2.linux-amd64.tar.gz # Extract the file to /usr/local
 rm go1.22.2.linux-amd64.tar.gz # Delete the installer package
 ```
 
@@ -93,13 +93,17 @@ dydxprotocold init --chain-id=$YOUR_TARGET_CHAIN $YOUR_NODE_NAME
 ```
 
 ### Step 7: Update your configuration with the Genesis Block of the network in which you want to participate
-The Genesis Block is the initial state of a dYdX chain. To download it and update your node's configuration, run the following command:
-
 <!-- confirm that this step is necessary along with snapshot -->
+The Genesis Block is the initial state of a dYdX chain. To download it and save it as a JSON file, run the following command:
 
 ```bash
-curl https://dydx-rpc.lavenderfive.com/genesis | python3 -c 'import json,sys;print(json.dumps(json.load(sys.stdin)["result"]["genesis"], indent=2))' > $WORKDIR/config/genesis.json
+curl https://dydx-rpc.lavenderfive.com/genesis | python3 -c 'import json,sys;print(json.dumps(json.load(sys.stdin)["result"]["genesis"], indent=2))' > $HOME/.dydxprotocol/config/genesis.json
+```
 
+<!-- todo command below not working 
+make this more general and link to seed lists-->
+
+```bash
 SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856", 
 "65b740ee326c9260c30af1f044e9cda63c73f7c1@seeds.kingnodes.net:23856", 
 "f04a77b92d0d86725cdb2d6b7a7eb0eda8c27089@dydx-mainnet-seed.bwarelabs.com:36656",
@@ -112,11 +116,6 @@ SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856",
 
 sed -i 's/seeds = ""/seeds = "'"${SEED_NODES[*]}"'"/' $HOME/.dydxprotocol/config/config.toml
 ```
-
-<!-- todo
-failing to write output
-make this more general and link out to seed information
- -->
 
 For an up-to-date list of seed nodes, see [Resources](https://docs.dydx.exchange/network/resources#seed-nodes).
 
@@ -163,7 +162,8 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable dydxprotocold
 ```
-<!-- todo test this, simplify if possible -->
+<!-- todo test this script, simplify if possible 
+not sure about /go/cosmovisor -->
 
 The command above saves a file `dydxprotocold.service` to the  directory `/etc/systemd/system/`. The file contains a command to run on startup, `ExecStart`, and related environment variables. **The flag `--non-validating-full-node=true` must be included, as it specifies that you are creating a full node.**
 
@@ -173,7 +173,10 @@ To start your node using the `systemd` service that you created, run the followi
 sudo systemctl start dydxprotocold
 ```
 
-<!-- todo test -->
+When you want to stop the service, run the following command:
+```bash
+sudo systemctl stop dydxprotocold
+```
 
 When you start your full node it must sync with the history of the network. If you initialized your full node using a snapshot, your node must update its state only with blocks created after the snapshot was taken. If your node's state is empty, it must sync with the entire history of the network.
 
