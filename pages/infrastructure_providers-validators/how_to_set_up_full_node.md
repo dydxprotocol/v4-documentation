@@ -1,7 +1,7 @@
 # Set Up a Full Node
 Installing and running a full node allows your system to participate in a dYdX chain network.
 
-### Prerequisites
+## Prerequisites
 To run a full node, the system that hosts the node must meet the following minimum requirements:
 - Linux (Ubuntu Server 22.04.3 or later recommended)
 - 8-core CPU (ARM or x86_64 architecture)
@@ -19,13 +19,13 @@ To set up a full node, you can either:
 ## Manual Installation Steps
 The following steps will guide you through manually setting up a full node.
 
-### Step 1: Update your system and prepare to install dependencies
-Run the commands in this procedure from your home directory unless otherwise specified in these instructions. To change directories to your home folder, run the following command:
+Run the commands in this procedure from your home directory unless otherwise specified. To change directories to your home folder, run the following command:
 ```bash
 cd $HOME
 ```
 
-To download system updates and install [curl](https://curl.se/), run the following commands:
+### Step 1: Update your system and prepare to install dependencies
+To download system updates and install [curl](https://curl.se/),[jq](https://jqlang.github.io/jq/), and [lz4](https://lz4.org/), run the following commands:
 ```bash
 sudo apt-get -y update
 sudo apt-get install -y curl jq lz4
@@ -83,14 +83,16 @@ rm dydxprotocold-v5.0.5-linux-amd64.tar.gz # Delete the installer package
 
 Add the `dydxprotocold` directory to your system `$PATH`:
 ```bash
-echo 'export PATH=$PATH:$HOME/.dydxprotocol/cosmovisor/genesis/bin' >> $HOME/.bashrc
+echo 'export PATH=$PATH:$HOME/.dydxprotocol/cosmovisor/genesis/bin' >> $HOME/.bashrc # Write to your .bashrc profile
 ```
 
 ### Step 6: Initialize your node
-To initialize your node, provide the ID of the chain to which you want to connect and name your node. By default, the dYdX home directory is created in `$HOME/.dydxprotocol`. Replace the example values with yours and run the following command:
+To initialize your node, provide the ID of the chain to which you want to connect and create a name for your node. The dYdX home directory is created in `$HOME/.dydxprotocol` by default. Replace the example values `dydx-testnet-0` and `my-node` with your own and run the following command:
 ```bash
-dydxprotocold init --chain-id=$YOUR_TARGET_CHAIN $YOUR_NODE_NAME
+dydxprotocold init --chain-id=dydx-testnet-0 my-node
 ```
+
+> See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for chain IDs and other network constants.
 
 ### Step 7: Update your node configuration with the Genesis Block of the network in which you want to participate
 <!-- confirm that this step is necessary along with snapshot -->
@@ -101,7 +103,9 @@ curl https://dydx-rpc.lavenderfive.com/genesis | python3 -c 'import json,sys;pri
 ```
 
 ### Step 8: Update your node configuration with a list of seed nodes
-Seed nodes provide trustworthy data about the history of the network to your full node. For an up-to-date list of seed nodes, see [Resources](https://docs.dydx.exchange/network/resources#seed-nodes). To update `config.toml` with a list of seed nodes, run the following command using your own comma-separated list of strings:
+Seed nodes provide trustworthy data about the history of the network to your full node. To update `config.toml` with a list of seed nodes, run the following command:
+
+> Check the [Resources](https://docs.dydx.exchange/network/resources#seed-nodes) page for an up-to-date list of seed nodes.
 
 ```bash
 SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856", 
@@ -122,19 +126,29 @@ The preceding command updates the `seeds` variable of `config.toml` with the lis
 ### Step 8: Download and extract a snapshot of the chain's history since genesis
 Using snapshots to restore or sync your full node's state saves time and effort. Using a snapshot avoids replaying all the blocks from genesis and does not require multiple binary versions for network upgrades. Instead, your node reads most of the chain's history directly from the snapshot.
 
-Find and download the latest snapshot from the [Snapshot Service](https://docs.dydx.exchange/network/resources#snapshot-service). 
+To download a snapshot, first find a provider for your use case on the [Snapshot Service](https://docs.dydx.exchange/network/resources#snapshot-service) page.
 
-Extract the snapshot contents to the default dydxprotocol home directory, `$/HOME/.dydxprotocol/data`, with the following command:
+> For example, if you are connecting to `dydx-testnet-4`, you may use the provider [Bware Labs](https://bwarelabs.com/snapshots/dydx).
+
+Use the provider's instructions to download the snapshot.
+
+> In most cases, you can run `wget snapshot-web-address`.
+
+To extract the snapshot contents to the default dydxprotocol home directory, `$/HOME/.dydxprotocol/data`, run the following command, replacing the example value `your-snapshot-filename`:
+
+<!-- double check this command works, want to have users run it from $HOME like all others
+original instructions say you must run from $HOME/.dydxprotocol
+original: lz4 -dc < your-snapshot-filename.tar.lz4 | tar xf -  -->
 
 ```bash
-lz4 -dc < $YOUR_SNAPSHOT_FILENAME.tar.lz4 | tar xf -
+lz4 -dc < your-snapshot-filename.tar.lz4 | tar xf -C $HOME/.dydxprotocol
 ```
-> The /data directory is automatically created when you extract the snapshot
+> The `/data` directory is automatically created when you extract the snapshot
 
-When you start your full node, it automatically uses the snapshot in its data directory to begin syncing your full node's state with the network.
+When you start your full node, it automatically uses the snapshot to begin syncing your full node's state with the network.
 
 ### Step 9: Create a system service to start your full node automatically
-To create a `systemd` service that starts your full node automatically on system startup, run the following commands:
+To create a `systemd` service that starts your full node automatically, run the following commands:
 
 ```bash
 sudo tee /etc/systemd/system/dydxprotocold.service > /dev/null << EOF
@@ -163,7 +177,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable dydxprotocold
 ```
 
-The command above saves a file `dydxprotocold.service` to the  directory `/etc/systemd/system/`. The file contains a command to run on startup, `ExecStart`, and related environment variables. **The flag `--non-validating-full-node=true` must be included, as it specifies that you are creating a full node.**
+The system service holds environment variables. When you start it, it will run the command `/$HOME/go/bin/cosmovisor run start --non-validating-full-node=true`
 
 ### Step 10: Start the service
 To start your node using the `systemd` service that you created, run the following command:
@@ -182,7 +196,7 @@ When you start your full node it must sync with the history of the network. If y
 ```bash
 sudo journalctl -u dydxprotocold -f
 ```
-If your system service is running, the preceding command continuously returns node updates to your terminal. 
+If your system service is running, the preceding command streams updates from your node to your command line. Press `Ctrl + C` to stop viewing updates.
 
 Finally, confirm that your full node is properly synchronized by comparing its current block to the dYdX chain:
 - To find the network's current block, you can use the block explorer [mintscan.io](https://www.mintscan.io/dydx).
