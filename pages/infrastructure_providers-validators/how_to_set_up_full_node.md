@@ -17,7 +17,7 @@ To set up a full node, you can either:
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 
 ## Manual Installation Steps
-The following steps will guide you through manually setting up a full node. Alternatively, you can [run this script](https://github.com/dydxprotocol/v4-chain/blob/main/protocol/scripts/create_full_node.sh).
+The following steps will guide you through manually setting up a full node.
 
 ### Step 1: Update your system and prepare to install dependencies
 To download system updates and install [curl](https://curl.se/), run the following commands:
@@ -29,6 +29,8 @@ sudo apt-get install -y curl jq lz4
 ### Step 2: Install Go
 To install [Go](https://go.dev/) and add its directory to your system `$PATH`, run the following commands with the latest version of Go:
 
+<!-- todo dir to run these commands from-->
+
 ```bash
 # Example for AMD64 architecture and Go version 1.22.2
 wget https://golang.org/dl/go1.22.2.linux-amd64.tar.gz # Download the compressed file
@@ -36,6 +38,8 @@ sudo tar -C /usr/local -xzf go1.22.2.linux-amd64.tar.gz # Extract the file to /u
 rm go1.22.2.linux-amd64.tar.gz # Delete the installer package
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bashrc # Add Go to your $PATH
 ```
+
+<!-- todo define $HOME-->
 
 ### Step 3: Install Cosmovisor and create data directories
 [Cosmovisor](https://docs.cosmos.network/main/build/tooling/cosmovisor) is a process manager for Cosmos SDK-based blockchains that enables automatic binary updates without downtime. To install Cosmovisor, run the following command with the latest Cosmovisor version:
@@ -66,12 +70,12 @@ Extract the binary and rename it "dydxprotocold", removing the version and archi
 
 ```bash
 # Example for AMD64 architecture
-sudo tar -C /usr/local -xzf dydxprotocold-v5.0.5-linux-amd64.tar.gz dydxprotocold # Extract and rename the file
+sudo tar -C /usr/local -xzf dydxprotocold-v5.0.5-linux-amd64.tar.gz dydxprotocold # Extract the file to /usr/local
 rm dydxprotocold-v5.0.5-linux-amd64.tar.gz # Delete the installer package
 echo 'export PATH=$PATH:/usr/local/bin:$HOME/bin' >> $HOME/.bashrc # Add to your $PATH
 ```
 
-<!-- 
+<!-- todo first cmd didnt work for me
 sudo tar -xzvf dydxprotocold-v5.0.5-linux-amd64.tar.gz
 mv ./build/dydxprotocold-v5.0.5-linux-amd64 dydxprotocold
  -->
@@ -79,12 +83,12 @@ mv ./build/dydxprotocold-v5.0.5-linux-amd64 dydxprotocold
 ### Step 5: Initialize your node
 To initialize your node, provide the ID of the chain to which you want to connect and name your node. By default, the dYdX home directory is created in `$HOME/.dydxprotocol`.
 ```bash
-CHAIN_ID=dydx-testnet-0
-NODE_NAME=mydydxfullnode
-dydxprotocold init --chain-id=$CHAIN_ID $NODE_NAME
+dydxprotocold init --chain-id=<dydx-example-network> <mynode>
 ```
 
-<!-- had to run ./dydxprotocold, fix path -->
+<!-- todo 
+decide on variable format <> $
+had to run ./dydxprotocold, fix path installation -->
 
 ### Step 6: Move `dydxprotocold` to your Cosmovisor `/genesis` directory
 Your dYdX home directory will remain the same. Moving `dydxprotold` into your Cosmovisor data directory allows you to use Cosmovisor for no-downtime binary upgrades.
@@ -95,7 +99,7 @@ To move the file to your Cosmovisor data directory, run the following command:
 mv dydxprotocold $HOME/.dydxprotocol/cosmovisor/genesis/bin/
 ```
 
-<!-- used current directory -->
+<!-- todo used current directory, just define $HOME at top -->
 
 ### Step 7: Update your configuration with the Genesis Block of the network in which you want to participate
 The Genesis Block is the initial state of a dYdX chain. To download it and update your node's configuration, run the following command:
@@ -116,8 +120,11 @@ SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856",
 sed -i 's/seeds = ""/seeds = "'"${SEED_NODES[*]}"'"/' $HOME/.dydxprotocol/config/config.toml
 ```
 
-<!-- failing to write output
-is this needed? -->
+<!-- todo
+failing to write output
+is this needed?
+make this more general and link out to this information
+ -->
 
 For an up-to-date list of seed nodes, see [Resources](https://docs.dydx.exchange/network/resources#seed-nodes).
 
@@ -130,13 +137,13 @@ Find and download the latest snapshot from the [Snapshot Service](https://docs.d
 lz4 -dc < snapshotfile.tar.lz4 | tar xf -
 ```
 
-<!-- wget https://snapshots.bwarelabs.com/dydx/testnet/dydx20240717.tar.lz4
-
+<!-- 
+todo
+add:
+wget https://snapshots.bwarelabs.com/dydx/testnet/dydx20240717.tar.lz4
 
 clarify HOME directory and data directory -->
-
-<!-- lz4 -c -d dydx20240717.tar.lz4 | tar -x -C <DYDX_HOME>/data <dont use /data, command creates it>
-
+<!-- note that the command above creates a /data dir automatically
  -->
 
 After extracting the snapshot to your dydxprotocl home directory, when you start your full node, it will automatically use the snapshot in its data directory to begin syncing your full node's state with the network.
@@ -170,6 +177,7 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable dydxprotocold
 ```
+<!-- todo test this, simplify if possible -->
 
 The command above saves a file `dydxprotocold.service` to the  directory `/etc/systemd/system/`. The file contains a command to run on startup, `ExecStart`, and related environment variables. **The flag `--non-validating-full-node=true` must be included, as it specifies that you are creating a full node.**
 
@@ -182,14 +190,14 @@ sudo systemctl start dydxprotocold
 When you start your full node it must sync with the history of the network. If you initialized your full node using a snapshot, your node must update its state only with blocks created after the snapshot was taken. If your node's state is empty, it must sync with the entire history of the network.
 
 ### Check your service logs to confirm that your node is running
-
 ```bash
 sudo journalctl -u dydxprotocold -f
 ```
+<!-- todo test this command and detail output -->
 
-If your node is still syncing, it returns (TODO)
+If your node is still syncing, it returns...
 
-If your node is finished syncing, it returns (TODO). Confirm that your full node is properly synchronized by comparing its current block to the dYdX chain.
+If your node is finished syncing, it returns... . Confirm that your full node is properly synchronized by comparing its current block to the dYdX chain.
 
 - To find the network's current block, you can use the block explorer [mintscan.io](https://www.mintscan.io/dydx).
 - To find your full node's height, query your node with the following command:
