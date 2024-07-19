@@ -11,8 +11,16 @@ To run a full node, the system that hosts the node must meet the following minim
 ## Choose a Method
 To set up a full node, you can either:
 
-1. Use [this script](https://github.com/dydxprotocol/v4-chain/blob/main/protocol/scripts/create_full_node.sh), provided by dYdX, to automate setup.
-2. Follow the steps on this page to manually set up a full node.
+1. Use [this script](https://github.com/dydxprotocol/v4-chain/blob/main/protocol/scripts/create_full_node.sh), provided by dYdX, to automate setup. 
+
+Save the script with an `.sh` extension in your `$HOME` directory. You may need to replace default values, such as `chain-id`, with your own. Run it with the following commands, replacing example value `your-script-name` with your own:
+
+```bash
+cd $HOME
+bash your-script-name.sh
+```
+
+2. Or, follow the steps on this page to manually set up a full node.
 
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 
@@ -43,7 +51,7 @@ rm go1.22.2.linux-amd64.tar.gz # Delete the installer package
 
 Add the Go directory to your system `$PATH`:
 ```bash
-echo 'export PATH=$PATH:$HOME/go/bin' >> $HOME/.bashrc # Write to your .bashrc profile
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bashrc # Write to your .bashrc profile
 ```
 
 ### Step 3: Install Cosmovisor and create data directories
@@ -72,13 +80,14 @@ curl -L -O https://github.com/dydxprotocol/v4-chain/releases/download/protocol/v
 ```
 
 ### Step 5: Move `dydxprotocold` to your Cosmovisor `/genesis` directory
-After you download the binary, moving `dydxprotold` into your Cosmovisor data directory allows you to use Cosmovisor for no-downtime binary upgrades. To extract, rename, and move the file to your Cosmovisor data directory, run the following commands:
+After you download the binary, moving `dydxprotocold` into your Cosmovisor data directory allows you to use Cosmovisor for no-downtime binary upgrades. To extract, rename, and move the file to your Cosmovisor data directory, run the following commands:
 
 ```bash
 # Example for AMD64 architecture
 sudo tar -xzvf dydxprotocold-v5.0.5-linux-amd64.tar.gz # Extract the file
-mv ./build/dydxprotocold-v5.0.5-linux-amd64 ./.dydxprotocol/cosmovisor/genesis/bin/dydxprotocold # Move the file to /.dydxprotocol and rename it
+sudo mv ./build/dydxprotocold-v5.0.5-linux-amd64 ./.dydxprotocol/cosmovisor/genesis/bin/dydxprotocold # Move the file to /.dydxprotocol and rename it
 rm dydxprotocold-v5.0.5-linux-amd64.tar.gz # Delete the installer package
+rm -rf build # Delete the now-empty /build directory
 ```
 
 Add the `dydxprotocold` directory to your system `$PATH`:
@@ -94,6 +103,8 @@ dydxprotocold init --chain-id=dydx-testnet-0 my-node
 
 > See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for chain IDs and other network constants.
 
+When you initialize your node, `dydxprotocold` returns your default node configuration in JSON.
+
 ### Step 7: Update your node configuration with the Genesis Block of the network in which you want to participate
 <!-- confirm that this step is necessary along with snapshot -->
 The Genesis Block is the initial state of a dYdX chain. To download it and save it as a JSON file, run the following command:
@@ -101,6 +112,8 @@ The Genesis Block is the initial state of a dYdX chain. To download it and save 
 ```bash
 curl https://dydx-rpc.lavenderfive.com/genesis | python3 -c 'import json,sys;print(json.dumps(json.load(sys.stdin)["result"]["genesis"], indent=2))' > $HOME/.dydxprotocol/config/genesis.json
 ```
+
+Your `genesis.json` configuration file is updated from a default configuration file to the genesis state of the chain to which you are connecting.
 
 ### Step 8: Update your node configuration with a list of seed nodes
 Seed nodes provide trustworthy data about the history of the network to your full node. To update `config.toml` with a list of seed nodes, run the following command:
@@ -126,26 +139,33 @@ The preceding command updates the `seeds` variable of `config.toml` with the lis
 ### Step 8: Download and extract a snapshot of the chain's history since genesis
 Using snapshots to restore or sync your full node's state saves time and effort. Using a snapshot avoids replaying all the blocks from genesis and does not require multiple binary versions for network upgrades. Instead, your node reads most of the chain's history directly from the snapshot.
 
-To download a snapshot, first find a provider for your use case on the [Snapshot Service](https://docs.dydx.exchange/network/resources#snapshot-service) page.
+To download and extract the snapshot contents to the default dydxprotocol home directory, first **change directories into ./dydxprotocol**. To change directories, run the following command:
+
+```bash
+cd $HOME/.dydxprotocol
+```
+
+Then, find a provider for your use case on the [Snapshot Service](https://docs.dydx.exchange/network/resources#snapshot-service) page.
 
 > For example, if you are connecting to `dydx-testnet-4`, you may use the provider [Bware Labs](https://bwarelabs.com/snapshots/dydx).
 
-Use the provider's instructions to download the snapshot.
+Use the provider's instructions to download the snapshot into your current directory, `/.dydxprotocol`.
 
 > In most cases, you can run `wget snapshot-web-address`.
 
-To extract the snapshot contents to the default dydxprotocol home directory, `$/HOME/.dydxprotocol/data`, run the following command, replacing the example value `your-snapshot-filename`:
-
-<!-- double check this command works, want to have users run it from $HOME like all others
-original instructions say you must run from $HOME/.dydxprotocol
-original: lz4 -dc < your-snapshot-filename.tar.lz4 | tar xf -  -->
+From the current directory `$/HOME/.dydxprotocol`, run the following command, replacing the example value `your-snapshot-filename`:
 
 ```bash
-lz4 -dc < your-snapshot-filename.tar.lz4 | tar xf -C $HOME/.dydxprotocol
+lz4 -dc < your-snapshot-filename.tar.lz4 | tar xf -
 ```
-> The `/data` directory is automatically created when you extract the snapshot
+The preceding command creates the `/data` folder in your current directory, `/.dydxprotocol`.
 
-When you start your full node, it automatically uses the snapshot to begin syncing your full node's state with the network.
+**Change directories back to your $HOME directory for the rest of the procedure**. Run the following command:
+```bash
+cd ..
+```
+
+When you start your full node, it will automatically use the snapshot to begin syncing your full node's state with the network.
 
 ### Step 9: Create a system service to start your full node automatically
 To create a `systemd` service that starts your full node automatically, run the following commands:
@@ -177,7 +197,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable dydxprotocold
 ```
 
-The system service holds environment variables. When you start it, it will run the command `/$HOME/go/bin/cosmovisor run start --non-validating-full-node=true`
+The system service definition above holds environment variables. When you start it, the service will run the command `/$HOME/go/bin/cosmovisor run start --non-validating-full-node=true`
 
 ### Step 10: Start the service
 To start your node using the `systemd` service that you created, run the following command:
@@ -196,10 +216,10 @@ When you start your full node it must sync with the history of the network. If y
 ```bash
 sudo journalctl -u dydxprotocold -f
 ```
-If your system service is running, the preceding command streams updates from your node to your command line. Press `Ctrl + C` to stop viewing updates.
+If your system service `dydxprotocold` is running, the preceding command streams updates from your node to your command line. Press `Ctrl + C` to stop viewing updates.
 
 Finally, confirm that your full node is properly synchronized by comparing its current block to the dYdX chain:
-- To find the network's current block, you can use the block explorer [mintscan.io](https://www.mintscan.io/dydx).
+- To find the network's current block, see the **Block Height** of the network with a block explorer, such as [mintscan.io](https://www.mintscan.io/dydx).
 - To find your full node's height, query your node with the following command:
 ```bash
 curl localhost:26657/status
