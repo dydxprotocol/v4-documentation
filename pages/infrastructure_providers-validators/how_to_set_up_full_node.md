@@ -106,7 +106,6 @@ dydxprotocold init --chain-id=dydx-testnet-0 my-node
 When you initialize your node, `dydxprotocold` returns your default node configuration in JSON.
 
 ### Step 7: Update your node configuration with the Genesis Block of the network in which you want to participate
-<!-- confirm that this step is necessary along with snapshot -->
 The Genesis Block is the initial state of a dYdX chain. To download it and save it as a JSON file, run the following command:
 
 ```bash
