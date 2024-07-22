@@ -13,11 +13,11 @@ To set up a full node, you can either:
 
 1. Use [this script](https://github.com/dydxprotocol/v4-chain/blob/main/protocol/scripts/create_full_node.sh), provided by dYdX, to automate setup. 
 
-Save the script with an `.sh` extension in your `$HOME` directory. You may need to replace default values, such as `chain-id`, with your own. Run it with the following commands, replacing example value `your-script-name` with your own:
+Save the script with an `.sh` extension in your `$HOME` directory. You may need to replace default values configured for the mainnet, such as `chain-id`, with your own. Run it with the following commands:
 
 ```bash
 cd $HOME
-bash your-script-name.sh
+bash create_full_node.sh
 ```
 
 2. Or, follow the steps on this page to manually set up a full node.
@@ -98,7 +98,8 @@ echo 'export PATH=$PATH:$HOME/.dydxprotocol/cosmovisor/genesis/bin' >> $HOME/.ba
 ### Step 6: Initialize your node
 To initialize your node, provide the ID of the chain to which you want to connect and create a name for your node. The dYdX home directory is created in `$HOME/.dydxprotocol` by default. Replace the example values `dydx-testnet-0` and `my-node` with your own and run the following command:
 ```bash
-dydxprotocold init --chain-id=dydx-testnet-0 my-node
+# Example for dYdX token holders on mainnet
+dydxprotocold init --chain-id=dydx-mainnet-1 my-node
 ```
 
 > See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for chain IDs and other network constants.
@@ -117,9 +118,10 @@ Your `genesis.json` configuration file is updated from a default configuration f
 ### Step 8: Update your node configuration with a list of seed nodes
 Seed nodes provide trustworthy data about the history of the network to your full node. To update `config.toml` with a list of seed nodes, run the following command:
 
-> Check the [Resources](https://docs.dydx.exchange/network/resources#seed-nodes) page for an up-to-date list of seed nodes.
+> Check the [Resources](https://docs.dydx.exchange/network/resources#seed-nodes) page for an up-to-date list of seed nodes for the network to which you want to connect.
 
 ```bash
+# Example for dYdX token holders on mainnet
 SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856", 
 "65b740ee326c9260c30af1f044e9cda63c73f7c1@seeds.kingnodes.net:23856", 
 "f04a77b92d0d86725cdb2d6b7a7eb0eda8c27089@dydx-mainnet-seed.bwarelabs.com:36656",
@@ -146,11 +148,11 @@ cd $HOME/.dydxprotocol
 
 Then, find a provider for your use case on the [Snapshot Service](https://docs.dydx.exchange/network/resources#snapshot-service) page.
 
-> For example, if you are connecting to `dydx-testnet-4`, you may use the provider [Bware Labs](https://bwarelabs.com/snapshots/dydx).
+> For example, if you are connecting to `dydx-mainnet-1`, you may use the provider [Bware Labs](https://bwarelabs.com/snapshots/dydx).
 
 Use the provider's instructions to download the snapshot into your current directory, `/.dydxprotocol`.
 
-> In most cases, you can run `wget snapshot-web-address`.
+> In most cases, you can run `wget <snapshot-web-address>`.
 
 From the current directory `$/HOME/.dydxprotocol`, run the following command, replacing the example value `your-snapshot-filename`:
 
@@ -218,7 +220,7 @@ sudo journalctl -u dydxprotocold -f
 If your system service `dydxprotocold` is running, the preceding command streams updates from your node to your command line. Press `Ctrl + C` to stop viewing updates.
 
 Finally, confirm that your full node is properly synchronized by comparing its current block to the dYdX chain:
-- To find the network's current block, see the **Block Height** of the network with a block explorer, such as [mintscan.io](https://www.mintscan.io/dydx).
+- To find the network's current block, see the **Block Height** of your network with a block explorer, such as [mintscan.io](https://www.mintscan.io/dydx).
 - To find your full node's height, query your node with the following command:
 ```bash
 curl localhost:26657/status
