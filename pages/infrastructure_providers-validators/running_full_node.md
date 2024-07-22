@@ -20,6 +20,8 @@ See [snapshot service](../infrastructure_providers-network/resources.mdx#snapsho
 
 You need a non-validating full node.
 
+If you followed the instructions in... start it with `stystemctl start dydxprotocol`.
+
 ## Start Your Full Node
 
 If you set up a `systemd` service to start your full node by following the instructions in [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node), start your node with the following command:
