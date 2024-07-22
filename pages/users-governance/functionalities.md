@@ -79,9 +79,9 @@ Current Liquidity Tiers include:
 | ID | Name | initial margin fraction | maintenance fraction (what fraction MMF is of IMF) | base position notional | impact notional |  maintenance margin fraction (as is) | impact notional (as is) | Lower Cap (USDC Millions) | Upper Cap (USDC Millions) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 0 | Large-Cap | 0.05 | 0.6 | 1_000_000 USDC | 500 USDC / IM | 0.03 | 10_000 USDC | None | None |
-| 1 | Mid-Cap | 0.1 | 0.5 | 250_000 USDC | 500 USDC / IM | 0.05 | 5_000 USDC | 15 | 25 |
-| 2 | Long-Tail | 0.2 | 0.5 | 100_000 USDC | 500 USDC / IM | 0.1 | 2_500 USDC | 2.5 | 5 |
-| 3 | Safety | 1 | .02 | 1_000 USDC | 2500 USDC / IM | 0.2 | 2_500 USDC | 0.5 | 1 |
+| 1 | Mid-Cap | 0.1 | 0.5 | 250_000 USDC | 500 USDC / IM | 0.05 | 5_000 USDC | 20 | 50 |
+| 2 | Long-Tail | 0.2 | 0.5 | 100_000 USDC | 500 USDC / IM | 0.1 | 2_500 USDC | 5 | 10 |
+| 3 | Safety | 1 | .02 | 1_000 USDC | 2500 USDC / IM | 0.2 | 2_500 USDC | 2 | 5 |
 
 - Each market has a `Lower Cap` and `Upper Cap` denominated in USDC.
 - Each market already has a `Base IMF`.
