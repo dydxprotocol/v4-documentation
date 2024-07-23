@@ -1,6 +1,8 @@
 # Set Up a Full Node
 Installing and running a full node allows your system to participate in a dYdX chain network.
 
+> Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
+
 ## Prerequisites
 To run a full node, the system that hosts the node must meet the following minimum requirements:
 - Linux (Ubuntu Server 22.04.3 or later recommended)
@@ -13,7 +15,9 @@ To set up a full node, you can either:
 
 1. Use [this script](https://github.com/dydxprotocol/v4-chain/blob/main/protocol/scripts/create_full_node.sh), provided by dYdX, to automate setup. 
 
-Save the script with an `.sh` extension in your `$HOME` directory. You may need to replace default values configured for the mainnet, such as `chain-id`, with your own. Run it with the following commands:
+Save the script with an `.sh` extension in your `$HOME` directory. Edit the script, replacing default values in fields such `VERSION` and `CHAIN-ID` with your own. Run the script with the following commands:
+
+> To find the current version of the [dYdX foundation](https://www.dydx.foundation/) mainnet, see the recommended protocol version on [mintscan.io](https://www.mintscan.io/dydx/parameters). To find network constants such as chain IDs, see the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation.
 
 ```bash
 cd $HOME
@@ -21,8 +25,6 @@ bash create_full_node.sh
 ```
 
 2. Or, follow the steps on this page to manually set up a full node.
-
-> Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 
 ## Manual Installation Steps
 The following steps will guide you through manually setting up a full node.
@@ -67,8 +69,7 @@ mkdir -p $HOME/.dydxprotocol/cosmovisor/upgrades
 ```
 
 ### Step 4: Download the `dydxprotocold` binary
-The `dydxprotocold` binary contains the software you need to operate a full node. **You must use the same version of the software as the network to which you want to connect.**
-> To find the current version of the [dYdX foundation](https://www.dydx.foundation/) mainnet, see the recommended protocol version on [mintscan.io](https://www.mintscan.io/dydx/parameters).
+The `dydxprotocold` binary contains the software you need to operate a full node. **You must use the same version of the software as the network to which you want to connect.** To find the current version of the [dYdX foundation](https://www.dydx.foundation/) mainnet, see the recommended protocol version on [mintscan.io](https://www.mintscan.io/dydx/parameters).
 
 **Option 1**: Find and download that protocol binary from the [v4 Chain Releases](https://github.com/dydxprotocol/v4-chain/releases/) page.
 > For example, for protocol version 5.0.5 on an AMD system, download `dydxprotocold-v5.0.5-linux-amd64.tar.gz`.
@@ -96,7 +97,7 @@ echo 'export PATH=$PATH:$HOME/.dydxprotocol/cosmovisor/genesis/bin' >> $HOME/.ba
 ```
 
 ### Step 6: Initialize your node
-To initialize your node, provide the ID of the chain to which you want to connect and create a name for your node. The dYdX home directory is created in `$HOME/.dydxprotocol` by default. Replace the example values `dydx-testnet-0` and `my-node` with your own and run the following command:
+To initialize your node, provide the ID of the chain to which you want to connect and create a name for your node. The dYdX home directory is created in `$HOME/.dydxprotocol` by default. Replace the example values `dydx-mainnet-1` and `my-node` with your own and run the following command:
 ```bash
 # Example for dYdX token holders on mainnet
 dydxprotocold init --chain-id=dydx-mainnet-1 my-node
@@ -141,16 +142,16 @@ Then, find a provider for your use case on the [Snapshot Service](https://docs.d
 
 > For example, if you are connecting to `dydx-mainnet-1`, you may use the provider [Bware Labs](https://bwarelabs.com/snapshots/dydx).
 
-Use the provider's instructions to download the snapshot into your node's data directory, `$HOME/.dydxprotocol/data`.
+Use the provider's instructions to download the snapshot into your `$HOME/.dydxprotocol` directory.
 
 > In most cases, you can run `wget <snapshot-web-address>`.
 
-From the current directory `$/HOME/.dydxprotocol`, run the following command, replacing the example value `your-snapshot-filename`:
+From `$/HOME/.dydxprotocol`, run the following command, replacing the example value `your-snapshot-filename`:
 
 ```bash
 lz4 -dc < your-snapshot-filename.tar.lz4 | tar xf -
 ```
-The preceding command creates the `/data` folder in your current directory, `/.dydxprotocol`.
+Note that extracting the snapshot adds the `/data` folder in your current directory.
 
 **Change directories back to your $HOME directory for the rest of the procedure**. Run the following command:
 ```bash
