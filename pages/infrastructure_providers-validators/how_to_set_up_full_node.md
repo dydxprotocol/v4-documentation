@@ -106,17 +106,8 @@ dydxprotocold init --chain-id=dydx-mainnet-1 my-node
 
 When you initialize your node, `dydxprotocold` returns your default node configuration in JSON.
 
-### Step 7: Update your node configuration with the Genesis Block of the network in which you want to participate
-The Genesis Block is the initial state of a dYdX chain. To download it and save it as a JSON file, run the following command:
-
-```bash
-curl https://dydx-rpc.lavenderfive.com/genesis | python3 -c 'import json,sys;print(json.dumps(json.load(sys.stdin)["result"]["genesis"], indent=2))' > $HOME/.dydxprotocol/config/genesis.json
-```
-
-Your `genesis.json` configuration file is updated from a default configuration file to the genesis state of the chain to which you are connecting.
-
-### Step 8: Update your node configuration with a list of seed nodes
-Seed nodes provide trustworthy data about the history of the network to your full node. To update `config.toml` with a list of seed nodes, run the following command:
+### Step 7: Update your node configuration with a list of seed nodes
+A seed node acts as an address book and helps your node join the network. To update `config.toml` with a list of seed nodes, run the following command:
 
 > Check the [Resources](https://docs.dydx.exchange/network/resources#seed-nodes) page for an up-to-date list of seed nodes for the network to which you want to connect.
 
@@ -137,8 +128,8 @@ sed -i 's/seeds = ""/seeds = "'"${SEED_NODES[*]}"'"/' $HOME/.dydxprotocol/config
 
 The preceding command updates the `seeds` variable of `config.toml` with the list you provide.
 
-### Step 8: Download and extract a snapshot of the chain's history since genesis
-Using snapshots to restore or sync your full node's state saves time and effort. Using a snapshot avoids replaying all the blocks from genesis and does not require multiple binary versions for network upgrades. Instead, your node reads most of the chain's history directly from the snapshot.
+### Step 8: Use a snapshot as your node's initial state
+Using snapshots to restore or sync your full node's state saves time and effort. Using a snapshot avoids replaying all the blocks from genesis and does not require multiple binary versions for network upgrades. Instead, your node uses the snapshot as its initial state.
 
 To download and extract the snapshot contents to the default dydxprotocol home directory, first **change directories into ./dydxprotocol**. To change directories, run the following command:
 
@@ -150,7 +141,7 @@ Then, find a provider for your use case on the [Snapshot Service](https://docs.d
 
 > For example, if you are connecting to `dydx-mainnet-1`, you may use the provider [Bware Labs](https://bwarelabs.com/snapshots/dydx).
 
-Use the provider's instructions to download the snapshot into your current directory, `/.dydxprotocol`.
+Use the provider's instructions to download the snapshot into your node's data directory, `$HOME/.dydxprotocol/data`.
 
 > In most cases, you can run `wget <snapshot-web-address>`.
 
@@ -163,7 +154,7 @@ The preceding command creates the `/data` folder in your current directory, `/.d
 
 **Change directories back to your $HOME directory for the rest of the procedure**. Run the following command:
 ```bash
-cd ..
+cd $HOME
 ```
 
 When you start your full node, it will automatically use the snapshot to begin syncing your full node's state with the network.
