@@ -1,5 +1,3 @@
-
-
 # Full Node gRPC Streaming
 
 Last updated for: `v5.0.5`
@@ -17,7 +15,7 @@ The orderbook stream is implemented with gRPC, a streaming RPC protocol develope
 | grpc-streaming-max-batch-size | int | 2000 | Maximum protocol-side update buffer before dropping all streaming connections|
 | grpc-streaming-max-channel-buffer-size | int | 2000 | Maximum channel size before dropping slow or erroring grpc connections. Decreasing this will more aggressively drop slow client connections. |
 
-**Disclaimer:** We recommend you use this exclusively with your own node, as supporting multiple public gRPC streams with unknown client subscriptions may result in degredated performance.
+**Disclaimer:** We recommend you use this exclusively with your own node, as supporting multiple public gRPC streams with unknown client subscriptions may result in degraded performance.
 
 ## Connecting to the Stream
 
@@ -41,14 +39,16 @@ For Python, the corresponding code is already generated in [the v4-proto PyPi pa
 2. Discard messages until you receive a `StreamOrderbookUpdate` with `snapshot` set to `true`. This message contains the full orderbook state for each clob pair.
 3. When you see an `OrderPlaceV1` message, insert the order into the book at the end of the queue on its price level. Track the order's initial quantums (quantity) and total filled quantums.
 4. When you see an `OrderUpdateV1` message, update the order's total filled quantums.
-5. When you see a `ClobMatch` (trade) message, update the total filled quantums for each maker order filled using the `fill_amounts` field. Note that, just as with `OrderUpdateV1`, this number is the order's _total_ filled quantity, not the amount filled in this specific match. The order's open quantity remaining is always its initial quantity minus its total filled quantity.
+5. When you see a `ClobMatch` (trade) message, update the total filled quantums for each maker order filled using the `fill_amounts` field. 
+	- Note that, similar to `OrderUpdateV1`, the `fill_amounts` field represents the order's total filled quantity up to this point. This is not the amount filled in this specific match, but rather the cumulative amount filled across all matches for this order. 
+    - The order's quantity remaining is always its initial quantity minus its total filled quantity.
 6. When you see an `OrderRemoveV1` message, remove the order from the book.
 
 Note:
 - The order subticks (price) and quantums (quantity) fields are encoded as integers and 
   require [translation to human-readable values](https://github.com/dydxprotocol/grpc-stream-client/blob/d8cbbc3c6aeb454078c72204491727b243c26e19/src/market_info.py#L1).
 - Each node's view of the book is subjective, because order messages arrive at different nodes in different orders. When a block is proposed, nodes "sync" their books to cohere with the block proposer's view of the book.
-- Only `ClobMatch` messages with `execModeFinalize` are trades confirmed by consensus. Other `ClobMatch` messages are speculative. 
+- Only `ClobMatch` messages with `execModeFinalize` are trades confirmed by consensus.
 	- Use all `ClobMatch` messages to update the orderbook state (the node's book state is optimistic, and reverts if fills are not confirmed).
     - Treat only `ClobMatch` messages with `execModeFinalize` as confirmed trades.
     - See [FAQs](#faqs) for more information.
@@ -157,7 +157,7 @@ When `OrderPlaceV1` is received,  add the corresponding order to the end of the 
 - This message is only used to modify the orderbook data structure (Bids, Asks).
 - This message is sent out whenever an order is added to the in-memory orderbook.
 - This may occur in various places such as when an order is initially placed, or when an order is replayed during the ProcessCheckState step.
-- A Placement message will always be followed by an Update message.
+- An `OrderPlaceV1` message is always be followed by an `OrderUpdateV1` message, which sets the intial fill amount (typically zero).
 
 <details>
 
@@ -194,7 +194,7 @@ func (l *LocalOrderbook) AddOrder(order v1types.IndexerOrder) {
 ### OrderUpdateV1
 When `OrderUpdateV1` is received, update the order's fill amount to the amount specified.
 - This message is only used to update fill amounts. It carries information about an order's updated fill amount.
-- This message is sent out whenever an order's fill amount changes from an action that isn't a `ClobMatch`. 
+- This message is emitted when an order's fill amount changes due to something other than a `ClobMatch`.
 - This includes when deliverState is reset to the checkState from last block, or when branched state is written to and then discarded if there was a matching error.
 - An update message will always accompany an order placement message.
 - It's possible for an update message to be sent before a placement message. You can safely ignore update messages with order ids not in the orderbook.
@@ -283,7 +283,7 @@ This message is only used to update fill amounts, it does not add or remove orde
 
 The `ClobMatch` data structure contains either a `MatchOrders` or a `MatchPerpetualLiquidation` object. Match Deleveraging events are not emitted. Within each Match object, a `MakerFill` array contains the various maker orders that matched with the singular taker order and the amount of quantums matched.
 
-Note that prices are always matched at the maker order price.  The `orders` field in the `StreamOrderbookFill` object allow for price lookups based on order id. It contains all the maker order ids, and in the case of non-liquidation orders, it has the taker order.
+Note that all matches occur at the maker order price. The `orders` field in the `StreamOrderbookFill` object allow for price lookups based on order id. It contains all the maker order ids, and in the case of non-liquidation orders, it has the taker order.
 
 Mapping each order in `orders` to the corresponding value in the `fill_amounts` field provides the absolute filled amount of quantums that each order is filled to after the ClobMatch was processed. 
 
