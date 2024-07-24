@@ -331,7 +331,7 @@
 <summary>1. How is the oracle price computed?</summary>
 
 - The oracle price has five parts:
-  - Skip Protocol Sidecar: side car that pulls price data from external sources and caches them for the validator to use [link](https://docs.skip.money/slinky/integrations/dydx).
+  - Skip Protocol Sidecar: side car that pulls price data from external sources and caches them for the validator to use [link](https://docs.skip.build/connect/validators/quickstart).
   - Vote Extensions: Every block during the Precommit stage, all validators will submit vote extensions for what they believe the oracle price of all tracked assets should be.
   - Consensus: The block after VE are submitted, Slinky deterministically aggregates all VE from the previous block and proposes a new updated price which is voted into consensus.
   - `x/prices` Module: updates the state based on the new price, also has logic for validation and etc. [link](https://github.com/dydxprotocol/v4-chain/tree/main/protocol/x/prices).
