@@ -42,6 +42,7 @@ For Python, the corresponding code is already generated in [the v4-proto PyPi pa
 5. When you see a `ClobMatch` (trade) message, update the total filled quantums for each maker order filled using the `fill_amounts` field. 
 	- Note that, similar to `OrderUpdateV1`, the `fill_amounts` field represents the order's total filled quantity up to this point. This is not the amount filled in this specific match, but rather the cumulative amount filled across all matches for this order. 
     - The order's quantity remaining is always its initial quantity minus its total filled quantity.
+    - Note that both `OrderUpdateV1` and `ClobMatch` messages must be processed to maintain the correct book state. See [OrderUpdateV1](#orderupdatev1) for details.
 6. When you see an `OrderRemoveV1` message, remove the order from the book.
 
 Note:
@@ -195,7 +196,8 @@ func (l *LocalOrderbook) AddOrder(order v1types.IndexerOrder) {
 When `OrderUpdateV1` is received, update the order's fill amount to the amount specified.
 - This message is only used to update fill amounts. It carries information about an order's updated fill amount.
 - This message is emitted when an order's fill amount changes due to something other than a `ClobMatch`.
-- This includes when deliverState is reset to the checkState from last block, or when branched state is written to and then discarded if there was a matching error.
+    - This includes when deliverState is reset to the checkState from last block, or when branched state is written to and then discarded if there was a matching error.
+    - For example, this could happen if the full node sees the order filled, and then the next block committed by consensus does not contain the expected fill, so the order’s quantity remaining resets to its state from the previous block.
 - An update message will always accompany an order placement message.
 - It's possible for an update message to be sent before a placement message. You can safely ignore update messages with order ids not in the orderbook.
 - **Note that you must handle both `OrderUpdateV1` and `ClobMatch` messages to maintain the correct book state**.
