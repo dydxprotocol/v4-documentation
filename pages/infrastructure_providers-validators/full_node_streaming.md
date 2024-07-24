@@ -1,12 +1,14 @@
 
 
-# Full Node GRPC Streaming
+# Full Node gRPC Streaming
 
 Last updated for: `v5.0.5`
 
-This feature aims to provide real-time, accurate orderbook updates and fills. Complete orderbook activities and fills are streamed to the client and can be used to construct a full depth L3 orderbook. Streams are implemented using the existing GRPC query service from Cosmos SDK. Note that by dYdX V4’s optimistic orderbook design, the orderbook can be slightly different across different nodes.
+Enabling this feature causes a full node to expose a stream of orderbook updates (L3) and fills, allowing clients to maintain a full view of the book. Note that due to dYdX's offchain orderbook design, the book state can vary slightly between nodes.
 
-## Enabling GRPC Streaming
+
+## Enabling Streaming
+The orderbook stream is implemented with gRPC, a streaming RPC protocol developed by Google and used in CosmosSDK. Use the following flags to configure the gRPC streaming feature:
 
 | CLI Flag | Type | Default | Short Explanation |
 | -------- | ----- | ------- | -------- |
@@ -15,21 +17,44 @@ This feature aims to provide real-time, accurate orderbook updates and fills. Co
 | grpc-streaming-max-batch-size | int | 2000 | Maximum protocol-side update buffer before dropping all streaming connections|
 | grpc-streaming-max-channel-buffer-size | int | 2000 | Maximum channel size before dropping slow or erroring grpc connections. Decreasing this will more aggressively drop slow client connections. |
 
-**Disclaimer:** We recommend you use this exclusively with your own node, as supporting multiple public GRPC streams with unknown client subscriptions may result in degredated performance.
+**Disclaimer:** We recommend you use this exclusively with your own node, as supporting multiple public gRPC streams with unknown client subscriptions may result in degredated performance.
 
-## Consuming the gRPC Stream
+## Connecting to the Stream
 
+After setting up a full node with gRPC streaming enabled, you can connect to the stream using any gRPC client.
 To follow along with [Google's documentation on gRPC streaming clients](https://grpc.io/docs/languages/go/basics/#client):
 
-1. Clone the [github.com/dydxprotocol/v4-chain](https://github.com/dydxprotocol/v4-chain) repository at same version as your full node.
+1. Clone the [github.com/dydxprotocol/v4-chain](https://github.com/dydxprotocol/v4-chain) repository at the same version as your full node.
 2. Generate the protos: `make proto-gen && make proto-export-deps`.
 3. The generated protos are now in the `.proto-export-deps` directory.
 4. Use the protobuf compiler (protoc) to [generate stubs](https://protobuf.dev/getting-started/) in any supported language.
 5. Follow the documentation to write a streaming client.
+6. Connect to the stream defined in the `dydxprotocol.clob.Query` service ([StreamOrderbookUpdates](https://github.com/dydxprotocol/v4-chain/blob/4199c3e7b00ded24774d49ce8adcbaaa8325ddc1/proto/dydxprotocol/clob/query.proto#L63-L67)).
 
 For Python, the corresponding code is already generated in [the v4-proto PyPi package](https://pypi.org/project/v4-proto/).
 
-## Request / Response
+## Maintaining Orderbook State 
+
+### Overview
+
+1. Connect to the stream and subscribe to updates for a series of clob pair ids, each of which corresponds to a tradeable instrument.
+2. Discard messages until you receive a `StreamOrderbookUpdate` with `snapshot` set to `true`. This message contains the full orderbook state for each clob pair.
+3. When you see an `OrderPlaceV1` message, insert the order into the book at the end of the queue on its price level. Track the order's initial quantums (quantity) and total filled quantums.
+4. When you see an `OrderUpdateV1` message, update the order's total filled quantums.
+5. When you see a `ClobMatch` (trade) message, update the total filled quantums for each maker order filled using the `fill_amounts` field. Note that, just as with `OrderUpdateV1`, this number is the order's _total_ filled quantity, not the amount filled in this specific match. The order's open quantity remaining is always its initial quantity minus its total filled quantity.
+6. When you see an `OrderRemoveV1` message, remove the order from the book.
+
+Note:
+- The order subticks (price) and quantums (quantity) fields are encoded as integers and 
+  require [translation to human-readable values](https://github.com/dydxprotocol/grpc-stream-client/blob/d8cbbc3c6aeb454078c72204491727b243c26e19/src/market_info.py#L1).
+- Each node's view of the book is subjective, because order messages arrive at different nodes in different orders. When a block is proposed, nodes "sync" their books to cohere with the block proposer's view of the book.
+- Only `ClobMatch` messages with `execModeFinalize` are trades confirmed by consensus. Other `ClobMatch` messages are speculative. 
+	- Use all `ClobMatch` messages to update the orderbook state (the node's book state is optimistic, and reverts if fills are not confirmed).
+    - Treat only `ClobMatch` messages with `execModeFinalize` as confirmed trades.
+    - See [FAQs](#faqs) for more information.
+
+
+### Request / Response
 
 To subscribe to the stream, the client can send a 'StreamOrderbookUpdatesRequest' specifying the clob pair ids to subscribe to.
 
@@ -61,7 +86,7 @@ Response will contain a `oneof` field that contains either:
 	- `fill_amounts` contains the absolute, total filled quantums of each order as stored in state.
 		- fill_amounts should be zipped together with the `orders` field. Both arrays should have the same length.
 
-as well as some debugging metadata about `block_height` and `exec_mode`. It is not advised to write business logic around `exec_mode`, as some of these values are used by the underlying cosmos-sdk and are implementation-specific.
+as well as `block_height` and `exec_mode` (see [What Are the Exec Modes?](#what-are-the-exec-modes)). 
 
 <details>
 
@@ -76,7 +101,7 @@ message StreamOrderbookUpdatesResponse {
 }
 
 // StreamUpdate is an update that will be pushed through the
-// GRPC stream.
+// gRPC stream.
 message StreamUpdate {
   // Contains one of an StreamOrderbookUpdate,
   // StreamOrderbookFill.
@@ -93,7 +118,7 @@ message StreamUpdate {
 }
 
 // StreamOrderbookUpdate provides information on an orderbook update. Used in
-// the full node GRPC stream.
+// the full node gRPC stream.
 message StreamOrderbookUpdate {
   // Orderbook updates for the clob pair. Can contain order place, removals,
   // or updates.
@@ -108,7 +133,7 @@ message StreamOrderbookUpdate {
 }
 
 // StreamOrderbookFill provides information on an orderbook fill. Used in
-// the full node GRPC stream.
+// the full node gRPC stream.
 message StreamOrderbookFill {
   // Clob match. Provides information on which orders were matched
   // and the type of order.
@@ -124,8 +149,6 @@ message StreamOrderbookFill {
 ```
 </details>
 
-
-## Maintaining a local orderbook
 
 After subscribing to the orderbook updates, use the orderbook in the snapshot as the starting orderbook.
 
@@ -171,9 +194,11 @@ func (l *LocalOrderbook) AddOrder(order v1types.IndexerOrder) {
 ### OrderUpdateV1
 When `OrderUpdateV1` is received, update the order's fill amount to the amount specified.
 - This message is only used to update fill amounts. It carries information about an order's updated fill amount.
-- This message is sent out whenever an an order's fill amount changes from an action that isn't a `ClobMatch`.
+- This message is sent out whenever an order's fill amount changes from an action that isn't a `ClobMatch`. 
 - This includes when deliverState is reset to the checkState from last block, or when branched state is written to and then discarded if there was a matching error.
 - An update message will always accompany an order placement message.
+- It's possible for an update message to be sent before a placement message. You can safely ignore update messages with order ids not in the orderbook.
+- **Note that you must handle both `OrderUpdateV1` and `ClobMatch` messages to maintain the correct book state**.
 
 <details>
 
@@ -253,10 +278,8 @@ func (l *LocalOrderbook) RemoveOrder(orderId v1types.IndexerOrderId) {
 
 </details>
 
-## Maintaining Order Fill Amounts
-
 ### StreamOrderbookFill/ClobMatch
-This message is only used to update fill amounts, it does not cause any modifications to the orderbook data structure (Bids, Asks).
+This message is only used to update fill amounts, it does not add or remove orders from the book but can change the quantity remaining for open orders.
 
 The `ClobMatch` data structure contains either a `MatchOrders` or a `MatchPerpetualLiquidation` object. Match Deleveraging events are not emitted. Within each Match object, a `MakerFill` array contains the various maker orders that matched with the singular taker order and the amount of quantums matched.
 
@@ -307,8 +330,9 @@ func (c *GrpcClient) ProcessMatchPerpetualLiquidation(
 
 </details>
 
+## FAQs
 
-## Optimistic Orderbook Execution
+### Optimistic Orderbook Execution
 
 By protocol design, each validator has their own version of the orderbook and optimistically processes orderbook matches. As a result, you may see interleaved sequences of order removals, placements, and state fill amount updates when optimistically processed orderbook matches are removed and later replayed on the local orderbook.
 
@@ -316,59 +340,7 @@ By protocol design, each validator has their own version of the orderbook and op
 
 Note that DeliverTx maps to exec mode `execModeFinalize`.
 
-## Example Scenario
-
-- Trader places a bid at price 100 for size 1
-  - OrderPlace, price = 100, size = 1
-  - OrderUpdate, total filled amount = 0
-- Trader replaces that original bid to be price 99 at size 2
-  - OrderRemove
-  - OrderPlace, price = 99, size = 2
-  - OrderUpdate, total filled amount = 0
-- Another trader submits an IOC ask at price 100 for size 1.
-  - Full node doesn't see this matching anything so no updates.
-- Block is confirmed that there was a fill for the trader's original order at price 100 for size 1 (BP didn't see the order replacement)
-  - OrderUpdate, set total fill amount to be 0 (no-op) from checkState -> deliverState reset
-  - MatchOrder emitted for block proposer's original order match, total filled amount = 1
- 
-## Metrics and Logs
-
-| Metric | Type | Explanation |
-| -------- | ----- | ------- |
-| grpc_stream_num_updates_buffered | gauge | number of updates in the full node's buffer cache of updates. Once this hits `grpc-streaming-max-batch-size`, all subscriptions will be dropped. |
-| grpc_stream_subscriber_count | gauge | number of streaming connections currently connected to the full node |
-| grpc_subscription_channel_length.quantile | histogram | histogram of channel size across all subscriptions. Once this hits `grpc-streaming-max-channel-buffer-size`, the offending subscription will be dropped. |
-| grpc_flush_updates_latency.count | count | number of times the buffer cache is flushed. |
-| grpc_flush_updates_latency.quantile | histogram | Latency of each buffer cache flush call into subscription channel. |
-| grpc_send_response_to_subscriber_count | counter | number of messages emitted across all grpc streams. |
-
-All logs from grpc streaming are tagged with `module: grpc-streaming`.
-
-## Protocol-side buffering and Slow GRPC Client Connections
-
-The full node maintains a length-configurable buffer cache of streaming updates to ensure bursts of protocol updates do not induce full node lag. If the buffer reaches maximum capacity, all connections and updates are dropped, and subscribers will have to re-subscribe. The buffer is periodically flushed into each per-subscription golang channel at a configurable set interval of time, defaulting to 50ms.
-
-To ensure slow client connections do not induce full node lag, each client subscription has a unique goroutine and golang channel that pushes updates through the grpc stream. If the channel buffer grows beyond the configurable `grpc-streaming-max-channel-buffer-size` parameter, the goroutine will be stopped. With the poller gone, the channel buffer will eventually grow and hit the max buffer size, at which the lagging subscription is pruned.
-
-Metrics and logs are emitted to help tune both of these parameters.
-
-## FAQs
-
-Q: Suppose the full node saw the cancellation of order X at t0 before the placement of the order X at t1. What would the updates be like?
-- **A: No updates because the order was never added to the book**
-
-Q: A few questions because it often results in crossed books:
-In which cases shall we not expect to see OrderRemove message?
-- Post only reject? → **PO reject won’t have a removal since they were never added to the book**
-- IOC/FOK auto cancel? → **IOC/FOK also won’t have a removal message for similar reason**
-- Order expired outside of block window? → **expired orders will generate a removal message**
-- Passive limit order was fully filled → **fully filled maker will generate a removal message**
-- Aggressive limit order was fully filled? → **fully filled taker won’t have a removal**
-
-Q: Why does `StreamOrderbookUpdate` use IndexerOrderId and `StreamOrderbookFill` use dydxprotocol.OrderId?
-- A: GRPC streaming exposes inner structs of the matching engine and our updates are processed differently from fills. The two data structures have equivalent fields, and a lightweight translation layer to go from Indexer OrderId to Protocol OrderId can be written.
-
-Q: What are the exec modes?
+### What Are the Exec Modes?
 <details>
 
 <summary>Exec Modes</summary>
@@ -389,12 +361,73 @@ Q: What are the exec modes?
 </details>
 <br>
 
+
+### Example Scenario
+
+- Trader places a bid at price 100 for size 1
+  - OrderPlace, price = 100, size = 1
+  - OrderUpdate, total filled amount = 0
+- Trader replaces that original bid to be price 99 at size 2
+  - OrderRemove
+  - OrderPlace, price = 99, size = 2
+  - OrderUpdate, total filled amount = 0
+- Another trader submits an IOC ask at price 100 for size 1.
+  - Full node doesn't see this matching anything so no updates.
+- Block is confirmed that there was a fill for the trader's original order at price 100 for size 1 (block proposer didn't see the order replacement)
+  - OrderUpdate, set total fill amount to be 0 (no-op) from checkState -> deliverState reset
+  - MatchOrder emitted for block proposer's original order match, total filled amount = 1
+
+### Metrics and Logs
+
+| Metric | Type | Explanation |
+| -------- | ----- | ------- |
+| grpc_stream_num_updates_buffered | gauge | number of updates in the full node's buffer cache of updates. Once this hits `grpc-streaming-max-batch-size`, all subscriptions will be dropped. |
+| grpc_stream_subscriber_count | gauge | number of streaming connections currently connected to the full node |
+| grpc_subscription_channel_length.quantile | histogram | histogram of channel size across all subscriptions. Once this hits `grpc-streaming-max-channel-buffer-size`, the offending subscription will be dropped. |
+| grpc_flush_updates_latency.count | count | number of times the buffer cache is flushed. |
+| grpc_flush_updates_latency.quantile | histogram | Latency of each buffer cache flush call into subscription channel. |
+| grpc_send_response_to_subscriber_count | counter | number of messages emitted across all grpc streams. |
+
+All logs from grpc streaming are tagged with `module: grpc-streaming`.
+
+### Protocol-side buffering and Slow gRPC Client Connections
+
+The full node maintains a length-configurable buffer cache of streaming updates to ensure bursts of protocol updates do not induce full node lag. If the buffer reaches maximum capacity, all connections and updates are dropped, and subscribers will have to re-subscribe. The buffer is periodically flushed into each per-subscription golang channel at a configurable set interval of time, defaulting to 50ms.
+
+To ensure slow client connections do not induce full node lag, each client subscription has a unique goroutine and golang channel that pushes updates through the grpc stream. If the channel buffer grows beyond the configurable `grpc-streaming-max-channel-buffer-size` parameter, the goroutine will be stopped. With the poller gone, the channel buffer will eventually grow and hit the max buffer size, at which the lagging subscription is pruned.
+
+Metrics and logs are emitted to help tune both of these parameters.
+
+### FAQs
+
+Q: Suppose the full node saw the cancellation of order X at t0 before the placement of the order X at t1. What would the updates be like?
+- **A: No updates because the order was never added to the book**
+
+Q: A few questions because it often results in crossed books:
+In which cases shall we not expect to see OrderRemove message?
+- Post only reject? → **PO reject won’t have a removal since they were never added to the book**
+- IOC/FOK auto cancel? → **IOC/FOK also won’t have a removal message for similar reason**
+- Order expired outside of block window? → **expired orders will generate a removal message**
+- Passive limit order was fully filled → **fully filled maker will generate a removal message**
+- Aggressive limit order was fully filled? → **fully filled taker won’t have a removal**
+
+Q: Why does `StreamOrderbookUpdate` use IndexerOrderId and `StreamOrderbookFill` use dydxprotocol.OrderId?
+- A: gRPC streaming exposes inner structs of the matching engine and our updates are processed differently from fills. The two data structures have equivalent fields, and a lightweight translation layer to go from Indexer OrderId to Protocol OrderId can be written.
+
 Q: I only want to listen to confirmed updates. I do not want to process optimistic fills.
 - A: You will want to only process messages from DeliverTx stage (`execModeFinalize`). This step is when we save proposed matches from the block proposer into state. These updates will have exec mode execModeFinalize.
 
 Q: Why do I see an Order Update message for a new OrderId before an Order Place message?
 - A: During DeliverTx, the first step we do is to reset fill amounts (via OrderUpdate messages) for all orders involved in the proposed and local operations queue due to the deliver state being reset to the check state from last block. We "reset" fill order amounts to 0 for orders that the block proposer has seen but has not gossiped to our full node yet. In the future, we may reduce the number of messages that are sent, but for now we are optimizing for orderbook correctness.
 
+Q: How do I print the gRPC stream at the command line?
+- A: Use the [grpcurl](https://github.com/fullstorydev/grpcurl) tool. Connect to a full node stream with:
+	```
+	grpcurl -plaintext -d '{"clobPairId":[0,1]}' 127.0.0.1:9090 dydxprotocol.clob.Query/StreamOrderbookUpdates
+	```
+
+Q: Is there a sample client?
+- A: Example client which subscribes to the stream and maintains a local orderbook: [dydxprotocol/grpc-stream-client](https://github.com/dydxprotocol/grpc-stream-client/)
 
 ## Changelog
 
