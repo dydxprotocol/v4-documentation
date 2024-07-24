@@ -24,6 +24,7 @@
 
   "api_integration-clients": "Client Documentation",
   "api_integration-indexer": "Indexer Documentation",
+  "api_integration-full-node-streaming": "Full Node Streaming API",
   "api_integration-repositories": "Repositories",
   "api_integration-trading": "Trading",
   "api_integration-deposits_and_withdrawals": "Deposits and Withdrawals",
