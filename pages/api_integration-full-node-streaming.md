@@ -48,9 +48,9 @@ For Python, the corresponding code is already generated in [the v4-proto PyPi pa
 Note:
 - The order subticks (price) and quantums (quantity) fields are encoded as integers and 
   require [translation to human-readable values](https://github.com/dydxprotocol/grpc-stream-client/blob/d8cbbc3c6aeb454078c72204491727b243c26e19/src/market_info.py#L1).
-- Each node's view of the book is subjective, because order messages arrive at different nodes in different orders. When a block is proposed, nodes "sync" their books to cohere with the block proposer's view of the book.
+- Each node's view of the book is subjective, because order messages arrive at different nodes in different orders. When a block is proposed, nodes "sync" subsets of their book states to cohere with the trades seen by the block proposer.
 - Only `ClobMatch` messages with `execModeFinalize` are trades confirmed by consensus.
-	- Use all `ClobMatch` messages to update the orderbook state (the node's book state is optimistic, and reverts if fills are not confirmed).
+	- Use all `ClobMatch` messages to update the orderbook state. The node's book state is optimistic, and reverts if fills are not confirmed, in which case a series of `OrderRemoveV1`, `OrderPlaceV1` and `OrderUpdateV1` messages are sent to represent the modifications to the full node's book state.
     - Treat only `ClobMatch` messages with `execModeFinalize` as confirmed trades.
     - See [FAQs](#faqs) for more information.
 
