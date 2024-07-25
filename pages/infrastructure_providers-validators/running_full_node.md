@@ -1,14 +1,12 @@
 # Run a Full Node
-
 Running a full node allows your system to participate in a dYdX chain network. The recommended settings and best practices on this page help ensure your node stays healthy and up-to-date with the network.
 
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 
 ## Prerequisites
-
 You need a running, non-validating full node. 
 
-- If you created a system service for your node by following the instructions on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node.md), you can start your node with the following command:
+- If you created a system service for your node by following the instructions on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node.md), start your node with the following command:
   ```bash
   stystemctl start dydxprotocol
   ```
@@ -26,16 +24,15 @@ Connect to healthy peers with the latest state of the network so that your node'
 - https://services.lavenderfive.com/mainnet/dydx#live-peers
 - https://polkachu.com/live_peers/dydx
 
-When you have a list of healthy peers, choose 5 of them at random to add to the `persistent_peers` field in your `config.toml`.
+From a list of healthy peers, choose 5 at random to add to the `persistent_peers` field in your `config.toml`.
 
 ### Save an address book
-Download the `addrbook.json` file, which stores configuration details that help your node connect to peers in its network more efficiently. You can download an up-to-date address book file from one of the following services:
-
+Download the latest `addrbook.json` file, which stores configuration details that help your node efficiently connect to peers in its network. You can download an up-to-date address book file from one of the following services:
 - https://polkachu.com/addrbooks/dydx
 - https://services.lavenderfive.com/mainnet/dydx#latest-addrbook
 - https://autostake.com/networks/dydx/
 
-Save the file `addrbook.json` in your `/.dydxprotocol/config` directory.
+Save the `addrbook.json` file in your `/.dydxprotocol/config` directory.
 
 ### Use snapshots or state sync to back up your node
 Your full node needs a backup plan to replay the history of the network in case it falls out of sync. You can back up your node in one of two ways:
