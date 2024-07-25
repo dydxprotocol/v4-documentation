@@ -133,7 +133,7 @@ The preceding command updates the `seeds` variable of `config.toml` with the lis
 Using snapshots to restore or sync your full node's state saves time and effort. Using a snapshot avoids replaying all the blocks from genesis and does not require multiple binary versions for network upgrades. Instead, your node uses the snapshot as its initial state.
 
 #### Clear your data directory
-If you already have a data directory at `$HOME/.dydxprotocol/data`, you must clear it before installing a snapshot. To clear your data directory:
+If you already have a data directory at `$HOME/.dydxprotocol/data`, you must clear it before installing a snapshot, which comes with its own data directory. To clear your data directory while retaining files you need, follow these steps:
 
 First, make a backup copy of `priv_validator_state.json` in your `.dydxprotocol` directory by running the following command:
 ```bash
@@ -143,8 +143,8 @@ cp $HOME/.dydxprotocol/data/priv_validator_state.json $HOME/.dydxprotocol/priv_v
 
 Next, confirm the following:
 - A backup file, `priv_validator_state.json.backup`, exists in your current directory.
-- The original `priv_validator_state.json` exists in the data directory to be deleted.
-- No other files exist in the data directory to be deleted.
+- The original `priv_validator_state.json` exists in the `/data` directory to be deleted.
+- No other files exist in the `/data` directory to be deleted.
 
 ```bash
 ls $HOME/.dydxprotocol # Confirm that the backup exists in /.dydxprotocol
