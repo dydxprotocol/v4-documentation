@@ -132,33 +132,63 @@ The preceding command updates the `seeds` variable of `config.toml` with the lis
 ### Step 8: Use a snapshot as your node's initial state
 Using snapshots to restore or sync your full node's state saves time and effort. Using a snapshot avoids replaying all the blocks from genesis and does not require multiple binary versions for network upgrades. Instead, your node uses the snapshot as its initial state.
 
-To download and extract the snapshot contents to the default dydxprotocol home directory, first **change directories into ./dydxprotocol**. To change directories, run the following command:
+#### Clear your data directory
+If you already have a data directory at `$HOME/.dydxprotocol/data`, you must clear it before installing a snapshot. To clear your data directory:
+
+First, make a backup copy of `priv_validator_state.json` in your `.dydxprotocol` directory by running the following command:
+```bash
+# Make a copy of priv_validator_state.json and append .backup
+cp $HOME/.dydxprotocol/data/priv_validator_state.json $HOME/.dydxprotocol/priv_validator_state.json.backup
+```
+
+Next, confirm the following:
+- A backup file, `priv_validator_state.json.backup`, exists in your current directory.
+- The original `priv_validator_state.json` exists in the data directory to be deleted.
+- No other files exist in the data directory to be deleted.
+
+```bash
+ls $HOME/.dydxprotocol # Confirm that the backup exists in /.dydxprotocol
+ls $HOME/.dydxprotocol/data # Confirm that only priv_validator_state.json exists in /data
+```
+
+Finally, to clear the data directory, removing it and all files inside, run the following command:
+```bash
+# WARNING: This command recursively deletes files and directories in the dydxprotocol /data directory. Make sure you know what you are deleting before running the command.
+rm -rf $HOME/.dydxprotocol/data
+```
+
+Installing a snapshot will create a new `/data` directory.
+
+#### Install the Snapshot
+To download and extract the snapshot contents to the default dydxprotocol home directory, first **change directories into /.dydxprotocol**. To change directories, run the following command:
 
 ```bash
 cd $HOME/.dydxprotocol
 ```
 
-Then, find a provider for your use case on the [Snapshot Service](https://docs.dydx.exchange/network/resources#snapshot-service) page.
+Next, find a provider for your use case on the [Snapshot Service](https://docs.dydx.exchange/network/resources#snapshot-service) page. Use the provider's instructions to download the snapshot into your `$HOME/.dydxprotocol` directory.
 
-> For example, if you are connecting to `dydx-mainnet-1`, you may use the provider [Bware Labs](https://bwarelabs.com/snapshots/dydx).
+> For example, if you are connecting to `dydx-mainnet-1`, you may use the provider [Polkachu](https://polkachu.com/tendermint_snapshots/dydx). In most cases, you can run `wget <snapshot-web-address>`.
 
-Use the provider's instructions to download the snapshot into your `$HOME/.dydxprotocol` directory.
-
-> In most cases, you can run `wget <snapshot-web-address>`.
-
-From `$/HOME/.dydxprotocol`, run the following command, replacing the example value `your-snapshot-filename`:
+Next, run the following command in your `$/HOME/.dydxprotocol` directory, replacing the example value `your-snapshot-filename`:
 
 ```bash
 lz4 -dc < your-snapshot-filename.tar.lz4 | tar xf -
 ```
-Note that extracting the snapshot adds the `/data` folder in your current directory.
+Extracting the snapshot creates a new `/data` folder in your current directory, `.dydxprotocol`.
 
-**Change directories back to your $HOME directory for the rest of the procedure**. Run the following command:
+Next, use the backup file `priv_validator_state.json.backup` you created to reinstate `/data/priv_validator_state.json` with the following command:
+
+```bash
+mv $HOME/.dydxprotocol/priv_validator_state.json.backup $HOME/.dydxprotocol/data/priv_validator_state.json
+```
+
+Finally, **change directories back to your $HOME directory for the rest of the procedure**. Run the following command:
 ```bash
 cd $HOME
 ```
 
-When you start your full node, it will automatically use the snapshot to begin syncing your full node's state with the network.
+When you start your full node, it will automatically use the snapshot in your data directory to begin syncing your full node's state with the network.
 
 ### Step 9: Create a system service to start your full node automatically
 To create a `systemd` service that starts your full node automatically, run the following commands:
