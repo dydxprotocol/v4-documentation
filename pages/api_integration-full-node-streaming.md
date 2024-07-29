@@ -2,7 +2,7 @@
 
 Last updated for: `v5.0.5`
 
-Enabling this feature causes a full node to expose a stream of orderbook updates (L3) and fills, allowing clients to maintain a full view of the book. Note that due to dYdX's offchain orderbook design, the book state can vary slightly between nodes.
+Enable full node gRPC streaming to expose a stream of orderbook updates (L3) and fills, allowing clients to maintain a full view of the orderbook. Note that the orderbook state can vary slightly between nodes due to dYdX's offchain orderbook design.
 
 
 ## Enabling Streaming
