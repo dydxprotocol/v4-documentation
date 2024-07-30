@@ -6,7 +6,7 @@ Enable full node gRPC streaming to expose a stream of orderbook updates (L3) and
 
 
 ## Enabling Streaming
-The orderbook stream is implemented with gRPC, a streaming RPC protocol developed by Google and used in CosmosSDK. Use the following flags to configure the gRPC streaming feature:
+The orderbook stream is implemented with [gRPC](https://grpc.io/), a streaming RPC protocol developed by Google and used in CosmosSDK. Use the following flags to configure the gRPC streaming feature:
 
 | CLI Flag | Type | Default | Short Explanation |
 | -------- | ----- | ------- | -------- |
