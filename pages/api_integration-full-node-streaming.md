@@ -26,7 +26,7 @@ To follow along with [Google's documentation on gRPC streaming clients](https://
 2. Generate the protos: `make proto-gen && make proto-export-deps`.
 3. The generated protos are now in the `.proto-export-deps` directory.
 4. Use the protobuf compiler (protoc) to [generate stubs](https://protobuf.dev/getting-started/) in any supported language.
-5. Follow the documentation to write a streaming client.
+5. Follow [Google's documentation](https://grpc.io/docs/languages/go/basics/#client) to write a client that can read from the stream.
 6. Connect to the stream defined in the `dydxprotocol.clob.Query` service ([StreamOrderbookUpdates](https://github.com/dydxprotocol/v4-chain/blob/4199c3e7b00ded24774d49ce8adcbaaa8325ddc1/proto/dydxprotocol/clob/query.proto#L63-L67)).
 
 For Python, the corresponding code is already generated in [the v4-proto PyPi package](https://pypi.org/project/v4-proto/).
@@ -52,7 +52,7 @@ Note:
 - Only `ClobMatch` messages with `execModeFinalize` are trades confirmed by consensus.
 	- Use all `ClobMatch` messages to update the orderbook state. The node's book state is optimistic, and reverts if fills are not confirmed, in which case a series of `OrderRemoveV1`, `OrderPlaceV1` and `OrderUpdateV1` messages are sent to represent the modifications to the full node's book state.
     - Treat only `ClobMatch` messages with `execModeFinalize` as confirmed trades.
-    - See [FAQs](#faqs) for more information.
+    - See [Reference Material](#reference-material) for more information.
 
 
 ### Request / Response
@@ -87,7 +87,7 @@ Response will contain a `oneof` field that contains either:
 	- `fill_amounts` contains the absolute, total filled quantums of each order as stored in state.
 		- fill_amounts should be zipped together with the `orders` field. Both arrays should have the same length.
 
-as well as `block_height` and `exec_mode` (see [What Are the Exec Modes?](#what-are-the-exec-modes)). 
+as well as `block_height` and `exec_mode` (see [Exec Modes Reference](#exec-mode-reference)). 
 
 <details>
 
@@ -332,7 +332,7 @@ func (c *GrpcClient) ProcessMatchPerpetualLiquidation(
 
 </details>
 
-## FAQs
+## Reference Material
 
 ### Optimistic Orderbook Execution
 
@@ -342,7 +342,7 @@ By protocol design, each validator has their own version of the orderbook and op
 
 Note that DeliverTx maps to exec mode `execModeFinalize`.
 
-### What Are the Exec Modes?
+### Exec Mode Reference
 <details>
 
 <summary>Exec Modes</summary>
