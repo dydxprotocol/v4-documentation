@@ -11,12 +11,12 @@ You need a running, non-validating full node that is connected to network.
   stystemctl start dydxprotocold
   ```
 - To start your node with Cosmovisor, include the flag `--non-validating-full-node=true`. Cosmovisor may prompt you to configure additional variables in your environment or include them in your command.
-  > The flag `--non-validating-full-node` is required. It disables the pricing daemon and enables additional logic for reading data.
+  > The flag `--non-validating-full-node` is required. It disables the pricing daemon intended for validator nodes and enables additional logic for reading data.
   ```bash
   cosmovisor run start --non-validating-full-node=true 
   ```
 - To start your node directly with the `dydxprotocold` binary, include the flag `--non-validating-full-node=true`. `dydxprotocold` may prompt you to configure additional variables in your environment or include them in your command.
-  > The flag `--non-validating-full-node` is required. It disables the pricing daemon and enables additional logic for reading data.
+  > The flag `--non-validating-full-node` is required. It disables the pricing daemon intended for validator nodes and enables additional logic for reading data.
   ```bash
   dydxprotocold run start --non-validating-full-node=true 
   ```
@@ -26,7 +26,7 @@ To keep your full node up to date, connect to healthy peers that have the latest
 - https://services.lavenderfive.com/mainnet/dydx#live-peers
 - https://polkachu.com/live_peers/dydx
 
-<!-- add testnet examples/ resources -->
+<!-- testnet options -->
 
 From a list of healthy peers, choose any 5 for your node to query for the latest state. Add a comma-separated list of those peer addresses to the `persistent_peers` field in your `config.toml`, like in the following example:
 
@@ -42,19 +42,25 @@ Download the latest `addrbook.json` file, which stores configuration details tha
 - https://services.lavenderfive.com/mainnet/dydx#latest-addrbook
 - https://autostake.com/networks/dydx/
 
+<!-- testnet options -->
+
 Save the `addrbook.json` file in your `/.dydxprotocol/config` directory.
 
 ## Back Up Your Node
 > If you followed the procedure on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node.md), you already have a snapshot installed.
 
-Your full node needs a backup plan to replay the history of the network in case it falls out of sync. You can back up your node in one of two ways:
+Your full node needs a backup plan to replay the history of the network in case it falls out of sync. You can back up your node in one of two ways.
 
-1. Using a **snapshot** stored on the system that your node runs on. A snapshot contains a compressed copy of the application state at the time it was taken. If your node falls out of sync, a snapshot allows the node to recover to that saved state before replaying the rest of the history of the network. This speeds up the syncing process because you avoid replaying the entire history of the network, instead starting from your stored application state snapshot. To use a snapshot to back up your full node, install a snapshot from a [snapshot service](../infrastructure_providers-network/resources.mdx#snapshot-service).
+### Snapshot
+You can use a **snapshot** stored on the system that your node runs on. A snapshot contains a compressed copy of the application state at the time the snapshot was taken. If your node falls out of sync, a snapshot allows the node to recover to that saved state before replaying the rest of the history of the network. This speeds up the syncing process because you avoid replaying the entire history of the network, instead starting from your stored application state snapshot. To use a snapshot to back up your full node, install a snapshot from a [snapshot service](../infrastructure_providers-network/resources.mdx#snapshot-service).
 
-2. Using **state sync**, a set of configuration settings that allow your node to retrieve a snapshot from the network. If your node falls out of sync, it queries a state sync node for a verified, recent snapshot of the application state. This speeds up the syncing process because you avoid replaying the entire history of the network, instead starting from the network's most recent application state snapshot. To use state sync to back up your full node, follow the instructions from a state sync service from the list below:
+### State Sync
+You can use **state sync**, a set of configuration settings that allow your node to retrieve a snapshot from the network. If your node falls out of sync, it queries a state sync node for a verified, recent snapshot of the application state. This speeds up the syncing process because you avoid replaying the entire history of the network, instead starting from the network's most recent application state snapshot. To use state sync to back up your full node, follow the instructions from a state sync service from the list below:
     - https://polkachu.com/state_sync/dydx
     - https://services.lavenderfive.com/mainnet/dydx/statesync
     - https://autostake.com/networks/dydx/#state-sync
+
+<!-- testnet options -->
 
 ## Optimize Pruning Settings
 In general, dYdX recommends the following pruning setting, configured in your `app.toml` file:
