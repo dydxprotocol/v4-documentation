@@ -57,10 +57,3 @@ pruning = "everything" # 2 latest states will be kept; pruning at 10 block inter
 ```
 
 However, if you want to use your node to query historical data, configure a custom pruning strategy to retain more states. Retaining more states increases storage requirements.
-
-## Next Steps
-With your full node, you can:
-- Get realtime data about your account, including margin and open positions
-- Get an in-order history of the network
-- Build an orderbook to integrate with programmatically
-- Place, confirm, and cancel orders
