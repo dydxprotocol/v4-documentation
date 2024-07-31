@@ -11,12 +11,12 @@ You need a running, non-validating full node that is connected to network.
   stystemctl start dydxprotocold
   ```
 - To start your node with Cosmovisor, include the flag `--non-validating-full-node=true`. Cosmovisor may prompt you to configure additional variables in your environment or include them in your command.
-  > The flag `--non-validating-full-node` is required. It disables the pricing daemon intended for validator nodes and enables additional logic for reading data.
+  > The flag `--non-validating-full-node` is required. It disables the functionality intended for validator nodes and enables additional logic for reading data.
   ```bash
   cosmovisor run start --non-validating-full-node=true 
   ```
 - To start your node directly with the `dydxprotocold` binary, include the flag `--non-validating-full-node=true`. `dydxprotocold` may prompt you to configure additional variables in your environment or include them in your command.
-  > The flag `--non-validating-full-node` is required. It disables the pricing daemon intended for validator nodes and enables additional logic for reading data.
+  > The flag `--non-validating-full-node` is required. It disables the functionality intended for validator nodes and enables additional logic for reading data.
   ```bash
   dydxprotocold run start --non-validating-full-node=true 
   ```
