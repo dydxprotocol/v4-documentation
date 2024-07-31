@@ -11,15 +11,16 @@ You need a running, non-validating full node that is connected to network.
   stystemctl start dydxprotocold
   ```
 - To start your node with Cosmovisor, include the flag `--non-validating-full-node=true`. Cosmovisor may prompt you to configure additional variables in your environment or include them in your command.
-  > The flag `--non-validating-full-node` is required. It disables the functionality intended for validator nodes and enables additional logic for reading data.
   ```bash
   cosmovisor run start --non-validating-full-node=true 
   ```
-- To start your node directly with the `dydxprotocold` binary, include the flag `--non-validating-full-node=true`. `dydxprotocold` may prompt you to configure additional variables in your environment or include them in your command.
   > The flag `--non-validating-full-node` is required. It disables the functionality intended for validator nodes and enables additional logic for reading data.
+- To start your node directly with the `dydxprotocold` binary, include the flag `--non-validating-full-node=true`. `dydxprotocold` may prompt you to configure additional variables in your environment or include them in your command.
+  
   ```bash
   dydxprotocold run start --non-validating-full-node=true 
   ```
+  > The flag `--non-validating-full-node` is required. It disables the functionality intended for validator nodes and enables additional logic for reading data.
 
 ## Connect to Healthy Peers
 To keep your full node up to date, connect to healthy peers with the latest state of the network. Request a list of healthy peers for your deployment from a [Live Peer Node](../infrastructure_providers-network/resources#live-peer-node-providers) provider.
