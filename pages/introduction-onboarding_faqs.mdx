@@ -1,9 +1,9 @@
 # Onboarding FAQs
 
-## Intro
+## Background
 
 <details>
-<summary>1. Can you give an overview of the structure of the network and the role full nodes/validators play in constructing the orderbook and participating in block building, and how trades are placed?</summary>
+<summary>1. How does the network work? </summary>
 
 - dYdX Chain (or "v4") is composed of full nodes and each maintains an in-memory order book. Anyone can use the open source software to run a full node. Traders can submit order placements and cancellations to full nodes, which gossip the transactions amongst themselves.
 - Full nodes with enough delegated layer 1 governance tokens participate in block building as validators. Validators on dYdX Chain take turns proposing blocks of trades every ~1 second. The validator whose turn it is to propose a block at a given height is called the proposer. The proposer uses its mempool orderbook to propose a block of matches, which validators either accept or reject according to CometBFT (Tendermint) consensus.
@@ -12,6 +12,7 @@
 </details>
 
 <details>
+
 <summary>2. What is the difference between a full node and a validator?</summary>
 
 - A full node does not participate in consensus. It receives data from other full nodes and validators in the network via the gossip protocol. A validator participates in consensus by broadcasting votes signed by each validator’s private keys.
@@ -41,7 +42,7 @@
 
 </details>
 
-## Trading on an Exchange Run on dYdX Chain
+## Trading
 
 <details>
 <summary>1. How can I understand how finality works on dYdX Chain?</summary>
@@ -168,7 +169,7 @@
 </details>
 
 <details>
-<summary>12. How does the order cancellation mechanism work? Is it necessary for the cancel instruction and the original order to be on the same validator for a successful cancel? What's the best practice to ensure order cancellation succeeds?</summary>
+<summary>12. How does the order cancellation mechanism work? </summary>
 
 - Short-term:
   - When validators receive a cancellation, if they don't already see a match for the order, they will remove the order from their order book.
@@ -213,9 +214,9 @@
 </details>
 
 <details>
-<summary>16. When I transfer funds to create a new subaccount (the only way to create new subaccount btw), do I need gas?</summary>
+<summary>16. Do I need gas when I transfer funds to create a new subaccount?</summary>
 
-- Yes, you will need gas. Fortunately, both USDC and cosmos native DYDX can be used to pay for gas fees. This USDC must be in the main wallet and not another subaccount to pay for fees.
+- Yes, you will need gas. Fortunately, both USDC and cosmos native dYdX can be used to pay for gas fees. This USDC must be in the main wallet and not another subaccount to pay for fees.
 - To ensure this, the frontend leaves a small amount of USDC in your wallet when sweeping into your subaccount, to ensure there's enough to pay for gas.
 
 </details>
@@ -235,7 +236,7 @@
 
 </details>
 
-## Trading as it Relates to Validators
+## Full Nodes & Validators
 
 <details>
 <summary>1. How much throughput and latency can be expected from a self-hosted full node? Would having multiple full nodes in different regions improve speed?</summary>
@@ -261,16 +262,16 @@
 </details>
 
 <details>
-<summary>4. Compared to a full node, is it faster to submit transactions directly to the validator, or is it faster to broadcast to the next validator with block-producing rights?</summary>
+<summary>4. Is it faster to submit transactions directly to a validator or to broadcast transactions to the network? </summary>
 
-- It would be faster to submit a transaction directly to the block proposer, the difference between a full-node/validator is negligible unless that validator was the proposer.
+- It is faster to submit a transaction directly to the block proposer. The speed difference between a full-node and a validator is negligible unless that validator is the proposer.
 
 </details>
 
 <details>
-<summary>5. Do you have some faster validators that we can send orders to?</summary>
+<summary>5. Do you have some validators that we can send orders to?</summary>
 
-- Validators usually don't expose the RPC endpoints for orders to be submitted to, and we also don't have a list of validator IPs.
+- Validators don't expose the RPC endpoints for orders.
 
 </details>
 
@@ -319,9 +320,9 @@
 </details>
 
 <details>
-<summary>3. Would deliberately taking already-canceled orders be considered an attack against makers? How can such attacks be mitigated?</summary>
+<summary>3. Is deliberately taking canceled orders considered an attack against makers? </summary>
 
-- Nodes should respect cancels as soon as they receive them, if they don't then we see that as MEV and the aforementioned dashboard/metrics tracking MEV will track that.
+- Nodes should respect cancels as soon as they receive them. If they don't, then we see that as MEV and the aforementioned dashboard/metrics tracking MEV will track that.
 
 </details>
 
@@ -349,7 +350,7 @@
 </details>
 
 <details>
-<summary>2. Will liquidity provider rewards exist in v4?</summary>
+<summary>2. Do liquidity provider rewards exist on v4 (the dYdX Chain)?</summary>
 
 - Liquidity provider rewards in v4 are not controlled by dYdX. dYdX recommends that liquidity provider rewards should cease to exist in v4. Makers could be rewarded with a maker rebate ranging from 0.5bps to 1.1bps, based on their nominal volume and volume share. The full proposed fee schedule can be found [here](./concepts-trading/rewards_fees_and_parameters.md).
 

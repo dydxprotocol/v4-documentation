@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the dYdX Chain documentation hub! This is the source of truth for documentation related to v4 software (the ”dYdX Chain”). 🦔 💜
+Welcome to the dYdX Chain documentation hub! This is the source of truth for documentation related to v4 software (the dYdX Chain).
 
 ## About dYdX
 

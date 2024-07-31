@@ -99,7 +99,7 @@ echo 'export PATH=$PATH:$HOME/.dydxprotocol/cosmovisor/genesis/bin' >> $HOME/.ba
 ### Step 6: Initialize your node
 To initialize your node, provide the ID of the chain to which you want to connect and create a name for your node. The dYdX home directory is created in `$HOME/.dydxprotocol` by default. Replace the example values `dydx-mainnet-1` and `my-node` with your own and run the following command:
 ```bash
-# Example for dYdX token holders on mainnet
+# Example for DYDX token holders on mainnet
 dydxprotocold init --chain-id=dydx-mainnet-1 my-node
 ```
 
@@ -113,7 +113,7 @@ A seed node acts as an address book and helps your node join the network. To upd
 > Check the [Resources](https://docs.dydx.exchange/network/resources#seed-nodes) page for an up-to-date list of seed nodes for the network to which you want to connect.
 
 ```bash
-# Example for dYdX token holders on mainnet
+# Example for DYDX token holders on mainnet
 SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856", 
 "65b740ee326c9260c30af1f044e9cda63c73f7c1@seeds.kingnodes.net:23856", 
 "f04a77b92d0d86725cdb2d6b7a7eb0eda8c27089@dydx-mainnet-seed.bwarelabs.com:36656",

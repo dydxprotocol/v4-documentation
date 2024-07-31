@@ -1,15 +1,24 @@
 {
   "----------INTRODUCTION----------": {
-    "title": "🦔 INTRODUCTION",
+    "title": "Introduction",
     "type": "separator"
   },
 
-  "index": "Introduction",
+  "index": "About dYdX",
   "introduction-getting_started": "Getting Started",
   "introduction-onboarding_faqs": "Onboarding FAQs",
 
+  "----------USERS----------": {
+    "title": "Chain Users",
+    "type": "separator"
+  },
+  "user-guides": "Guides",
+  "users-rewards": "Rewards",
+  "users-governance": "Governance",
+  "users-faqs": "User Submitted Questions",
+
   "----------INFRASTRUCTURE PROVIDERS----------": {
-    "title": "🏘️ INFRASTRUCTURE PROVIDERS",
+    "title": "Chain Infrastructure",
     "type": "separator"
   },
 
@@ -18,7 +27,7 @@
   "infrastructure_providers-operators": "Indexer Operators",
 
   "----------API INTEGRATION----------": {
-    "title": "🔗 API INTEGRATION",
+    "title": "API Integrations",
     "type": "separator"
   },
 
@@ -31,18 +40,8 @@
   "api_integration-constants": "Constants",
   "api_integration-guides": "Guides",
 
-  "----------USERS----------": {
-    "title": "👥 USERS",
-    "type": "separator"
-  },
-
-  "users-rewards": "Rewards",
-  "users-governance": "Governance",
-  "user-guides": "Guides",
-  "users-faqs": "FAQs",
-
   "----------CONCEPTS----------": {
-    "title": "🤔 CONCEPTS",
+    "title": "Technical Concepts",
     "type": "separator"
   },
 
@@ -50,12 +49,12 @@
   "concepts-trading": "Trading",
 
   "----------OTHER----------": {
-    "title": "💬 OTHER",
+    "title": "Policies",
     "type": "separator"
   },
 
   "other-security": "Security",
-  "other-terms_of_use_and_privacy_policy": "Terms & Policies",
+  "other-terms_of_use_and_privacy_policy": "Terms of Use & Privacy",
 
   "testnet app": {
     "title": "Testnet App ↗",

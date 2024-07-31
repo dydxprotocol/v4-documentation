@@ -1,4 +1,4 @@
-# FAQ Documentation
+# User Submitted Questions and Answers
 
 Since the inception of dYdX Chain, we have been compiling a list of questions and answers from users related to technical support. We turned this list into a live _v4 Telegram Questions_ document, which should be able to answer many of your more nuanced questions.
 
