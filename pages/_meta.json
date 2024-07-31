@@ -12,9 +12,9 @@
     "title": "Chain Users",
     "type": "separator"
   },
-  "user-guides": "Guides",
   "users-rewards": "Rewards",
   "users-governance": "Governance",
+  "user-guides": "Guides",
   "users-faqs": "User Submitted Questions",
 
   "----------INFRASTRUCTURE PROVIDERS----------": {
