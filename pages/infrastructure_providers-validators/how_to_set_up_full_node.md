@@ -1,5 +1,5 @@
 # Set Up a Full Node
-Installing and running a full node allows your system to participate in a dYdX chain network.
+Installing and running a full node allows your system to participate in a dYdX Chain network.
 
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 
@@ -243,7 +243,7 @@ sudo journalctl -u dydxprotocold -f
 ```
 If your system service `dydxprotocold` is running, the preceding command streams updates from your node to your command line. Press `Ctrl + C` to stop viewing updates.
 
-Finally, confirm that your full node is properly synchronized by comparing its current block to the dYdX chain:
+Finally, confirm that your full node is properly synchronized by comparing its current block to the dYdX Chain:
 - To find the network's current block, see the **Block Height** of your network with a block explorer, such as [mintscan.io](https://www.mintscan.io/dydx).
 - To find your full node's height, query your node with the following command:
 ```bash

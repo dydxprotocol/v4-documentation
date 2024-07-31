@@ -27,7 +27,7 @@ pip install v4-client-py
 import { FaucetClient } from "@dydxprotocol/v4-client-js";
 
 const client = new FaucetClient(FaucetApiHost.TESTNET);
-const address = /* your dYdX chain address */;
+const address = /* your dYdX Chain address */;
 const faucetResponse = await client?.fill(address, 0, 2000);
 ```
 </Tab>
@@ -38,7 +38,7 @@ from v4_client_py import FaucetClient
 client = FaucetClient(
     host=FAUCET_API_HOST_TESTNET,
 )
-address = /* your dYdX chain address */
+address = /* your dYdX Chain address */
 faucet_response = client.fill(address, 0, 2000)
 ```
 </Tab>
@@ -52,7 +52,7 @@ faucet_response = client.fill(address, 0, 2000)
 import { FaucetClient } from "@dydxprotocol/v4-client-js";
 
 const client = new FaucetClient(FaucetApiHost.TESTNET);
-const address = /* your dYdX chain address */;
+const address = /* your dYdX Chain address */;
 const faucetResponse = await client?.fill_native(address);
 ```
 </Tab>
@@ -63,7 +63,7 @@ from v4_client_py import FaucetClient
 client = FaucetClient(
     host=FAUCET_API_HOST_TESTNET,
 )
-address = /* your dYdX chain address */
+address = /* your dYdX Chain address */
 faucet_response = client.fill_native(address)
 ```
 </Tab>
