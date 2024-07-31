@@ -220,7 +220,9 @@ sudo systemctl daemon-reload
 sudo systemctl enable dydxprotocold
 ```
 
-The system service definition above holds environment variables. When you start it, the service will run the command `/$HOME/go/bin/cosmovisor run start --non-validating-full-node=true`
+The system service definition above holds environment variables. When you start it, the service will run the command `/$HOME/go/bin/cosmovisor run start --non-validating-full-node=true`.
+
+> The flag `--non-validating-full-node` is required. It disables the functionality intended for validator nodes and enables additional logic for reading data.
 
 ### Step 10: Start the service
 To start your node using the `systemd` service that you created, run the following command:
