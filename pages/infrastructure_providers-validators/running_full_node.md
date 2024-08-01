@@ -34,42 +34,37 @@ persistent_peers=83c299de2052db247f08422b6592e1383dd7a104@136.243.36.60:23856,1c
 ```
 
 ## Save an Address Book
-Download an `addrbook.json` file, which stores a list of healthy nodes operated by a provider. If your node can't connect to the network conventionally, it uses the nodes in your address book to make an initial connection. 
-
-<!--  todo more info -->
+<!-- todo: verify info -->
+Download an `addrbook.json` file, which stores a list of healthy nodes operated by a provider. If your node can't connect to the network conventionally, it uses the nodes in your address book to make an initial connection to the network. If successful, your node resumes normal operations.
 
 Download an up-to-date address book file for your deployment from an [Address Book](../infrastructure_providers-network/resources#address-book-providers) provider.
 
 Save the `addrbook.json` file in your `/.dydxprotocol/config` directory.
 
-## Planning to Restore Your Node
-> If you followed the procedure on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node.md), you have a snapshot installed.
-
-<!--  edit todo
-i think this section needs to cover the setup for an event where youd need a backup
-set up a system for taking and replacing snapshots
-configure state sync
-link to procedure for actually restoring, new page
--->
+## Planning for Restoring Your Node
+<!--  todo: reframe-->
 Your full node can fall out of sync with the rest of the network due to various reasons, including a bad software upgrade, unexpected node crashes or human operational error. 
 In such cases, you need a way to restore your full node so it can catch back up with the network's latest state. You can restore your node in one of two ways:
 
-In the event that your node falls out of sync with the rest of the network, you should be prepared to partially restore its state so that it can quickly catch up with the latest state of the network. You restore the state of your node in one of two ways:
+In the event that your node falls out of sync with the of the network, you should be prepared to partially restore its state so that it can quickly catch up from there with the latest state of the network. You can restore a recent state snapshot 
 
 If your node falls out of sync, a snapshot allows the node to recover to that saved state before replaying the rest of the history of the network. This speeds up the syncing process because you avoid replaying the entire history of the network, instead starting from your stored application state snapshot. 
 
+> If you followed the procedure on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node.md), you have a snapshot installed.
+
 ### Snapshot
-<!-- todo edit -->
+<!-- todo: reframe -->
 You can use a **snapshot** stored on the system that your node runs on. A snapshot contains a compressed copy of the application state at the time the snapshot was taken.
 
 To install a snapshot to fall back on in case your node falls out of sync, download the snapshot for your deployment from a [Snapshot Service](../infrastructure_providers-network/resources.mdx#snapshot-service).
 
-To use the snapshot in case of... 
+If your node falls out of sync, you can use your saved snapshot to restore your node to that historical state. 
 
 ### State Sync
+<!-- todo: reframe -->
 You can use **state sync**, a set of configuration settings that allow your node to retrieve a snapshot from the network. If your node falls out of sync, it queries a state sync node for a verified, recent snapshot of the application state. This speeds up the syncing process because you avoid replaying the entire history of the network, instead starting from the network's most recent application state snapshot. To use state sync to back up your full node, follow the instructions for your deployment from a [State Sync](../infrastructure_providers-network/resources#state-sync-service) service.
 
-<!-- todo need to explain these config settings here -->
+<!-- todo: add procedure for configs  -->
 
 ## Optimize Pruning Settings
 In general, dYdX recommends the following pruning setting, configured in your `app.toml` file:
