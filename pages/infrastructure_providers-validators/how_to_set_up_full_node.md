@@ -1,5 +1,5 @@
 # Set Up a Full Node
-Installing and running a full node allows your system to participate in a dYdX chain network.
+Installing, configuring, and running a full node lets you interact programmatically with the dYdX Chain. You can read orderbook data as well as place, confirm, and cancel orders directly as part of the node network.
 
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 

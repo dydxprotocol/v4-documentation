@@ -1,10 +1,10 @@
-# Run a Full Node
-Running a full node allows your system to participate in a dYdX chain network. The recommended settings and best practices on this page help ensure your node stays healthy and up to date with the network.
+# Optimize Your Full Node
+You can use your full node to read orderbook data and to place, confirm, and cancel orders. The recommended settings and best practices on this page help ensure that your node maintains the best possible connection to the network.
 
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 
 ## Prerequisites
-You need a running, non-validating full node that is connected to network. 
+You need a running, non-validating full node that is connected to a network. 
 
 - If you created a system service for your node by following the instructions on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node.md), start your node with the following command:
   ```bash
@@ -34,20 +34,42 @@ persistent_peers=83c299de2052db247f08422b6592e1383dd7a104@136.243.36.60:23856,1c
 ```
 
 ## Save an Address Book
-Download the latest `addrbook.json` file, which stores configuration details that help your node efficiently connect to peers in its network. Download an up-to-date address book file for your deployment from an [Address Book](../infrastructure_providers-network/resources#address-book-providers) provider.
+Download an `addrbook.json` file, which stores a list of healthy nodes operated by a provider. If your node can't connect to the network conventionally, it uses the nodes in your address book to make an initial connection. 
+
+<!--  todo more info -->
+
+Download an up-to-date address book file for your deployment from an [Address Book](../infrastructure_providers-network/resources#address-book-providers) provider.
 
 Save the `addrbook.json` file in your `/.dydxprotocol/config` directory.
 
-## Back Up Your Node
-> If you followed the procedure on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node.md), you already have a snapshot installed.
+## Planning to Restore Your Node
+> If you followed the procedure on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node.md), you have a snapshot installed.
 
-Your full node needs a backup plan to replay the history of the network in case it falls out of sync. You can back up your node in one of two ways.
+<!--  edit todo
+i think this section needs to cover the setup for an event where youd need a backup
+set up a system for taking and replacing snapshots
+configure state sync
+link to procedure for actually restoring, new page
+-->
+Your full node can fall out of sync with the rest of the network due to various reasons, including a bad software upgrade, unexpected node crashes or human operational error. 
+In such cases, you need a way to restore your full node so it can catch back up with the network's latest state. You can restore your node in one of two ways:
+
+In the event that your node falls out of sync with the rest of the network, you should be prepared to partially restore its state so that it can quickly catch up with the latest state of the network. You restore the state of your node in one of two ways:
+
+If your node falls out of sync, a snapshot allows the node to recover to that saved state before replaying the rest of the history of the network. This speeds up the syncing process because you avoid replaying the entire history of the network, instead starting from your stored application state snapshot. 
 
 ### Snapshot
-You can use a **snapshot** stored on the system that your node runs on. A snapshot contains a compressed copy of the application state at the time the snapshot was taken. If your node falls out of sync, a snapshot allows the node to recover to that saved state before replaying the rest of the history of the network. This speeds up the syncing process because you avoid replaying the entire history of the network, instead starting from your stored application state snapshot. To use a snapshot to back up your full node, install a snapshot for your deployment from a [Snapshot Service](../infrastructure_providers-network/resources.mdx#snapshot-service).
+<!-- todo edit -->
+You can use a **snapshot** stored on the system that your node runs on. A snapshot contains a compressed copy of the application state at the time the snapshot was taken.
+
+To install a snapshot to fall back on in case your node falls out of sync, download the snapshot for your deployment from a [Snapshot Service](../infrastructure_providers-network/resources.mdx#snapshot-service).
+
+To use the snapshot in case of... 
 
 ### State Sync
 You can use **state sync**, a set of configuration settings that allow your node to retrieve a snapshot from the network. If your node falls out of sync, it queries a state sync node for a verified, recent snapshot of the application state. This speeds up the syncing process because you avoid replaying the entire history of the network, instead starting from the network's most recent application state snapshot. To use state sync to back up your full node, follow the instructions for your deployment from a [State Sync](../infrastructure_providers-network/resources#state-sync-service) service.
+
+<!-- todo need to explain these config settings here -->
 
 ## Optimize Pruning Settings
 In general, dYdX recommends the following pruning setting, configured in your `app.toml` file:
