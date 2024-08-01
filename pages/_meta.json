@@ -57,6 +57,13 @@
   "other-security": "Security",
   "other-terms_of_use_and_privacy_policy": "Terms & Policies",
 
+  "mainnet app": {
+    "title": "Mainnet App ↗",
+    "type": "page",
+    "href": "https://dydx.trade",
+    "newWindow": true
+  },
+
   "testnet app": {
     "title": "Testnet App ↗",
     "type": "page",
