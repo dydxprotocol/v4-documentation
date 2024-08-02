@@ -38,10 +38,10 @@ Download the latest `addrbook.json` file, which stores configuration details tha
 
 Save the `addrbook.json` file in your `/.dydxprotocol/config` directory.
 
-## Back Up Your Node
+## Restore Your Node
 > If you followed the procedure on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node.md), you already have a snapshot installed.
 
-Your full node needs a backup plan to replay the history of the network in case it falls out of sync. You can back up your node in one of two ways.
+Your full node needs a backup plan to replay the history of the network in case it falls out of sync. You can prepare a backup for your node in one of two ways.
 
 ### Snapshot
 You can use a **snapshot** stored on the system that your node runs on. A snapshot contains a compressed copy of the application state at the time the snapshot was taken. If your node falls out of sync, a snapshot allows the node to recover to that saved state before replaying the rest of the history of the network. This speeds up the syncing process because you avoid replaying the entire history of the network, instead starting from your stored application state snapshot. To use a snapshot to back up your full node, install a snapshot for your deployment from a [Snapshot Service](../infrastructure_providers-network/resources.mdx#snapshot-service).
