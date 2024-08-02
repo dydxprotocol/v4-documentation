@@ -253,4 +253,4 @@ curl localhost:26657/status
 When your full node's latest block is the same as the network's latest block, your full node is ready to participate in the network.
 
 ## Next Steps
-When your full node is up to date with the network, you can use it to read live data and configure additional settings. Learn more on the [Running a Full Node](../infrastructure_providers-validators/running_full_node) page.
+When your full node is up to date with the network, you can use it to read live data and configure additional settings. Learn more on the [Running a Full Node](../infrastructure_providers-validators/running_full_node.md) page.
