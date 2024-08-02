@@ -1,4 +1,6 @@
 # Set Up a Full Node
+You can use your full node to read orderbook data and to place, confirm, and cancel orders. 
+<!-- todo: standardize intro -->
 Installing, configuring, and running a full node lets you interact programmatically with the dYdX Chain. You can read orderbook data as well as place, confirm, and cancel orders directly as part of the node network.
 
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
