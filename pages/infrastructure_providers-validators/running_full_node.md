@@ -1,5 +1,5 @@
-# Manage a Full Node
-To run a performant full node, configure settings that help keep your connection healthy and make preparations to bring your node back online in case it falls out of sync.
+# Run a Full Node
+Running a full node allows your system to participate in a dYdX Chain network. The recommended settings and best practices on this page help ensure your node stays healthy and up to date with the network.
 
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 
