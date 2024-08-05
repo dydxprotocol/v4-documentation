@@ -1,5 +1,5 @@
 # Optimize Your Full Node
-Optimizing your full node helps keep it online, up-to-date, and quick to connect. Nodes that can more quickly read data and place, confirm, and cancel orders have an advantage on the network.
+Optimizing your full node helps keep it online, up-to-date, and operating quickly. Faster nodes have an advantage over slower nodes because they tend to receive new data first and they minimize the time between placing and resolving orders.
 
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 
