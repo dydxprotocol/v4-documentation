@@ -24,7 +24,7 @@ You need a running, non-validating full node that is connected to a network.
 The following recommended settings and best practices help ensure that your node stays healthy and up to date with the network.
 
 ### Save a List of Persistent Peers
-Save a list of healthy peers to reliably read the latest data from the network.
+Save a list of healthy peers to more quickly and reliably read the latest data from the network.
 
 Request a list of healthy peers for your deployment from a [Live Peer Node](../infrastructure_providers-network/resources.mdx#live-peer-node-providers) provider.
 
@@ -37,9 +37,7 @@ persistent_peers=83c299de2052db247f08422b6592e1383dd7a104@136.243.36.60:23856,1c
 ```
 
 ### Save an Address Book File
-Save an address book file of trusted nodes to more quickly and reliably connect to the network.
-
-Download an `addrbook.json` file, which stores a list of healthy nodes operated by a provider. If your node can't connect to the network conventionally, it uses the nodes in your address book to make an initial connection to the network. If successful, your node resumes normal operations.
+Save an address book file of trusted nodes operated by a provider to more quickly and reliably connect to the network.
 
 Download an up-to-date `addrbook.json` file for your deployment from an [Address Book](../infrastructure_providers-network/resources.mdx#address-book-providers) provider. 
 
@@ -63,7 +61,7 @@ Your full node can fall out of sync with the rest of the network for a variety o
 You can speed up the re-syncing process significantly by providing your node with a snapshot. A snapshot contains a compressed copy of the application state at the time the snapshot was taken. If your node falls out of sync, a snapshot allows it to recover to that saved state before replaying the rest of the history of the network, saving time.
 
 ### Save a Snapshot on Your System
-You can use a snapshot saved on the system that your node runs on to restore your node.
+You can use a snapshot saved on the system on which your node runs to restore your node.
 
 To use a snapshot to back up your full node, install a snapshot for your deployment from a [Snapshot Service](../infrastructure_providers-network/resources.mdx#snapshot-service).
 
