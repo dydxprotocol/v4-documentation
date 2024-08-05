@@ -26,7 +26,9 @@ You need a running, non-validating full node that is connected to a network.
 The following recommended settings and best practices help ensure that your node stays healthy and up to date with the network.
 
 ### Save a List of Persistent Peers
-Connect to healthy peers with the latest state of the network. Request a list of healthy peers for your deployment from a [Live Peer Node](../infrastructure_providers-network/resources.mdx#live-peer-node-providers) provider.
+Save a list of healthy peers to reliably read the latest data from the network.
+
+Request a list of healthy peers for your deployment from a [Live Peer Node](../infrastructure_providers-network/resources.mdx#live-peer-node-providers) provider.
 
 From the list of healthy peers that you retrieve from peer node provider, choose any 5 for your node to query for the latest state. Add a comma-separated list of those peer addresses to the `persistent_peers` field in your `config.toml`, like in the following example:
 
@@ -37,7 +39,11 @@ persistent_peers=83c299de2052db247f08422b6592e1383dd7a104@136.243.36.60:23856,1c
 ```
 
 ### Save an Address Book File
-Download an up-to-date `addrbook.json` file for your deployment from an [Address Book](../infrastructure_providers-network/resources.mdx#address-book-providers) provider.
+Save an address book file of trusted nodes to more quickly and reliably connect to the network.
+
+Download an `addrbook.json` file, which stores a list of healthy nodes operated by a provider. If your node can't connect to the network conventionally, it uses the nodes in your address book to make an initial connection to the network. If successful, your node resumes normal operations.
+
+Download an up-to-date `addrbook.json` file for your deployment from an [Address Book](../infrastructure_providers-network/resources.mdx#address-book-providers) provider. 
 
 Save the `addrbook.json` file in your `/.dydxprotocol/config` directory.
 
