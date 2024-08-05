@@ -4,7 +4,7 @@ Running a full node allows your system to participate in a dYdX Chain network. T
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 
 ## Prerequisites
-You need a running, non-validating full node that is connected to network. 
+You need a running, non-validating full node that is connected to a network. 
 
 - If you created a system service for your node by following the instructions on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node.md), start your node with the following command:
   ```bash
