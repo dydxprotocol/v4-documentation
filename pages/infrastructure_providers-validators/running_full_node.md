@@ -1,5 +1,5 @@
 # Optimize Your Full Node
-Running a full node allows your system to participate in a dYdX Chain network.
+Optimizing your full node helps keep it online, up-to-date, and quick to connect. Nodes that can more quickly read data and place, confirm, and cancel orders have an advantage on the network.
 
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 
@@ -10,19 +10,17 @@ You need a running, non-validating full node that is connected to a network.
   ```bash
   stystemctl start dydxprotocold
   ```
-- To start your node with Cosmovisor, include the flag `--non-validating-full-node=true`. Cosmovisor may prompt you to configure additional variables in your environment or include them in your command.
+- To start your node with Cosmovisor, you must include the flag `--non-validating-full-node=true`. The flag disables the functionality intended for validator nodes and enables additional logic for reading data. Cosmovisor may prompt you to configure additional variables in your environment or include them in your command.
   ```bash
   cosmovisor run start --non-validating-full-node=true 
   ```
-  > The flag `--non-validating-full-node` is required. It disables the functionality intended for validator nodes and enables additional logic for reading data.
-- To start your node directly with the `dydxprotocold` binary, include the flag `--non-validating-full-node=true`. `dydxprotocold` may prompt you to configure additional variables in your environment or include them in your command.
+- To start your node directly with the `dydxprotocold` binary, you must include the flag `--non-validating-full-node=true`. The flag disables the functionality intended for validator nodes and enables additional logic for reading data. `dydxprotocold` may prompt you to configure additional variables in your environment or include them in your command.
   
   ```bash
   dydxprotocold run start --non-validating-full-node=true 
   ```
-  > The flag `--non-validating-full-node` is required. It disables the functionality intended for validator nodes and enables additional logic for reading data.
 
-## Optimize Node Settings
+## Customize Node Settings
 The following recommended settings and best practices help ensure that your node stays healthy and up to date with the network.
 
 ### Save a List of Persistent Peers
