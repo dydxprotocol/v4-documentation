@@ -1,11 +1,11 @@
 # Reading a New Market Proposal
-
 A new market proposal is a JSON document that details configuration settings for a market to be added to the dYdX exchange. Users with governance tokens vote to add or reject new markets based on proposal documents. 
 
-Users need to be able to interpret new market proposals in order to vote on them, and market makers need to derive additional values from the proposal to provide liquidity at launch.
+For dYdX Chain users, reading new market proposals is important to be able to assess and vote on how the community adds a new market.
+
+For market makers, new market proposals contain key information that helps configure programmatic trading strategies to provide liquidity to that market at launch.
 
 ## Example Proposal
-
 Below is an example proposal JSON file for adding a new perpetual market, `BTC-USD`.
 
 ```json
@@ -76,11 +76,12 @@ Below is an example proposal JSON file for adding a new perpetual market, `BTC-U
 ```
 
 ### Proposal Values
+The following values are visible in a new market proposal.
 
 | Name | Field | Description | Proposer Input |
 | ---- | ----- | ----------- | -------------- |
-| Reference Price | reference_price | desc | yes |
-| Liquidity Tier | liquidity_tier | desc | yes |
+| Reference Price | reference_price | Starting price of an asset on the exchange, should the proposal be accepted. A user proposing a new market should set this based on the current price of the asset. | yes |
+| Liquidity Tier | liquidity_tier | The liquidity tier that the asset falls into. A user proposing a new market should set this based on [dYdX liquidity tier guidelines](). | yes |
 | Atomic Resolution | atomic_resolution | desc | no |
 | Minimum Exchanges | min_exchanges | desc | no |
 | Minimum Price Change PPM | min_price_change_ppm | desc | no |
@@ -90,6 +91,7 @@ Below is an example proposal JSON file for adding a new perpetual market, `BTC-U
 | Quantum Conversion Exponent | quantum_conversion_exponent | desc | no |
 
 ### Derived Values
+You can calculate the following values based on values in a new market proposal.
 
 | Name | Field | Description | Equation |
 | ----- | -- |----------- | -------- |
