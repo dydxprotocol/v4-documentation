@@ -6,7 +6,7 @@ Optimizing your full node helps keep it online, up to date, and operating quickl
 ## Prerequisites
 You need a running, non-validating full node that is connected to a network. 
 
-- If you created a system service for your node by following the instructions on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/how_to_set_up_full_node.md), start your node with the following command:
+- If you created a system service for your node by following the instructions on the previous page, [Set Up a Full Node](../infrastructure_providers-validators/set_up_full_node.md), start your node with the following command:
   ```bash
   stystemctl start dydxprotocold
   ```
