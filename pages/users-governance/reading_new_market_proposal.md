@@ -1,12 +1,12 @@
 # Reading a New Market Proposal
+
 A new market proposal is a JSON document that details configuration settings for a market to be added to the dYdX exchange. Users with governance tokens vote to add or reject new markets based on proposal documents. 
 
 Users need to be able to interpret new market proposals in order to vote on them, and market makers need to derive additional values from the proposal to provide liquidity at launch.
 
 ## Example Proposal
 
-
-Below is an example proposal JSON file to propose adding `BTC-USD` as a new perpetual market (if it had not been added yet).
+Below is an example proposal JSON file for adding a new perpetual market, `BTC-USD`.
 
 ```json
 {
@@ -75,14 +75,29 @@ Below is an example proposal JSON file to propose adding `BTC-USD` as a new perp
   }
 ```
 
-### Reading a Proposal
+### Proposal Values
 
-### Voting on a Proposal
+| Name | Field | Description | Proposer Input |
+| ---- | ----- | ----------- | -------------- |
+| Reference Price | reference_price | desc | yes |
+| Liquidity Tier | liquidity_tier | desc | yes |
+| Atomic Resolution | atomic_resolution | desc | no |
+| Minimum Exchanges | min_exchanges | desc | no |
+| Minimum Price Change PPM | min_price_change_ppm | desc | no |
+| Exponent | exponent | desc | no |
+| Step Base Quantums | step_base_quantums | desc | no |
+| Subticks Per Tick | subticks_per_tick | desc | no |
+| Quantum Conversion Exponent | quantum_conversion_exponent | desc | no |
 
-### (Market Makers) Compute Additional Values to Provide Liquidity to a New Market
+### Derived Values
 
-| Value | Description | Equation |
-| ----- | ----------- | -------- |
-| Step Size | desc | xy |
-| Tick Size | desc | xy |
-| Minimum Order Size | desc | xy |
+| Name | Field | Description | Equation |
+| ----- | -- |----------- | -------- |
+| Step Size | x | desc | xy |
+| Tick Size | ticksize | desc | xy |
+| Minimum Order Size | x | desc | xy |
+
+## Next Steps
+If you are a dYdX Chain user, you can [vote on a proposal](../users-governance/voting.md) or [submit your own](../users-governance/submitting_a_proposal.md).
+
+If you are a market maker aiming to provide liquidity to a new market, you can configure a trading strategy using values and derived values from the proposal.
