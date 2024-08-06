@@ -47,7 +47,7 @@ Download an up-to-date `addrbook.json` file for your deployment from an [Address
 Save it in your `/.dydxprotocol/config` directory, replacing the existing `addrbook.json` file.
 
 ## Prepare to Restore Your Node
-Prepare to restore your node quickly in case it falls out of sync, minimizing downtime.
+To minimize downtime in case your node falls out of sync, make preparations to restore your node quickly.
 
 Your full node can fall out of sync with the rest of the network for a variety of reasons, including a bad software upgrade, unexpected node crashes, or human operational error. To re-sync with the network, your full node needs to replay the history of the network, which can take a long time.
 
@@ -68,7 +68,7 @@ As an alternative to state sync, you can use a snapshot that you have saved on y
 To save a snapshot on your system for quick recovery in case your node falls out of sync, install a snapshot for your deployment from a [Snapshot Service](../infrastructure_providers-network/resources.mdx#snapshot-service).
 
 ## Configure a Pruning Strategy
-In general, dYdX recommends the following pruning setting, configured in your `app.toml` file:
+To reduce the amount of storage your node requires, dYdX recommends the following pruning setting, configured in your `app.toml` file:
 
 ```bash
 # app.toml

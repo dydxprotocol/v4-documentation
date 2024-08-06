@@ -8,7 +8,7 @@ We recommend validators to use `cosmovisor` to run their nodes. This will make l
 
 When Cosmovisor activates an upgrade, it does a backup of the entire data directory by default. This backup can take a very long time to process unless the user does aggressive historical-state-pruning using the `pruning` [configuration on the node](../required_node_configs.md).
 
-As long as you have access to a previous state [snapshot](../snapshots.md), we recommend setting the environment variable `UNSAFE_SKIP_BACKUP` to `false` which skips the data backup and allows a much faster upgrade. If your node is configured to only keep a small amount of historical state, then you may be able to get away with running the backup quickly.
+As long as you have access to a previous state [snapshot](../snapshots.md), we recommend setting the environment variable `UNSAFE_SKIP_BACKUP` to `true` which skips the data backup and allows a much faster upgrade. If your node is configured to only keep a small amount of historical state, then you may be able to get away with running the backup quickly.
 
 More information about Cosmovisor settings can be found in the [Cosmovisor documentation](https://docs.cosmos.network/main/build/tooling/cosmovisor).
 
