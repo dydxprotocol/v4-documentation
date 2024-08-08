@@ -1,4 +1,4 @@
-# Governance Functionality
+# Governance Functionalities
 
 Below is a current list of all module parameters that `x/gov` has the ability to update directly. Further documentation will be released which outlines overviews of each custom module, how modules interact with one another, and technical guides regarding how to properly submit governance proposals. 
 
@@ -138,7 +138,7 @@ Governance has the ability to update:
 
 ## Community Assets
 
-### Community Pool + Community Treasury
+### Community Pool & Treasury
 
 There are two addresses intended for managing funds owned by the community: 
 
@@ -149,6 +149,6 @@ The Community Pool is the recipient of any Community Tax that is implemented via
 
 The Community Treasury is an account controlled by governance and can be funded via any account or module sending tokens to it.  
 
-## CosmosSDK Default Modules:
+## CosmosSDK Default Modules
 
 For more information on default modules, head to the [Cosmos SDK official documentation](https://docs.cosmos.network/v0.47/modules). dYdX Chain inherits the same governance properties of any standard CosmosSDK modules that are present on dYdX Chain,

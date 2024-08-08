@@ -1,4 +1,4 @@
-# Reading a New Market Proposal
+# Reading a Proposal
 A new market proposal is a JSON document that details configuration settings for a market to be added to the dYdX exchange. Users with governance tokens vote to add or reject new markets based on proposal documents. 
 
 For dYdX Chain users, reading new market proposals is important to be able to assess and vote on how the community adds a new market.
