@@ -80,24 +80,24 @@ The following values are visible in a new market proposal.
 
 | Name | Field | Description | Proposer Input |
 | ---- | ----- | ----------- | -------------- |
-| Reference Price | reference_price | Starting price of an asset on the exchange, should the proposal be accepted. A user proposing a new market should set this based on the current price of the asset. | yes |
-| Liquidity Tier | liquidity_tier | The liquidity tier that the asset falls into. A user proposing a new market should set this based on [dYdX liquidity tier guidelines](). | yes |
-| Atomic Resolution | atomic_resolution | desc | no |
-| Minimum Exchanges | min_exchanges | desc | no |
-| Minimum Price Change PPM | min_price_change_ppm | desc | no |
-| Exponent | exponent | desc | no |
-| Step Base Quantums | step_base_quantums | desc | no |
-| Subticks Per Tick | subticks_per_tick | desc | no |
-| Quantum Conversion Exponent | quantum_conversion_exponent | desc | no |
+| Reference Price | `reference_price` | Starting price of the proposed asset on the exchange. A user proposing a new market should set this based on the price of the asset at the time they create the proposal. | yes |
+| Liquidity Tier | `liquidity_tier` | Liquidity tier of the proposed asset. A user proposing a new market should set this based on [dYdX liquidity tier guidelines](../users-governance/functionalities#liquidity-tiers). | yes |
+| Atomic Resolution | `atomic_resolution` | Precision of the size of the coin.  | no |
+| Minimum Exchanges | `min_exchanges` | Number of exchanges required to list this asset. | no |
+| Minimum Price Change PPM | `min_price_change_ppm` | The minimum price change that causes the oracle price to update. | no |
+| Exponent | `exponent` | Number of decimal places to use to show prices.  | no |
+| Step Base Quantums | `step_base_quantums` | Minimum amount by which you can increase or decrease an order. Same as `step_size`. | no |
+| Subticks Per Tick | `subticks_per_tick` | desc | no |
+| Quantum Conversion Exponent | `quantum_conversion_exponent` | Determines the subtick size. | no |
 
 ### Derived Values
 You can calculate the following values based on values in a new market proposal.
 
 | Name | Field | Description | Equation |
 | ----- | -- |----------- | -------- |
-| Step Size | x | desc | xy |
-| Tick Size | ticksize | desc | xy |
-| Minimum Order Size | x | desc | xy |
+| Step Size | `stepsize` |Minimum amount by which you can increase or decrease an order. Same as `step_base_quantums`.  | xy |
+| Tick Size | `ticksize` | desc | subtick_size * subticks_per_tick |
+| Minimum Order Size | `min_order_size` | desc | atomic_resolution * step_base_quantums |
 
 ## Next Steps
 If you are a dYdX Chain user, you can [vote on a proposal](../users-governance/voting.md) or [submit your own](../users-governance/submitting_a_proposal.md).
