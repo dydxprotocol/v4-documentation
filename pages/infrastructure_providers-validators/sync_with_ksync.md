@@ -1,7 +1,7 @@
-# Sync with KSYNC
+# Sync dYdX with KYVE's KSYNC
 
-KYVE is a blockchain that validates and archives chain data like dYdX blocks and state-sync snapshots.
-The tool KSYNC provides the possibility to use the validated data in order to sync an dYdX node to any height.
+KYVE is a blockchain that validates and permanently archives chain data like dYdX blocks, block results, and state-sync snapshots.
+KYVE's tool KSYNC provides the possibility to use this validated data in order to easily sync a dYdX node to any height or a dYdX full archival node, and provide decentralized dYdX snapshots.
 
 > More information about KSYNC can be found in the [KYVE Docs](https://docs.kyve.network/access-data-sets/ksync).
 
@@ -10,6 +10,8 @@ This guide covers the following features:
 1. Sync a node from genesis with block-sync
 2. Sync to live height with state-sync
 3. Sync to any arbitrary height in minutes with height-sync
+
+Disclaimer: Please note that this integration is currently on KYVE's testnet, Kaon.
 
 ## Installation
 
