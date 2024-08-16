@@ -1,12 +1,15 @@
 import { Tab, Tabs } from "nextra-theme-docs";
 
-# Quickstart
+# Getting Started with the TypeScript Client
 
-## Getting Started
+## Quickstart
+
+This is a quickstart guide to get you up and running with the TypeScript client library for dYdX V4.
+For more guides and code examples, please refer to the [Typescript client repository](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-js). 
 
 ### Installation
 
-The `v4-client-js` uses node v18 for development. 
+The `v4-client-js` uses node `v18` for development. 
 You can use nvm to manage different versions of node.
 
 ```bash
@@ -25,7 +28,46 @@ Now install the V4 Client
 npm i @dydxprotocol/v4-client-js
 ```
 
-### Setup an example repository
+
+### Run examples from the TS client repository
+
+#### 1. Clone or fork the examples repo
+
+```bash
+git clone git@github.com:dydxprotocol/v4-clients.git
+```
+
+#### 2. Go to one of the examples
+
+- Go to `v4-client-js/examples`
+```bash
+cd v4-client-js/examples
+```
+
+These examples by default use a test account with `DYDX_TEST_MNEMONIC` from the TS client library under `v4-client-js/examples/constants`.
+
+#### 3. Run the scripts with node
+
+```bash
+npm install
+npm run build
+```
+
+You should now see a `/build/examples` dir generated with JS files. We will use node to run these scripts
+
+- Open a terminal to run an example, e.g. account_endpoints.
+
+```bash
+node ../build/examples/composite_example.js
+
+```
+
+Everytime you change the TS code, you need to run `npm run build` again, before you execute using node. 
+
+### Setup your own example project
+
+To setup your own standalone project and switch network, have a look at the following example project, which you can modify freely
+and iterate on in order to achieve your trading use cases.
 
 #### 1. Clone or fork the examples repo
 
@@ -50,6 +92,7 @@ NETWORK_TYPE=testnet # Use "mainnet" for main network
 ```
 
 - For testnet, feel free to use `DYDX_TEST_MNEMONIC` from the official TS client library under `v4-client-js/examples/constants`.
+- For Mainnet change `NETWORK_TYPE` to `mainnet` and fill in your own `ADDRESS` and `MNEMONIC`.
 
 #### 3a. Run the scripts with node
 
