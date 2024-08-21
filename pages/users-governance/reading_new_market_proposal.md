@@ -1,7 +1,7 @@
 # Reading a Proposal
-dYdX Chain users add markets to their exchange by submitting new market proposals. A new market proposal is a JSON document that details market values, such as the name of the proposed market, the submitter's asset price quote, the oracle sources it will use, and many others. Users with governance tokens vote to add or reject new markets based on proposal documents. 
+dYdX Chain users add markets to the exchange by submitting new market proposals. A new market proposal is a JSON document that details market values, such as the name of the proposed market, the submitter's asset price quote, the oracle sources it will use, and many others. Users with governance tokens vote to accept or reject new markets based on proposal documents. 
 
-For dYdX Chain users, reading new market proposals is important to be able to assess and vote on how the community adds a new market.
+For dYdX Chain users, reading new market proposals is important to be able to assess and vote on adding new markets.
 
 For market makers, new market proposals contain key information that helps configure programmatic trading strategies to provide liquidity to that market at launch.
 
@@ -79,7 +79,7 @@ Below is an example proposal JSON file for adding a perpetual market, `BTC-USD`.
 The following values are visible in a new market proposal.
 
 | Name | Field | Description | Proposer Input |
-| ---- | ----- | ----------- | -------------- |
+| ---- | ---- | ------------------- | -------- |
 | Reference Price | `reference_price` | Starting price of the proposed asset on the exchange. A user proposing a new market should set this based on the price of the asset at the time they create the proposal. | yes |
 | Liquidity Tier | `liquidity_tier` | Liquidity tier of the proposed asset. A user proposing a new market should set this based on [dYdX liquidity tier guidelines](../users-governance/functionalities#liquidity-tiers). | yes |
 | Atomic Resolution | `atomic_resolution` | Precision of the size of the coin.  | no |
@@ -87,17 +87,17 @@ The following values are visible in a new market proposal.
 | Minimum Price Change PPM | `min_price_change_ppm` | The minimum price change that causes the oracle price to update. | no |
 | Exponent | `exponent` | Number of decimal places to use to show prices.  | no |
 | Step Base Quantums | `step_base_quantums` | Minimum amount by which you can increase or decrease an order. Same as `step_size`. | no |
-| Subticks Per Tick | `subticks_per_tick` | desc | no |
-| Quantum Conversion Exponent | `quantum_conversion_exponent` | Determines the subtick size. | no |
+| Subticks Per Tick | `subticks_per_tick` | TODO Determines the subticks per tick. | no |
+| Quantum Conversion Exponent | `quantum_conversion_exponent` | TODO Determines the subtick size. | no |
 
 ### Derived Values
 You can calculate the following values based on values in a new market proposal.
 
 | Name | Field | Description | Equation |
 | ----- | -- |----------- | -------- |
-| Step Size | `stepsize` |Minimum amount by which you can increase or decrease an order. Same as `step_base_quantums`.  | xy |
-| Tick Size | `ticksize` | desc | subtick_size * subticks_per_tick |
-| Minimum Order Size | `min_order_size` | desc | atomic_resolution * step_base_quantums |
+| Step Size | `stepsize` | Minimum amount in USDC by which you can increase or decrease an order. Same as `step_base_quantums`.  | `step_base_quantums` |
+| Tick Size | `ticksize` | Minimum amount in USDC by which an asset's price can increase or decrease. The market ignores price changes below this threshold. | `subtick_size` * `subticks_per_tick` |
+| Minimum Order Size | `min_order_size` | Minimum amount in USDC required to place an order. | `atomic_resolution` * `step_base_quantums` |
 
 ## Next Steps
 If you are a dYdX Chain user, you can [vote on a proposal](../users-governance/voting.md) or [submit your own](../users-governance/submitting_a_proposal.md).
