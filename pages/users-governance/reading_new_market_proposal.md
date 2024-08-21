@@ -87,8 +87,8 @@ The following values are visible in a new market proposal.
 | Minimum Price Change PPM | `min_price_change_ppm` | The minimum price change that causes the oracle price to update. | no |
 | Exponent | `exponent` | Number of decimal places to use to show prices.  | no |
 | Step Base Quantums | `step_base_quantums` | Minimum amount by which you can increase or decrease an order. Same as `step_size`. | no |
-| Subticks Per Tick | `subticks_per_tick` | TODO Determines the subticks per tick. | no |
-| Quantum Conversion Exponent | `quantum_conversion_exponent` | TODO Determines the subtick size. | no |
+| Subticks Per Tick | `subticks_per_tick` | Determines the `ticksize` when multiplied by `subtick_size`. | no |
+| Quantum Conversion Exponent | `quantum_conversion_exponent` | Determines the `subticks_per_tick` based on `ticksize_exponent`. | no |
 
 ### Derived Values
 You can calculate the following values based on values in a new market proposal.
