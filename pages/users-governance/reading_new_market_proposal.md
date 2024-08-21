@@ -1,12 +1,12 @@
 # Reading a Proposal
-A new market proposal is a JSON document that details configuration settings for a market to be added to the dYdX exchange. Users with governance tokens vote to add or reject new markets based on proposal documents. 
+dYdX Chain users add markets to their exchange by submitting new market proposals. A new market proposal is a JSON document that details market values, such as the name of the proposed market, the submitter's asset price quote, the oracle sources it will use, and many others. Users with governance tokens vote to add or reject new markets based on proposal documents. 
 
 For dYdX Chain users, reading new market proposals is important to be able to assess and vote on how the community adds a new market.
 
 For market makers, new market proposals contain key information that helps configure programmatic trading strategies to provide liquidity to that market at launch.
 
 ## Example Proposal
-Below is an example proposal JSON file for adding a new perpetual market, `BTC-USD`.
+Below is an example proposal JSON file for adding a perpetual market, `BTC-USD`.
 
 ```json
 {
