@@ -1,6 +1,10 @@
+---
+title: dYdX Trading's Docs
+description: Official documentation for dYdX Trading, including setup guides, API references, and more.
+---
 ## dYdX Chain Software Documentation
 
-The most recent setup guides for how to use the dYdX Chain open-source software, as well as the netwrok parameters for `dydx-mainnet-1` are currently hosted by dYdX Trading Inc. at [docs.dydx.exchange](https://docs.dydx.exchange/).
+The most recent setup guides for how to use the dYdX Chain open-source software, as well as the network parameters for `dydx-mainnet-1` are currently hosted by dYdX Trading Inc. at [docs.dydx.exchange](https://docs.dydx.exchange/).
 
 The dYdX Operations subDAO is committed to actively enhancing the documentation by contributing updates to the associated public repository located at https://github.com/dydxprotocol/v4-documentation.
 
