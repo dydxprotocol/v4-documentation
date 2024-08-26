@@ -33,7 +33,7 @@
 
   "api_integration-clients": "Clients",
   "api_integration-indexer": "Indexer",
-  "api_integration-full-node": "Full Nodes",
+  "api_integration-full-nodes": "Full Nodes",
   "api_integration-repositories": "Repositories",
   "api_integration-trading": "Trading",
   "api_integration-deposits_and_withdrawals": "Deposits and Withdrawals",
