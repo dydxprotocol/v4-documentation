@@ -1,5 +1,5 @@
 # Set Up a Full Node
-Installing and running a full node allows you to read orderbook and on-chain data from a network, as well as place, confirm and cancel orders directly on that network.
+Installing and running a full node allows you to read orderbook and onchain data from a network, as well as place, confirm and cancel orders directly on that network.
 
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 

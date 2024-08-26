@@ -68,7 +68,7 @@
 - User places a trade on a decentralized front end (e.g., website) or via the typescript or python client that places orders directly to a full node or validator API.
 - The consensus process picks one validator to be the block proposer. The selected validator will propose their view of the matches in the next proposed block.
 - If the matches are valid (orders cross, subaccounts well-collateralized, etc.) and accepted by ⅔+ of validator stake weight (consensus), then the block is committed and those matches are written to state as valid matches.
-- After the block is committed, the updated on-chain (and off-chain) data is streamed from full nodes to Indexers. The Indexer then makes this data available via API and websockets back to the front end and/or any other outside services querying for this data.
+- After the block is committed, the updated onchain (and offchain) data is streamed from full nodes to Indexers. The Indexer then makes this data available via API and websockets back to the front end and/or any other outside services querying for this data.
 - Note: the block proposer’s matches are the canonical matches for the next block assuming their block is accepted by consensus.
   - Other validators maintain a list of matches and those matches might differ from the block proposer’s matches, but if they’re not the block proposer those matches will not be proposed in the next block.
   - Similarly, the indexer is not the block proposer so its list of matches might be different from the block proposer’s matches, until the network reaches finality.
