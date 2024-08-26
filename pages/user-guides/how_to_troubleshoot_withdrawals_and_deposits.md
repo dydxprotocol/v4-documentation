@@ -58,7 +58,7 @@ For more info on this flow, see: [https://dydx.exchange/blog/cctp](https://dydx.
     You should see a "deposit to subaccount" transaction there.
 
     - If not, you can confirm whether USDC has arrived on Noble, by checking [https://www.mintscan.io/noble](https://www.mintscan.io/noble) or [https://ibc.range.org](https://ibc.range.org).
-    - You need to make sure you have the dYdX Front-end opened and wallet connected. The dYdX front end will detect your funds on Noble and auto-sweep it to your dYdX address. For this to happen, you need to actively open the front end and connect your wallet.
+    - You need to make sure you have the dYdX front-end opened and wallet connected. The dYdX front end will detect your funds on Noble and auto-sweep it to your dYdX address. For this to happen, you need to actively open the front end and connect your wallet.
       ​
 
 4.  **Manual process stuck funds**

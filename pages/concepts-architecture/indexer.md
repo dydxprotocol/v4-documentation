@@ -6,15 +6,15 @@ A good way to think about the indexer is as similar to Infura or Alchemy’s rol
 
 As part of tooling for the dYdX ecosystem, we want to ensure that clients have access to performant data queries when using exchanges running on dYdX Chain software. Cosmos SDK Full Nodes offer a number of APIs that can be used to request on-chain data. However, these Full Nodes are optimized for committing and executing blocks, not for serving high frequency, low-latency requests from web/mobile clients.
 
-This is why we wrote software for an indexing service. The Indexer is a read-only service that serves off chain data to clients over REST APIs and Websockets. Its purpose is to store and serve data that exists on the dYdX Chain in an easier to use way. In other words, the purpose of an indexer is to index and serve data to clients in a more performant, efficient and web2-friendly way. For example the indexer will serve websockets that provide updates on the state of the orderbook and fills. These clients will include front-end applications (mobile and web), market makers, institutions, and any other parties looking to query dYdX Chain data via a traditional web2 API.
+This is why we wrote software for an indexing service. The Indexer is a read-only service that serves off chain data to clients over REST APIs and Websockets. Its purpose is to store and serve data that exists on dYdX Chain in an easier to use way. In other words, the purpose of an indexer is to index and serve data to clients in a more performant, efficient and web2-friendly way. For example the indexer will serve websockets that provide updates on the state of the orderbook and fills. These clients will include front-end applications (mobile and web), market makers, institutions, and any other parties looking to query dYdX Chain data via a traditional web2 API.
 
 ### On-chain vs. Off-chain data
 
 The Indexer will run two separate ingestion/storage processes with data from a v4 Full Node: one for on-chain data and one for off-chain data. Currently, throughput of on-chain data state changes is expected to be from 10-50 events/second. On the other hand, the expected throughput of off-chain data state changes is between 500-1,000 events/second. This represents a 10-100x difference in throughput requirements. By handling these data types separately, v4 is built to allow for different services to better scale according to throughput requirements.
 
-### On-chain Data
+### Onchain Data
 
-On-chain data is all data that can be reproduced by reading committed transactions on the dYdX Chain. All on-chain data has been validated through consensus. This data includes:
+Onchain data is all data that can be reproduced by reading committed transactions on a dYdX Chain deployment. All onchain data has been validated through consensus. This data includes:
 
 1. Account balances (USDC)
 2. Account positions (open interest)
