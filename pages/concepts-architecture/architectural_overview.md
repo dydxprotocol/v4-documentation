@@ -26,14 +26,14 @@ Indexers use Postgres databases to store onchain data, Redis for offchain data, 
 ### Front-ends
 In service of building an end-to-end decentralized experience, dYdX has built three open-source front ends: a web app, an iOS app, and an Android app.  
 
-- **Web application**: The website was built using Javascript and React. The website interacts with the Indexer through an API to get offchain orderbook information and will send trades directly to the chain. dYdX has open sourced the front end codebase and associated deployment scripts. This allows anyone to easily deploy and access the dYdX front end to/from their own domain/hosting solution via IPFS/Cloudflare gateway. 
+- **Web application**: The website was built using Javascript and React. The website interacts with the Indexer through an API to get offchain orderbook information and will send trades directly to the chain. dYdX has open sourced the front-end codebase and associated deployment scripts. This allows anyone to easily deploy and access the dYdX front end to/from their own domain/hosting solution via IPFS/Cloudflare gateway. 
 
 - **Mobile**: The iOS and Android apps are built in native Swift and Kotlin, respectively. The mobile apps interact with the Indexer in the same way the web application does, and will send trades directly to the chain. The mobile apps have been open sourced as well, allowing anyone to deploy the mobile app to the App Store or Play store. Specifically for the App store, the deployer needs to have a developer account as well as a Bitrise account to go through the app submission process.
 
 ### Lifecycle of an Order
 Now that we have a better understanding of each of the components of dYdX Chain, let’s take a look at how it all comes together when placing an order. When an order is placed on dYdX Chain, it follows the flow below:
 
-1. User places a trade on a decentralized front-end (e.g., website) or via API
+1. User places a trade on a decentralized front end (e.g., website) or via API
 2. The order is routed to a validator. That validator gossips that transaction to other validators and full nodes to update their orderbooks with the new order.
 3. The consensus process picks one validator to be the proposer. The selected validator matches the order and adds it to its next proposed block.
 4. The proposed block continues through the consensus process. 
