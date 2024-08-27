@@ -1,6 +1,6 @@
 ---
-title: dYdX Trading's Docs
-description: Official documentation for dYdX Trading, including setup guides, API references, and more.
+title: dYdX Chain Docs
+description: Official documentation for dYdX Chain, including setup guides, API references, and more.
 ---
 ## dYdX Chain Software Documentation
 
