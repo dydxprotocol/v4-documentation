@@ -15,7 +15,7 @@ The Full Node and CometBFT APIs offer different sets of functionality. They acce
 The Full Node API accepts gRPC or REST. The CometBFT API accepts only RPC.
 
 || Full Node API | CometBFT API |
-| ------ | ------------- | ------------ |
+| ---- | --- | ------ |
 | gRPC | ✅ | ✖ |
 | REST | ✅ | ✖ |
 | RPC | ✖ | ✅ |
@@ -35,9 +35,9 @@ Then, check your connection to your target node using the command for your use c
 
 || Full Node API | CometBFT API |
 | ------ | ------------- | ------------ |
-| gRPC | `grpcurl <url>.dydxprotocol` | ✖ |
+| gRPC | `grpcurl --plaintext <url>.dydxprotocol` | ✖ |
 | REST | `curl <url>/dydxprotocol/`  | ✖ |
-| RPC | ✖ | `grpcurl <url>.status` |
+| RPC | ✖ | `grpcurl --plaintext <url>.status` |
 
 ## Full Node API
 The Full Node API provides an identical set of 
