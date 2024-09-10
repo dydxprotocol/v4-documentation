@@ -8,6 +8,6 @@ You can find all finalized audit reports in the [v4_chain audits folder](https:/
 
 ## Bug Bounty
 
-With all core dYdX Chain (v4) software GitHub repos now made public, we are inviting the community to help us identify any vulnerabilities to improve the security of the dYdX Chain.
+With all core dYdX Chain (v4) software GitHub repos now made public, we are inviting the community to help us identify any vulnerabilities to improve the security of dYdX Chain.
 
 To find more details, please see our blog post [here](https://dydx.exchange/blog/dydx-bug-bounty-program)!

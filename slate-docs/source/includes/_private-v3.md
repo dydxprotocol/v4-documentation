@@ -1286,7 +1286,7 @@ toAddress         | The Ethereum address the transfer is for.
 
 ## Fast vs. Slow Withdrawal
 
-The normal process for withdrawing from L2 to L1 requires waiting for a block of L2 transactions to be collected, and the zero-knowledge proof for the block to be constructed and verified on-chain.
+The normal process for withdrawing from L2 to L1 requires waiting for a block of L2 transactions to be collected, and the zero-knowledge proof for the block to be constructed and verified onchain.
 
 Using the fast withdrawal process, users can get their funds on L1 much faster by essentially trading their L2 funds to an “LP” account operated by dYdX, in order to receive immediate liquidity on L1. Since the LP must then recycle these funds from L2 to L1 via the regular withdrawal process, dYdX is only able to process a certain volume of fast withdrawals within a given period of time.
 
@@ -1344,7 +1344,7 @@ Description: Create a withdrawal from an account.
 If not withdrawing the entirety of your balance, there is a minimum withdrawal amount. Currently that amount is 100 USDC.
 </aside>
 
-An additional L1 transaction has to be sent to the Starkware contract to retrieve funds after a slow withdrawal. This cannot be done until the zero-knowledge proof for the block has been constructed and verified on-chain. For the L1 transaction, the Ethereum address that the starkKey is registered to must call either the [withdraw](https://github.com/dydxprotocol/starkex-eth/blob/master/src/contracts/starkware-perpetual-abi.json#L1802) or [withdrawTo](https://github.com/dydxprotocol/starkex-eth/blob/master/src/contracts/starkware-perpetual-abi.json#L1907) smart-contract functions. The contract ABI is not tied to a particular client but can be accessed via a [client](https://github.com/dydxprotocol/starkex-eth). All withdrawable funds are withdrawn at once.
+An additional L1 transaction has to be sent to the Starkware contract to retrieve funds after a slow withdrawal. This cannot be done until the zero-knowledge proof for the block has been constructed and verified onchain. For the L1 transaction, the Ethereum address that the starkKey is registered to must call either the [withdraw](https://github.com/dydxprotocol/starkex-eth/blob/master/src/contracts/starkware-perpetual-abi.json#L1802) or [withdrawTo](https://github.com/dydxprotocol/starkex-eth/blob/master/src/contracts/starkware-perpetual-abi.json#L1907) smart-contract functions. The contract ABI is not tied to a particular client but can be accessed via a [client](https://github.com/dydxprotocol/starkex-eth). All withdrawable funds are withdrawn at once.
 
 Both Layer 1 withdrawal methods can be accessed from [starkex-eth](https://github.com/dydxprotocol/starkex-eth/blob/master/src/modules/Exchange.ts).
 
