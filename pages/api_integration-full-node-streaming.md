@@ -19,7 +19,7 @@ The orderbook stream is implemented with [gRPC](https://grpc.io/), a streaming R
 
 ## Connecting to the Stream
 
-After setting up a full node with gRPC streaming enabled, you can connect to the stream using any gRPC client.
+After setting up a full node with ``gRPC streaming enabled, you can connect to the stream using any gRPC client.
 To follow along with [Google's documentation on gRPC streaming clients](https://grpc.io/docs/languages/go/basics/#client):
 
 1. Clone the [github.com/dydxprotocol/v4-chain](https://github.com/dydxprotocol/v4-chain) repository at the same version as your full node.
@@ -31,19 +31,21 @@ To follow along with [Google's documentation on gRPC streaming clients](https://
 
 For Python, the corresponding code is already generated in [the v4-proto PyPi package](https://pypi.org/project/v4-proto/).
 
-## Maintaining Orderbook State 
+## Maintaining Orderbook and Subaccount State 
 
 ### Overview
 
-1. Connect to the stream and subscribe to updates for a series of clob pair ids, each of which corresponds to a tradeable instrument.
-2. Discard messages until you receive a `StreamOrderbookUpdate` with `snapshot` set to `true`. This message contains the full orderbook state for each clob pair.
-3. When you see an `OrderPlaceV1` message, insert the order into the book at the end of the queue on its price level. Track the order's initial quantums (quantity) and total filled quantums.
-4. When you see an `OrderUpdateV1` message, update the order's total filled quantums.
-5. When you see a `ClobMatch` (trade) message, update the total filled quantums for each maker order filled using the `fill_amounts` field. 
+1. Connect to the stream and subscribe to updates for a series of clob pair ids, each of which corresponds to a tradeable instrument, and subaccount ids, each of which corresponds to a subaccount.
+2. Discard order messages until you receive a `StreamOrderbookUpdate` with `snapshot` set to `true`. This message contains the full orderbook state for each clob pair.
+3. Similarlyl, discard subaccount messages until you receive a `StreamSubaccountUpdate` with `snapshot` set to `true`. This message contains the full subaccount state for each subscribed subaccount.
+4. When you see an `OrderPlaceV1` message, insert the order into the book at the end of the queue on its price level. Track the order's initial quantums (quantity) and total filled quantums.
+5. When you see an `OrderUpdateV1` message, update the order's total filled quantums.
+6. When you see a `ClobMatch` (trade) message, update the total filled quantums for each maker order filled using the `fill_amounts` field. 
 	- Note that, similar to `OrderUpdateV1`, the `fill_amounts` field represents the order's total filled quantity up to this point. This is not the amount filled in this specific match, but rather the cumulative amount filled across all matches for this order. 
     - The order's quantity remaining is always its initial quantity minus its total filled quantity.
     - Note that both `OrderUpdateV1` and `ClobMatch` messages must be processed to maintain the correct book state. See [OrderUpdateV1](#orderupdatev1) for details.
-6. When you see an `OrderRemoveV1` message, remove the order from the book.
+7. When you see an `OrderRemoveV1` message, remove the order from the book.
+8. For subaccounts, when you see a `StreamSubaccountUpdate` message with `snapshot` set to `false`, incrementally update the subaccount's balances and positions.
 
 Note:
 - The order subticks (price) and quantums (quantity) fields are encoded as integers and 
@@ -57,7 +59,7 @@ Note:
 
 ### Request / Response
 
-To subscribe to the stream, the client can send a 'StreamOrderbookUpdatesRequest' specifying the clob pair ids to subscribe to.
+To subscribe to the stream, the client can send a 'StreamOrderbookUpdatesRequest' specifying the clob pair ids and subaccount ids to subscribe to.
 
 <details>
 
@@ -69,6 +71,9 @@ To subscribe to the stream, the client can send a 'StreamOrderbookUpdatesRequest
 message StreamOrderbookUpdatesRequest {
   // Clob pair ids to stream orderbook updates for.
   repeated uint32 clob_pair_id = 1;
+
+  // Subaccount ids to stream subaccount updates for.
+  repeated dydxprotocol.subaccounts.SubaccountId subaccount_ids = 2;
 }
 ```
 </details>
@@ -86,8 +91,16 @@ Response will contain a `oneof` field that contains either:
 		- Prices within a Match are matched at the maker order price.
 	- `fill_amounts` contains the absolute, total filled quantums of each order as stored in state.
 		- fill_amounts should be zipped together with the `orders` field. Both arrays should have the same length.
+- `StreamTakerOrder`
+  - TODO(jonfung): Add documentation for this message type.
+- `StreamSubaccountUpdate`
+  - Contains a singular `SubaccountId` object to identify the subaccount.
+  - multiple `SubaccountPerpetualPosition`s to represent the perpetual positions of the subaccount.
+    - each `SubaccountPerpetualPosition` contains a perpetual id and the size of the position in base quantums.
+  - multiple `SubaccountAssetPosition`s to represent the asset positions of the subaccount.
+    - each `SubaccountAssetPosition` contains an asset id and the size of the position in base quantums.
 
-as well as `block_height` and `exec_mode` (see [Exec Modes Reference](#exec-mode-reference)). 
+  as well as `block_height` and `exec_mode` (see [Exec Modes Reference](#exec-mode-reference)). 
 
 <details>
 
@@ -105,17 +118,19 @@ message StreamOrderbookUpdatesResponse {
 // gRPC stream.
 message StreamUpdate {
   // Contains one of an StreamOrderbookUpdate,
-  // StreamOrderbookFill.
+  // StreamOrderbookFill, StreamTakerOrderStatus.
   oneof update_message {
     StreamOrderbookUpdate orderbook_update = 1;
     StreamOrderbookFill order_fill = 2;
+    StreamTakerOrder taker_order = 3;
+    dydxprotocol.subaccounts.StreamSubaccountUpdate subaccount_update = 4;
   }
 
   // Block height of the update.
-  uint32 block_height = 3;
+  uint32 block_height = 5;
 
   // Exec mode of the update.
-  uint32 exec_mode = 4;
+  uint32 exec_mode = 6;
 }
 
 // StreamOrderbookUpdate provides information on an orderbook update. Used in
@@ -147,11 +162,84 @@ message StreamOrderbookFill {
   // Resulting fill amounts for each order in the orders array.
   repeated uint64 fill_amounts = 3 [ (gogoproto.nullable) = false ];
 }
+
+// StreamTakerOrder provides information on a taker order that was attempted
+// to be matched on the orderbook.
+// It is intended to be used only in full node streaming.
+message StreamTakerOrder {
+  // The taker order that was matched on the orderbook. Can be a
+  // regular order or a liquidation order.
+  oneof taker_order {
+    Order order = 1;
+    StreamLiquidationOrder liquidation_order = 2;
+  }
+
+  // Information on the taker order after it is matched on the book,
+  // either successfully or unsuccessfully.
+  StreamTakerOrderStatus taker_order_status = 3;
+}
+
+// StreamTakerOrderStatus is a representation of a taker order
+// after it is attempted to be matched on the orderbook.
+// It is intended to be used only in full node streaming.
+message StreamTakerOrderStatus {
+  // The state of the taker order after attempting to match it against the
+  // orderbook. Possible enum values can be found here:
+  // https://github.com/dydxprotocol/v4-chain/blob/main/protocol/x/clob/types/orderbook.go#L105
+  uint32 order_status = 1;
+
+  // The amount of remaining (non-matched) base quantums of this taker order.
+  uint64 remaining_quantums = 2;
+
+  // The amount of base quantums that were *optimistically* filled for this
+  // taker order when the order is matched against the orderbook. Note that if
+  // any quantums of this order were optimistically filled or filled in state
+  // before this invocation of the matching loop, this value will not include
+  // them.
+  uint64 optimistically_filled_quantums = 3;
+}
+
+// StreamSubaccountUpdate provides information on a subaccount update. Used in
+// the full node GRPC stream.
+message StreamSubaccountUpdate {
+  SubaccountId subaccount_id = 1;
+  // updated_perpetual_positions will each be for unique perpetuals.
+  repeated SubaccountPerpetualPosition updated_perpetual_positions = 2;
+  // updated_asset_positions will each be for unique assets.
+  repeated SubaccountAssetPosition updated_asset_positions = 3;
+  // Snapshot indicates if the response is from a snapshot of the subaccount.
+  // All updates should be ignored until snapshot is received.
+  // If the snapshot is true, then all previous entries should be
+  // discarded and the subaccount should be resynced.
+  // For a snapshot subaccount update, the `updated_perpetual_positions` and
+  // `updated_asset_positions` fields will contain the full state of the
+  // subaccount.
+  bool snapshot = 4;
+}
+
+// SubaccountPerpetualPosition provides information on a subaccount's updated
+// perpetual positions.
+message SubaccountPerpetualPosition {
+  // The `Id` of the `Perpetual`.
+  uint32 perpetual_id = 1;
+  // The size of the position in base quantums.
+  uint64 quantums = 2;
+}
+
+// SubaccountAssetPosition provides information on a subaccount's updated asset
+// positions.
+message SubaccountAssetPosition {
+  // The `Id` of the `Asset`.
+  uint32 asset_id = 1;
+  // The absolute size of the position in base quantums.
+  uint64 quantums = 2;
+}
 ```
 </details>
 
 
 After subscribing to the orderbook updates, use the orderbook in the snapshot as the starting orderbook.
+Similarly, use the subaccount state in the snapshot as the starting subaccount state.
 
 ### OrderPlaceV1
 When `OrderPlaceV1` is received,  add the corresponding order to the end of the price level.
@@ -332,6 +420,94 @@ func (c *GrpcClient) ProcessMatchPerpetualLiquidation(
 
 </details>
 
+### StreamSubaccountUpdate
+This message is used to update subaccount balances and positions.
+
+The initial message for a subaccount will have `snapshot` set to `true`. This message contains the full state of the subaccount. All updates should be ignored until the snapshot is received. Subsequent updates will contain updates to the positions and balances of the subaccount. They should be merged in with the existing state of the subaccount.
+
+<details>
+
+<summary>Code Snippet</summary>
+
+```go
+type SubaccountId struct {
+    Owner  string
+    Number int
+}
+
+type SubaccountPerpetualPosition struct {
+    PerpetualId int
+    Quantums    int
+}
+
+type SubaccountAssetPosition struct {
+    AssetId  int
+    Quantums int
+}
+
+type SubaccountState struct {
+    SubaccountId       SubaccountId
+    PerpetualPositions map[int]SubaccountPerpetualPosition
+    AssetPositions     map[int]SubaccountAssetPosition
+}
+
+func (c *GrpcClient) ProcessSubaccountUpdate(
+    subaccountUpdate *satypes.StreamSubaccountUpdate,
+    subaccountMap map[satypes.SubaccountId]SubaccountState,
+) {
+    // Extract the subaccount ID from the update
+    subaccountId := *subaccountUpdate.SubaccountId
+
+    // Check if this is a snapshot
+    if subaccountUpdate.Snapshot {
+        // Replace the entire subaccount state with the snapshot data
+        subaccountState := SubaccountState{
+            SubaccountId:       subaccountId,
+            PerpetualPositions: make(map[int]SubaccountPerpetualPosition),
+            AssetPositions:     make(map[int]SubaccountAssetPosition),
+        }
+
+        // Populate perpetual positions from snapshot
+        for _, perpPositionUpdate := range subaccountUpdate.UpdatedPerpetualPositions {
+            subaccountState.PerpetualPositions[perpPositionUpdate.PerpetualId] = *perpPositionUpdate
+        }
+
+        // Populate asset positions from snapshot
+        for _, assetPositionUpdate := range subaccountUpdate.UpdatedAssetPositions {
+            subaccountState.AssetPositions[assetPositionUpdate.AssetId] = *assetPositionUpdate
+        }
+
+        // Update the map with the new snapshot state
+        subaccountMap[subaccountId] = subaccountState
+    } else {
+        // If not a snapshot, retrieve or initialize the current subaccount state
+        subaccountState, exists := subaccountMap[subaccountId]
+        if !exists {
+            subaccountState = SubaccountState{
+                SubaccountId:       subaccountId,
+                PerpetualPositions: make(map[int]SubaccountPerpetualPosition),
+                AssetPositions:     make(map[int]SubaccountAssetPosition),
+            }
+        }
+
+        // Update perpetual positions
+        for _, perpPositionUpdate := range subaccountUpdate.UpdatedPerpetualPositions {
+            subaccountState.PerpetualPositions[perpPositionUpdate.PerpetualId] = *perpPositionUpdate
+        }
+
+        // Update asset positions
+        for _, assetPositionUpdate := range subaccountUpdate.UpdatedAssetPositions {
+            subaccountState.AssetPositions[assetPositionUpdate.AssetId] = *assetPositionUpdate
+        }
+
+        // Update the map with the modified state
+        subaccountMap[subaccountId] = subaccountState
+    }
+}
+```
+
+</details>
+
 ## Reference Material
 
 ### Optimistic Orderbook Execution
@@ -341,6 +517,10 @@ By protocol design, each validator has their own version of the orderbook and op
 ![full node streaming diagram](../artifacts/full_node_streaming_diagram.jpg)
 
 Note that DeliverTx maps to exec mode `execModeFinalize`.
+
+### Finalized Subaccount Updates
+
+Only finalized subaccount updates are sent.
 
 ### Exec Mode Reference
 <details>
@@ -425,13 +605,17 @@ Q: Why do I see an Order Update message for a new OrderId before an Order Place 
 Q: How do I print the gRPC stream at the command line?
 - A: Use the [grpcurl](https://github.com/fullstorydev/grpcurl) tool. Connect to a full node stream with:
 	```
-	grpcurl -plaintext -d '{"clobPairId":[0,1]}' 127.0.0.1:9090 dydxprotocol.clob.Query/StreamOrderbookUpdates
+	grpcurl -plaintext -d '{"clobPairId":[0,1], "subaccountIds": [{"owner": "dydx1nzuttarf5k2j0nug5yzhr6p74t9avehn9hlh8m", "number": 0}]}' 127.0.0.1:9090 dydxprotocol.clob.Query/StreamOrderbookUpdates
 	```
 
 Q: Is there a sample client?
 - A: Example client which subscribes to the stream and maintains a local orderbook: [dydxprotocol/grpc-stream-client](https://github.com/dydxprotocol/grpc-stream-client/)
 
 ## Changelog
+
+### v6.0.0
+- added taker order message to stream
+- added subaccount update message to stream
 
 ### v5.0.5
 - added update batching and per-channel channel/goroutines to not block full node on laggy subscriptions
