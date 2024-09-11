@@ -19,7 +19,7 @@ The orderbook stream is implemented with [gRPC](https://grpc.io/), a streaming R
 
 ## Connecting to the Stream
 
-After setting up a full node with ``gRPC streaming enabled, you can connect to the stream using any gRPC client.
+After setting up a full node with gRPC streaming enabled, you can connect to the stream using any gRPC client.
 To follow along with [Google's documentation on gRPC streaming clients](https://grpc.io/docs/languages/go/basics/#client):
 
 1. Clone the [github.com/dydxprotocol/v4-chain](https://github.com/dydxprotocol/v4-chain) repository at the same version as your full node.
@@ -37,7 +37,7 @@ For Python, the corresponding code is already generated in [the v4-proto PyPi pa
 
 1. Connect to the stream and subscribe to updates for a series of clob pair ids, each of which corresponds to a tradeable instrument, and subaccount ids, each of which corresponds to a subaccount.
 2. Discard order messages until you receive a `StreamOrderbookUpdate` with `snapshot` set to `true`. This message contains the full orderbook state for each clob pair.
-3. Similarlyl, discard subaccount messages until you receive a `StreamSubaccountUpdate` with `snapshot` set to `true`. This message contains the full subaccount state for each subscribed subaccount.
+3. Similarly, discard subaccount messages until you receive a `StreamSubaccountUpdate` with `snapshot` set to `true`. This message contains the full subaccount state for each subscribed subaccount.
 4. When you see an `OrderPlaceV1` message, insert the order into the book at the end of the queue on its price level. Track the order's initial quantums (quantity) and total filled quantums.
 5. When you see an `OrderUpdateV1` message, update the order's total filled quantums.
 6. When you see a `ClobMatch` (trade) message, update the total filled quantums for each maker order filled using the `fill_amounts` field. 
@@ -100,7 +100,7 @@ Response will contain a `oneof` field that contains either:
   - multiple `SubaccountAssetPosition`s to represent the asset positions of the subaccount.
     - each `SubaccountAssetPosition` contains an asset id and the size of the position in base quantums.
 
-  as well as `block_height` and `exec_mode` (see [Exec Modes Reference](#exec-mode-reference)). 
+as well as `block_height` and `exec_mode` (see [Exec Modes Reference](#exec-mode-reference)). 
 
 <details>
 
@@ -118,7 +118,7 @@ message StreamOrderbookUpdatesResponse {
 // gRPC stream.
 message StreamUpdate {
   // Contains one of an StreamOrderbookUpdate,
-  // StreamOrderbookFill, StreamTakerOrderStatus.
+  // StreamOrderbookFill, StreamTakerOrderStatus, StreamSubaccountUpdate.
   oneof update_message {
     StreamOrderbookUpdate orderbook_update = 1;
     StreamOrderbookFill order_fill = 2;
