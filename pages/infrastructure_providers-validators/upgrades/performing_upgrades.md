@@ -13,7 +13,7 @@ See [Governance -> Voting](../../users-governance/voting.md)
 
 ## Upgrades
 
-Releases for the dYdX chain will use [semantic versioning](https://semver.org/). See [here](./types_of_upgrades.md) for details.
+Releases for the dYdX Chain will use [semantic versioning](https://semver.org/). See [here](./types_of_upgrades.md) for details.
 
 ### ⚒️ Cosmovisor Users
 

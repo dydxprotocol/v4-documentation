@@ -22,7 +22,7 @@ Note: example endpoints will work out of the box, but will be quickly rate limit
 
 ## Connect Sidecar
 
-Starting in `v5.0.0`, running a validating full node requires a Skip Protocol's Connect Sidecar to be run in order to fetch Oracle prices. The sidecar should be started before upgrading from `v4` to `v5`. Instructions to start Connect Sidecar can be found [here](https://docs.skip.build/connect/introduction).
+Starting in `v5.0.0`, running a validating full node requires a Skip Protocol's Connect Sidecar to be run in order to fetch Oracle prices. The sidecar should be started before upgrading from `v4` to `v5`. Instructions to start Connect Sidecar can be found [here](https://docs.skip.build/connect/validators/quickstart).
 
 Support issues with Skip's Sidecar should be directed [here](https://discord.gg/7hxEThEaRQ).
 

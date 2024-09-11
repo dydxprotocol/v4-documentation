@@ -2,7 +2,7 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 # Resources
 
-## `networks` repositories
+## `networks` Repositories
 
 <Tabs items={['dydx-testnet-4', 'dydx-mainnet-1']}>
   <Tab>https://github.com/dydxprotocol/v4-testnets/tree/main/dydx-testnet-4</Tab>
@@ -34,7 +34,9 @@ For **the deployment by DYDX token holders**:
 | 7,147,833 ~ 12,791,712  | [v3.0.2](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv3.0.2)<br />[v3.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv3.0.0)                                                                                        | `v3.0.2` allows easier syncing from block 1                                                          |
 | 12,791,713 ~ 14,404,200 | [v4.0.5](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv4.0.5)                                                                                                                                                                               |                                                                                                      |
 | 14,404,201 ~ 17,560,000 | [v4.1.2](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv4.1.2)<br />[v4.1.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv4.1.0)                                                                                        | `v4.1.2` adds performance improvements                                                               |
-| 17,560,001 ~            | [v5.0.4](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv5.0.4)<br />[v5.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv5.0.0)                                                                                        | `v5.0.4` adds performance improvements                                                               |
+| 17,560,001 ~ 21,142,000 | [v5.0.6](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv5.0.6)<br />[v5.0.4](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv5.0.4)<br />[v5.0.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv5.0.0) | `v5.0.4` adds performance improvements; <br /> `v5.0.6` fixes a chain liveness issue                 |
+| 21,142,001 ~ 22,170,000 | [v5.1.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv5.1.0)                                                                                                                                                                               |                                                                                                      |
+| 22,170,001 ~            | [v5.2.0](https://github.com/dydxprotocol/v4-chain/releases/tag/protocol%2Fv5.2.0)                                                                                                                                                                               |                                                                                                      |
 
   </Tab>
 </Tabs>
@@ -72,7 +74,7 @@ For **the deployment by DYDX token holders**:
   </Tab>
 </Tabs>
 
-## Indexer endpoints
+## Indexer Endpoints
 
 <Tabs items={['dydx-testnet-4', 'dydx-mainnet-1']}>
   <Tab>
@@ -95,7 +97,7 @@ For **the deployment by DYDX token holders**:
   </Tab>
 </Tabs>
 
-## StateSync nodes
+## StateSync Nodes
 
 <Tabs items={['dydx-testnet-4', 'dydx-mainnet-1']}>
   <Tab>
@@ -123,6 +125,30 @@ For **the deployment by DYDX token holders**:
 
   </Tab>
 </Tabs>
+
+## State Sync Service
+
+<Tabs items={['dydx-testnet-4', 'dydx-mainnet-1']}>
+  <Tab>
+For **Testnet**:
+
+| Team          | URI                                                                                     |
+| ------------- | --------------------------------------------------------------------------------------- |
+| Lavender.Five | https://services.lavenderfive.com/testnet/dydx/statesync |
+
+  </Tab>
+  <Tab>
+For **the deployment by DYDX token holders**:
+
+| Team          | URI                                                                                    |
+| ------------- | -------------------------------------------------------------------------------------- |
+| Polkachu | https://polkachu.com/state_sync/dydx |
+| Lavender.Five | https://services.lavenderfive.com/mainnet/dydx/statesync |
+| AutoStake | https://autostake.com/networks/dydx/#state-sync |
+
+  </Tab>
+</Tabs>
+
 ## Snapshot Service
 
 <Tabs items={['dydx-testnet-4', 'dydx-mainnet-1']}>
@@ -148,7 +174,52 @@ For **the deployment by DYDX token holders**:
   </Tab>
 </Tabs>
 
-## Full node endpoints
+## Live Peer Node Providers
+
+<Tabs items={['dydx-testnet-4', 'dydx-mainnet-1']}>
+  <Tab>
+For **Testnet**:
+
+| Team          | URI                                                                                     |
+| ------------- | --------------------------------------------------------------------------------------- |
+| Lavender.Five | `https://services.lavenderfive.com/testnet/dydx#live-peers`                             |
+
+  </Tab>
+  <Tab>
+For **the deployment by DYDX token holders**:
+
+| Team          | URI                                                                                    |
+| ------------- | -------------------------------------------------------------------------------------- |
+| Lavender.Five | `https://services.lavenderfive.com/mainnet/dydx#live-peers` |
+| Polkachu      | `https://polkachu.com/live_peers/dydx` |
+
+  </Tab>
+</Tabs>
+
+## Address Book Providers
+
+<Tabs items={['dydx-testnet-4', 'dydx-mainnet-1']}>
+  <Tab>
+For **Testnet**:
+
+| Team          | URI                                                                                     |
+| ------------- | --------------------------------------------------------------------------------------- |
+| Lavender.Five | `https://services.lavenderfive.com/testnet/dydx#latest-addrbook` |
+
+  </Tab>
+  <Tab>
+For **the deployment by DYDX token holders**:
+
+| Team          | URI                                                                                    |
+| ------------- | -------------------------------------------------------------------------------------- |
+| AutoStake     | `https://autostake.com/networks/dydx/` |
+| Polkachu      | `https://polkachu.com/addrbooks/dydx` |
+| Lavender.Five | `https://services.lavenderfive.com/mainnet/dydx#latest-addrbook` |
+
+  </Tab>
+</Tabs>
+
+## Full Node Endpoints
 
 <Tabs items={["dydx-testnet-4", "dydx-mainnet-1"]}>
 <Tab>
@@ -224,13 +295,13 @@ For **the deployment by DYDX token holders**:
 </Tab>
 </Tabs>
 
-## Archival node endpoints
+## Archival Node Endpoints
 
 <Tabs items={["dydx-testnet-4", "dydx-mainnet-1"]}>
 <Tab>
 For **Testnet**:
 
-No Archival nodes
+No Archival Nodes.
 
 </Tab>
 <Tab>
@@ -271,9 +342,9 @@ For **Testnet**:
 
 | Name                       | URI                                                                                                   |
 | -------------------------- | ----------------------------------------------------------------------------------------------------- |
-| Public Testnet Front-end   | `https://v4.testnet.dydx.exchange`                                                                    |
+| Public Testnet Front End   | `https://v4.testnet.dydx.exchange`                                                                    |
 | Status Page                | `https://status.v4testnet.dydx.exchange`                                                              |
-| Mintscan                   | `https://testnet.mintscan.io/dydx-testnet`                                                            |
+| Mintscan                   | `https://www.mintscan.io/dydx-testnet`                                                            |
 | Keplr                      | `https://testnet.keplr.app/chains/dydx-testnet`                                                       |
 | Validator Metrics          | `https://p.datadoghq.com/sb/dc160ddf0-05a98d2dbe2a01d8caa5783eb616f826`                               |
 | Discord Channel (Feedback) | `https://discord.com/channels/724804754382782534/1117897181886677012`                                 |

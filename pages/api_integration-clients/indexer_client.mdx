@@ -292,14 +292,14 @@ market_candles = market_candles_response.data['candles']
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-// address is the wallet address on dYdX chain
+// address is the wallet address on dYdX Chain
 const response = await client.account.getSubaccounts(address);
 const subaccounts = response.subaccounts;
 ```
 </Tab>
 <Tab>
 ```python copy
-# address is the wallet address on dYdX chain
+# address is the wallet address on dYdX Chain
 subaccounts_response = client.account.get_subaccounts(address)
 subaccounts = subaccounts_response.data['subaccounts']
 ```
@@ -314,14 +314,14 @@ subaccounts = subaccounts_response.data['subaccounts']
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-// address is the wallet address on dYdX chain, subaccountNumber is the subaccount number
+// address is the wallet address on dYdX Chain, subaccountNumber is the subaccount number
 const response = await client.account.getSubaccount(address, subaccountNumber);
 const subaccounts = response.subaccount;
 ```
 </Tab>
 <Tab>
 ```python copy
-# address is the wallet address on dYdX chain, subaccount_number is the subaccount number
+# address is the wallet address on dYdX Chain, subaccount_number is the subaccount number
 subaccount_response = client.account.get_subaccount(address, subaccount_number)
 subaccount = subaccount_response.data['subaccount']
 ```
@@ -336,14 +336,14 @@ subaccount = subaccount_response.data['subaccount']
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-// address is the wallet address on dYdX chain, subaccountNumber is the subaccount number
+// address is the wallet address on dYdX Chain, subaccountNumber is the subaccount number
 const response = await client.account.getSubaccountAssetPositions(address, subaccountNumber);
 const positions = response.positions;
 ```
 </Tab>
 <Tab>
 ```python copy
-# address is the wallet address on dYdX chain, subaccount_number is the subaccount number
+# address is the wallet address on dYdX Chain, subaccount_number is the subaccount number
 asset_positions_response = client.account.get_subaccount_asset_positions(address, subaccount_number)
 asset_positions = asset_positions_response.data['positions']
 ```
@@ -358,14 +358,14 @@ asset_positions = asset_positions_response.data['positions']
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-// address is the wallet address on dYdX chain, subaccountNumber is the subaccount number
+// address is the wallet address on dYdX Chain, subaccountNumber is the subaccount number
 const response = await client.account.getSubaccountPerpetualPositions(address, subaccountNumber);
 const positions = response.positions;
 ```
 </Tab>
 <Tab>
 ```python copy
-# address is the wallet address on dYdX chain, subaccount_number is the subaccount number
+# address is the wallet address on dYdX Chain, subaccount_number is the subaccount number
 perpetual_positions_response = client.account.get_subaccount_perpetual_positions(address, subaccount_number)
 perpetual_positions = perpetual_positions_response.data['positions']
 ```
@@ -380,14 +380,14 @@ perpetual_positions = perpetual_positions_response.data['positions']
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-// address is the wallet address on dYdX chain, subaccountNumber is the subaccount number
+// address is the wallet address on dYdX Chain, subaccountNumber is the subaccount number
 const response = await client.account.getSubaccountOrders(address, subaccountNumber);
 const orders = response;
 ```
 </Tab>
 <Tab>
 ```python copy
-# address is the wallet address on dYdX chain, subaccount_number is the subaccount number
+# address is the wallet address on dYdX Chain, subaccount_number is the subaccount number
 orders_response = client.account.get_subaccount_orders(address, subaccount_number)
 orders = orders_response.data
 ```
@@ -424,14 +424,14 @@ order = order_response.data
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-// address is the wallet address on dYdX chain, subaccountNumber is the subaccount number
+// address is the wallet address on dYdX Chain, subaccountNumber is the subaccount number
 const response = await client.account.getSubaccountFills(address, subaccountNumber);
 const fills = response.fills;
 ```
 </Tab>
 <Tab>
 ```python copy
-# address is the wallet address on dYdX chain, subaccount_number is the subaccount number
+# address is the wallet address on dYdX Chain, subaccount_number is the subaccount number
 fills_response = client.account.get_subaccount_fills(address, subaccount_number)
 fills = fills_response.data['fills']
 ```
@@ -447,14 +447,14 @@ fills = fills_response.data['fills']
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-// address is the wallet address on dYdX chain, subaccountNumber is the subaccount number
+// address is the wallet address on dYdX Chain, subaccountNumber is the subaccount number
 const response = await client.account.getSubaccountTransfers(address, subaccountNumber);
 const transfers = response.transfers;
 ```
 </Tab>
 <Tab>
 ```python copy
-# address is the wallet address on dYdX chain, subaccount_number is the subaccount number
+# address is the wallet address on dYdX Chain, subaccount_number is the subaccount number
 transfers_response = client.account.get_subaccount_transfers(address, subaccount_number)
 transfers = transfers_response.data['transfers']
 ```
@@ -469,14 +469,14 @@ transfers = transfers_response.data['transfers']
 <Tabs items={["TypeScript", "Python"]}>
 <Tab>
 ```typescript copy
-// address is the wallet address on dYdX chain, subaccountNumber is the subaccount number
+// address is the wallet address on dYdX Chain, subaccountNumber is the subaccount number
 const response = await client.account.getSubaccountHistoricalPNLs(address, subaccountNumber);
 const historicalPnl = response.historicalPnl;
 ```
 </Tab>
 <Tab>
 ```python copy
-# address is the wallet address on dYdX chain, subaccount_number is the subaccount number
+# address is the wallet address on dYdX Chain, subaccount_number is the subaccount number
 historical_pnl_response = client.account.get_subaccount_historical_pnls(address, subaccount_number)
 historical_pnl = historical_pnl_response.data['historicalPnl']
 ```
