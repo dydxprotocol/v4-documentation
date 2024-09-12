@@ -2,7 +2,7 @@
 
 Last updated for: `v5.0.5`
 
-Enable full node gRPC streaming to expose a stream of orderbook updates (L3) and fills, allowing clients to maintain a full view of the orderbook. Note that the orderbook state can vary slightly between nodes due to dYdX's offchain orderbook design.
+Enable full node gRPC streaming to expose a stream of orderbook updates (L3), fills, and subaccount updates, allowing clients to maintain a full view of the orderbook. Note that the orderbook state can vary slightly between nodes due to dYdX's offchain orderbook design.
 
 
 ## Enabling Streaming
@@ -492,12 +492,22 @@ func (c *GrpcClient) ProcessSubaccountUpdate(
 
         // Update perpetual positions
         for _, perpPositionUpdate := range subaccountUpdate.UpdatedPerpetualPositions {
-            subaccountState.PerpetualPositions[perpPositionUpdate.PerpetualId] = *perpPositionUpdate
+            if perpPositionUpdate.Quantums != 0 {
+                subaccountState.PerpetualPositions[perpPositionUpdate.PerpetualId] = *perpPositionUpdate
+            } else {
+                // Delete the entry if the position size is zero
+                delete(subaccountState.PerpetualPositions, perpPositionUpdate.PerpetualId)
+            }
         }
 
         // Update asset positions
         for _, assetPositionUpdate := range subaccountUpdate.UpdatedAssetPositions {
-            subaccountState.AssetPositions[assetPositionUpdate.AssetId] = *assetPositionUpdate
+			if assetPositionUpdate.Quantums != 0 {
+                subaccountState.AssetPositions[assetPositionUpdate.AssetId] = *assetPositionUpdate
+            } else {
+                // Delete the entry if the asset quantity is zero
+                delete(subaccountState.AssetPositions, assetPositionUpdate.AssetId)
+            }
         }
 
         // Update the map with the modified state
@@ -520,7 +530,7 @@ Note that DeliverTx maps to exec mode `execModeFinalize`.
 
 ### Finalized Subaccount Updates
 
-Only finalized subaccount updates are sent.
+Only finalized subaccount updates are sent. Snapshots are sent during PrepareCheckState, so the execMode will be set to `102` for subaccount snapshots. Finalized incremental subaccount updates are sent with execMode `7`.
 
 ### Exec Mode Reference
 <details>
