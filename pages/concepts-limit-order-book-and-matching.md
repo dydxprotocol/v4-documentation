@@ -59,7 +59,7 @@ Order instructions are limit order placements, replacements, and cancellations.
 > Note: This section covers short-term orders which live off-chain, in node memory, until matched.
 > 
 > Stateful orders (on-chain, consensus-speed placement) exist for longer-lived limit orders but aren't recommended for API traders.
-> More info: [Short-term vs Stateful Orders](./api_integration-trading/short_term_vs_stateful)
+> More info: [Short-term vs Stateful Orders](./api_integration-trading/short_term_vs_stateful.mdx)
 
 
 ### Finality and GTB
