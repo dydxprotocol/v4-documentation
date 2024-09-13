@@ -1,4 +1,4 @@
-# Introduction
+# dYdX Chain Documentation
 
 Welcome to the dYdX Chain documentation! This is the source of truth for information about dYdX Chain.
 
