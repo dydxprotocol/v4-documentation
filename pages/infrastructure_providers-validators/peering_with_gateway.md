@@ -12,7 +12,7 @@ There are 2 options to peer directly with the gateway node:
 
 ```bash
 --p2p.private_peer_ids="$gateway_node_id,..."
---p2p.unconditional_peer_ids=""$gateway_node_id,..."
+--p2p.unconditional_peer_ids="$gateway_node_id,..."
 ```
 
 ## Option B: Validator -> Gateway
