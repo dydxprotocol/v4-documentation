@@ -2,7 +2,7 @@
 
 Last updated for: `v5.0.5`
 
-Enable full node gRPC streaming to expose a stream of orderbook updates (L3), fills, and subaccount updates, allowing clients to maintain a full view of the orderbook. Note that the orderbook state can vary slightly between nodes due to dYdX's offchain orderbook design.
+Enable full node gRPC streaming to expose a stream of orderbook updates (L3), fills, taker orders, and subaccount updates, allowing clients to maintain a full view of the orderbook and various exchange activities. Note that the orderbook state can vary slightly between nodes due to dYdX's offchain orderbook design.
 
 
 ## Enabling Streaming
@@ -45,14 +45,15 @@ For Python, the corresponding code is already generated in [the v4-proto PyPi pa
     - The order's quantity remaining is always its initial quantity minus its total filled quantity.
     - Note that both `OrderUpdateV1` and `ClobMatch` messages must be processed to maintain the correct book state. See [OrderUpdateV1](#orderupdatev1) for details.
 7. When you see an `OrderRemoveV1` message, remove the order from the book.
-8. For subaccounts, when you see a `StreamSubaccountUpdate` message with `snapshot` set to `false`, incrementally update the subaccount's balances and positions.
+8. When you see a `StreamSubaccountUpdate` message with `snapshot` set to `false`, incrementally update the subaccount's balances and positions.
+8. When you see a `StreamTakerOrder` message, state does not need to be updated -- Taker orders are purely informational and are emitted whenever a taker order enters the matching loop, regardless of success or failure.
 
 Note:
 - The order subticks (price) and quantums (quantity) fields are encoded as integers and 
   require [translation to human-readable values](https://github.com/dydxprotocol/grpc-stream-client/blob/d8cbbc3c6aeb454078c72204491727b243c26e19/src/market_info.py#L1).
 - Each node's view of the book is subjective, because order messages arrive at different nodes in different orders. When a block is proposed, nodes "sync" subsets of their book states to cohere with the trades seen by the block proposer.
 - Only `ClobMatch` messages with `execModeFinalize` are trades confirmed by consensus.
-	- Use all `ClobMatch` messages to update the orderbook state. The node's book state is optimistic, and reverts if fills are not confirmed, in which case a series of `OrderRemoveV1`, `OrderPlaceV1` and `OrderUpdateV1` messages are sent to represent the modifications to the full node's book state.
+	- Use all `ClobMatch` messages to update the orderbook state. The node's book state is optimistic, and reverts i2f fills are not confirmed, in which case a series of `OrderRemoveV1`, `OrderPlaceV1` and `OrderUpdateV1` messages are sent to represent the modifications to the full node's book state.
     - Treat only `ClobMatch` messages with `execModeFinalize` as confirmed trades.
     - See [Reference Material](#reference-material) for more information.
 
@@ -92,7 +93,13 @@ Response will contain a `oneof` field that contains either:
 	- `fill_amounts` contains the absolute, total filled quantums of each order as stored in state.
 		- fill_amounts should be zipped together with the `orders` field. Both arrays should have the same length.
 - `StreamTakerOrder`
-  - TODO(jonfung): Add documentation for this message type.
+  - Contains a oneof `TakerOrder` field which represents the order that entered the matching loop.
+    - Could be a regular order or a Liquidation Order.
+  - Contains a `StreamTakerOrderStatus` field which represents the status of a taker order after it has finished the matching loop.
+    - `OrderStatus` is a uint32 describing the result of the taker order matching. Only value `0` indicates success. Possible values found [here](https://github.com/dydxprotocol/v4-chain/blob/main/protocol/x/clob/types/orderbook.go#L118-L152).
+      - @jonfung to update to static link
+    - `RemainingQuantums` represents the remaining amount of non-matched quantums for the taker order.
+    - `OptimisticallyFilledQuantums` represents the number of quantums filled *during this matching loop*. It does not include quantums filled before this matching loop, if the order was a replacement order and was previously filled.
 - `StreamSubaccountUpdate`
   - Contains a singular `SubaccountId` object to identify the subaccount.
   - multiple `SubaccountPerpetualPosition`s to represent the perpetual positions of the subaccount.
@@ -518,6 +525,48 @@ func (c *GrpcClient) ProcessSubaccountUpdate(
 
 </details>
 
+### StreamTakerOrder
+
+This message is purely an informational message used to indicate whenever a taker order is matched against the orderbook. No internal state in clients need to be updated.
+
+Information provided in the struct:
+- One of (taker order, liquidation order) entering matching loop
+- Status of order after matching. If order failed to match, status code provides the reason for failure (i.e post only order crosses book)
+- Remaining non-matched quantums for the taker order
+- Quantity of optimistically matched quantums during this matching order loop.
+
+Note that by protocol design, all `StreamTakerOrderStatus` emissions will be optimistic from CheckTx state. This is due to the fact that each node maintains it's own orderbook, thus all matching operations when a taker order enters the matching loop will be optimistic. If confirmed fill amounts in consensus are desired, `StreamOrderbookFill` objects will be emitted during DeliverTx for proposed blocks.
+
+<details>
+
+<summary>Code Snippet</summary>
+
+```go
+type StreamTakerOrderStatus struct {
+	OrderStatus uint32
+	RemainingQuantums uint64
+	OptimisticallyFilledQuantums uint64
+}
+
+func (c *GrpcClient) ProcessStreamTakerOrder(
+    streamTakerOrder *satypes.StreamTakerOrder,
+) {
+	takerOrder := streamTakerOrder.GetOrder()
+	takerOrderLiquidation := streamTakerOrder.GetLiquidationOrder()
+	takerOrderStatus := streamTakerOrder.GetTakerOrderStatus()
+	if takerOrderStatus.OrderStatus == 0 || takerOrderStatus.OrderStatus == 0 {
+		if takerOrder != nil {
+			// Process success of regular taker order
+		}
+		if takerOrderLiquidation != nil {
+			// Process success of liquidation taker order
+		}
+	}
+}
+```
+
+</details>
+
 ## Reference Material
 
 ### Optimistic Orderbook Execution
@@ -553,6 +602,25 @@ Only finalized subaccount updates are sent. Snapshots are sent during PrepareChe
 </details>
 <br>
 
+### Taker Order Status Reference
+
+Values are defined in code [here](https://github.com/dydxprotocol/v4-chain/blob/main/protocol/x/clob/types/orderbook.go#L118-L152).
+  - @jonfung to update to static link
+
+| Value    | Status | Description |
+| -------- | ------ | ------- |
+| 0  |  Success  | Order was successfully matched and/or added to the orderbook.|
+| 1  |  Undercollateralized  | Order failed collateralization checks when matching or placed on orderbook. Order was cancelled. |
+| 2  |  InternalError  | Order caused internal error and was cancelled. |
+| 3  |  ImmediateOrCancelWouldRestOnBook  | Order is an IOC order that would have been placed on the orderbook. Order was cancelled. |
+| 4  |  ReduceOnlyResized  | Order was resized since it would have changed the user's position size. |
+| 5  |  LiquidationRequiresDeleveraging  | Not enough liquidity to liquidate the subaccount profitably on the orderbook. Order was not fully matched because insurance fund did not have enough funds to cover losses from performing liquidation. Subaccount requires deleveraging. |
+| 6  |  LiquidationExceededSubaccountMaxNotionalLiquidated  | Liquidation order could not be matched because it exceeds the max notional liquidated in this block. |
+| 7  |  LiquidationExceededSubaccountMaxInsuranceLost  | Liquidation order could not be matched because it exceeds the max funds lost for hte insurance fund in this block. |
+| 8  |  ViolatesIsolatedSubaccountConstraints  | Matching this order would lead to the subaccount violating isolated perpetual constraints. Order was cancelled. |
+| 9  |  PostOnlyWouldCrossMakerOrder  | Matching this order would lead to the post only taker order crossing the orderbook. Order wasa cancelled. |
+
+<br>
 
 ### Example Scenario
 
@@ -623,6 +691,7 @@ Q: Is there a sample client?
 
 ## Changelog
 
+@jonfung todo update the correct version
 ### v6.0.0
 - added taker order message to stream
 - added subaccount update message to stream
