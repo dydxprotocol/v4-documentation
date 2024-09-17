@@ -1,6 +1,6 @@
 ## Rate Limits
 
-All rate limits are subject to change. The latest limits can be queried via the `https://<NODE_ENDPOINT>/dydxprotocol/clob/block_rate` endpoint.
+All rate limits are subject to change. The latest limits can be queried via the `https://<REST_NODE_ENDPOINT>/dydxprotocol/clob/block_rate` endpoint.
 
 Note that rate limits are applied per account. That is, subaccounts under the same account share the same rate limit.
 
