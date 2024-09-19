@@ -1,9 +1,6 @@
 # Reading a Proposal
-dYdX Chain users add markets to the exchange by submitting new market proposals. A new market proposal is a JSON document that details market values, such as the name of the proposed market, the submitter's asset price quote, the oracle sources it will use, and many others. Users with governance tokens vote to accept or reject new markets based on proposal documents. 
+A governance proposal is a json document submitted to the dYdX Chain governance module. One of the most popular types of governance proposals is a new market proposal which add new markets to the dYdX Chain if passed. A new market proposal specifies parameters necessary to specify a market, such as the name of the market, oracle sources, and liquidity tier. This page will outline how to interpret the market parameters so that the community can assess the proposal and be prepared to trade with correct configurations if the market becomes live. See [proposing a new market](../users-governance/proposing_a_new_market.md) for more information on how the market parameters can be calculated.
 
-For dYdX Chain users, reading new market proposals is important to be able to assess and vote on adding new markets.
-
-For market makers, new market proposals contain key information that helps configure programmatic trading strategies to provide liquidity to that market at launch.
 
 ## Example Proposal
 Below is an example proposal JSON file for adding a perpetual market, `BTC-USD`.
@@ -12,7 +9,7 @@ Below is an example proposal JSON file for adding a perpetual market, `BTC-USD`.
 {
     "title": "Add BTC-USD perpetual market",
     "deposit": "10000000000000000000000adv4tnt",
-    "summary": "Add the `x/prices`, `x/perpetuals` and `x/clob` parameters needed for a BTC-UTC perpetual market. Create the market in `INITIALIZING` status and transition it to `ACTIVE` status after 3600 blocks.",
+    "summary": "Add the `x/prices`, `x/perpetuals` and `x/clob` parameters needed for a BTC-USD perpetual market. Create the market in `INITIALIZING` status and transition it to `ACTIVE` status after 3600 blocks.",
     "messages": [
       {
         "@type": "/dydxprotocol.prices.MsgCreateOracleMarket",
@@ -75,29 +72,68 @@ Below is an example proposal JSON file for adding a perpetual market, `BTC-USD`.
   }
 ```
 
-### Proposal Values
-The following values are visible in a new market proposal.
+### Understanding Proposal Values
 
-| Name | Field | Description | Proposer Input |
-| ---- | ---- | ------------------- | -------- |
-| Reference Price | `reference_price` | Starting price of the proposed asset on the exchange. A user proposing a new market should set this based on the price of the asset at the time they create the proposal. | yes |
-| Liquidity Tier | `liquidity_tier` | Liquidity tier of the proposed asset. A user proposing a new market should set this based on [dYdX liquidity tier guidelines](../users-governance/functionalities#liquidity-tiers). | yes |
-| Atomic Resolution | `atomic_resolution` | Precision of the size of the coin.  | no |
-| Minimum Exchanges | `min_exchanges` | Number of exchanges required to list this asset. | no |
-| Minimum Price Change PPM | `min_price_change_ppm` | The minimum price change that causes the oracle price to update. | no |
-| Exponent | `exponent` | Number of decimal places to use to show prices.  | no |
-| Step Base Quantums | `step_base_quantums` | Minimum amount by which you can increase or decrease an order. Same as `step_size`. | no |
-| Subticks Per Tick | `subticks_per_tick` | Determines the `ticksize` when multiplied by `subtick_size`. | no |
-| Quantum Conversion Exponent | `quantum_conversion_exponent` | Determines the `subticks_per_tick` based on `ticksize_exponent`. | no |
+A new market proposal consists of 4 messages: 
+
+1. Create Oracle Market
+2. Create Perpetual
+3. Create CLOB Pair
+4. Delay Message
+
+#### Create Oracle Market
+Create Oracle Market message specifies the oracle sources and their parameters that will be used to compute the oracle price. 
+- `exchange_config_json` includes the exchange, ticker, and parameters (if applicable) that constitute oracle sources. 
+  - adjust_by_market specifies the ticker to adjust the returned price if the quote asset for the spot ticker is not USD. ex: If the spot ticker is BTCUSDT, the adjust_by_market may be USDT-USD.
+  - invert specifies whether to invert the price. ex: If the oracle market is TRY-USD and the spot ticker is USDTTRY, the invert may be true.
+- `exponent` is the number of decimal places to use to show prices.
+- `id` is the id of the oracle market. This should be the same as the perpetual_id and clob_pair_id.
+- `min_exchanges` is the number of exchanges that should be responsive for the oracle price to be updated in that block.
+- `min_price_change_ppm` is the threshold for which the oracle price will update only if the proposed price change is greater than min_price_change_ppm. 
+- `pair` is the ticker of the market being added.
+
+#### Create Perpetual
+Create Perpetual message specifies the parameters specific to the perpetual.
+- `atomic_resolution` determines the precision of the size of the coin. If the atomic resolution is -10, then the perpetual positions are represented as multiples of 10^-10.
+- `default_funding_ppm` is the default funding rate in parts per million.
+- `id` is the id of the perpetual. This should be the same as the oracle_market_id and clob_pair_id.
+- `liquidity_tier` is the liquidity tier of the proposed market. This should be set based on [dYdX liquidity tier guidelines](../users-governance/functionalities#liquidity-tiers).
+- `market_id` is the id of the oracle market. This should be the same as the id.
+- `ticker` is the ticker of the market being added.
+
+#### Create CLOB Pair
+Create CLOB Pair message sets up the orderbook parameters for the market.
+- `id` is the id of the CLOB pair. This should be the same as the oracle_market_id and perpetual_id.
+- `perpetual_clob_metadata.perpetual_id` is the id of the perpetual. This should be the same as the id.
+- `quantum_conversion_exponent`is used to convert the value of a position in protocol to/from a human readable value in $.
+- `status` is set to "STATUS_INITIALIZING" to create the market in initializing status.
+- `step_base_quantums` deteremines `step_size`, which is the minimum amount by which you can increase or decrease an order.
+- `subticks_per_tick` determines the `tick_size` for the market. 
+
+#### Delay Message
+Delay Message is used to transition the market from INITIALIZING to ACTIVE status after a specified number of blocks.
+- `clob_pair` contains the same parameters as in the Create CLOB Pair message, but with `status` set to "STATUS_ACTIVE".
+- `delay_blocks` specifies the number of blocks to wait before activating the market.
 
 ### Derived Values
-You can calculate the following values based on values in a new market proposal.
+You can calculate the following values based on parameters in a new market proposal.
 
-| Name | Field | Description | Equation |
-| ----- | -- |----------- | -------- |
-| Step Size | `stepsize` | Minimum amount in USDC by which you can increase or decrease an order. Same as `step_base_quantums`.  | `step_base_quantums` |
-| Tick Size | `ticksize` | Minimum amount in USDC by which an asset's price can increase or decrease. The market ignores price changes below this threshold. | `subtick_size` * `subticks_per_tick` |
-| Minimum Order Size | `min_order_size` | Minimum amount in USDC required to place an order. | `atomic_resolution` * `step_base_quantums` |
+- Tick Size:
+  - Minimum amount in USDC by which valid prices for an order increment by. The formula corresponds to the tick size falling between 1 and 10 bps of the base asset price in USDC.
+  -`tick_size` = `subtick_size` * `subticks_per_tick` where `subtick_size` = 10^(-`atomic_resolution` + `quantum_conversion_exponent` + `quote_quantum_resolution`) and `quote_quantum_resolution := -6` for USDC.
+
+- Step Size:
+  - Minimum amount in base_asset by which you can increase or decrease an order. This formula corresponds to the step size falling between 1 and 10 USDC.
+  - `step_size` = 10^(`atomic_resolution`) * `step_base_quantums`
+
+- Minimum Order Size:
+  - Minimum amount in base_asset required to place an order. Protocol uses the same values for step size and minimum order size.
+  - `min_order_size` = 10^ (`atomic_resolution`) * `step_base_quantums`
+
+- From the example proposal above, we can calculate the above values for `BTC-USD` as the following:
+  - `tick_size` = `subtick_size` * `subticks_per_tick` = 10^(10 - 9 - 6) * 100000 = $1
+  - `step_size` = 10^(-10) * 1000000 = 0.0001 BTC
+  - `min_order_size` = 10^(-10) * 1000000 = 0.0001 BTC
 
 ## Next Steps
 If you are a dYdX Chain user, you can [vote on a proposal](../users-governance/voting.md) or [submit your own](../users-governance/submitting_a_proposal.md).
