@@ -109,11 +109,13 @@
 <details>
 <summary>7. How can I tell if my short-term order is canceled?</summary>
 
-- Short-term order placements and cancellations are best-effort, and therefore their cancels and placement can't be considered actually canceled and unfillable until expiry.
-- A FOK or IOC order can also be seen as canceled if a fill does not occur after expiry.
-- The indexer does not send a websocket notification if a short-term order has been canceled.
-- However, since the goodTilBlock for the cancel needs to be set when placing the cancel, the block height can be checked to ensure that the cancel was successful.
-- This is lower latency than what a websocket notification could provide.
+- Short-term order placements and cancellations are best-effort, and therefore can't be considered final (actually placed or canceled and unfillable) until expiry.
+- A FOK or IOC order is also unfillable after expiry.
+- The indexer **does not** send a websocket notification when a short-term order expires, which happens when the chain height exceeds the goodTilBlock of the order.
+- The block height is the only reliable way to know if a short-term order is canceled with finality.
+- However, the indexer **does** send a websocket notification when a short-term order cancel is received by the indexer's full node.
+- In most cases, this "best effort" cancel means the order is cancelled. However, some small fraction of these cancels are not successful.
+- See [Limit Order Book and Matching](./concepts-limit-order-book-and-matching.md) for more information.
 
 </details>
 
