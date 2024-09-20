@@ -2,7 +2,7 @@
 
 **Depositing on dYdX Chain**
 
-1. Connect your preferred Ethereum wallet to the dYdX Chain deployment of your choice (e.g. the dYdX Operations Services Ltd. deployment [dydx.trade](https://dydx.trade)). _Support for Cosmos native wallets such as Keplr and Leap coming soon_.
+1. Connect your preferred wallet to the dYdX Chain deployment of your choice (e.g. the dYdX Operations Services Ltd. deployment [dydx.trade](https://dydx.trade)).
 2. Deposit USDC to your dYdX Chain address. The default onboarding path uses Circle's Cross Chain Transfer Protocol (CCTP) on Noble Chain. You can deposit USDC from many origination chains. Read more [here](https://dydx.exchange/blog/cctp).
 
 ## User Journeys
