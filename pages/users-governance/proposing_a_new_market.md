@@ -182,7 +182,7 @@ Below is an example proposal JSON file to propose adding `BTC-USD` as a new perp
 {
     "title": "Add BTC-USD perpetual market",
     "deposit": "10000000000000000000000adv4tnt",
-    "summary": "Add the `x/prices`, `x/perpetuals` and `x/clob` parameters needed for a BTC-UTC perpetual market. Create the market in `INITIALIZING` status and transition it to `ACTIVE` status after 3600 blocks.",
+    "summary": "Add the `x/prices`, `x/perpetuals` and `x/clob` parameters needed for a BTC-USD perpetual market. Create the market in `INITIALIZING` status and transition it to `ACTIVE` status after 3600 blocks.",
     "messages": [
       {
         "@type": "/dydxprotocol.prices.MsgCreateOracleMarket",
