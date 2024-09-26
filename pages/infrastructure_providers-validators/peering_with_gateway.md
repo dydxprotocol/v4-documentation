@@ -24,3 +24,7 @@ There are 2 options to peer directly with the gateway node:
 --p2p.private_peer_ids="$gateway_node_id,..."
 --p2p.persistent_peers="$gateway_node_id@$gateway_ip_address:$port,..."
 ```
+
+# Addendum
+
+CometBFT [documentation](https://docs.cometbft.com/v0.38/spec/p2p/legacy-docs/config) on P2P configs
