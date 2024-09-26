@@ -20,14 +20,12 @@ The RPC endpoint you choose *MUST* satisfy the following requirements
 
 Note: example endpoints will work out of the box, but will be quickly rate limited and will not be useable over long periods of blocks.
 
-## Slinky Sidecar
+## Connect Sidecar
 
-Starting in `v5.0.0`, running a validating full node requires a Skip Protocol's Slinky Sidecar to be run in order to fetch Oracle prices. The sidecar should be started before upgrading from `v4` to `v5`. Instructions to start Slinky Sidecar can be found [here](https://docs.skip.build/connect/validators/quickstart).
+Starting in `v5.0.0`, running a validating full node requires a Skip Protocol's Connect Sidecar to be run in order to fetch Oracle prices. The sidecar should be started before upgrading from `v4` to `v5`. Instructions to start Connect Sidecar can be found [here](https://docs.skip.build/connect/validators/quickstart).
 
 Support issues with Skip's Sidecar should be directed [here](https://discord.gg/7hxEThEaRQ).
 
-For mainnet deployment by dYdX Operation Services, Ltd. run: [`v0.4.6`](https://github.com/skip-mev/slinky/tree/v0.4.6) (`ghcr.io/skip-mev/slinky-sidecar:v0.4.6`)
-
-For testnet run: [`v0.4.6`](https://github.com/skip-mev/slinky/tree/v0.4.6) (`ghcr.io/skip-mev/slinky-sidecar:v0.4.6`)
+You can find the required version of the Connect sidecar listed in the `dYdX Blockchain` section [here](https://docs.skip.build/connect/validators/quickstart#run-connect-sidecar).
 
 Instructions on upgrading sidecar can be found [here](./upgrades/upgrading_sidecar.md).

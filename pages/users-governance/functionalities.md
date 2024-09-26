@@ -1,4 +1,4 @@
-# Governance Functionality
+# Governance Functionalities
 
 Below is a current list of all module parameters that `x/gov` has the ability to update directly. Further documentation will be released which outlines overviews of each custom module, how modules interact with one another, and technical guides regarding how to properly submit governance proposals. 
 
@@ -76,12 +76,15 @@ Liquidity Tiers group markets of similar risk into standardized risk parameters.
 
 Current Liquidity Tiers include: 
 
-| ID | Name | initial margin fraction | maintenance fraction (what fraction MMF is of IMF) | base position notional | impact notional |  maintenance margin fraction (as is) | impact notional (as is) | Lower Cap (USDC Millions) | Upper Cap (USDC Millions) |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 0 | Large-Cap | 0.05 | 0.6 | 1_000_000 USDC | 500 USDC / IM | 0.03 | 10_000 USDC | None | None |
-| 1 | Mid-Cap | 0.1 | 0.5 | 250_000 USDC | 500 USDC / IM | 0.05 | 5_000 USDC | 20 | 50 |
-| 2 | Long-Tail | 0.2 | 0.5 | 100_000 USDC | 500 USDC / IM | 0.1 | 2_500 USDC | 5 | 10 |
-| 3 | Safety | 1 | .02 | 1_000 USDC | 2500 USDC / IM | 0.2 | 2_500 USDC | 2 | 5 |
+| ID | Name | initial margin fraction | maintenance fraction (what fraction MMF is of IMF) | impact notional |  maintenance margin fraction (as is) | impact notional (as is) | Lower Cap (USDC Millions) | Upper Cap (USDC Millions) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 0 | Large-Cap | 0.05 | 0.6 | 500 USDC / IM | 0.03 | 10_000 USDC | None | None |
+| 1 | Small-Cap | 0.1 | 0.5 | 500 USDC / IM | 0.05 | 5_000 USDC | 20 | 50 |
+| 2 | Long-Tail | 0.2 | 0.5 | 500 USDC / IM | 0.1 | 2_500 USDC | 5 | 10 |
+| 3 | Safety | 1 | 0.2 | 2500 USDC / IM | 0.2 | 2_500 USDC | 2 | 5 |
+| 4 | Isolated | 0.05 | 0.6 | 125 USDC / IM | 0.03 | 2_500 USDC | 0.5 | 1 |
+| 5 | Mid-Cap | 0.05 | 0.6 | 250 USDC / IM | 0.03 | 5_000 USDC | 40 | 100 |
+| 6 | FX | 0.01 | 0.5 | 25 USDC / IM | 0.0005 | 2_500 USDC | 0.5 | 1 |
 
 - Each market has a `Lower Cap` and `Upper Cap` denominated in USDC.
 - Each market already has a `Base IMF`.
@@ -138,7 +141,7 @@ Governance has the ability to update:
 
 ## Community Assets
 
-### Community Pool + Community Treasury
+### Community Pool & Treasury
 
 There are two addresses intended for managing funds owned by the community: 
 
@@ -149,6 +152,6 @@ The Community Pool is the recipient of any Community Tax that is implemented via
 
 The Community Treasury is an account controlled by governance and can be funded via any account or module sending tokens to it.  
 
-## CosmosSDK Default Modules:
+## CosmosSDK Default Modules
 
 For more information on default modules, head to the [Cosmos SDK official documentation](https://docs.cosmos.network/v0.47/modules). dYdX Chain inherits the same governance properties of any standard CosmosSDK modules that are present on dYdX Chain,

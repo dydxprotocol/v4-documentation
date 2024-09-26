@@ -2,7 +2,7 @@
 
 In v5.0.0 the Isolated Markets feature was added to the V4 chain software. The below is an overview of how trading will work on Isolated Markets on the V4 chain software.
 
->Note: This document covers how the feature works from the protocol point of view and not the front-end or the indexer. For more details on what isolated markets are see the [blog post](https://dydx.exchange/blog/introducing-isolated-markets-and-isolated-margin).
+>Note: This document covers how the feature works from the protocol point of view and not the front end or the indexer. For more details on what isolated markets are see the [blog post](https://dydx.exchange/blog/introducing-isolated-markets-and-isolated-margin).
 
 # Trading Isolated Markets
 
