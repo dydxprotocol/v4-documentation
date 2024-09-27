@@ -38,7 +38,7 @@ Governance has the ability to adjust Funding Rate parameters:
 
 - Funding rate clamp factor, premium vote clamp factor, and min number of votes per premium sample. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/params.proto#L6-L19)
 - Epoch information, which defines the funding interval and premium sampling interval. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/epochs/epoch_info.proto#L6-L43)
-- Liquidity Tier, which defines the impact notional value. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/perpetual.proto#L84-L113)
+- Liquidity Tier, which defines the impact notional value. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/perpetual.proto#L100-L139)
 
 ## Trading Rewards
 
@@ -96,7 +96,7 @@ Current Liquidity Tiers include:
     - Then a market’s `Effective IMF = Min(Base IMF + Max(IMF Increase, 0), 1.0)`
 - The effective IMF is the base IMF while the Open Notional < Lower Cap, and increases linearly until Open Notional = Upper Cap, at which point the IMF stays at 1.0 (requiring 1:1 collateral for trading)
 
-Governance has the ability to create and modify Liquidity Tiers as well as update existing markets’ Liquidity Tier placements. ([proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/perpetual.proto#L84-L113))
+Governance has the ability to create and modify Liquidity Tiers as well as update existing markets’ Liquidity Tier placements. ([proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/perpetual.proto#L100-L139))
 
 ### Updating a Live Market
 
