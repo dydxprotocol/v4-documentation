@@ -8,7 +8,7 @@ As part of default settings on the dYdX Chain open source software, each market 
 
 ## Open-Interest-Based IMF
 
-The IMF of a perpetual market scales linearly according to the current `open_notional` in the market, starting at `open_notional_lower_cap` to `open_notional_upper_cap` (UDSC denominated):
+The IMF of a perpetual market scales linearly according to the current `open_notional` in the market, starting at `open_notional_lower_cap` to `open_notional_upper_cap` (USDC denominated):
 
 ```
 open_notional = open_interest * oracle_price
