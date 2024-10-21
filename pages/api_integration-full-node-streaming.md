@@ -1,19 +1,23 @@
 # Full Node gRPC Streaming
 
-Last updated for: `v5.0.5`
+Last updated for: `v6.0.6`
 
-Enable full node gRPC streaming to expose a stream of orderbook updates (L3), fills, taker orders, and subaccount updates, allowing clients to maintain a full view of the orderbook and various exchange activities. Note that the orderbook state can vary slightly between nodes due to dYdX's offchain orderbook design.
+Enable full node streaming to expose a stream of orderbook updates (L3), fills, taker orders, and subaccount updates, allowing clients to maintain a full view of the orderbook and various exchange activities. Note that the orderbook state can vary slightly between nodes due to dYdX's offchain orderbook design.
 
 
 ## Enabling Streaming
-The orderbook stream is implemented with [gRPC](https://grpc.io/), a streaming RPC protocol developed by Google and used in CosmosSDK. Use the following flags to configure the gRPC streaming feature:
+Full node streaming supports two streaming protocols. Information can be streamed via [gRPC](https://grpc.io/), a streaming RPC protocol developed by Google and used in CosmosSDK, or Websockets. Use the following flags to configure full node streaming features:
 
 | CLI Flag | Type | Default | Short Explanation |
 | -------- | ----- | ------- | -------- |
-| grpc-streaming-enabled | bool | false | Toggle on to enable full node streaming. Can only be used when grpc is enabled. |
-| grpc-streaming-flush-interval-ms | int | 50 | Buffer flush interval for batch emission of protocol-side updates |
-| grpc-streaming-max-batch-size | int | 2000 | Maximum protocol-side update buffer before dropping all streaming connections|
+| grpc-streaming-enabled | bool | false | Toggle on to enable grpc-based full node streaming. |
+| grpc-streaming-flush-interval-ms | int | 50 | Buffer flush interval for batch emission of protocol-side updates. |
+| grpc-streaming-max-batch-size | int | 2000 | Maximum protocol-side update buffer before dropping all streaming connections. |
 | grpc-streaming-max-channel-buffer-size | int | 2000 | Maximum channel size before dropping slow or erroring grpc connections. Decreasing this will more aggressively drop slow client connections. |
+| websocket-streaming-enabled | bool | false | Toggle on to enable websocket-based streaming. Must be used in conjunction with `grpc-streaming-enabled`. |
+| websocket-streaming-port | int | 9092 | Port number to expose for websocket streaming. |
+| fns-snapshot-interval | int | 0 | If set to a nonzero number, snapshots will be sent out at this block interval. Used for debugging purposes. |
+
 
 **Disclaimer:** We recommend you use this exclusively with your own node, as supporting multiple public gRPC streams with unknown client subscriptions may result in degraded performance.
 
@@ -46,14 +50,14 @@ For Python, the corresponding code is already generated in [the v4-proto PyPi pa
     - Note that both `OrderUpdateV1` and `ClobMatch` messages must be processed to maintain the correct book state. See [OrderUpdateV1](#orderupdatev1) for details.
 7. When you see an `OrderRemoveV1` message, remove the order from the book.
 8. When you see a `StreamSubaccountUpdate` message with `snapshot` set to `false`, incrementally update the subaccount's balances and positions.
-8. When you see a `StreamTakerOrder` message, state does not need to be updated -- Taker orders are purely informational and are emitted whenever a taker order enters the matching loop, regardless of success or failure.
+8. When you see a `StreamTakerOrder` message, state does not need to be updated. Taker orders are purely informational and are emitted whenever a taker order enters the matching loop, regardless of success or failure.
 
 Note:
 - The order subticks (price) and quantums (quantity) fields are encoded as integers and 
   require [translation to human-readable values](https://github.com/dydxprotocol/grpc-stream-client/blob/d8cbbc3c6aeb454078c72204491727b243c26e19/src/market_info.py#L1).
 - Each node's view of the book is subjective, because order messages arrive at different nodes in different orders. When a block is proposed, nodes "sync" subsets of their book states to cohere with the trades seen by the block proposer.
 - Only `ClobMatch` messages with `execModeFinalize` are trades confirmed by consensus.
-	- Use all `ClobMatch` messages to update the orderbook state. The node's book state is optimistic, and reverts i2f fills are not confirmed, in which case a series of `OrderRemoveV1`, `OrderPlaceV1` and `OrderUpdateV1` messages are sent to represent the modifications to the full node's book state.
+	- Use all `ClobMatch` messages to update the orderbook state. The node's book state is optimistic, and reverts if fills are not confirmed, in which case a series of `OrderRemoveV1`, `OrderPlaceV1` and `OrderUpdateV1` messages are sent to represent the modifications to the full node's book state.
     - Treat only `ClobMatch` messages with `execModeFinalize` as confirmed trades.
     - See [Reference Material](#reference-material) for more information.
 
@@ -104,7 +108,7 @@ Response will contain a `oneof` field that contains either:
   - Contains a singular `SubaccountId` object to identify the subaccount.
   - multiple `SubaccountPerpetualPosition`s to represent the perpetual positions of the subaccount.
     - each `SubaccountPerpetualPosition` contains a perpetual id and the size of the position in base quantums.
-  - multiple `SubaccountAssetPosition`s to represent the asset positions of the subaccount.
+  - multiple `SubaccountAssetPosition`s to represent the asset positions of the subaccount. (i.e, usdc collateral positions)
     - each `SubaccountAssetPosition` contains an asset id and the size of the position in base quantums.
 
 as well as `block_height` and `exec_mode` (see [Exec Modes Reference](#exec-mode-reference)). 
@@ -432,6 +436,8 @@ This message is used to update subaccount balances and positions.
 
 The initial message for a subaccount will have `snapshot` set to `true`. This message contains the full state of the subaccount. All updates should be ignored until the snapshot is received. Subsequent updates will contain updates to the positions and balances of the subaccount. They should be merged in with the existing state of the subaccount.
 
+Apart from the initial snapshot, this mesage will only be sent out for subaccount updates that are in consensus.
+
 <details>
 
 <summary>Code Snippet</summary>
@@ -576,6 +582,10 @@ By protocol design, each validator has their own version of the orderbook and op
 ![full node streaming diagram](../artifacts/full_node_streaming_diagram.jpg)
 
 Note that DeliverTx maps to exec mode `execModeFinalize`.
+
+### Staged DeliverTx Validation
+
+In DeliverTx, all of the updates emitted are finalized and in consensus. A batch of updates will be sent out in the same `StreamOrderbookUpdatesResponse` object. In consensus, fills and subaccount updates will be emitted.
 
 ### Finalized Subaccount Updates
 
