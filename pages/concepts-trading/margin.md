@@ -1,27 +1,30 @@
-# Margin Calculations
+# Margining
 
-As part of the default settings of the v4 open source software (”dYdX Chain”), collateral is held as USDC, and the quote asset for all perpetual markets is USDC. Cross-margining is used by default, meaning an account can open multiple positions that share the same collateral.
+As part of default settings on the dYdX Chain open source software, each market has two risk parameters, Initial Margin Fraction (IMF) and Maintenance Margin Fraction (MMF):
 
-As part of the default settings on the v4 open source software, each market has two risk parameters, the initial margin fraction and the maintenance margin fraction, which determine the max leverage available within that market. By default, these are used to calculate the value that must be held by an account in order to open or increase positions (in the case of initial margin) or avoid liquidation (in the case of maintenance margin). With the removal of nonlinear margin scaling, the IMF and MMF are now consistent across all position sizes, providing a predictable leverage limit for traders.
+  - **Initial Margin Fraction**: A percentage (fixed until [certain level](#open-interest-based-imf) of Open Interest) that determines the minimum collateral required to open or increase positions.
 
-  - **Maximum Leverage**: Each market has a specified maximum leverage. A trader cannot make a trade that would place their leverage above this limit. With the removal of nonlinear scaling, the maximum leverage remains consistent across all position sizes, providing traders with a predictable and uniform leverage limit.
+  - **Maintenance Margin Fraction**: A percentage (fixed) that determines the minimum collateral required to maintain positions and avoid liquidation.
 
-  - **Maintenance Margin Fraction**: Margin fraction is calculated as a trader’s position notional value divided by equity. If a trader’s margin fraction exceeds the maintenance margin fraction, their position will be automatically closed (liquidated) and a liquidation fee of 1.5% could be assessed. With the removal of nonlinear margin scaling, the MMF remains constant across all position sizes, ensuring consistent margin requirements for traders.
+## Open-Interest-Based IMF
 
-  - **Initial Margin Fraction**: Margin fraction is calculated as a trader’s position notional value divided by equity. If a trader’s margin fraction exceeds the initial margin fraction, a trader will no longer be allowed to increase their position. With the nonlinear scaling feature removed, the IMF does not increase based on position size and remains constant regardless of how large the position becomes, providing uniform margin requirements for all traders.
+The IMF of a perpetual market scales linearly according to the current `open_notional` in the market, starting at `open_notional_lower_cap` to `open_notional_upper_cap` (UDSC denominated):
 
-  - **Base Position Notional**: The concept of Base Position Notional becomes redundant with the removal of nonlinear scaling, as margin requirements now remain constant regardless of position size. Thus, the IMF and MMF apply consistently, simplifying the margin requirements framework for all traders.
+```
+open_notional = open_interest * oracle_price
 
-## How are new margin fractions computed on dYdX Chain?
+scaling_factor = (open_notional - open_notional_lower_cap) / (open_notional_upper_cap - open_notional_lower_cap)
 
-In the default settings of the v4 open source software, the initial and maintenance margin fractions for each perpetual market are fixed and do not change based on the position's size. This unified approach ensures that all traders face consistent margin requirements:
+IMF_increase = scaling_factor * (1 - base_IMF)
 
-  - **Initial Margin Fraction (IMF)**: A fixed percentage that determines the value required to open or increase positions.
-  - **Maintenance Margin Fraction (MMF)**: A fixed percentage that determines the minimum collateral required to avoid liquidation.
+effective_IMF = Min(base_IMF + Max(IMF_increase, 0), 100%)
+```
 
-These fixed percentages simplify trading calculations and prevent unexpected increases in margin requirements due to nonlinear scaling. As a result, all traders can better understand the exact leverage and risk they will encounter, regardless of position size.
+I.e. the effective IMF is the base IMF while `open_notinal < lower_cap`, and increases linearly until `open_notional = upper_cap`, at which point the IMF stays at 100% (requiring 1:1 collateral for trading). Importantly, the MMF (Maintenance Margin Fraction) does not change.
 
-## Margin Calculation
+The [Open Notional Lower Cap](https://github.com/dydxprotocol/v4-chain/blob/b829b28b0d71e754ac553fbeec29ce5309bd79f7/proto/dydxprotocol/perpetuals/perpetual.proto#L133) and [Open Notional Upper Cap](https://github.com/dydxprotocol/v4-chain/blob/b829b28b0d71e754ac553fbeec29ce5309bd79f7/proto/dydxprotocol/perpetuals/perpetual.proto#L138) are parameters defined as part of the market's [Liquidity Tier](https://github.com/dydxprotocol/v4-chain/blob/b829b28b0d71e754ac553fbeec29ce5309bd79f7/proto/dydxprotocol/perpetuals/perpetual.proto#L100).
+
+## Detailed Margin Calculation
 
 The margin requirement for a single position is calculated as follows:
 
