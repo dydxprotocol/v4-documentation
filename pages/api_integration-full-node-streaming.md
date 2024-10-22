@@ -651,14 +651,23 @@ Values are defined in code [here](https://github.com/dydxprotocol/v4-chain/blob/
 
 | Metric | Type | Explanation |
 | -------- | ----- | ------- |
-| grpc_stream_num_updates_buffered | gauge | number of updates in the full node's buffer cache of updates. Once this hits `grpc-streaming-max-batch-size`, all subscriptions will be dropped. |
-| grpc_stream_subscriber_count | gauge | number of streaming connections currently connected to the full node |
-| grpc_subscription_channel_length.quantile | histogram | histogram of channel size across all subscriptions. Once this hits `grpc-streaming-max-channel-buffer-size`, the offending subscription will be dropped. |
+| grpc_send_orderbook_updates_latency.quantile | histogram | Latency for each orderbook cache buffer enqueue |
+| grpc_send_orderbook_updates_latency.count | count | number orderbook updates enqueued in cache buffer |
+| grpc_send_orderbook_snapshot_latency.quantile | histogram | Latency for each snapshot orderbook emission |
+| grpc_send_orderbook_snapshot_latency.count | count | number of order book snapshots emitted |
+| grpc_send_subaccount_update_count | count | Number of subaccount updates emitted |
+| grpc_send_orderbook_fills_latency.quantile | histogram | Latency for each orderbook fill cache buffer enqueue |
+| grpc_send_orderbook_fills_latency.count | count | number orderbook snapshots enqueued in cache buffer |
+| grpc_add_update_to_buffer_count | count | Number of total update objects added to the cache buffer |
+| grpc_add_to_subscription_channel_count | count | Number of updates added to each per-subscription channel buffer. Tagged by `subscription_id`. |
+| grpc_send_response_to_subscriber_count | count | Number of updates sent from each per-subscription channel buffer to the client. Tagged by `subscription_id`. |
+| grpc_stream_subscriber_count | count | number of streaming connections currently connected to the full node |
+| grpc_stream_num_updates_buffered | histogram | number of updates in the full node's buffer cache of updates. Once this hits `grpc-streaming-max-batch-size`, all subscriptions will be dropped. Use with `quantile:0.99` in order to observe maximum amount of updates. |
 | grpc_flush_updates_latency.count | count | number of times the buffer cache is flushed. |
 | grpc_flush_updates_latency.quantile | histogram | Latency of each buffer cache flush call into subscription channel. |
-| grpc_send_response_to_subscriber_count | counter | number of messages emitted across all grpc streams. |
+| grpc_subscription_channel_length.quantile | histogram | Length of each subscription's channel buffer. Tagged by `subscription_id`. Use with `quantile:0.99` in order to observe subscription channel length for subscription ids. Once this hits `grpc-streaming-max-channel-buffer-size`, the offending subscription will be dropped. |
 
-All logs from grpc streaming are tagged with `module: grpc-streaming`.
+All logs from grpc streaming are tagged with `module: full-node-streaming`.
 
 ### Protocol-side buffering and Slow gRPC Client Connections
 
@@ -701,10 +710,12 @@ Q: Is there a sample client?
 
 ## Changelog
 
-@jonfung todo update the correct version
-### v6.0.0
+### v6.0.6
 - added taker order message to stream
 - added subaccount update message to stream
+- Finalized DeliverTx updates are all batched together in a single message
+- Metrics modifications
+- Websocket support
 
 ### v5.0.5
 - added update batching and per-channel channel/goroutines to not block full node on laggy subscriptions
