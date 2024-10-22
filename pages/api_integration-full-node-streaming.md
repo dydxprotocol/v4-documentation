@@ -35,6 +35,8 @@ To follow along with [Google's documentation on gRPC streaming clients](https://
 
 For Python, the corresponding code is already generated in [the v4-proto PyPi package](https://pypi.org/project/v4-proto/).
 
+To connect via websocket, connect to the specified websocket server port at endpoint `/ws`. Default port number is `9092`, but it can be configured via cli flag. There are two query parameters. `clobPairIds` is a list of clob pair ids to subscribe to, and `subaccountIds` are a list of subaccount ids to subscribe to.
+
 ## Maintaining Orderbook and Subaccount State 
 
 ### Overview
