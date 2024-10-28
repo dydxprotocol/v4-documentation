@@ -1,6 +1,6 @@
 # Full Node gRPC Streaming
 
-Last updated for: `v6.0.6`
+Last updated for: `v6.0.8`
 
 Enable full node streaming to expose a stream of orderbook updates (L3), fills, taker orders, and subaccount updates, allowing clients to maintain a full view of the orderbook and various exchange activities. Note that the orderbook state can vary slightly between nodes due to dYdX's offchain orderbook design.
 
@@ -235,8 +235,8 @@ message StreamSubaccountUpdate {
 message SubaccountPerpetualPosition {
   // The `Id` of the `Perpetual`.
   uint32 perpetual_id = 1;
-  // The size of the position in base quantums.
-  uint64 quantums = 2;
+  // The size of the position in base quantums. Negative means short.
+  int64 quantums = 2;
 }
 
 // SubaccountAssetPosition provides information on a subaccount's updated asset
@@ -712,7 +712,7 @@ Q: Is there a sample client?
 
 ## Changelog
 
-### v6.0.6
+### v6.0.8
 - added taker order message to stream
 - added subaccount update message to stream
 - Finalized DeliverTx updates are all batched together in a single message
