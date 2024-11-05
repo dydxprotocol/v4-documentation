@@ -38,7 +38,7 @@ Governance has the ability to adjust Funding Rate parameters:
 
 - Funding rate clamp factor, premium vote clamp factor, and min number of votes per premium sample. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/params.proto#L6-L19)
 - Epoch information, which defines the funding interval and premium sampling interval. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/epochs/epoch_info.proto#L6-L43)
-- Liquidity Tier, which defines the impact notional value. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/perpetual.proto#L84-L113)
+- Liquidity Tier, which defines the impact notional value. [Proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/perpetual.proto#L100-L139)
 
 ## Trading Rewards
 
@@ -78,7 +78,7 @@ Current Liquidity Tiers include:
 
 | ID | Name | initial margin fraction | maintenance fraction (what fraction MMF is of IMF) | impact notional |  maintenance margin fraction (as is) | impact notional (as is) | Lower Cap (USDC Millions) | Upper Cap (USDC Millions) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 0 | Large-Cap | 0.05 | 0.6 | 500 USDC / IM | 0.03 | 10_000 USDC | None | None |
+| 0 | Large-Cap | 0.02 | 0.6 | 500 USDC / IM | 0.012 | 10_000 USDC | None | None |
 | 1 | Small-Cap | 0.1 | 0.5 | 500 USDC / IM | 0.05 | 5_000 USDC | 20 | 50 |
 | 2 | Long-Tail | 0.2 | 0.5 | 500 USDC / IM | 0.1 | 2_500 USDC | 5 | 10 |
 | 3 | Safety | 1 | 0.2 | 2500 USDC / IM | 0.2 | 2_500 USDC | 2 | 5 |
@@ -96,7 +96,7 @@ Current Liquidity Tiers include:
     - Then a market’s `Effective IMF = Min(Base IMF + Max(IMF Increase, 0), 1.0)`
 - The effective IMF is the base IMF while the Open Notional < Lower Cap, and increases linearly until Open Notional = Upper Cap, at which point the IMF stays at 1.0 (requiring 1:1 collateral for trading)
 
-Governance has the ability to create and modify Liquidity Tiers as well as update existing markets’ Liquidity Tier placements. ([proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/perpetual.proto#L84-L113))
+Governance has the ability to create and modify Liquidity Tiers as well as update existing markets’ Liquidity Tier placements. ([proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/perpetuals/perpetual.proto#L100-L139))
 
 ### Updating a Live Market
 

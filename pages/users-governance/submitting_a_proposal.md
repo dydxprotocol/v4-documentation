@@ -9,7 +9,7 @@ Alternatively, if your platform is supported by the prebuilt binaries found in t
 Save the [chain-id](../infrastructure_providers-network/network_constants.mdx#chain-id). This will make it so you do not have to manually pass in the chain-id flag for every CLI command.
 
 ```bash
-dydxprotocold config chain-id [chain_id]
+dydxprotocold config set client chain-id [chain_id]
 ```
 
 ## Confirming Connectivity
