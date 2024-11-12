@@ -97,7 +97,7 @@ Create Perpetual message specifies the parameters specific to the perpetual.
 - `atomic_resolution` determines the precision of the size of the coin. If the atomic resolution is -10, then the perpetual positions are represented as multiples of 10^-10.
 - `default_funding_ppm` is the default funding rate in parts per million.
 - `id` is the id of the perpetual. This should be the same as the oracle_market_id and clob_pair_id.
-- `liquidity_tier` is the liquidity tier of the proposed market. This should be set based on [dYdX liquidity tier guidelines](../users-governance/functionalities#liquidity-tiers).
+- `liquidity_tier` is the liquidity tier of the proposed market. This should be set based on [dYdX liquidity tier guidelines](./functionalities.md#liquidity-tiers)
 - `market_id` is the id of the oracle market. This should be the same as the id.
 - `ticker` is the ticker of the market being added.
 
