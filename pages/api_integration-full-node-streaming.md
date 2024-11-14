@@ -1,6 +1,6 @@
 # Full Node gRPC Streaming
 
-Last updated for: `v6.0.8`
+Last updated for: `v7.0.2`
 
 Enable full node streaming to expose a stream of orderbook updates (L3), fills, taker orders, and subaccount updates, allowing clients to maintain a full view of the orderbook and various exchange activities. Note that the orderbook state can vary slightly between nodes due to dYdX's offchain orderbook design.
 
@@ -711,6 +711,9 @@ Q: Is there a sample client?
 - A: Example client which subscribes to the stream and maintains a local orderbook: [dydxprotocol/grpc-stream-client](https://github.com/dydxprotocol/grpc-stream-client/)
 
 ## Changelog
+
+### v7.0.2
+- perp position to signed int for tracking long/short positions
 
 ### v6.0.8
 - added taker order message to stream
