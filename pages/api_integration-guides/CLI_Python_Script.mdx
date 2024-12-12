@@ -2,15 +2,15 @@
 
 Table of Contents
 
-Command syntax	1
-Command: balance	2
-Command: buyquantity	3
-Command: sellquantity	4
-Command: buyusdc	5
-Command: sellusdc	6
-Command: positions	7
-Command: buyquantitylimit	8
-Command: sellquantitylimit	9
+Command syntax
+Command: balance
+Command: buyquantity
+Command: sellquantity
+Command: buyusdc
+Command: sellusdc
+Command: positions
+Command: buyquantitylimit
+Command: sellquantitylimit
 Command: getorder
 Command: getorderid
 Command: cancelorder
@@ -32,159 +32,172 @@ Run the script like this:
 ## Command: balance
 This command gets the balance of all of your subaccounts or a specific subaccount.
 - Parameters: None required.  May optionally specify a single subaccount to only display the balance for that subaccount.
-- Syntax
+- Syntax:
 
 `python3 v4dydxcli.py <apikeyfile> balance <optional: subaccount>`
 
-- Examples
+- Examples:
 
 `python3 v4dydxcli.py testnet.py balance`
 
 `python3 v4dydxcli.py testnet.py balance 0`
 
+- Screenshot:
 ![CLIPythonScript1](../../artifacts/CLIPythonScript1.png)
 
 ## Command: buyquantity
 This command buys a specific amount of crypto using MARKET order.
 - Parameters: Must specify the market and amount.
-- Syntax
+- Syntax:
 
 `python3 v4dydxcli.py <apikeyfile> buyquantity <market> <quantity>`
 
-- Example
+- Example:
 
 `python3 v4dydxcli.py testnet.py buyquantity BTC-USD 0.001`
 
+- Screenshot:
 ![CLIPythonScript2](../../artifacts/CLIPythonScript2.png)
 
 ## Command: sellquantity
 This command sells a specific amount of crypto using MARKET order.
 - Parameters: Must specify the market and amount.
-- Syntax
+- Syntax:
 
 `python3 v4dydxcli.py <apikeyfile> sellquantity <market> <quantity>`
 
-- Example
+- Example:
 
 `python3 v4dydxcli.py testnet.py sellquantity ETH-USD 0.01`
 
+- Screenshot:
 ![CLIPythonScript3](../../artifacts/CLIPythonScript3.png)
 
 ## Command: buyusdc
 This command buys a specific USD-amount of crypto using MARKET order.
 - Parameters: Must specify the market and USD-amount.
-- Syntax
+- Syntax:
 
 `python3 v4dydxcli.py <apikeyfile> buyusdc <market> <USD-amount>`
 
-- Example
+- Example:
 
 `python3 v4dydxcli.py testnet.py buyusdc SOL-USD 200`
 
+- Screenshot:
 ![CLIPythonScript4](../../artifacts/CLIPythonScript4.png)
 
 ## Command: sellusdc
 This command sells a specific USD-amount of crypto using MARKET order.
 - Parameters: Must specify the market and USD-amount.
-- Syntax
+- Syntax:
 
 `python3 v4dydxcli.py <apikeyfile> sellusdc <market> <USD-amount>`
 
-- Example
+- Example:
 
 `python3 v4dydxcli.py testnet.py sellusdc LINK-USD 200`
 
+- Screenshot:
 ![CLIPythonScript5](../../artifacts/CLIPythonScript5.png)
 
 ## Command: positions
 This command shows open positions.  If no open positions, it returns nothing.  If you have been following the examples so far, we have opened 4 positions and this is displayed below.
 - Parameters: None.
-- Syntax
+- Syntax:
 
 `python3 v4dydxcli.py <apikeyfile> positions`
 
-- Example
+- Example:
 
 `python3 v4dydxcli.py testnet.py positions`
 
+- Screenshot:
 ![CLIPythonScript6](../../artifacts/CLIPythonScript6.png)
 
 ## Command: buyquantitylimit
 This command buys a specific amount of crypto using LIMIT order.
 - Parameters: Must specify the market, quantity, limit-price, and expiration (in seconds).
-- Syntax
+- Syntax:
 
 `python3 v4dydxcli.py <apikeyfile> buyquantitylimit <market> <quantity> <limitprice> <expiration>`
 
-- Example
+- Example:
 
 `python3 v4dydxcli.py testnet.py buyquantitylimit BTC-USD 0.002 30000 3600`
 
+- Screenshot:
 ![CLIPythonScript7](../../artifacts/CLIPythonScript7.png)
 
 ## Command: sellquantitylimit
 This command sells a specific amount of crypto using LIMIT order.
 - Parameters: Must specify the market, quantity, limit-price, and expiration (in seconds).
 
-- Syntax
+- Syntax:
 
 `python3 v4dydxcli.py <apikeyfile> sellquantitylimit <market> <quantity> <limitprice> <expiration>`
 
-- Example
+- Example:
 
 `python3 v4dydxcli.py testnet.py sellquantitylimit ETH-USD 0.02 4000 3600`
 
+- Screenshot:
 ![CLIPythonScript8](../../artifacts/CLIPythonScript8.png)
 
 ## Command: getorder
 This command gets the data on an order with a specific client-id.  Alternatively, you can specify a status to find all orders with that status.
 - Parameters: Must specify the client-id or a status.
 
-- Syntax
+- Syntax:
 
 `python3 v4dydxcli.py <apikeyfile> getorder <clientid or status>`
 
-- Example
+- Example:
 
 `python3 v4dydxcli.py testnet.py getorder 525086946
 
+- Screenshot:
 ![CLIPythonScript9](../../artifacts/CLIPythonScript9.png)
 
 - Example
 
 `python3 v4dydxcli.py testnet.py getorder OPEN`
 
+- Screenshot:
 ![CLIPythonScript10](../../artifacts/CLIPythonScript10.png)
 
 ## Command: getorderid
 This command gets the data on an order with a specific order-id.
 - Parameters: Must specify the order-id.
 
-- Syntax
+- Syntax:
 
 `python3 v4dydxcli.py <apikeyfile> getorderid <orderid>`
 
-- Example
+- Example:
 
 `python3 v4dydxcli.py testnet.py getorderid e7474df1-669c-5c06-a331-889d91b0306b`
 
+- Screenshot:
 ![CLIPythonScript11](../../artifacts/CLIPythonScript11.png)
 
 ## Command: cancelorder
 This command cancels an order with a specific client-id.  Alternatively, you can specify a status to cancel all orders with that status.
 - Parameters: Must specify the client-id or a status.
-- Syntax
+- Syntax:
 
 `python3 v4dydxcli.py <apikeyfile> cancelorder <client-id or status>`
 
-- Example
+- Example:
 
 `python3 v4dydxcli.py testnet.py cancelorder 314604016`
 
+- Screenshot:
 ![CLIPythonScript12](../../artifacts/CLIPythonScript12.png)
 
-- Example
+- Example:
 
+- Screenshot:
 `python3 v4dydxcli.py testnet.py cancelorder OPEN`
 
 ![CLIPythonScript13](../../artifacts/CLIPythonScript13.png)
