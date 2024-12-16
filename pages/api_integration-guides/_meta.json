@@ -1,7 +1,7 @@
 {
   "Getting_started_with_the_typescript_client": "Getting started with the Typescript client",
   "api_trading_with_classic_python_client": "API Trading with Classic Python Client",
-  "CLI_python_script": "CLI Python Script",
+  "cli_python_script": "CLI Python Script",
   "how_to_uncross_orderbook": "How to uncross the orderbook",
   "how_to_interpret_block_data_for_trades": "How to interpret block data for trades",
   "setting_up_raspberry_pi_for_api_trading": "Setting up Raspberry Pi for API Trading",
