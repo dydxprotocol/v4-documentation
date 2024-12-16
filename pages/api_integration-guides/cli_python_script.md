@@ -1,20 +1,5 @@
 # CLI Python Script
 
-Table of Contents
-
-Command syntax
-Command: balance
-Command: buyquantity
-Command: sellquantity
-Command: buyusdc
-Command: sellusdc
-Command: positions
-Command: buyquantitylimit
-Command: sellquantitylimit
-Command: getorder
-Command: getorderid
-Command: cancelorder
-
 ## Command syntax
 Run the script like this:
 - Syntax
