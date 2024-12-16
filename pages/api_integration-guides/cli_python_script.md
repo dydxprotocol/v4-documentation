@@ -1,6 +1,6 @@
 # CLI Python Script
 
-## Command syntax
+## Command: syntax
 
 Run the script like this:
 - Syntax:
