@@ -8,8 +8,8 @@ CompositeClient simplifies the transactions by transforming human readable param
 
 For example, Placing an order with ValidatorClient requires parameters such as quantums and subticks, which are calculated based on ClobPair settings.
 
-CompositeClient would take regular human readable parameters such as price and size, 
-make the neccesory calculations and conversions, 
+CompositeClient would take regular human readable parameters such as price and size,
+make the neccesory calculations and conversions,
 and call ValidatorClient with the correct quantums and subticks for you.
 
 ### Installation
@@ -17,12 +17,12 @@ and call ValidatorClient with the correct quantums and subticks for you.
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
     ```bash copy
-    pnpm install @dydxprotocol/v4-client-js 
+    pnpm install @dydxprotocol/v4-client-js
     ```
   </Tab>
   <Tab>
     ```bash copy
-    pip install v4-client-py 
+    pip install v4-client-py
     ```
   </Tab>
 </Tabs>
@@ -76,7 +76,7 @@ and call ValidatorClient with the correct quantums and subticks for you.
         env='mainnet',
         validator_config=ValidatorConfig(
             grpc_endpoint='https://dydx-ops-rpc.kingnodes.com', # or other node URL
-            chain_id='dydx-mainnet-1', 
+            chain_id='dydx-mainnet-1',
             ssl_enabled=True
         ),
         indexer_config=IndexerConfig(
@@ -119,9 +119,9 @@ and call ValidatorClient with the correct quantums and subticks for you.
   </Tab>
 </Tabs>
 
-## Placing Orders 
+## Placing Orders
 
-### Placing an Order 
+### Placing an Order
 
 <Tabs items={["TypeScript", "Python"]}>
   <Tab>
@@ -161,9 +161,12 @@ and call ValidatorClient with the correct quantums and subticks for you.
   </Tab>
   <Tab>
     ```python copy
-    from v4_client_py import {
-      OrderExecution, OrderSide, OrderTimeInForce, OrderType
-    }
+    from v4_client_py.clients.helpers.chain_helpers import (
+      OrderExecution,
+      OrderSide,
+      OrderTimeInForce,
+      OrderType,
+    )
 
     subaccount = SubaccountClient(wallet, 0)
     clientId = 123 # set to a number, can be used by the client to identify the order

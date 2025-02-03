@@ -62,12 +62,5 @@
     "type": "page",
     "href": "https://v4.testnet.dydx.exchange",
     "newWindow": true
-  },
-
-  "v3 docs": {
-    "title": "V3 Docs ↗",
-    "type": "page",
-    "href": "https://dydxprotocol.github.io/v3-teacher",
-    "newWindow": true
   }
 }

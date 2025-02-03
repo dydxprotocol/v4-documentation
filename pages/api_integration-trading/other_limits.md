@@ -1,6 +1,45 @@
 ## Other Limits
 
-Subaccounts may have a limited number of open orders at any one time determined by the net collateral of the subaccount as per:
+Subaccounts have a limited number of stateful open orders at any one time determined by the net collateral of the subaccount.
+
+These limits are subject to governance. The latest limits can be queried via the `https://<REST_NODE_ENDPOINT>/dydxprotocol/clob/equity_tier` endpoint.
+
+Here is an example response:
+
+```
+{
+  "equity_tier_limit_config": {
+    "stateful_order_equity_tiers": [
+      {
+        "usd_tnc_required": "0",
+        "limit": 0
+      },
+      {
+        "usd_tnc_required": "20000000",
+        "limit": 4
+      },
+      {
+        "usd_tnc_required": "100000000",
+        "limit": 8
+      },
+      {
+        "usd_tnc_required": "1000000000",
+        "limit": 10
+      },
+      {
+        "usd_tnc_required": "10000000000",
+        "limit": 100
+      },
+      {
+        "usd_tnc_required": "100000000000",
+        "limit": 200
+      }
+    ]
+  }
+}
+```
+
+Read as:
 
 | Net Collateral | Long-term or Conditional orders |
 | -------------- |  ------------------------------- |
@@ -13,4 +52,6 @@ Subaccounts may have a limited number of open orders at any one time determined 
 
 For example up to 10 open bids across all markets for a subaccount with a net collateral of $2,000.
 
-Note that limit `Immediate-or-Cancel`, `Fill-or-Kill`, and market orders on the frontend do not have this limitation.
+Note:
+- Short term orders, including limit `Immediate-or-Cancel`, `Fill-or-Kill`, and market orders on the frontend do not have this limitation.
+- Only the `stateful_order_equity_tiers` field is in effect -- short term order equity limits under the `short_term_order_equity_tiers` key are no longer in effect.
