@@ -187,7 +187,7 @@ const client = await CompositeClient.connect(Network.mainnet());
 
 **2. Define permissions**
 
-Each authenticator can have one or multiple restrictions that are combined with `ALL_OF`:
+Each authenticator can have one or multiple restrictions that are combined with `ALL_OF` or `ANY_OF`:
 
 ```typescript
 import { toBase64 } from '@cosmjs/encoding';
