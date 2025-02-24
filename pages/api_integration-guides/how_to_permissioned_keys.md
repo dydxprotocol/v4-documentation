@@ -45,15 +45,6 @@ To enable this there are currently six types of "authenticator" that can used, f
    - No order size restrictions
    - No custom leverage limits
 
-2. **Order Book Behavior**
-
-   - Cannot control execution of resting orders
-   - Orders remain executable while on book
-
-3. **Asset Management**
-   - No internal portfolio management features
-   - Standard platform risk measures apply
-
 ---
 
 ## **Example: Setup permission keys using Golang**
