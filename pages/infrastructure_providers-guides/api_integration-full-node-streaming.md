@@ -581,7 +581,7 @@ func (c *GrpcClient) ProcessStreamTakerOrder(
 
 By protocol design, each validator has their own version of the orderbook and optimistically processes orderbook matches. As a result, you may see interleaved sequences of order removals, placements, and state fill amount updates when optimistically processed orderbook matches are removed and later replayed on the local orderbook.
 
-![full node streaming diagram](../artifacts/full_node_streaming_diagram.jpg)
+![full node streaming diagram](../../artifacts/full_node_streaming_diagram.jpg)
 
 Note that DeliverTx maps to exec mode `execModeFinalize`.
 

@@ -1,10 +1,13 @@
 {
-  "Getting_started_with_the_typescript_client": "Getting started with the Typescript client",
-  "api_trading_with_classic_python_client": "API Trading with Classic Python Client",
-  "cli_python_script": "CLI Python Script",
-  "how_to_uncross_orderbook": "How to uncross the orderbook",
-  "how_to_interpret_block_data_for_trades": "How to interpret block data for trades",
-  "setting_up_raspberry_pi_for_api_trading": "Setting up Raspberry Pi for API Trading",
-  "how_to_transfer_tokens_between_accounts": "How to transfer tokens between accounts",
-  "how_to_isolated": "How to integrate APIs with FE isolated positions"
+  "Getting_started_with_the_typescript_client": "Typescript client",
+  "how_to_permissioned_keys": "Permissioned Keys",
+  "how_to_uncross_orderbook": "Uncross the orderbook",
+  "how_to_interpret_block_data_for_trades": "Interpret trade data",
+  "how_to_transfer_tokens_between_accounts": "Subaccount transfers",
+  "how_to_isolated": "Isolated Margin",
+  "setting_up_raspberry_pi_for_api_trading": "Setting up Raspberry Pi",
+  "cli_python_script": "Python Script CLI",
+  "api_trading_with_classic_python_client": "Python Client (deprecated)",
+  "how_to_send_usdc_from_ethereum_to_dydx": "Ethereum <> dYdX"
+
 }
