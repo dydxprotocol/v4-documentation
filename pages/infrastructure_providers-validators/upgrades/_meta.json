@@ -1,6 +1,7 @@
 {
-    "types_of_upgrades": "Types of Upgrades",
+    "types_of_upgrades": "Upgrade Types",
     "performing_upgrades": "Performing Upgrades",
     "cosmovisor": "Cosmovisor",
-    "using_cosmovisor_to_stage_dYdX_Chain_binary_upgrade": "Using Cosmovisor to stage dYdX Chain binary upgrade"
+    "using_cosmovisor_to_stage_dYdX_Chain_binary_upgrade": "Cosmovisor Guide",
+    "upgrading_sidecar": "Upgrading Sidecar"
 }
