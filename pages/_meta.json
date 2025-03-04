@@ -5,49 +5,42 @@
   },
 
   "index": "About dYdX",
-  "introduction-getting_started": "Getting Started",
-  "introduction-onboarding_faqs": "Onboarding FAQs",
 
   "----------USERS----------": {
-    "title": "Chain Users",
+    "title": "Users",
     "type": "separator"
   },
-  "users-rewards": "Rewards",
-  "users-governance": "Governance",
+  "introduction-getting_started": "Start Trading",
   "user-guides": "Guides",
-  "users-faqs": "User Submitted Questions",
+  "introduction-onboarding_faqs": "FAQs",
+
+  "----------API Traders----------": {
+    "title": "API Traders",
+    "type": "separator"
+  },
+
+  "api_integration-started": "Quickstart",
+  "api_integration-clients": "Clients & APIs",
+  "infrastructure_providers-network": "Network",
+  "api_integration-guides": "Guides",
 
   "----------INFRASTRUCTURE PROVIDERS----------": {
     "title": "Chain Infrastructure",
     "type": "separator"
   },
-
+  "infrastructure-started": "Quickstart",
   "infrastructure_providers-validators": "Validators & Full-Nodes",
-  "infrastructure_providers-network": "Network Configuration",
-  "infrastructure_providers-operators": "Indexer Operators",
-
-  "----------API INTEGRATION----------": {
-    "title": "API Integrations",
-    "type": "separator"
-  },
-
-  "api_integration-clients": "Client Documentation",
-  "api_integration-indexer": "Indexer Documentation",
-  "api_integration-full-node-streaming": "Full Node Streaming API",
-  "api_integration-repositories": "Repositories",
-  "api_integration-trading": "Trading",
-  "api_integration-deposits_and_withdrawals": "Deposits and Withdrawals",
-  "api_integration-constants": "Constants",
-  "api_integration-guides": "Guides",
+  "infrastructure_providers-guides": "Guides",
 
   "----------CONCEPTS----------": {
-    "title": "Technical Concepts",
+    "title": "Concepts",
     "type": "separator"
   },
 
   "concepts-architecture": "Architecture",
   "concepts-trading": "Trading",
-  "concepts-limit-order-book-and-matching": "Limit Order Book and Matching",
+  "users-rewards": "Rewards",
+  "concepts-parameters": "Parameters",
 
   "----------OTHER----------": {
     "title": "Policies",
