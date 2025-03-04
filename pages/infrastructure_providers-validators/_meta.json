@@ -1,10 +1,9 @@
 {
   "hardware_requirements": "Hardware Requirements",
   "required_node_configs": "Required Node Configs",
-  "set_up_full_node": "Set Up a Full Node",
-  "optimize_full_node": "Optimize Your Full Node",
-  "running_a_validator": "Running a Validator",
-  "snapshots": "Snapshots",
-  "full_node_streaming": "Full Node Streaming",
-  "upgrades": "Upgrades"
+  "set_up_full_node": "Setup Full Node",
+  "optimize_full_node": "Optimize Full Node",
+  "running_a_validator": "Setup Validator",
+  "upgrades": "Upgrades",
+  "infrastructure_providers-operators": "Indexer"
 }
