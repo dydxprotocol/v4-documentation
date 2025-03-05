@@ -68,11 +68,17 @@ The basic structure for fees have been developed to reflect the following charac
 2. Users are eligible for lower fees based on their 30 day trading volume across sub accounts and markets
 3. Fees are uniform across all markets
 
-![FRP5](../../artifacts/FRP5.png)
-
-Initially, traders’ maker rebates will be developed to reflect -1.1bps. This initial setting can be adjusted by the applicable Governance Community.  The open-source software contemplates that after the 120-day period has concluded, the dYdX Chain would automatically revert to the other fee schedule shown in the schedule above. _Note that this ended in March 2024._
-
-The initial software code contemplates fees accruing to validators, which then may be shared with stakers that provide staking services to validators. Like most other settings, this can be adjusted by the applicable Governance Community.
+| Tier  | 30d Trailing Volume                     | Taker (bps) | Maker (bps) |
+|-------|-----------------------------------------|-----------------|----------------------------------------|
+| 1     | < $1M                                  | 5.0             | 1.0                                    |
+| 2    | ≥ $1M                                  | 4.5             | 1.0                                    |
+| 3   | ≥ $5M                                  | 4.0             | 0.5                                    |
+| 4    | ≥ $25M                                 | 3.5             | —                                      |
+| 5     | ≥ $125M                                | 3.0             | —                                      |
+| 6    | ≥ $125M and ≥0.5% exchange mkt. share  | 2.5             | -0.5                                   |
+| 7   | ≥ $125M and ≥1% maker mkt. share       | 2.5             | -0.7                                   |
+| 8  | ≥ $125M and ≥2% maker mkt. share       | 2.5             | -0.9                                   |
+| 9    | ≥ $125M and ≥4% maker mkt. share       | 2.5             | -1.1                                   |
 
 **Parameters**
 
