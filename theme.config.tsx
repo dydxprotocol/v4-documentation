@@ -39,6 +39,24 @@ const config: DocsThemeConfig = {
   },
   // Navbar
   logo: <Logo />,
+  navbar: {
+    extraContent: (
+      <div className="nx-flex nx-items-center">
+        <a
+          href="/introduction-getting_started"
+          className="nx-ml-4 nx-text-gray-600 hover:nx-text-black dark:nx-text-gray-300 dark:hover:nx-text-white"
+        >
+          Docs
+        </a>
+        <a
+          href="/api-reference"
+          className="nx-ml-4 nx-text-gray-600 hover:nx-text-black dark:nx-text-gray-300 dark:hover:nx-text-white"
+        >
+          API Reference
+        </a>
+      </div>
+    ),
+  },
   project: {},
   chat: {},
 

@@ -7,7 +7,7 @@
   "index": "About dYdX",
 
   "----------USERS----------": {
-    "title": "Users",
+    "title": "Frontend Users",
     "type": "separator"
   },
   "introduction-getting_started": "Start Trading",
@@ -25,7 +25,7 @@
   "api_integration-guides": "Guides",
 
   "----------INFRASTRUCTURE PROVIDERS----------": {
-    "title": "Chain Infrastructure",
+    "title": "Node Hosts",
     "type": "separator"
   },
   "infrastructure-started": "Quickstart",
