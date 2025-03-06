@@ -1,6 +1,6 @@
 # Overview
 
-![Rewards Overview](../../artifacts/rewards_overview.png)
+![Rewards Overview](../../../artifacts/rewards_overview.png)
 
 There are several reward mechanisms available with the protocol software.
 

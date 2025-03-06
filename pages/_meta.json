@@ -1,55 +1,17 @@
 {
-  "----------INTRODUCTION----------": {
-    "title": "Introduction",
-    "type": "separator"
+  "index": {
+    "title": "Home",
+    "type": "page"
   },
-
-  "index": "About dYdX",
-
-  "----------USERS----------": {
-    "title": "Frontend Users",
-    "type": "separator"
+  "docs": {
+    "title": "Docs",
+    "type": "page"
   },
-  "introduction-getting_started": "Start Trading",
-  "user-guides": "Guides",
-  "introduction-onboarding_faqs": "FAQs",
-
-  "----------API Traders----------": {
-    "title": "API Traders",
-    "type": "separator"
+  "api": {
+    "title": "API Reference",
+    "type": "page",
+    "href": "/api-reference"
   },
-
-  "api_integration-started": "Quickstart",
-  "api_integration-clients": "Clients & APIs",
-  "infrastructure_providers-network": "Network",
-  "api_integration-guides": "Guides",
-
-  "----------INFRASTRUCTURE PROVIDERS----------": {
-    "title": "Node Hosts",
-    "type": "separator"
-  },
-  "infrastructure-started": "Quickstart",
-  "infrastructure_providers-validators": "Validators & Full-Nodes",
-  "infrastructure_providers-guides": "Guides",
-
-  "----------CONCEPTS----------": {
-    "title": "Concepts",
-    "type": "separator"
-  },
-
-  "concepts-architecture": "Architecture",
-  "concepts-trading": "Trading",
-  "users-rewards": "Rewards",
-  "concepts-parameters": "Parameters",
-
-  "----------OTHER----------": {
-    "title": "Policies",
-    "type": "separator"
-  },
-
-  "other-security": "Security",
-  "other-terms_of_use_and_privacy_policy": "Terms of Use & Privacy",
-
   "testnet app": {
     "title": "Testnet App ↗",
     "type": "page",

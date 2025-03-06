@@ -1,0 +1,17 @@
+{
+    "index": "Overview",
+    "authentication": "Authentication",
+    "endpoints": {
+      "title": "API Endpoints",
+      "type": "separator"
+    },
+    "trading-endpoints": "Trading",
+    "account-endpoints": "Account",
+    "market-data-endpoints": "Market Data",
+    "advanced": {
+      "title": "Advanced Topics",
+      "type": "separator"
+    },
+    "rate-limits": "Rate Limits",
+    "error-handling": "Error Handling"
+  }

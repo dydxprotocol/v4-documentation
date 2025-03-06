@@ -47,27 +47,30 @@
     "@types/mdx" "^2.0.0"
     "@types/react" ">=16"
 
-"@napi-rs/simple-git-darwin-arm64@0.1.8":
-  version "0.1.8"
-  resolved "https://registry.npmjs.org/@napi-rs/simple-git-darwin-arm64/-/simple-git-darwin-arm64-0.1.8.tgz"
-  integrity sha512-ufy/36eI/j4UskEuvqSH7uXtp3oXeLDmjQCfKJz3u5Vx98KmOMKrqAm2H81AB2WOtCo5mqS6PbBeUXR8BJX8lQ==
+"@napi-rs/simple-git-darwin-arm64@0.1.19":
+  version "0.1.19"
+  resolved "https://registry.npmjs.org/@napi-rs/simple-git-darwin-arm64/-/simple-git-darwin-arm64-0.1.19.tgz"
+  integrity sha512-viZB5TYgjA1vH+QluhxZo0WKro3xBA+1xSzYx8mcxUMO5gnAoUMwXn0ZO/6Zy6pai+aGae+cj6XihGnrBRu3Pg==
 
-"@napi-rs/simple-git@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.npmjs.org/@napi-rs/simple-git/-/simple-git-0.1.8.tgz"
-  integrity sha512-BvOMdkkofTz6lEE35itJ/laUokPhr/5ToMGlOH25YnhLD2yN1KpRAT4blW9tT8281/1aZjW3xyi73bs//IrDKA==
+"@napi-rs/simple-git@^0.1.19", "@napi-rs/simple-git@^0.1.8":
+  version "0.1.19"
+  resolved "https://registry.npmjs.org/@napi-rs/simple-git/-/simple-git-0.1.19.tgz"
+  integrity sha512-jMxvwzkKzd3cXo2EB9GM2ic0eYo2rP/BS6gJt6HnWbsDO1O8GSD4k7o2Cpr2YERtMpGF/MGcDfsfj2EbQPtrXw==
   optionalDependencies:
-    "@napi-rs/simple-git-android-arm-eabi" "0.1.8"
-    "@napi-rs/simple-git-android-arm64" "0.1.8"
-    "@napi-rs/simple-git-darwin-arm64" "0.1.8"
-    "@napi-rs/simple-git-darwin-x64" "0.1.8"
-    "@napi-rs/simple-git-linux-arm-gnueabihf" "0.1.8"
-    "@napi-rs/simple-git-linux-arm64-gnu" "0.1.8"
-    "@napi-rs/simple-git-linux-arm64-musl" "0.1.8"
-    "@napi-rs/simple-git-linux-x64-gnu" "0.1.8"
-    "@napi-rs/simple-git-linux-x64-musl" "0.1.8"
-    "@napi-rs/simple-git-win32-arm64-msvc" "0.1.8"
-    "@napi-rs/simple-git-win32-x64-msvc" "0.1.8"
+    "@napi-rs/simple-git-android-arm-eabi" "0.1.19"
+    "@napi-rs/simple-git-android-arm64" "0.1.19"
+    "@napi-rs/simple-git-darwin-arm64" "0.1.19"
+    "@napi-rs/simple-git-darwin-x64" "0.1.19"
+    "@napi-rs/simple-git-freebsd-x64" "0.1.19"
+    "@napi-rs/simple-git-linux-arm-gnueabihf" "0.1.19"
+    "@napi-rs/simple-git-linux-arm64-gnu" "0.1.19"
+    "@napi-rs/simple-git-linux-arm64-musl" "0.1.19"
+    "@napi-rs/simple-git-linux-powerpc64le-gnu" "0.1.19"
+    "@napi-rs/simple-git-linux-s390x-gnu" "0.1.19"
+    "@napi-rs/simple-git-linux-x64-gnu" "0.1.19"
+    "@napi-rs/simple-git-linux-x64-musl" "0.1.19"
+    "@napi-rs/simple-git-win32-arm64-msvc" "0.1.19"
+    "@napi-rs/simple-git-win32-x64-msvc" "0.1.19"
 
 "@next/env@13.3.1":
   version "13.3.1"

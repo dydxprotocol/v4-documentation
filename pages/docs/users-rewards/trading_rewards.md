@@ -18,7 +18,7 @@ To facilitate fair trading behaviors and to preserve the protocol’s safety, tr
 
 ## Details
 
-![Trading Rewards](../../artifacts/trading_rewards.png)
+![Trading Rewards](../../../artifacts/trading_rewards.png)
 
 ### Reward Treasury
 
@@ -40,15 +40,15 @@ Let `A` represent the amount of rewards that are distributed from this `T` to
 
 We define a trader X’s `rewards score` in a given block as:
 
-![Trading Rewards Formula 1](../../artifacts/trading_rewards_formula_1.png)
+![Trading Rewards Formula 1](../../../artifacts/trading_rewards_formula_1.png)
 
 Let `S` be the sum of all the rewards scores across all traders for a given block. `S` is given by:
 
-![Trading Rewards Formula 2](../../artifacts/trading_rewards_formula_2.png)
+![Trading Rewards Formula 2](../../../artifacts/trading_rewards_formula_2.png)
 
 Every block, the amount `A` of the native token that is distributed to traders is defined as:
 
-![Trading Rewards Formula 3](../../artifacts/trading_rewards_formula_3.png)
+![Trading Rewards Formula 3](../../../artifacts/trading_rewards_formula_3.png)
 
 Where `C` is a constant configurable via governance.
 

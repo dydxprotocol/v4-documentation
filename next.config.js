@@ -58,7 +58,9 @@ module.exports = withNextra({
 
       // Validators
       { source: '/validators/:slug*', destination: '/infrastructure_providers-validators/:slug*', permanent: true },
-      { source: '/validators/upgrades/:slug*', destination: '/infrastructure_providers-validators/upgrades/:slug*', permanent: true },
+      { source: '/validators/upgrades/:slug*', destination: '/infrastructure_providers-validators/upgrades/:slug*', permanent: true }
     ]
   },
 })
+
+

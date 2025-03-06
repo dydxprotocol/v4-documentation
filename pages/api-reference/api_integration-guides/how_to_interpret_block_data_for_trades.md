@@ -1,6 +1,6 @@
 ## dYdX v4: How to Interpret the Block Data for Trades
 
-![Interpret1](../../artifacts/interpret_block_data_1.png)
+![Interpret1](../../../artifacts/interpret_block_data_1.png)
 
 In dYdX Chain trading, quantities and prices are represented in quantums (for quantities) and subticks (for prices), which need conversion for practical understanding.
 
@@ -38,7 +38,7 @@ Result: Determined the quantity
 
 4. Next, look at columns, E, F, G, H, I, and J
 
-![Interpret2](../../artifacts/interpret_block_data_2.png)
+![Interpret2](../../../artifacts/interpret_block_data_2.png)
 
 The price of the trade is either `abs((G+E)/I)*10e(-6 - AtomicResolution)`, or `abs((H+F)/J)*10e(-6 - AtomicResolution)`, either one is the same. Note that the ‘-6’ is because the AtomicResolution of USDC is -6.
 

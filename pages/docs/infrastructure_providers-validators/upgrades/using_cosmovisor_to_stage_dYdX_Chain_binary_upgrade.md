@@ -28,11 +28,11 @@ You have to change the way you currently run dydxprotocold to run under Cosmovis
 
 1. The Cosmovisor directory structure looks like this:
 
-![Upgrade1](../../../artifacts/Staging_1.png)
+![Upgrade1](../../../../artifacts/Staging_1.png)
 
 2. To stage an upgrade, you would create a <name> directory inside the upgrades/ directory.  For example, as of 4/1/2024, the current version is v3.0.0 and the next upgrade version is v4.0.0.  Therefore you would create a directory called “v4.0.0” and then a bin directory inside it.
 
-![Upgrade2](../../../artifacts/Staging_2.png)
+![Upgrade2](../../../../artifacts/Staging_2.png)
 
 3. Now, download the upgraded binary and put it inside the bin directory created previously.  It must be named dydxprotocold
 

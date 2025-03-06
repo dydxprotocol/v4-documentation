@@ -6,7 +6,7 @@
 3. Pro: Required for V4 dYdX CLI Tool
 4. Con: Can only trade cross-margin markets in cross-margin mode.  As of December 3, 2024, the following markets are cross-margin capable or isolated-margin only.
 
-![APITradingClassicPic1](../../artifacts/APITradingClassicPic1.png)
+![APITradingClassicPic1](../../../artifacts/APITradingClassicPic1.png)
 
 ## Requirements (Initial Setup)
 1. Recommended OS: Ubuntu 22.04.4 LTS server (ubuntu-22.04.4-live-server-amd64.iso)
@@ -29,15 +29,15 @@
 3. Create a APIKEY file.  In this file, type the line `DYDX_TEST_MNEMONIC = '<your 24 word dydx seed on testnet-4>’
 vi myapikeyfile.py'`
 
-![APITradingClassicPic2](../../artifacts/APITradingClassicPic2.png)
+![APITradingClassicPic2](../../../artifacts/APITradingClassicPic2.png)
 
 4. Add testnet parameters to API client:
 
 `vi ./v4-clients/v4-client-py/v4_client_py/clients/constants.py`
 
-![APITradingClassicPic4](../../artifacts/APITradingClassicPic4.png)
+![APITradingClassicPic4](../../../artifacts/APITradingClassicPic4.png)
 
-![APITradingClassicPic3](../../artifacts/APITradingClassicPic3.png)
+![APITradingClassicPic3](../../../artifacts/APITradingClassicPic3.png)
 
 `VALIDATOR_GRPC_ENDPOINT = 'test-dydx-grpc.kingnodes.com:443'`
 

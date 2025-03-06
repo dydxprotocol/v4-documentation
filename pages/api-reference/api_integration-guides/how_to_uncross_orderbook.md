@@ -4,10 +4,10 @@
 First, let’s take a look at an actual example of a crossed orderbook for BTC-USD on v4 Testnet.
 
 At the moment just before it crossed, the below is what is shown. There are no crossed prices here:
-![Observation 1](../../artifacts/how_to_uncross_orderbook_observation_1.png)
+![Observation 1](../../../artifacts/how_to_uncross_orderbook_observation_1.png)
 
 At the next update, the below is what is shown and there was a crossed price:
-![Observation 2](../../artifacts/how_to_uncross_orderbook_observation_2.png)
+![Observation 2](../../../artifacts/how_to_uncross_orderbook_observation_2.png)
 
 As shown above, the best bid was 26854 and the best ask was 26826, which is lower than the best bid.
 
@@ -67,4 +67,4 @@ Next, set the following variables in the first iteration of the while loop (see 
 ```
 
 Then, compare the two sides, using the offsets to determine whether to discard the bid or ask (see box c in the graphic below), or in the case where both bid/ask have the same offset, it compares the volume on each side (see box d in the graphic below).
-![Sample Code](../../artifacts/how_to_uncross_orderbook_sample_code.png)
+![Sample Code](../../../artifacts/how_to_uncross_orderbook_sample_code.png)

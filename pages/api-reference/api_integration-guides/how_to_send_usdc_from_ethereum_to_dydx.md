@@ -15,18 +15,18 @@
 ## Prerequisite USDC Approval
 1. First, go to `USDC_ERC20_ADDRESS`'s `writeProxyContract` tab [https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48#writeProxyContract](https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48#writeProxyContract)
 2. Click the “Connect to Web3” button
-![Connect to Web3](../../artifacts/how_to_send_usdc_to_dydx_connect_web3_1.png)
-![Connect to Web3 Disclaimer](../../artifacts/how_to_send_usdc_to_dydx_connect_web3_2.png)
-![Connect Wallet](../../artifacts/how_to_send_usdc_to_dydx_connect_web3_3.png)
+![Connect to Web3](../../../artifacts/how_to_send_usdc_to_dydx_connect_web3_1.png)
+![Connect to Web3 Disclaimer](../../../artifacts/how_to_send_usdc_to_dydx_connect_web3_2.png)
+![Connect Wallet](../../../artifacts/how_to_send_usdc_to_dydx_connect_web3_3.png)
 3. Now it turns green.
-![Connected](../../artifacts/how_to_send_usdc_to_dydx_connect_web3_4.png)
+![Connected](../../../artifacts/how_to_send_usdc_to_dydx_connect_web3_4.png)
 4. Click on the first line `1. Approve (0x095ea7b3)` to expand it, input `0xbd3fa81b58ba92a82136038b25adec7066af3155` (the `TOKEN_MESSENGER_CONTRACT_ADDRESS`) in the spender (address) box and `115792089237316195423570985008687907853269984665640564039457584007913129639935` in the second box (value (`uint256`)) for unlimited. You can specify a smaller number here as well.
-![Approve](../../artifacts/how_to_send_usdc_to_dydx_approve.png)
+![Approve](../../../artifacts/how_to_send_usdc_to_dydx_approve.png)
 5. Click the `Write` button.
 
 ## Procedure
 1. Starting with code provided here: [https://github.com/bd21/noble-tutorials/tree/master/tutorials/05-eth-noble-python](https://github.com/bd21/noble-tutorials/tree/master/tutorials/05-eth-noble-python), a few changes have been made to allow you to specify: `(1) a dYdX Chain address`, and `(2) the USDC amount`. Here is a diff showing the differences:
-![Script Diff](../../artifacts/how_to_send_usdc_to_dydx_script_diff.png)
+![Script Diff](../../../artifacts/how_to_send_usdc_to_dydx_script_diff.png)
 2. Save the source code (last section of this document) as `deposit_for_burn.py`, create a directory called `abi/`, and download `TokenMessengerWithMetadata.json` from the `abi/` directory at github above, and save it into `abi/`. You now have the following files in the working directory.
 ```bash
 ./deposit_for_burn.py

@@ -12,7 +12,7 @@ We can categorize them in:
 1. **CCTP**: USDC deposits or withdrawals via Etherium, Arbitrum, Optimism and Avalanche.
 2. **Axelar** or non-CCTP: If they do not fall into the CCTP category, they are by default using the Axelar route. This includes USDC transfers on non-CCTP supported chains, and all other assets from other chains.
 
-![Withdrawals & Deposit process](../../artifacts/how_to_troubleshoot_withdrawals_1.png)
+![Withdrawals & Deposit process](../../../artifacts/how_to_troubleshoot_withdrawals_1.png)
 
 ## Troubleshooting CCTP Transactions
 
@@ -41,7 +41,7 @@ For more info on this flow, see: [https://dydx.exchange/blog/cctp](https://dydx.
 
     > **Tip**: Be sure to tick the "Show Pending" box.
 
-    ​![USDC.range](../../artifacts/how_to_troubleshoot_withdrawals_2.png)
+    ​![USDC.range](../../../artifacts/how_to_troubleshoot_withdrawals_2.png)
 
     <br></br>
 
@@ -90,7 +90,7 @@ For more info on this flow, see [https://dydx.exchange/blog/1-click-onboarding](
 
    Check whether your funds have arrived on the destination side, by entering the transaction hash on [https://tracker.squidrouter.com/](https://tracker.squidrouter.com/).
 
-   ​![Squid Tracker tool](../../artifacts/how_to_troubleshoot_withdrawals_3.png)
+   ​![Squid Tracker tool](../../../artifacts/how_to_troubleshoot_withdrawals_3.png)
 
    **For Deposits**
 
