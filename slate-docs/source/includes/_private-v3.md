@@ -1,254 +1,140 @@
-# Private HTTP API
-
-## Authentication
-
-There are three levels of authentication to be considered when using dYdX. All signing can be handled directly by the client libraries.
-
-### Ethereum Key Authentication
-
-The highest level of authentication is via an account's Ethereum private key. The Ethereum key remains in control of an account's funds while they are within the L2 system. This includes the ability to forcibly close an account's positions and exit the system, in the event that the L2 operators (dYdX and Starkware) were to unexpectedly go offline or otherwise censor requests.
-
-Ethereum key authentication is required for the following operations:
-
-* Register a new user or STARK key
-* Create or revoke API keys
-* Request a forced withdrawal or forced trade
-
-### STARK Key Authentication
-
-Within the L2 system, authentication is handled by a separate key pair, known as the account's STARK key pair.
-
-STARK key authentication is required for the following operations:
-
-* Place an order
-* Withdraw funds
-
-### API Key Authentication
-
-The third level of authentication consists of the API key, secret and passphrase which are used solely to authenticate API requests made to dYdX. This includes operations such as canceling orders or retrieving an account's fills, which do not affect the L2 system.
-
-When a user onboards via `POST v3/onboarding`, the server will use the signature as a seed to determinstically generate default API key credentials. An API key includes three fields:
-
-* `key`: UUID identifying the credentials.
-* `secret`: Secret string used to generate HMACs, not sent with requests.
-* `passphrase`: Secret string sent with each request, used to encrypt/decrypt the secret in our DB, and never stored in our DB.
-
-API keys can be added and managed via the `/v3/api-keys` endpoints.
-
-All requests which are not signed by an Ethereum key and which are made to private endpoints require an API key signature.
-
-### STARK Key Cryptography
-
-The STARK and API keys are ECDSA key pairs on the [STARK curve](https://docs.starkware.co/starkex-docs/crypto/stark-curve). More info on the cryptography used on L2 is available in [Starkware's documentation](https://docs.starkware.co/starkex-docs/crypto/signatures).
-
-## Creating and Signing Requests
-
-<aside class="success">
-Note that the Python and TypeScript clients can generate all required signatures.
-</aside>
-
-Within the private HTTP API, there are three groups of endpoints which each require different headers and authentication.
-
-(Separately, and in addition to the above, STARK signatures are required for orders and withdrawals. For details, please refer to the [Python](https://github.com/dydxprotocol/dydx-v3-python/tree/master/dydx3/starkex) and [TypeScript](https://github.com/dydxprotocol/starkex-lib/tree/master/src/signable) reference implementations.)
-
-### Onboarding Endpoint: `POST v3/onboarding`
-
-**Request Headers**
-
-| Header                | Required? | Description                  |
-|-----------------------|-----------|------------------------------|
-| DYDX-SIGNATURE        | yes       | Ethereum key authentication  |
-| DYDX-ETHEREUM-ADDRESS | yes       | Ethereum address of the user |
-
-**Signing**
-
-The header `DYDX-SIGNATURE` is an EIP-712 Ethereum signature on a static message containing the fields:
-
-* `action`: The string `DYDX-ONBOARDING`.
-* `onlySignOn`: The string `https://trade.dydx.exchange`.
-
-See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/onboarding.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/onboarding.ts)
-
-### Ethereum Key Private Endpoints
-
-This group includes the `POST` and `DELETE` `v3/api-keys` endpoints for managing API keys. Like the onboarding endpoint, requests to these endpoints require signatures by the user's Ethereum key. 
-
-**Request Headers**
-
-| Header                | Required? | Description                                                                                 |
-|-----------------------|-----------|---------------------------------------------------------------------------------------------|
-| DYDX-SIGNATURE        | yes       | Ethereum key authentication                                                                 |
-| DYDX-ETHEREUM-ADDRESS | yes       | Ethereum address of the user                                                                |
-| DYDX-TIMESTAMP        | yes       | ISO timestamp of when the request was signed. Must be within 30 seconds of the server time. |
-
-**Signing**
-
-The header `DYDX-SIGNATURE` is an EIP-712-compliant Ethereum signature on a message containing the fields:
-
-* `method`: The name of the HTTP method used, uppercase (e.g. `GET`).
-* `requestPath`: The API endpoint path, beginning with `/v3/`.
-* `body`: The HTTP request body (normally empty for `GET` and `DELETE`).
-* `timestamp`: Equal to the header `DYDX-TIMESTAMP`.
-
-See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/api_keys.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/keys.ts)
-
-### API Key Private Endpoints
-
-All private endpoints not listed above fall in this category, and must be authenticated via an API key.
-
-**Request Headers**
-
-| Header                | Required? | Description                                                                                 |
-|-----------------------|-----------|---------------------------------------------------------------------------------------------|
-| DYDX-SIGNATURE        | yes       | HMAC of the request.                                                                         |
-| DYDX-API-KEY          | yes       | Api key for the account.                                                                |
-| DYDX-TIMESTAMP        | yes       | ISO timestamp of when the request was signed. Must be within 30 seconds of the server time. |
-| DYDX-PASSPHRASE       | yes       | The `passphrase` field of the API key.                                                      |
-| DYDX-ACCOUNT-NUMBER	  | no        | Account number used to scope the request. Defaults to zero.                                 |
-
-**Signing**
-
-The `DYDX-SIGNATURE` is a SHA-256 HMAC produced as described below, and encoded as a `Base64` string.
-
-A SHA-256 HMAC is created using the API key `secret` and the message `timestamp + method + requestPath + body` defined as follows:
-
-* `timestamp`: The `DYDX-TIMESTAMP` header, which must be within 30 seconds of the server time.
-* `method`: The name of the HTTP method used, uppercase (e.g. `GET`).
-* `requestPath`: The API endpoint path, beginning with `/v3/`.
-* `body`: The HTTP request body (normally empty for `GET` and `DELETE`).
-
-The HMAC should be encoded as a Base64 string and sent as the `DYDX-SIGNATURE` header.
-
-See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/private.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/private.ts)
+# Trading Client
 
 ## Onboarding
 
+You will need to generate a dYdX address by connecting a wallet:
+
+- Eth wallet
+- Cosmos Wallet
+- Sol Wallet
+
+1. Connect your preferred wallet to the dYdX Chain deployment of your choice (e.g. the dYdX Operations Services Ltd. deployment [dydx.trade](https://dydx.trade)).
+2. Deposit USDC to your dYdX Chain address. The default onboarding path uses Circle's Cross Chain Transfer Protocol (CCTP) on Noble Chain. You can deposit USDC from many origination chains. Read more [here](https://dydx.exchange/blog/cctp).
+
+## Initialize Client
+
 ### Overview
 
-A few steps are required of all accounts before they can begin trading:
+Examples on how to setup client
 
-1. [Create a user](#onboarding), providing a STARK public key to be associated with the main account.
-1. [Request registration](#get-registration) signature from dYdX.
-1. Send registration request to the L1 smart contract.
-1. Approve collateral token allowance on the L1 smart contract.
-1. Deposit collateral token to the L1 smart contract.
+**Deposit Example: `examples/transfer_example_deposit`**
 
-All of these steps are supported by the Python and TypeScript clients. See the Python [integration tests](https://github.com/dydxprotocol/dydx-v3-python/blob/master/integration_tests/test_integration.py) for an example of onboarding and usage of various endpoints.
-
-> Create User
-
-```python
-onboarding_information = client.onboarding.create_user(
-  # Optional if stark_private_key was provided.
-  stark_public_key='012340bcd...',
-  stark_public_key_y_coordinate='01234abcd...',
-  # Optional if eth_private_key or web3.eth.defaultAccount was provided.
-  ethereum_address='ethereumAddress',
-  country='SG',
-)
-```
+> Initialize
 
 ```typescript
-const onboardingInformation: {
-  apiKey: ApiKeyCredentials,
-  user: UserResponseObject,
-  account: AccountResponseObject,
-}  = await client.onboarding.createUser(
-  {
-    starkKey: '71234abcd...',
-    starkKeyYCoordinate: '01234abcd...',
-    country: 'SG',
-  },
-  ethereumAddress: 'ethereumAddress',
-);
+  const client = await CompositeClient.connect(network);
 ```
 
-```json
-{
-  "apiKey": {
-    "key": "290decd9-548b-62a8-d603-45a988386fc8",
-    "passphrase": "S6a8lUhACPY2L5MWDvPl",
-    "secret": "KQ3s2VSLYqjWA0WpiDhvyEumvJVIQAj2Ni-TFg7z"
-  },
-  "user": {
-    "ethereumAddress": "0x0913017c740260fea4b2c62828a4008ca8b0d6e4",
-    "isRegistered": true,
-    "email": "email@dydx.exchange",
-    "username": "supersam15o",
-    "referredByAffiliateLink": null,
-    "makerFeeRate": "0.01",
-    "takerFeeRate": "0.01",
-    "makerVolume30D": "1000.00",
-    "takerVolume30D": "1000.00",
-    "fees30D": "00.50",
-    "userData": {},
-    "dydxTokenBalance": "0",
-    "stakedDydxTokenBalance": "0",
-    "isEmailVerified": false,
-    "isSharingUsername": null,
-    "isSharingAddress": true,
-    "country": "SG",
-  },
-  "account": {
-    "starkKey": "180913017c740260fea4b2c62828a4008ca8b0d6e4",
-    "positionId": "1812",
-    "equity": "10000",
-    "freeCollateral": "10000",
-    "quoteBalance": "10000",
-    "pendingDeposits": "0",
-    "pendingWithdrawals": "0",
-    "createdAt": "2021-04-09T21:08:34.984Z",
-    "openPositions": {
-      "BTC-USD": {
-        "market": "BTC-USD",
-        "status": "OPEN",
-        "side": "LONG",
-        "size": "1000",
-        "maxSize": "1050",
-        "entryPrice": "100",
-        "exitPrice": null,
-        "unrealizedPnl": "50",
-        "realizedPnl": "100",
-        "createdAt": "2021-01-04T23:44:59.690Z",
-        "closedAt": null,
-        "netFunding": "500",
-        "sumOpen": "1050",
-        "sumClose": "50"
-      }
-    },
-    "accountNumber": "5",
-    "id": "id"
-  }
-}
+```python
+    node = await NodeClient.connect(TESTNET.node)
+
 ```
 
-### HTTP Request
-`POST v3/onboarding`
 
-<aside class="warning">
-Programmatic users of the API must take care to store private STARK and API keys securely. dYdX does not store any private keys. Using the default key generation methods (such as `derive_stark_key`) ensures keys can be easily recovered by Ethereum key holder. If you generate your STARK key through other means, you must be careful not to lose it, or your funds may be inaccessible for a period of time.
-</aside>
+See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/onboarding.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/onboarding.ts)
 
-Description: Onboard a user so they can begin using dYdX V3 API. This will generate a user, account and derive a key, passphrase and secret from the signature.
 
 ### Request
 
-Parameter              | Description
----------------------- | -----------
-starkKey               | Public starkKey associated with the key-pair you created.
-starkKeyYCoordinate    | Public starkKey Y-Coordinate associated with the key-pair you created.
-ethereumAddress        | Ethereum address associated with the user being created.
-referredByAffiliateLink| (Optional) Link to affiliate the user was referred by.
-country                | (Optional) Country of the user's residence. Must be [ISO 3166-1 Alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) compliant.
+
+| Parameter                | Type | Required? | Description                  |
+|-----------------------|------|-----------|------------------------------|
+| `network`        | Network | yes       | The network to connect to |
 
 
 ### Response
 
 Parameter      | Description
 ---------------| -----------
-apiKey         | See [ApiKeyCredentials](#post-api-keys).
-user           | See [User](#get-user).
-account        | See [Account](#get-account).
+Client         | Promise of the client
+
+## Setup Mnemonic
+
+### Overview
+
+Examples on how to initialize mnemonic
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Mnemonic
+
+```typescript
+  const wallet = await LocalWallet.fromMnemonic(DYDX_TEST_MNEMONIC, BECH32_PREFIX);
+```
+
+```python
+    wallet = await Wallet.from_mnemonic(node, DYDX_TEST_MNEMONIC, TEST_ADDRESS)
+
+```
+
+
+See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/onboarding.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/onboarding.ts)
+
+
+### Request
+
+<aside class="warning">
+Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
+</aside>
+
+Description: Setup Mnemonic
+
+| Parameter                | Type | Required? | Description                  |
+|-----------------------|------|-----------|------------------------------|
+| `mnemonic`        | String | yes       | The mnemo  |
+| `prefix` | String | No       | Default Bech32 |
+
+
+### Response
+
+Parameter      | Description
+---------------| -----------
+LocalWallet         | Local Wallet
+
+## Depositing Funds
+
+### Overview
+
+Examples on how to deposit funds into a subaccount.
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Deposit
+
+```typescript
+  const tx = await client.post.deposit(subaccount, 0, new Long(10_000_000));
+```
+
+```python
+    response = await node.deposit(
+        wallet, TEST_ADDRESS, subaccount(TEST_ADDRESS, 0), 0, 10_000_000
+    )
+```
+
+
+See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/onboarding.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/onboarding.ts)
+
+
+### Request
+
+<aside class="warning">
+Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
+</aside>
+
+Description: Deposit funds into your dYdX subaccount
+
+| Parameter                | Type | Required? | Description                  |
+|-----------------------|------|-----------|------------------------------|
+| `subaccount`        | SubaccountInfo | yes       | The subaccount to deposit to |
+| `assetId` | number | yes       | The asset ID of the asset to deposit |
+| `quantums` | Long | yes       |  quantums to calculate size |
+| `broadcastMode` | BroadcastMode | no        | The broadcast mode |
+
+### Response
+
+Parameter      | Description
+---------------| -----------
+Tx         | Tx hash
 
 ## Derive StarkKey
 > Derive StarkKey
