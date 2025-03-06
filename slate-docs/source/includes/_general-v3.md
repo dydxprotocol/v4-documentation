@@ -1,160 +1,90 @@
 # Terms of Service and Privacy Policy
 
-By using any API provided by dYdX Trading Inc., you agree to its [Terms of Use](https://dydx.exchange/terms) and [Privacy Policy](https://dydx.exchange/privacy). If you do not agree to the foregoing, then do not use any such API.
+All of the above third parties are independent from and unaffiliated with dYdX Trading Inc. (”dYdX”), and dYdX is not responsible for any action taken by such third parties, including content set forth on any third-party websites, such as any links to such content on this page. dYdX services and products are not available to persons or entities who reside in, are located in, are incorporated in, or have registered offices in the U.S. or Canada, or Restricted Persons (as defined in the dYdX [Terms of Use](https://dydx.exchange/terms)). The content provided herein does not constitute, and should not be considered, or relied upon as, financial advice, legal advice, tax advice, investment advice or advice of any other nature, and you agree that you are responsible to conduct independent research, perform due diligence and engage a professional advisor prior to taking any financial, tax, legal or investment action related to the foregoing content. The information contained herein, and any use of v4 software, are subject to the [v4 Terms of Use](https://dydx.exchange/v4-terms)._
+
 
 # General
 
-These docs describe the v3 API for the dYdX decentralized perpetual contracts exchange. The exchange runs on an L2 (layer-2) blockchain system, and operates independently of previous dYdX protocols and systems, including the v1 and v2 APIs.
+Welcome to the dYdX Chain documentation! This is the source of truth for information about dYdX Chain.
 
-Like the previous iteration of dYdX perpetuals, the exchange uses a centralized order book, but remains non-custodial, and settles trades and liquidations in a trustless manner.
+> The terms "dYdX Chain" and "dYdX v4 software" are synonymous. They both refer to the same product, called dYdX Chain in this documentation.
 
 <aside class="notice">
-These docs describe the dYdX <a href="https://trade.dydx.exchange">layer-2 perpetuals exchange</a>.
+These docs describe the dYdX <a href="https://https://dydx.trade/">v4 exchange</a>.
 </aside>
 
-## Layer 2: ZK-Rollups
+## About dYdX V4
 
-Trades are settled in an L2 (layer-2) system, which publishes ZK (zero-knowledge) proofs periodically to an Ethereum smart contract in order to prove that state transitions within L2 are valid. Funds must be deposited to the Ethereum smart contract before they can be used to trade on dYdX.
+dYdX Chain is an open-source application specific blockchain software that can power a decentralized perpetuals exchange. This standalone blockchain software is open-sourced by dYdX Trading Inc. (“dYdX”) and is based on the Cosmos SDK and CometBFT proof-of-stake consensus protocol. dYdX Chain is fully decentralized end-to-end, including its consensus mechanism, order-book, matching engine and front end.
 
-By settling trades on L2, the exchange is able to offer much higher trade throughput and lower minimum order sizes, compared with systems settling trades directly on Ethereum (i.e. L1). This is achieved while maintaining decentralization, and the exchange is fully non-custodial.
+dYdX does not control any aspects of any public deployments of dYdX Chain. Any use of dYdX Chain is subject to the [v4 Terms of Use](https://dydx.exchange/v4-terms). You can read more about v4 software in our blog post [here](https://dydx.exchange/blog/dydx-chain).
 
-The L2 system was developed with, and is operated jointly with, Starkware. More information about the L2 design can be found in [Starkware's documentation](https://docs.starkware.co/starkex-docs/). (Note: Some of the details described there may be specific to Starkware's previous StarkEx system and may not apply to the dYdX system.)
+**Intro**
 
-## Data Centers
+- 🔗 dYdX v4 is developed as a standalone open-source blockchain software based on the Cosmos SDK and Tendermint Proof-of-stake consensus protocol (“dYdX Chain”)
 
-Our data centers are located in the AWS AP-NORTHEAST-1 region (Tokyo).
+- 🚀 dYdX v4 features fully decentralized, off-chain, orderbook and matching engine capable of scaling to orders of magnitude more throughput than any blockchain can support
+
+- We’re excited to announce that dYdX v4 will be developed as a standalone blockchain based on Tendermint consensus and built using Cosmos SDK!
+
+- dYdX v4 marks the full decentralization of the dYdX protocol, and we’re excited about the unique combination of decentralization, scalability, and customizability that Cosmos offers.
+
+## dYdX Features
+
+**dYdX Unlimited Features**
+
+- How to get started with the Affiliate Program
+- Affiliate program FAQ
+- Prediction Markets FAQ
+- Instant Market Listing FAQ
+- Mega Vault FAQ
+
+## dYdX Resources
+
+**💻 Developers**
+
+* [Monorepo](https://github.com/dydxprotocol/v4-chain)
+    * [Protocol](https://github.com/dydxprotocol/v4-chain/tree/main/protocol)
+    * [Indexer](https://github.com/dydxprotocol/v4-chain/tree/main/indexer)
+* [Clients](https://github.com/dydxprotocol/v4-clients)
+* [Frontend](https://github.com/dydxprotocol/v4-web)
+* [Foundation Guides](https://github.com/dydxfoundation)
+* [iOS](https://github.com/dydxprotocol/v4-native-ios)
+* [Terraform](https://github.com/dydxprotocol/v4-infrastructure)
+- [Github repos](https://github.com/dydxopsdao/)
+- [Security & audit reports](https://github.com/dydxprotocol/v4-chain/tree/main/audits)
+
+When contributing, please ensure your commits are verified. You can follow these steps to do so:
+
+* [Generate a new signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) for work use and [turn on Vigilant Mode](https://docs.github.com/en/authentication/managing-commit-signature-verification/displaying-verification-statuses-for-all-of-your-commits)
+* [Tell Git about your GPG key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key) and install `pinentry` if necessary
+
+
+**📚 Tutorials**
+
+- Tech support via in-app help chat: https://dydx.trade > More > Help > Live Chat
+- For additional help articles, check out our help center - help.dydx.trade
+
+**📢 Subscribe & Follow**
+
+- Read our Blog: https://www.dydxopsdao.com/blog
+- Join the Discord: https://discord.com/invite/dydx
+- Twitter: https://x.com/dYdX, https://x.com/dydxfoundation, https://x.com/dydx_ops_subdao
+- Forums: https://dydx.forum/
+- Status Page: https://status.dydx.trade
+
+ 
+
+**📊 Statistics**
+
+- Mintscan: https://www.mintscan.io/dydx
+- Keplr: https://wallet.keplr.app/chains/dydx
+- Observatory: https://observatory.zone/dydx
+- Chaos Labs: https://community.chaoslabs.xyz/dydx-v4/risk/overview
+- Numia: https://docs.numia.xyz/
+- Data Lenses: https://www.datalenses.zone/chain/dydx/wallets
+
 
 <aside class="warning">
 It is strictly against our <a href="https://dydx.exchange/terms">Terms of Use</a> to use United States based IPs to trade on dYdX.
 </aside>
-
-## Number Formats
-
-All amounts and prices in the clients and API are represented in “human readable,” natural units. For example, an amount of 1.25 ETH is represented as `1.25`, and a price of $31,000.50 per BTC is represented as `31000.5`.
-
-## Base URLs
-
-Base URLs for API endpoints are as follows:
-
-* **Production (Mainnet)**: `https://api.dydx.exchange`
-* **Staging (Goerli)**: `https://api.stage.dydx.exchange`
-
-## Testnet
-
-We have one testnet which is on `Goerli`. To use the testnet, use the above Staging URL for your endpoint. Also use a `networkId` of `5` (Goerli) instead of `1` (Mainnet).
-
-The user interface for testnet can be found [here](https://trade.stage.dydx.exchange).
-
-The `dYdX Goerli USDC` token address is `0xF7a2fa2c2025fFe64427dd40Dc190d47ecC8B36e`. Users can deposit via the Testnet website.
-
-## Rate-Limits
-
-All rate-limits are subject to change.
-
-Please make use of the WebSockets API if you need real-time data.
-
-### Rate Limit - API
-
-Limits are enforced by IP Address for public endpoints, and by both IP Address and Account for private endpoints.
-
-Each request consumes 1 point towards the rate limit. [`POST v3/orders`](#place-order-rate-limits) consumes variable points based on the order. Points refresh at the end of each time window. Please take note of the `RateLimit-Remaining` header to track points usage.
-
-#### Response Headers
-
-Field                                   | Description
-----------------------------------------| -----------
-`RateLimit-Remaining`                   | Points remaining in the time window.
-`RateLimit-Reset`                       | Timestamp that the time window ends, in Epoch milliseconds.
-`Retry-After`                           | Milliseconds until the next time window. Header included only when the limit has been reached.
-`RateLimit-Limit`                       | The maximum amount of points allowed per time window.
-
-Request                                 | Limit
-----------------------------------------| -----------
-`GET v3/*`                              | 175 requests per 10 seconds.
-`PUT v3/emails/send-verification-email` | 2 requests for 10 minutes.
-`DELETE v3/orders`                      | See `Cancel-Order Rate Limits`
-`POST v3/orders`                        | See `Place-Order Rate-Limits`
-`POST v3/testnet/tokens`                | 5 requests per 24 hours.
-`GET v3/active-orders`                  | See `Active-Order Rate-Limits`
-`DELETE v3/active-orders`               | See `Active-Order Rate-Limits`
-`All other requests`                    | 10 requests per minute.
-
-### Rate Limit - Websocket
-
-Limits are enforced per `connectionId`.
-
-<aside class="warning">
-If your connection exceeds the request limit, we will terminate the connection, and you will need to reconnect to the websocket. Additionally, sending too many invalid messages will also result in your websocket being disconnected.
-</aside>
-
-Request                                 | Limit
-----------------------------------------| -----------
-`subscribe v3_accounts, v3_markets`     | 2 requests per 1 second.
-`subscribe v3_orderbook, v3_trades`     | 2 requests for 1 second per market.
-`ping`                                  | 5 requests per 1 second.
-
-### Cancel-Order Rate Limits
-
-Canceling orders is limited per asset-pair and is intended to be higher than the limit on placing orders.
-
-`DELETE v3/orders` requests are limited to `3` requests per `10` seconds per asset-pair.
-
-`DELETE v3/orders/:id` requests are limited to `250` requests per `10` seconds per asset-pair.
-
-### Place-Order Rate-Limits
-
-Order rate limits are limited to `maxPoints` spent (per asset-pair) in a fixed window of `windowSec` seconds.
-
-We want to give priority to those who are making the largest orders and who are contributing the most liquidity to the exchange.
-Therefore, placing larger orders is subject to higher limits (i.e. larger orders carry a lower point cost).
-The point cost is based on the `orderNotional` which is equal to the `size * price` of the order.
-
-Limit-order point consumption is equal to:
-
-<pre class="center-column">
-orderConsumption = clamp(
-  ceil(targetNotional / orderNotional),
-  minOrderConsumption,
-  maxOrderConsumption
-)
-</pre>
-
-The `minOrderConsumption` is different for each order type, and can be one of `minLimitConsumption`, `minMarketConsumption`, or `minTriggerableConsumption`. Limit orders that are Fill-or-Kill or Immediate-or-Cancel are considered to be market orders for the purposes of rate limiting.
-
-The values of the above variables as of March 15th, 2022 are listed below, but the most up-to-date values can be found in the [v3/config endpoint](#get-global-configuration-variables).
-
-Variable         | Value
----------------- | -------
-`maxPoints`      | `1,750`
-`windowSec`      | `10`
-`targetNotional` | `40,000`
-`minLimitConsumption` | `4`
-`minMarketConsumption` | `20`
-`minTriggerableConsumption` | `100`
-`maxOrderConsumption` | `100`
-
-### Active-Order Rate-Limits
-
-Querying active orders is limited per endpoint and per asset and is intended to be higher than the respective DELETE and GET endpoints these new endpoints replace.
-
-#### DELETE Active-Orders Rate Limits
-
-`DELETE v3/active-orders/*`
-
-- 425 points allotted per 10 seconds per market.
-- 1 point consumed if order id included.
-- 25 points consumed if order side included.
-- 50 points consumed otherwise.
-
-#### GET Active-Orders Rate Limits
-
-`GET v3/active-orders/*`
-
-- 175 points allotted per 10 seconds per market.
-- 1 point consumed if order id included.
-- 3 points consumed if order side included.
-- 5 points consumed otherwise.
-
-## Other Limits
-
-Accounts may only have up to 20 open orders for a given market/side pair at any one time. (For example up to 20 open `BTC-USD` bids).

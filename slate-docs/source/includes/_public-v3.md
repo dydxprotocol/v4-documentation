@@ -1,61 +1,114 @@
-# Public HTTP API
+# Indexer API
 
-## Get Markets
-> Get Markets
+## ListPerpetualMarkets
+> List Pereptual markets
 
 ```python
-markets = client.public.get_markets()
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+# For the deployment by DYDX token holders, use
+# baseURL = 'https://indexer.dydx.trade/v4'
+baseURL = 'https://dydx-testnet.imperator.co/v4'
+
+r = requests.get(f'{baseURL}/perpetualMarkets', headers = headers)
+
+print(r.json())
 ```
 
 ```typescript
-const markets: { markets: MarketsResponseObject } = await client.public.getMarkets();
-```
+const headers = {
+  'Accept':'application/json'
+};
 
-```json
+// For the deployment by DYDX token holders, use
+// const baseURL = 'https://indexer.dydx.trade/v4';
+const baseURL = 'https://dydx-testnet.imperator.co/v4';
+
+fetch(`${baseURL}/perpetualMarkets`,
 {
-  "markets": {
-    "LINK-USD": {
-    "market": "LINK-USD",
-    "status": "ONLINE",
-    "baseAsset": "LINK",
-    "quoteAsset": "USD",
-    "stepSize": "0.1",
-    "tickSize": "0.01",
-    "indexPrice": "12",
-    "oraclePrice": "101",
-    "priceChange24H": "0",
-    "nextFundingRate": "0.0000125000",
-    "nextFundingAt": "2021-03-01T18:00:00.000Z",
-    "minOrderSize": "1",
-    "type": "PERPETUAL",
-    "initialMarginFraction": "0.10",
-    "maintenanceMarginFraction": "0.05",
-    "baselinePositionSize": "1000",
-    "incrementalPositionSize": "1000",
-    "incrementalInitialMarginFraction": "0.2",
-    "volume24H": "0",
-    "trades24H": "0",
-    "openInterest": "0",
-    "maxPositionSize": "10000",
-    "assetResolution": "10000000",
-    "syntheticAssetId": "0x4c494e4b2d37000000000000000000",
-  },
-  ...
-}
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
 ```
 
-### HTTP Request
+### HTTP Request 1
 `GET v3/markets`
 
 Description: Get one or all markets as well as metadata about each retrieved market.
 
-### Request
+### Request 1
 
-Parameter         | Description
-------------------| -----------
-market            | (Optional): Specific market to be fetched.
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|limit|query|number(double)|false|none|
+|ticker|query|string|false|none|
 
-### Response
+### Response 1
+
+
+> 200 Response
+
+```json
+{
+  "markets": {
+    "property1": {
+      "clobPairId": "string",
+      "ticker": "string",
+      "status": "ACTIVE",
+      "oraclePrice": "string",
+      "priceChange24H": "string",
+      "volume24H": "string",
+      "trades24H": 0.1,
+      "nextFundingRate": "string",
+      "initialMarginFraction": "string",
+      "maintenanceMarginFraction": "string",
+      "openInterest": "string",
+      "atomicResolution": 0.1,
+      "quantumConversionExponent": 0.1,
+      "tickSize": "string",
+      "stepSize": "string",
+      "stepBaseQuantums": 0.1,
+      "subticksPerTick": 0.1,
+      "marketType": "CROSS",
+      "openInterestLowerCap": "string",
+      "openInterestUpperCap": "string",
+      "baseOpenInterest": "string"
+    },
+    "property2": {
+      "clobPairId": "string",
+      "ticker": "string",
+      "status": "ACTIVE",
+      "oraclePrice": "string",
+      "priceChange24H": "string",
+      "volume24H": "string",
+      "trades24H": 0.1,
+      "nextFundingRate": "string",
+      "initialMarginFraction": "string",
+      "maintenanceMarginFraction": "string",
+      "openInterest": "string",
+      "atomicResolution": 0.1,
+      "quantumConversionExponent": 0.1,
+      "tickSize": "string",
+      "stepSize": "string",
+      "stepBaseQuantums": 0.1,
+      "subticksPerTick": 0.1,
+      "marketType": "CROSS",
+      "openInterestLowerCap": "string",
+      "openInterestUpperCap": "string",
+      "baseOpenInterest": "string"
+    }
+  }
+}
+```
 
 ### Market
 
@@ -126,7 +179,7 @@ const orderbook: OrderbookResponseObject = await client.public.getOrderbook(
 }
 ```
 
-### HTTP Request
+### HTTP Request 1
 `GET v3/orderbook/:market`
 
 <aside class="success">
@@ -135,13 +188,13 @@ Returns bids and asks which are each Orderbook order arrays (price and size).
 
 Description: Returns the active orderbook for a market. All bids and asks that are fillable are returned.
 
-### Request
+### Request 1
 
 Parameter         | Description
 ----------------- | -----------
 market            | Market of the Orderbook.
 
-### Response
+### Response 1
 
 Parameter         | Description
 ----------------- | -----------

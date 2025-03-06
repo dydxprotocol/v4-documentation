@@ -4,71 +4,100 @@ Python and TypeScript clients are available, allowing programmatic usage of dYdX
 
 ## Python Client
 
+This guide will help you get started with the dYdX Python SDK, which allows for asynchronous programming and interaction with the dYdX protocol.
+
 ### Installation
 
 Install `dydx-v3-python` from [PyPI](https://pypi.org/project/dydx-v3-python) using `pip`:
 
 <pre class="center-column">
-pip install dydx-v3-python
+pip install dydx-v4-client   
 </pre>
+
+> Initialize
+
+```python
+from dydx_v4_client.network import make_testnet
+from dydx_v4_client.node.client import NodeClient
+
+CUSTOM_TESTNET = make_testnet(
+    node_url="your-custom-testnet-node-url",
+    rest_indexer="your-custom-testnet-rest-url",
+    websocket_indexer="your-custom-testnet-websocket-url"
+)
+
+node = await NodeClient.connect(TESTNET.node)
+```
 
 ### Usage
 
-See [dydxprotocol/dydx-v3-python](https://github.com/dydxprotocol/dydx-v3-python).
+See [dydxprotocol/v4-clients](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-py-v2).
 
-See the [examples](https://github.com/dydxprotocol/dydx-v3-python/tree/master/examples) folder for simple python examples.
+See the [examples]((https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-py-v2/examples) folder for simple python examples.
 
 ## TypeScript Client
 
 ### Installation
 
-Install `@dydxprotocol/v3-client` from [NPM](https://www.npmjs.com/package/@dydxprotocol/v3-client):
+Install `pnpm install @dydxprotocol/v4-client-js` from [NPM](https://www.npmjs.com/package/@dydxprotocol/v4-client-js):
 
 <pre class="center-column">
-npm i -s @dydxprotocol/v3-client
+pnpm install @dydxprotocol/v4-client-js
 </pre>
 
 ### Usage
 
-See [dydxprotocol/v3-client](https://github.com/dydxprotocol/v3-client).
+See [dydxprotocol/v4-client-js](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-js).
 
-See the [examples](https://github.com/dydxprotocol/v3-client/tree/master/examples) folder for simple typescript examples.
-
-## Client Initialization
+See the [examples](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-js/examples) folder for simple typescript examples.
 
 > Initialize
 
-```python
-client = Client(
-    host='https://api.dydx.exchange',
-    web3=Web3('...'),
-    stark_private_key='01234abcd...',
-)
-```
-
 ```typescript
-const client: DydxClient = new Client(
-    'host',
-    {
-        apiTimeout: 3000,
-        starkPrivateKey: '01234abcd...',
-    },
-);
+import { CompositeClient, Network } from "@dydxprotocol/v4-client-js";
+
+    /**
+    // For the deployment by DYDX token holders, use below:
+
+    import { IndexerConfig, ValidatorConfig } from "@dydxprotocol/v4-client-js";
+
+    const NETWORK: Network = new Network(
+      'mainnet',
+      new IndexerConfig(
+        'https://indexer.dydx.trade',
+        'wss://indexer.dydx.trade',
+      ),
+      new ValidatorConfig(
+        'https://dydx-ops-rpc.kingnodes.com', // or other node URL
+        'dydx-mainnet-1',
+        {
+          CHAINTOKEN_DENOM: 'adydx',
+          CHAINTOKEN_DECIMALS: 18,
+          USDC_DENOM: 'ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5',
+          USDC_GAS_DENOM: 'uusdc',
+          USDC_DECIMALS: 6,
+        },
+      ),
+    );
+    */
+    const NETWORK = Network.testnet();
+
+    const client = await CompositeClient.connect(NETWORK);
 ```
 
-The client is organized into modules, based on the type of authentication needed for different requests. The configuration options passed into the client determine which modules are available. See [Authentication](#authentication) for more information.
+The Typescript client is organized into various clients
 
 <aside class="notice">
-Multiple methods of authorization are available, so users never need to provide private keys directly to the client, if so desired. Ethereum signatures are needed only for onboarding and managing API keys, not trading, and may be provided via a web3 provider. STARK key signatures are required for trading, and the STARK key can be held either in the client or elsewhere.
+The Python client uses a node client as opposed to these various clients.
 </aside>
 
 | Module     | Description                                                      |
 |------------|------------------------------------------------------------------|
-| public     | Public API endpoints. Does not require authentication.           |
-| onboarding | Endpoint to create a new user, authenticated via Ethereum key.   |
-| api_keys   | Endpoints for managing API keys, authenticated via Ethereum key. |
-| private    | All other private endpoints, authenticated via API key.          |
-| eth        | Calling and querying L1 Ethereum smart contracts.                |
+| `Composite`  | CompositeClient simplifies the transactions by transforming human readable parameters to chain-specific parameters.|
+| `Validator` | Validator client   |
+| `Indexer`   | Indexer client for read-only calls |
+| `Socket`    | Websocket for streaming data read-only         |
+| `Node`        | Python Node client                |
 
 The following configuration options are available:
 
@@ -88,10 +117,10 @@ The following configuration options are available:
 | crypto_c_exports_path    | (Optional) For python only, will use faster C++ code to run hashing, signing and verifying. It's expected to be compiled from the `crypto_c_exports` target from Starkware's [repository](https://github.com/starkware-libs/crypto-cpp/blob/master/src/starkware/crypto/ffi/CMakeLists.txt). See [section on this below for more information](#c-methods-for-faster-stark-signing).|
 
 
-### C++ Methods for Faster STARK Signing
+## Rust,  C++ and Python v1 (deprecated) Client
 
 <aside class="notice">
-This optimization is only available for the Python client currently.
+Notice that the V1 client (deprecated) will not be maintained further
+
 </aside>
 
-The C++ wrapper methods in the client expect an absolute path to a [Shared Object](https://www.cprogramming.com/tutorial/shared-libraries-linux-gcc.html). This has to be compiled from [Starkware's crypto C++ library](https://github.com/starkware-libs/crypto-cpp/blob/master/src/starkware/crypto/ffi/CMakeLists.txt).
