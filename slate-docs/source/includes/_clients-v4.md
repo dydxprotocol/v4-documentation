@@ -1,4 +1,4 @@
-# Clients
+<!-- # Clients
 
 Python and TypeScript clients are available, allowing programmatic usage of dYdX.
 
@@ -123,4 +123,4 @@ The following configuration options are available:
 Notice that the V1 client (deprecated) will not be maintained further
 
 </aside>
-
+ -->
