@@ -1,6 +1,125 @@
-# Trading Client
+# Clients
 
-## Onboarding
+Python and TypeScript clients are available, allowing programmatic usage of dYdX.
+
+## Python Client
+
+This guide will help you get started with the dYdX Python SDK, which allows for asynchronous programming and interaction with the dYdX protocol.
+
+### Installation
+
+Install `dydx-v3-python` from [PyPI](https://pypi.org/project/dydx-v3-python) using `pip`:
+
+<pre class="center-column">
+pip install dydx-v4-client   
+</pre>
+
+> Initialize
+
+```python
+from dydx_v4_client.network import make_testnet
+from dydx_v4_client.node.client import NodeClient
+
+CUSTOM_TESTNET = make_testnet(
+    node_url="your-custom-testnet-node-url",
+    rest_indexer="your-custom-testnet-rest-url",
+    websocket_indexer="your-custom-testnet-websocket-url"
+)
+
+node = await NodeClient.connect(TESTNET.node)
+```
+
+### Usage
+
+See [dydxprotocol/v4-clients](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-py-v2).
+
+See the [examples]((https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-py-v2/examples) folder for simple python examples.
+
+## TypeScript Client
+
+### Installation
+
+Install `pnpm install @dydxprotocol/v4-client-js` from [NPM](https://www.npmjs.com/package/@dydxprotocol/v4-client-js):
+
+<pre class="center-column">
+pnpm install @dydxprotocol/v4-client-js
+</pre>
+
+### Usage
+
+See [dydxprotocol/v4-client-js](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-js).
+
+See the [examples](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-js/examples) folder for simple typescript examples.
+
+> Initialize
+
+```typescript
+import { CompositeClient, Network } from "@dydxprotocol/v4-client-js";
+
+    /**
+    // For the deployment by DYDX token holders, use below:
+
+    import { IndexerConfig, ValidatorConfig } from "@dydxprotocol/v4-client-js";
+
+    const NETWORK: Network = new Network(
+      'mainnet',
+      new IndexerConfig(
+        'https://indexer.dydx.trade',
+        'wss://indexer.dydx.trade',
+      ),
+      new ValidatorConfig(
+        'https://dydx-ops-rpc.kingnodes.com', // or other node URL
+        'dydx-mainnet-1',
+        {
+          CHAINTOKEN_DENOM: 'adydx',
+          CHAINTOKEN_DECIMALS: 18,
+          USDC_DENOM: 'ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5',
+          USDC_GAS_DENOM: 'uusdc',
+          USDC_DECIMALS: 6,
+        },
+      ),
+    );
+    */
+    const NETWORK = Network.testnet();
+
+    const client = await CompositeClient.connect(NETWORK);
+```
+
+The Typescript client is organized into various clients
+
+<aside class="notice">
+The Python client uses a node client as opposed to these various clients.
+</aside>
+
+| Module     | Description                                                      |
+|------------|------------------------------------------------------------------|
+| `Composite`  | CompositeClient simplifies the transactions by transforming human readable parameters to chain-specific parameters.|
+| `Validator` | Validator client   |
+| `Indexer`   | Indexer client for read-only calls |
+| `Socket`    | Websocket for streaming data read-only         |
+| `Node`        | Python Node client                |
+
+The following configuration options are available:
+
+| Parameter                | Description                                                                                                                                                                          |
+|--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| host                     | The HTTP API host.                                                                                                                                                                   |
+| api_timeout              | Timeout for HTTP requests, in milliseconds.                                                                                                                                          |
+| default_ethereum_address | (Optional) The default account for Ethereum key auth and sending Ethereum transactions.                                                                                              |
+| eth_private_key          | (Optional) May be used for Ethereum key auth.                                                                                                                                        |
+| eth_send_options         | (Optional) Options for Ethereum transactions, see [`sendTransaction`](https://web3py.readthedocs.io/en/stable/web3.eth.html?highlight=signTransaction#web3.eth.Eth.sendTransaction). |
+| network_id               | (Optional) Chain ID for Ethereum key auth and smart contract addresses. Defaults to `web3.net.version` if available, or `1` (mainnet).                                               |
+| stark_private_key        | (Optional) STARK private key, used to sign orders and withdrawals.                                                                                                                   |
+| web3                     | (Optional) Web3 object used for Ethereum key auth and/or smart contract interactions.                                                                                                |
+| web3_account             | (Optional) May be used for Ethereum key auth.                                                                                                                                        |
+| web3_provider            | (Optional) Web3 provider object, same usage as `web3`.                                                                                                                               |
+| api_key_credentials      | (Optional) Dictionary containing the key, secret and passphrase required for the private module to sign requests.                                                                    |
+| crypto_c_exports_path    | (Optional) For python only, will use faster C++ code to run hashing, signing and verifying. It's expected to be compiled from the `crypto_c_exports` target from Starkware's [repository](https://github.com/starkware-libs/crypto-cpp/blob/master/src/starkware/crypto/ffi/CMakeLists.txt). See [section on this below for more information](#c-methods-for-faster-stark-signing).|
+
+
+## Validator Client
+
+### Onboarding
 
 You will need to generate a dYdX address by connecting a wallet:
 
@@ -11,9 +130,11 @@ You will need to generate a dYdX address by connecting a wallet:
 1. Connect your preferred wallet to the dYdX Chain deployment of your choice (e.g. the dYdX Operations Services Ltd. deployment [dydx.trade](https://dydx.trade)).
 2. Deposit USDC to your dYdX Chain address. The default onboarding path uses Circle's Cross Chain Transfer Protocol (CCTP) on Noble Chain. You can deposit USDC from many origination chains. Read more [here](https://dydx.exchange/blog/cctp).
 
-## Initialize Client
+### Configuring a Network
 
-### Overview
+### Initialize Client
+
+#### Overview
 
 Examples on how to setup client
 
@@ -34,7 +155,7 @@ Examples on how to setup client
 See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/onboarding.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/onboarding.ts)
 
 
-### Request
+#### Request
 
 
 | Parameter                | Type | Required? | Description                  |
@@ -42,15 +163,15 @@ See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v
 | `network`        | Network | yes       | The network to connect to |
 
 
-### Response
+#### Response
 
 Parameter      | Description
 ---------------| -----------
 Client         | Promise of the client
 
-## Setup Mnemonic
+### Setup Mnemonic
 
-### Overview
+#### Overview
 
 Examples on how to initialize mnemonic
 
@@ -71,7 +192,7 @@ Examples on how to initialize mnemonic
 See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/onboarding.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/onboarding.ts)
 
 
-### Request
+#### Request
 
 <aside class="warning">
 Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
@@ -85,15 +206,18 @@ Description: Setup Mnemonic
 | `prefix` | String | No       | Default Bech32 |
 
 
-### Response
+#### Response
 
 Parameter      | Description
 ---------------| -----------
 LocalWallet         | Local Wallet
 
-## Depositing Funds
 
-### Overview
+### Transfer
+
+### Deposit
+
+#### Overview
 
 Examples on how to deposit funds into a subaccount.
 
@@ -115,7 +239,7 @@ Examples on how to deposit funds into a subaccount.
 See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/onboarding.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/onboarding.ts)
 
 
-### Request
+#### Request
 
 <aside class="warning">
 Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
@@ -130,12 +254,35 @@ Description: Deposit funds into your dYdX subaccount
 | `quantums` | Long | yes       |  quantums to calculate size |
 | `broadcastMode` | BroadcastMode | no        | The broadcast mode |
 
-### Response
+#### Response
 
 Parameter      | Description
 ---------------| -----------
 Tx         | Tx hash
 
+### Withdraw
+
+### Simulate a Transaction
+
+### Sign a Transaction
+
+### Send a Transaction
+
+### Selecting desired gas token
+
+### Get Account Balances
+
+### Placing an Order
+
+#### Setting the good-til-block
+
+### Replacing an Order
+
+### Cancelling an Order
+
+
+
+<!-- 
 ## Derive StarkKey
 > Derive StarkKey
 
@@ -2707,4 +2854,8 @@ revenueShareRate         | Current revenue share rate for the user depending on 
 Parameter                | Description
 -------------------------| -----------
 usersReferred            | Total number of users referred by this affiliate in all previous epochs.
-revenue                  | Total amount of revenue this user has earned in all previous epochs.
+revenue                  | Total amount of revenue this user has earned in all previous epochs. -->
+
+
+
+
