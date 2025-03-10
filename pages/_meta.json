@@ -5,6 +5,13 @@
   },
 
   "index": "About dYdX",
+<<<<<<< HEAD
+=======
+  "introduction-getting_started": "Getting Started",
+  "introduction-onboarding_faqs": "Onboarding FAQs",
+  "introduction-trading_fees": "Trading Fees",
+  
+>>>>>>> upstream/main
 
   "----------USERS----------": {
     "title": "Users",

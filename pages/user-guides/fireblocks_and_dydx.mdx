@@ -1,0 +1,21 @@
+# Fireblocks and dYdX
+
+## Pre-requisites (done on Fireblocks Console)
+
+1. Request Fireblocks to unblock dYdX (2-3 business days).  This is done via submitting a request on their Help Desk at https://console.fireblocks.io/v2/zendesk-login
+
+2. Add “Typed message” to your Transaction Policy.
+
+3. Add address 0xbc8552339da68eb65c8b88b414b5854e0e366cfc to your list of whitelist addresses.  This address is the dYdX USDC Bridge.
+
+## Procedure
+
+1. When connecting to dYdX, do not check the box “Remember Me” and close the browser when done.
+
+2. Instant Deposits will not work.  Please use ‘Standard Deposits’.
+
+3. When connected, you can export the dYdX secret phrase.  This phrase can then be used to set up permissioned keys which can be given specific rights to your funds on dYdX such as trade-only (without withdraw/transfer).  For more information, see https://docs.dydx.exchange/api_integration-guides/how_to_permissioned_keys
+  
+5. The dYdX private key only allows operations on the funds that are deposited into dYdX account.  Your funds on Fireblocks are still protected by their world-class MPC infrastructure.
+
+

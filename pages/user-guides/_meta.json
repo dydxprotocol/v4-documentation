@@ -1,4 +1,9 @@
 {
+<<<<<<< HEAD
   "how_to_troubleshoot_withdrawals_and_deposits": "Withdrawals and Deposits",
   "users-governance": "Governance"
+=======
+  "how_to_troubleshoot_withdrawals_and_deposits": "How to Troubleshoot Withdrawals and Deposits",
+  "fireblocks_and_dydx": "Fireblocks and dYdX"
+>>>>>>> upstream/main
 }
