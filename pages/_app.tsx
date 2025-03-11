@@ -19,6 +19,7 @@ function App({ Component, pageProps }: AppProps) {
           data-project-name="kapa.ai"
           data-project-color="#FF0000"
           data-project-logo="https://dydx.exchange/icon.svg"
+          data-user-analytics-fingerprint-enabled="true"
         ></script>
       </Head>
       <Component {...pageProps} />
