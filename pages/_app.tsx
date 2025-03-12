@@ -8,7 +8,7 @@ import 'nextra-theme-docs/style.css'
 import '../styles.css'
 import '../fonts.css'
 
-const GA_ID = 'G-R55R6H8LZ0'  // Your GA ID here
+const GA_ID = 'G-BM5F5DVTBF'  // Your GA ID here
 
 
 function App({ Component, pageProps }: AppProps) {
