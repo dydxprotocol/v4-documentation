@@ -10,8 +10,7 @@ These docs describe the dYdX <a href="https://https://dydx.trade/">v4 exchange</
 
 ## Terms of Service and Privacy Policy
 
-All of the above third parties are independent from and unaffiliated with dYdX Trading Inc. (”dYdX”), and dYdX is not responsible for any action taken by such third parties, including content set forth on any third-party websites, such as any links to such content on this page. dYdX services and products are not available to persons or entities who reside in, are located in, are incorporated in, or have registered offices in the U.S. or Canada, or Restricted Persons (as defined in the dYdX [Terms of Use](https://dydx.exchange/terms)). The content provided herein does not constitute, and should not be considered, or relied upon as, financial advice, legal advice, tax advice, investment advice or advice of any other nature, and you agree that you are responsible to conduct independent research, perform due diligence and engage a professional advisor prior to taking any financial, tax, legal or investment action related to the foregoing content. The information contained herein, and any use of v4 software, are subject to the [v4 Terms of Use](https://dydx.exchange/v4-terms)._
-
+All of the above third parties are independent from and unaffiliated with dYdX Trading Inc. (”dYdX”), and dYdX is not responsible for any action taken by such third parties, including content set forth on any third-party websites, such as any links to such content on this page. dYdX services and products are not available to persons or entities who reside in, are located in, are incorporated in, or have registered offices in the U.S. or Canada, or Restricted Persons (as defined in the dYdX [Terms of Use](https://dydx.exchange/terms)). The content provided herein does not constitute, and should not be considered, or relied upon as, financial advice, legal advice, tax advice, investment advice or advice of any other nature, and you agree that you are responsible to conduct independent research, perform due diligence and engage a professional advisor prior to taking any financial, tax, legal or investment action related to the foregoing content. The information contained herein, and any use of v4 software, are subject to the [v4 Terms of Use](https://dydx.exchange/v4-terms).\_
 
 ## About dYdX V4
 
@@ -29,61 +28,48 @@ dYdX does not control any aspects of any public deployments of dYdX Chain. Any 
 
 - dYdX v4 marks the full decentralization of the dYdX protocol, and we’re excited about the unique combination of decentralization, scalability, and customizability that Cosmos offers.
 
-## dYdX Features
-
-**dYdX Unlimited Features**
-
-- How to get started with the Affiliate Program
-- Affiliate program FAQ
-- Prediction Markets FAQ
-- Instant Market Listing FAQ
-- Mega Vault FAQ
-
 ## dYdX Resources
 
 **💻 Developers**
 
-* [Monorepo](https://github.com/dydxprotocol/v4-chain)
-    * [Protocol](https://github.com/dydxprotocol/v4-chain/tree/main/protocol)
-    * [Indexer](https://github.com/dydxprotocol/v4-chain/tree/main/indexer)
-* [Clients](https://github.com/dydxprotocol/v4-clients)
-* [Frontend](https://github.com/dydxprotocol/v4-web)
-* [Foundation Guides](https://github.com/dydxfoundation)
-* [iOS](https://github.com/dydxprotocol/v4-native-ios)
-* [Terraform](https://github.com/dydxprotocol/v4-infrastructure)
+- [Protocol](https://github.com/dydxprotocol/v4-chain/tree/main/protocol)
+- [Indexer](https://github.com/dydxprotocol/v4-chain/tree/main/indexer)
+- [Clients](https://github.com/dydxprotocol/v4-clients)
+- [Frontend](https://github.com/dydxprotocol/v4-web)
+- [Foundation Guides](https://github.com/dydxfoundation)
+- [iOS](https://github.com/dydxprotocol/v4-native-ios)
+- [Terraform](https://github.com/dydxprotocol/v4-infrastructure)
 - [Github repos](https://github.com/dydxopsdao/)
 - [Security & audit reports](https://github.com/dydxprotocol/v4-chain/tree/main/audits)
 
+<aside class="notice">
 When contributing, please ensure your commits are verified. You can follow these steps to do so:
 
-* [Generate a new signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) for work use and [turn on Vigilant Mode](https://docs.github.com/en/authentication/managing-commit-signature-verification/displaying-verification-statuses-for-all-of-your-commits)
-* [Tell Git about your GPG key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key) and install `pinentry` if necessary
-
+- <a href=https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key>Generate a new signing key</a> for work use and <a href=https://docs.github.com/en/authentication/managing-commit-signature-verification/displaying-verification-statuses-for-all-of-your-commits>turn on Vigilant Mode</a>
+- <a href=https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key>Tell Git about your GPG key</a> and install `pinentry` if necessary
+</aside>
 
 **📚 Tutorials**
 
-- Tech support via in-app help chat: https://dydx.trade > More > Help > Live Chat
-- For additional help articles, check out our help center - help.dydx.trade
+- Tech support via in-app help chat: `https://dydx.trade > More > Help > Live Chat`
+- For additional help articles, check out our help center - `help.dydx.trade`
 
 **📢 Subscribe & Follow**
 
-- Read our Blog: https://www.dydxopsdao.com/blog
-- Join the Discord: https://discord.com/invite/dydx
-- Twitter: https://x.com/dYdX, https://x.com/dydxfoundation, https://x.com/dydx_ops_subdao
-- Forums: https://dydx.forum/
-- Status Page: https://status.dydx.trade
-
- 
+- Read our [Blog](https://www.dydxopsdao.com/blog)
+- Join the [Discord](https://discord.com/invite/dydx)
+- Twitter: [dYdx](https://x.com/dYdX), [dYdX Foundation](https://x.com/dydxfoundation), [dYdX Ops](https://x.com/dydx_ops_subdao)
+- Forums: [Forum](https://dydx.forum/)
+- [Status Page](https://status.dydx.trade)
 
 **📊 Statistics**
 
-- Mintscan: https://www.mintscan.io/dydx
-- Keplr: https://wallet.keplr.app/chains/dydx
-- Observatory: https://observatory.zone/dydx
-- Chaos Labs: https://community.chaoslabs.xyz/dydx-v4/risk/overview
-- Numia: https://docs.numia.xyz/
-- Data Lenses: https://www.datalenses.zone/chain/dydx/wallets
-
+- [Mintscan](https://www.mintscan.io/dydx)
+- [Keplr](https://wallet.keplr.app/chains/dydx)
+- [Observatory](https://observatory.zone/dydx)
+- [Chaos Labs](https://community.chaoslabs.xyz/dydx-v4/risk/overview)
+- [Numia](https://docs.numia.xyz/)
+- [Data Lenses](https://www.datalenses.zone/chain/dydx/wallets)
 
 <aside class="warning">
 It is strictly against our <a href="https://dydx.exchange/terms">Terms of Use</a> to use United States based IPs to trade on dYdX.
