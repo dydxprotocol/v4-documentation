@@ -54,35 +54,35 @@ See the [examples](https://github.com/dydxprotocol/v4-clients/tree/main/v4-clien
 > Initialize
 
 ```typescript
-import { CompositeClient, Network } from "@dydxprotocol/v4-client-js";
+import { ValidatorClient, Network } from '@dydxprotocol/v4-client-js';
 
-    /**
-    // For the deployment by DYDX token holders, use below:
+/**
+      // For the deployment by DYDX token holders, use below:
 
-    import { IndexerConfig, ValidatorConfig } from "@dydxprotocol/v4-client-js";
+      import { IndexerConfig, ValidatorConfig } from "@dydxprotocol/v4-client-js";
 
-    const NETWORK: Network = new Network(
-      'mainnet',
-      new IndexerConfig(
-        'https://indexer.dydx.trade',
-        'wss://indexer.dydx.trade',
-      ),
-      new ValidatorConfig(
-        'https://dydx-ops-rpc.kingnodes.com', // or other node URL
-        'dydx-mainnet-1',
-        {
-          CHAINTOKEN_DENOM: 'adydx',
-          CHAINTOKEN_DECIMALS: 18,
-          USDC_DENOM: 'ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5',
-          USDC_GAS_DENOM: 'uusdc',
-          USDC_DECIMALS: 6,
-        },
-      ),
-    );
+      const NETWORK: Network = new Network(
+        'mainnet',
+        new IndexerConfig(
+          'https://indexer.dydx.trade',
+          'wss://indexer.dydx.trade',
+        ),
+        new ValidatorConfig(
+          'https://dydx-ops-rpc.kingnodes.com', // or other node URL
+          'dydx-mainnet-1',
+          {
+            CHAINTOKEN_DENOM: 'adydx',
+            CHAINTOKEN_DECIMALS: 18,
+            USDC_DENOM: 'ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5',
+            USDC_GAS_DENOM: 'uusdc',
+            USDC_DECIMALS: 6,
+          },
+        ),
+      );
     */
-    const NETWORK = Network.testnet();
+const NETWORK = Network.testnet();
 
-    const client = await CompositeClient.connect(NETWORK);
+const client = await ValidatorClient.connect(NETWORK.validatorConfig);
 ```
 
 The Typescript client is organized into various clients
@@ -91,31 +91,30 @@ The Typescript client is organized into various clients
 The Python client uses a node client as opposed to these various clients.
 </aside>
 
-| Module     | Description                                                      |
-|------------|------------------------------------------------------------------|
-| `Composite`  | CompositeClient simplifies the transactions by transforming human readable parameters to chain-specific parameters.|
-| `Validator` | Validator client   |
-| `Indexer`   | Indexer client for read-only calls |
-| `Socket`    | Websocket for streaming data read-only         |
-| `Node`        | Python Node client                |
+| Module      | Description                                                                                                         |
+| ----------- | ------------------------------------------------------------------------------------------------------------------- |
+| `Composite` | CompositeClient simplifies the transactions by transforming human readable parameters to chain-specific parameters. |
+| `Validator` | Validator client                                                                                                    |
+| `Indexer`   | Indexer client for read-only calls                                                                                  |
+| `Socket`    | Websocket for streaming data read-only                                                                              |
+| `Node`      | Python Node client                                                                                                  |
 
 The following configuration options are available:
 
-| Parameter                | Description                                                                                                                                                                          |
-|--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| host                     | The HTTP API host.                                                                                                                                                                   |
-| api_timeout              | Timeout for HTTP requests, in milliseconds.                                                                                                                                          |
-| default_ethereum_address | (Optional) The default account for Ethereum key auth and sending Ethereum transactions.                                                                                              |
-| eth_private_key          | (Optional) May be used for Ethereum key auth.                                                                                                                                        |
-| eth_send_options         | (Optional) Options for Ethereum transactions, see [`sendTransaction`](https://web3py.readthedocs.io/en/stable/web3.eth.html?highlight=signTransaction#web3.eth.Eth.sendTransaction). |
-| network_id               | (Optional) Chain ID for Ethereum key auth and smart contract addresses. Defaults to `web3.net.version` if available, or `1` (mainnet).                                               |
-| stark_private_key        | (Optional) STARK private key, used to sign orders and withdrawals.                                                                                                                   |
-| web3                     | (Optional) Web3 object used for Ethereum key auth and/or smart contract interactions.                                                                                                |
-| web3_account             | (Optional) May be used for Ethereum key auth.                                                                                                                                        |
-| web3_provider            | (Optional) Web3 provider object, same usage as `web3`.                                                                                                                               |
-| api_key_credentials      | (Optional) Dictionary containing the key, secret and passphrase required for the private module to sign requests.                                                                    |
-| crypto_c_exports_path    | (Optional) For python only, will use faster C++ code to run hashing, signing and verifying. It's expected to be compiled from the `crypto_c_exports` target from Starkware's [repository](https://github.com/starkware-libs/crypto-cpp/blob/master/src/starkware/crypto/ffi/CMakeLists.txt). See [section on this below for more information](#c-methods-for-faster-stark-signing).|
-
+| Parameter                | Description                                                                                                                                                                                                                                                                                                                                                                         |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| host                     | The HTTP API host.                                                                                                                                                                                                                                                                                                                                                                  |
+| api_timeout              | Timeout for HTTP requests, in milliseconds.                                                                                                                                                                                                                                                                                                                                         |
+| default_ethereum_address | (Optional) The default account for Ethereum key auth and sending Ethereum transactions.                                                                                                                                                                                                                                                                                             |
+| eth_private_key          | (Optional) May be used for Ethereum key auth.                                                                                                                                                                                                                                                                                                                                       |
+| eth_send_options         | (Optional) Options for Ethereum transactions, see [`sendTransaction`](https://web3py.readthedocs.io/en/stable/web3.eth.html?highlight=signTransaction#web3.eth.Eth.sendTransaction).                                                                                                                                                                                                |
+| network_id               | (Optional) Chain ID for Ethereum key auth and smart contract addresses. Defaults to `web3.net.version` if available, or `1` (mainnet).                                                                                                                                                                                                                                              |
+| stark_private_key        | (Optional) STARK private key, used to sign orders and withdrawals.                                                                                                                                                                                                                                                                                                                  |
+| web3                     | (Optional) Web3 object used for Ethereum key auth and/or smart contract interactions.                                                                                                                                                                                                                                                                                               |
+| web3_account             | (Optional) May be used for Ethereum key auth.                                                                                                                                                                                                                                                                                                                                       |
+| web3_provider            | (Optional) Web3 provider object, same usage as `web3`.                                                                                                                                                                                                                                                                                                                              |
+| api_key_credentials      | (Optional) Dictionary containing the key, secret and passphrase required for the private module to sign requests.                                                                                                                                                                                                                                                                   |
+| crypto_c_exports_path    | (Optional) For python only, will use faster C++ code to run hashing, signing and verifying. It's expected to be compiled from the `crypto_c_exports` target from Starkware's [repository](https://github.com/starkware-libs/crypto-cpp/blob/master/src/starkware/crypto/ffi/CMakeLists.txt). See [section on this below for more information](#c-methods-for-faster-stark-signing). |
 
 ## Validator Client
 
@@ -132,6 +131,68 @@ You will need to generate a dYdX address by connecting a wallet:
 
 ### Configuring a Network
 
+#### Overview
+
+Examples on how to setup client
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Configure Network
+
+````typescript
+import { ValidatorClient, Network } from '@dydxprotocol/v4-client-js';
+
+/**
+      // For the deployment by DYDX token holders, use below:
+
+      import { IndexerConfig, ValidatorConfig } from "@dydxprotocol/v4-client-js";
+
+      const NETWORK: Network = new Network(
+        'mainnet',
+        new IndexerConfig(
+          'https://indexer.dydx.trade',
+          'wss://indexer.dydx.trade',
+        ),
+        new ValidatorConfig(
+          'https://dydx-ops-rpc.kingnodes.com', // or other node URL
+          'dydx-mainnet-1',
+          {
+            CHAINTOKEN_DENOM: 'adydx',
+            CHAINTOKEN_DECIMALS: 18,
+            USDC_DENOM: 'ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5',
+            USDC_GAS_DENOM: 'uusdc',
+            USDC_DECIMALS: 6,
+          },
+        ),
+      );
+    */
+const NETWORK = Network.testnet();```
+
+```python
+  from dydx_v4_client.network import make_testnet
+  from dydx_v4_client.node.client import NodeClient
+
+  CUSTOM_TESTNET = make_testnet(
+      node_url="your-custom-testnet-node-url",
+      rest_indexer="your-custom-testnet-rest-url",
+      websocket_indexer="your-custom-testnet-websocket-url"
+)
+````
+
+See reference implementations: [[Python]]()
+
+#### Request
+
+| Parameter | Type    | Required? | Description               |
+| --------- | ------- | --------- | ------------------------- |
+| `network` | Network | yes       | The network to connect to |
+
+#### Response
+
+| Parameter | Description           |
+| --------- | --------------------- |
+| Client    | Promise of the client |
+
 ### Initialize Client
 
 #### Overview
@@ -143,7 +204,7 @@ Examples on how to setup client
 > Initialize
 
 ```typescript
-  const client = await CompositeClient.connect(network);
+client = ValidatorClient.connect(NETWORK.validator_config);
 ```
 
 ```python
@@ -151,23 +212,19 @@ Examples on how to setup client
 
 ```
 
-
 See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/onboarding.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/onboarding.ts)
-
 
 #### Request
 
-
-| Parameter                | Type | Required? | Description                  |
-|-----------------------|------|-----------|------------------------------|
-| `network`        | Network | yes       | The network to connect to |
-
+| Parameter | Type    | Required? | Description               |
+| --------- | ------- | --------- | ------------------------- |
+| `network` | Network | yes       | The network to connect to |
 
 #### Response
 
-Parameter      | Description
----------------| -----------
-Client         | Promise of the client
+| Parameter | Description           |
+| --------- | --------------------- |
+| Client    | Promise of the client |
 
 ### Setup Mnemonic
 
@@ -179,18 +236,21 @@ Examples on how to initialize mnemonic
 
 > Mnemonic
 
-```typescript
-  const wallet = await LocalWallet.fromMnemonic(DYDX_TEST_MNEMONIC, BECH32_PREFIX);
-```
+````typescript
+    import {
+      BECH32_PREFIX,
+      LocalWallet,
+    } from '@dydxprotocol/v4-client-js';
+
+    const mnemonic = 'YOUR MNEMONIC HERE';
+    const wallet = await LocalWallet.fromMnemonic(mnemonic, BECH32_PREFIX);```
 
 ```python
     wallet = await Wallet.from_mnemonic(node, DYDX_TEST_MNEMONIC, TEST_ADDRESS)
 
-```
+````
 
-
-See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/onboarding.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/onboarding.ts)
-
+See reference implementations: [[Python]]()
 
 #### Request
 
@@ -200,20 +260,69 @@ Programmatic users of the API must take care to store Mnemonics. dYdX does not s
 
 Description: Setup Mnemonic
 
-| Parameter                | Type | Required? | Description                  |
-|-----------------------|------|-----------|------------------------------|
-| `mnemonic`        | String | yes       | The mnemo  |
-| `prefix` | String | No       | Default Bech32 |
-
+| Parameter  | Type   | Required? | Description    |
+| ---------- | ------ | --------- | -------------- |
+| `mnemonic` | String | yes       | The mnemo      |
+| `prefix`   | String | No        | Default Bech32 |
 
 #### Response
 
-Parameter      | Description
----------------| -----------
-LocalWallet         | Local Wallet
-
+| Parameter   | Description  |
+| ----------- | ------------ |
+| LocalWallet | Local Wallet |
 
 ### Transfer
+
+#### Overview
+
+Examples on how to transfer funds into a subaccount.
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Deposit
+
+````typescript
+    import { SubaccountClient } from '@dydxprotocol/v4-client-js';
+
+    const subaccount = new SubaccountClient(wallet, 0);
+    const recipientAddress = 'dydx...' // address of the recipient
+    const recipientSubaccountNumber = 0 // subaccount number of the recipient
+    const assetId = 0 // asset id of the token you want to transfer
+    const amount = Long.fromNumber(/* amount of the token you want to transfer */);
+
+    const tx = await client.post.transfer(
+      subaccount,
+      recipientAddress,
+      recipientSubaccountNumber,
+      assetId,
+      amount
+    );```
+
+```python
+````
+
+See reference implementations: [[Python]]()
+
+#### Request
+
+<aside class="warning">
+Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
+</aside>
+
+Description: Deposit funds into your dYdX subaccount
+
+| Parameter       | Type           | Required? | Description                          |
+| --------------- | -------------- | --------- | ------------------------------------ |
+| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
+| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
+| `quantums`      | Long           | yes       | quantums to calculate size           |
+| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+
+#### Response
+
+| Parameter | Description |
+| --------- | ----------- |
+| Tx        | Tx hash     |
 
 ### Deposit
 
@@ -226,7 +335,7 @@ Examples on how to deposit funds into a subaccount.
 > Deposit
 
 ```typescript
-  const tx = await client.post.deposit(subaccount, 0, new Long(10_000_000));
+const tx = await client.post.deposit(subaccount, 0, new Long(10_000_000));
 ```
 
 ```python
@@ -235,9 +344,7 @@ Examples on how to deposit funds into a subaccount.
     )
 ```
 
-
-See reference implementations: [[Python]](https://github.com/dydxprotocol/dydx-v3-python/blob/master/dydx3/modules/onboarding.py) [[TypeScript]](https://github.com/dydxprotocol/v3-client/blob/master/src/modules/onboarding.ts)
-
+See reference implementations: [[Python]]()
 
 #### Request
 
@@ -247,42 +354,506 @@ Programmatic users of the API must take care to store Mnemonics. dYdX does not s
 
 Description: Deposit funds into your dYdX subaccount
 
-| Parameter                | Type | Required? | Description                  |
-|-----------------------|------|-----------|------------------------------|
-| `subaccount`        | SubaccountInfo | yes       | The subaccount to deposit to |
-| `assetId` | number | yes       | The asset ID of the asset to deposit |
-| `quantums` | Long | yes       |  quantums to calculate size |
-| `broadcastMode` | BroadcastMode | no        | The broadcast mode |
+| Parameter       | Type           | Required? | Description                          |
+| --------------- | -------------- | --------- | ------------------------------------ |
+| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
+| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
+| `quantums`      | Long           | yes       | quantums to calculate size           |
+| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
 
 #### Response
 
-Parameter      | Description
----------------| -----------
-Tx         | Tx hash
+| Parameter | Description |
+| --------- | ----------- |
+| Tx        | Tx hash     |
 
 ### Withdraw
 
+#### Overview
+
+Examples on how to transfer funds into a subaccount.
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Deposit
+
+```typescript
+import { SubaccountClient } from '@dydxprotocol/v4-client-js';
+
+const subaccount = new SubaccountClient(wallet, 0);
+const assetId = 0; // asset id of the token you want to withdraw
+const amount = Long.fromNumber(/* amount of the token you want to withdraw */);
+
+const tx = await client.post.withdraw(subaccount, assetId, amount);
+```
+
+```python
+
+```
+
+See reference implementations: [[Python]]()
+
+#### Request
+
+<aside class="warning">
+Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
+</aside>
+
+Description: Deposit funds into your dYdX subaccount
+
+| Parameter       | Type           | Required? | Description                          |
+| --------------- | -------------- | --------- | ------------------------------------ |
+| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
+| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
+| `quantums`      | Long           | yes       | quantums to calculate size           |
+| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+
+#### Response
+
+| Parameter | Description |
+| --------- | ----------- |
+| Tx        | Tx hash     |
+
 ### Simulate a Transaction
+
+#### Overview
+
+Examples on how to simulate a transaction.
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Deposit
+
+```typescript
+const messages = () =>
+  Promise.resolve([
+    /* ... your transaction messages here */
+  ]);
+const fee = await client.simulate(wallet, messages);
+```
+
+```python
+
+```
+
+See reference implementations: [[Python]]()
+
+#### Request
+
+<aside class="warning">
+Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
+</aside>
+
+Description: Deposit funds into your dYdX subaccount
+
+| Parameter       | Type           | Required? | Description                          |
+| --------------- | -------------- | --------- | ------------------------------------ |
+| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
+| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
+| `quantums`      | Long           | yes       | quantums to calculate size           |
+| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+
+#### Response
+
+| Parameter | Description |
+| --------- | ----------- |
+| Tx        | Tx hash     |
 
 ### Sign a Transaction
 
+Examples on how to deposit funds into a subaccount.
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Deposit
+
+```typescript
+const messages = () =>
+  Promise.resolve([
+    /* ... your transaction messages here */
+  ]);
+const zeroFee = true;
+const signedTransaction = await client.sign(wallet, messages, zeroFee);
+```
+
+```python
+
+```
+
+See reference implementations: [[Python]]()
+
+#### Request
+
+<aside class="warning">
+Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
+</aside>
+
+Description: Deposit funds into your dYdX subaccount
+
+| Parameter       | Type           | Required? | Description                          |
+| --------------- | -------------- | --------- | ------------------------------------ |
+| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
+| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
+| `quantums`      | Long           | yes       | quantums to calculate size           |
+| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+
+#### Response
+
+| Parameter | Description |
+| --------- | ----------- |
+| Tx        | Tx hash     |
+
 ### Send a Transaction
+
+Examples on how to deposit funds into a subaccount.
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Deposit
+
+```typescript
+const messages = () =>
+  Promise.resolve([
+    /* ... your transaction messages here */
+  ]);
+const zeroFee = true;
+const signedTransaction = await client.send(wallet, messages, zeroFee);
+```
+
+```python
+
+```
+
+See reference implementations: [[Python]]()
+
+#### Request
+
+<aside class="warning">
+Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
+</aside>
+
+Description: Deposit funds into your dYdX subaccount
+
+| Parameter       | Type           | Required? | Description                          |
+| --------------- | -------------- | --------- | ------------------------------------ |
+| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
+| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
+| `quantums`      | Long           | yes       | quantums to calculate size           |
+| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+
+#### Response
+
+| Parameter | Description |
+| --------- | ----------- |
+| Tx        | Tx hash     |
 
 ### Selecting desired gas token
 
+This ability to select the desired gas token is only available in `v4-client-js`.
+Default gas token is `USDC`.
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Deposit
+
+```typescript
+import { SelectedGasDenom } from '@dydxprotocol/v4-client-js';
+
+client.setSelectedGasDenom(SelectedGasDenom.NATIVE);
+```
+
+```python
+
+```
+
+See reference implementations: [[Python]]()
+
+#### Request
+
+<aside class="warning">
+Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
+</aside>
+
+Description: Deposit funds into your dYdX subaccount
+
+| Parameter       | Type           | Required? | Description                          |
+| --------------- | -------------- | --------- | ------------------------------------ |
+| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
+| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
+| `quantums`      | Long           | yes       | quantums to calculate size           |
+| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+
+#### Response
+
+| Parameter | Description |
+| --------- | ----------- |
+| Tx        | Tx hash     |
+
 ### Get Account Balances
+
+Examples on how to deposit funds into a subaccount.
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Deposit
+
+```typescript
+const balances = await client.get.getAccountBalances(DYDX_ADDRESS);
+
+// Get balance of one denom for an account.
+const balance = await client.get.getAccountBalance(DYDX_ADDRESS, TOKEN_DENOM);
+```
+
+```python
+
+```
+
+See reference implementations: [[Python]]()
+
+#### Request
+
+<aside class="warning">
+Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
+</aside>
+
+Description: Deposit funds into your dYdX subaccount
+
+| Parameter       | Type           | Required? | Description                          |
+| --------------- | -------------- | --------- | ------------------------------------ |
+| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
+| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
+| `quantums`      | Long           | yes       | quantums to calculate size           |
+| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+
+#### Response
+
+| Parameter | Description |
+| --------- | ----------- |
+| Tx        | Tx hash     |
 
 ### Placing an Order
 
+Examples on how to deposit funds into a subaccount.
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Deposit
+
+```typescript
+import {
+  OrderFlags,
+  Order_Side,
+  Order_TimeInForce,
+  SubaccountClient,
+} from '@dydxprotocol/v4-client-js';
+
+const subaccount = new SubaccountClient(wallet, 0);
+const clientId = 123; // set to a number, can be used by the client to identify the order
+const clobPairId = 0; // perpertual market id
+const side = Order_Side.SIDE_BUY; // side of the order
+const quantums = Long.fromNumber(1_000_000_000); // quantums are calculated by the size if the order
+const subticks = Long.fromNumber(1_000_000_000); // subticks are calculated by the price of the order
+const timeInForce = Order_TimeInForce.TIME_IN_FORCE_UNSPECIFIED; // TimeInForce indicates how long an order will remain active before it is executed or expires
+const orderFlags = OrderFlags.SHORT_TERM; // either SHORT_TERM, LONG_TERM or CONDITIONAL
+const reduceOnly = false; // if true, the order will only reduce the position size
+
+const tx = await client.post.placeOrder(
+  subaccount,
+  clientId,
+  clobPairId,
+  side,
+  quantums,
+  subticks,
+  timeInForce,
+  orderFlags,
+  reduceOnly
+);
+```
+
+```python
+
+```
+
+See reference implementations: [[Python]]()
+
+#### Request
+
+<aside class="warning">
+Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
+</aside>
+
+Description: Deposit funds into your dYdX subaccount
+
+| Parameter       | Type           | Required? | Description                          |
+| --------------- | -------------- | --------- | ------------------------------------ |
+| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
+| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
+| `quantums`      | Long           | yes       | quantums to calculate size           |
+| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+
+#### Response
+
+| Parameter | Description |
+| --------- | ----------- |
+| Tx        | Tx hash     |
+
 #### Setting the good-til-block
+
+When specifying the good-til-block on your order, verify that the following is true to ensure your order placement succeeds (where `ShortBlockWindow` is currently set to [20 blocks](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/protocol/x/clob/types/constants.go#L7-L9)):
+
+`currentBlockHeight < order.goodTilBlock <= currentBlockHeight + ShortBlockWindow`.
 
 ### Replacing an Order
 
+Traders can replace Short-Term orders atomically by placing an order with the same order ID and a larger value for the [good-til-block field](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/clob/order.proto#L143-L146)
+of the order.
+
+Note that two orders have the same order ID if the following client-specified fields are equal (from [OrderId proto definition](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/clob/order.proto#L9-L41)):
+
+- [Subaccount ID](https://github.com/dydxprotocol/v4-chain/blob/dcd2d9c2f6170bd19218d92cf6f2f88216b2ffe1/proto/dydxprotocol/subaccounts/subaccount.proto#L10-L17).
+  - order.subaccount_id.owner should be set to your address that is signing the order transaction.
+  - order.subaccount_id.number should be set to 0 unless you are using a different subaccount.
+- Client ID.
+- Order flags (note this should always be set to 0 for placing Short-Term orders).
+- CLOB pair ID.
+
+Assuming the current block height is 9, the below example places an order with good-til-block 10, then places a replacement order with a good-til-block of 11.
+
+**Deposit Example: `examples/transfer_example_deposit`**
+
+> Replace Order
+
+```typescript
+import {
+  OrderFlags,
+  Order_Side,
+  Order_TimeInForce,
+  SubaccountClient,
+} from '@dydxprotocol/v4-client-js';
+
+const subaccount = new SubaccountClient(wallet, 0);
+const clientId = 123; // set to a number, can be used by the client to identify the order
+const clobPairId = 0; // perpertual market id
+const side = Order_Side.SIDE_BUY; // side of the order
+const quantums = Long.fromNumber(1_000_000_000); // quantums are calculated by the size if the order
+const subticks = Long.fromNumber(1_000_000_000); // subticks are calculated by the price of the order
+const timeInForce = Order_TimeInForce.TIME_IN_FORCE_UNSPECIFIED; // TimeInForce indicates how long an order will remain active before it is executed or expires
+const orderFlags = OrderFlags.SHORT_TERM; // either SHORT_TERM, LONG_TERM or CONDITIONAL
+const reduceOnly = false; // if true, the order will only reduce the position size
+
+const tx = await client.post.placeOrder(
+  subaccount,
+  clientId,
+  clobPairId,
+  side,
+  quantums,
+  subticks,
+  timeInForce,
+  orderFlags,
+  reduceOnly,
+  10
+);
+
+const replacementTx = await client.post.placeOrder(
+  subaccount,
+  clientId,
+  clobPairId,
+  side,
+  quantums,
+  subticks,
+  timeInForce,
+  orderFlags,
+  reduceOnly,
+  11
+);
+```
+
+```python
+
+```
+
+See reference implementations: [[Python]]()
+
+#### Request
+
+<aside class="warning">
+As of February 23rd, 2024, Typescript client source code for the above function is [here](https://github.com/dydxprotocol/v4-clients/blob/fd1e9d33913ef27a4c761cd66bca93057fe707e2/v4-client-js/src/clients/modules/post.ts#L353-L369),
+
+</aside>
+
+Description: Deposit funds into your dYdX subaccount
+
+| Parameter       | Type           | Required? | Description                          |
+| --------------- | -------------- | --------- | ------------------------------------ |
+| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
+| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
+| `quantums`      | Long           | yes       | quantums to calculate size           |
+| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+
+#### Response
+
+| Parameter | Description |
+| --------- | ----------- |
+| Tx        | Tx hash     |
+
 ### Cancelling an Order
 
+Examples on how to deposit funds into a subaccount.
 
+**Deposit Example: `examples/transfer_example_deposit`**
 
-<!-- 
+> Deposit
+
+```typescript
+/*
+    order is an Order object from the Indexer
+    */
+const goodTilBlock = order.goodTilBlock;
+let goodTilBlockTime: number | undefined;
+if (order.goodTilBlockTime) {
+  const datetime = new Date(order.goodTilBlockTime);
+  const utcMilllisecondsSinceEpoch = datetime.getTime();
+  goodTilBlockTime = Math.round(utcMilllisecondsSinceEpoch / 1000);
+}
+
+const tx = await client.post.cancelOrder(
+  subaccount,
+  order.clientId,
+  order.orderFlags,
+  order.clobPairId,
+  goodTilBlock,
+  goodTilBlockTime
+);
+```
+
+```python
+
+```
+
+See reference implementations: [[Python]]()
+
+#### Request
+
+<aside class="warning">
+Programmatic users of the API must take care to store Mnemonics. dYdX does not store any private keys. you must be careful not to lose it, or your funds may be inaccessible for a period of time.
+</aside>
+
+Description: Deposit funds into your dYdX subaccount
+
+| Parameter       | Type           | Required? | Description                          |
+| --------------- | -------------- | --------- | ------------------------------------ |
+| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
+| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
+| `quantums`      | Long           | yes       | quantums to calculate size           |
+| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+
+#### Response
+
+| Parameter | Description |
+| --------- | ----------- |
+| Tx        | Tx hash     |
+
+<!--
 ## Derive StarkKey
 > Derive StarkKey
 
@@ -2462,7 +3033,7 @@ epochStart           | Time when the epoch starts.
 epochEnd             | Time when the epoch ends.
 markets              | Map of market name to liquidity rewards for that market. See "LiquidityRewards" below.
 stakedDYDX           | See "StakedDYDX" below.
-linkedAddressRewards | For a `PRIMARY` address, map of linked address to rewards data for that address. Includes the `PRIMARY` address. See "PerAddressRewards" below. 
+linkedAddressRewards | For a `PRIMARY` address, map of linked address to rewards data for that address. Includes the `PRIMARY` address. See "PerAddressRewards" below.
 
 ### LiquidityRewards
 Parameter           | Description
@@ -2855,7 +3426,3 @@ Parameter                | Description
 -------------------------| -----------
 usersReferred            | Total number of users referred by this affiliate in all previous epochs.
 revenue                  | Total amount of revenue this user has earned in all previous epochs. -->
-
-
-
-
