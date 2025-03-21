@@ -1,4 +1,4 @@
-# Clients
+<!-- # Clients
 
 Python and TypeScript clients are available, allowing programmatic usage of dYdX.
 
@@ -11,7 +11,7 @@ This guide will help you get started with the dYdX Python SDK, which allows for 
 Install `dydx-v3-python` from [PyPI](https://pypi.org/project/dydx-v3-python) using `pip`:
 
 <pre class="center-column">
-pip install dydx-v4-client   
+pip install dydx-v4-client
 </pre>
 
 > Initialize
@@ -54,9 +54,9 @@ See the [examples](https://github.com/dydxprotocol/v4-clients/tree/main/v4-clien
 > Initialize
 
 ```typescript
-import { CompositeClient, Network } from '@dydxprotocol/v4-client-js';
+import { CompositeClient, Network } from "@dydxprotocol/v4-client-js";
 
-/**
+    /**
     // For the deployment by DYDX token holders, use below:
 
     import { IndexerConfig, ValidatorConfig } from "@dydxprotocol/v4-client-js";
@@ -80,9 +80,9 @@ import { CompositeClient, Network } from '@dydxprotocol/v4-client-js';
       ),
     );
     */
-const NETWORK = Network.testnet();
+    const NETWORK = Network.testnet();
 
-const client = await CompositeClient.connect(NETWORK);
+    const client = await CompositeClient.connect(NETWORK);
 ```
 
 The Typescript client is organized into various clients
@@ -91,34 +91,36 @@ The Typescript client is organized into various clients
 The Python client uses a node client as opposed to these various clients.
 </aside>
 
-| Module      | Description                                                                                                         |
-| ----------- | ------------------------------------------------------------------------------------------------------------------- |
-| `Composite` | CompositeClient simplifies the transactions by transforming human readable parameters to chain-specific parameters. |
-| `Validator` | Validator client                                                                                                    |
-| `Indexer`   | Indexer client for read-only calls                                                                                  |
-| `Socket`    | Websocket for streaming data read-only                                                                              |
-| `Node`      | Python Node client                                                                                                  |
+| Module     | Description                                                      |
+|------------|------------------------------------------------------------------|
+| `Composite`  | CompositeClient simplifies the transactions by transforming human readable parameters to chain-specific parameters.|
+| `Validator` | Validator client   |
+| `Indexer`   | Indexer client for read-only calls |
+| `Socket`    | Websocket for streaming data read-only         |
+| `Node`        | Python Node client                |
 
 The following configuration options are available:
 
-| Parameter                | Description                                                                                                                                                                                                                                                                                                                                                                         |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| host                     | The HTTP API host.                                                                                                                                                                                                                                                                                                                                                                  |
-| api_timeout              | Timeout for HTTP requests, in milliseconds.                                                                                                                                                                                                                                                                                                                                         |
-| default_ethereum_address | (Optional) The default account for Ethereum key auth and sending Ethereum transactions.                                                                                                                                                                                                                                                                                             |
-| eth_private_key          | (Optional) May be used for Ethereum key auth.                                                                                                                                                                                                                                                                                                                                       |
-| eth_send_options         | (Optional) Options for Ethereum transactions, see [`sendTransaction`](https://web3py.readthedocs.io/en/stable/web3.eth.html?highlight=signTransaction#web3.eth.Eth.sendTransaction).                                                                                                                                                                                                |
-| network_id               | (Optional) Chain ID for Ethereum key auth and smart contract addresses. Defaults to `web3.net.version` if available, or `1` (mainnet).                                                                                                                                                                                                                                              |
-| stark_private_key        | (Optional) STARK private key, used to sign orders and withdrawals.                                                                                                                                                                                                                                                                                                                  |
-| web3                     | (Optional) Web3 object used for Ethereum key auth and/or smart contract interactions.                                                                                                                                                                                                                                                                                               |
-| web3_account             | (Optional) May be used for Ethereum key auth.                                                                                                                                                                                                                                                                                                                                       |
-| web3_provider            | (Optional) Web3 provider object, same usage as `web3`.                                                                                                                                                                                                                                                                                                                              |
-| api_key_credentials      | (Optional) Dictionary containing the key, secret and passphrase required for the private module to sign requests.                                                                                                                                                                                                                                                                   |
-| crypto_c_exports_path    | (Optional) For python only, will use faster C++ code to run hashing, signing and verifying. It's expected to be compiled from the `crypto_c_exports` target from Starkware's [repository](https://github.com/starkware-libs/crypto-cpp/blob/master/src/starkware/crypto/ffi/CMakeLists.txt). See [section on this below for more information](#c-methods-for-faster-stark-signing). |
+| Parameter                | Description                                                                                                                                                                          |
+|--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| host                     | The HTTP API host.                                                                                                                                                                   |
+| api_timeout              | Timeout for HTTP requests, in milliseconds.                                                                                                                                          |
+| default_ethereum_address | (Optional) The default account for Ethereum key auth and sending Ethereum transactions.                                                                                              |
+| eth_private_key          | (Optional) May be used for Ethereum key auth.                                                                                                                                        |
+| eth_send_options         | (Optional) Options for Ethereum transactions, see [`sendTransaction`](https://web3py.readthedocs.io/en/stable/web3.eth.html?highlight=signTransaction#web3.eth.Eth.sendTransaction). |
+| network_id               | (Optional) Chain ID for Ethereum key auth and smart contract addresses. Defaults to `web3.net.version` if available, or `1` (mainnet).                                               |
+| stark_private_key        | (Optional) STARK private key, used to sign orders and withdrawals.                                                                                                                   |
+| web3                     | (Optional) Web3 object used for Ethereum key auth and/or smart contract interactions.                                                                                                |
+| web3_account             | (Optional) May be used for Ethereum key auth.                                                                                                                                        |
+| web3_provider            | (Optional) Web3 provider object, same usage as `web3`.                                                                                                                               |
+| api_key_credentials      | (Optional) Dictionary containing the key, secret and passphrase required for the private module to sign requests.                                                                    |
+| crypto_c_exports_path    | (Optional) For python only, will use faster C++ code to run hashing, signing and verifying. It's expected to be compiled from the `crypto_c_exports` target from Starkware's [repository](https://github.com/starkware-libs/crypto-cpp/blob/master/src/starkware/crypto/ffi/CMakeLists.txt). See [section on this below for more information](#c-methods-for-faster-stark-signing).|
 
-## Rust, C++ and Python v1 (deprecated) Client
+
+## Rust,  C++ and Python v1 (deprecated) Client
 
 <aside class="notice">
 Notice that the V1 client (deprecated) will not be maintained further
 
 </aside>
+ -->
