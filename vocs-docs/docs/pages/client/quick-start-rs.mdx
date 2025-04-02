@@ -150,10 +150,35 @@ We set the `limit` field to `1` to get only the last trade, to determine the cur
 
 ### Calling a Method to Get Trades
 
+To obtain trades, we will call the `get_trades()` method of the `IndexerClient` structure. The client itself is divided into sections:
+
+* **Accounts** - for obtaining information about accounts and transfers
+* **Markets** - operational trading information, order book, trades
+* **Utility** - service information, such as the current blockchain height (number of blocks) or recorded time
+* **Vaults** - for working with MegaVaults
+* **Feed** - streaming subscriptions for information about trades and orders
+
+In our case, we need the `markets` section accessible by calling the method of the same name:
+
+```rust [main.rs]
+let trades = indexer
+    .markets()
+    .get_trades(&ticker, Some(opts))
+    .await?;
+```
+
+The method call returns a `Vec` with trades, although we limited their number to only the last trade.
+
 ### Extracting Trading Data
 
-Text
+Each trade is represented by a `TradeResponseObject` structure. We simply extract this structure from the vector and retrieve the price (the `price` field of the mentioned structure).
 
+```rust [main.rs]
+let trade = trades
+    .first()
+    .ok_or_else(|| anyhow!("Trades are not available"))?;
+let price = &trade.price;
+```
 
 
 
