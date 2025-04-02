@@ -929,11 +929,11 @@ Description: Deposit funds into your dYdX subaccount
 
 ### Cancelling an Order
 
-Examples on how to deposit funds into a subaccount.
+Examples on how to cancel an order
 
-**Deposit Example: `examples/transfer_example_deposit`**
+**Cancel Example: `examples/short_term_order_cancel_examples.ts`(https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/short_term_order_cancel_example.ts)**
 
-> Deposit
+> Order cancel
 
 ```typescript
 /*
@@ -958,10 +958,141 @@ const tx = await client.post.cancelOrder(
 ```
 
 ```python
+import asyncio
+import random
+import time
 
+from v4_proto.dydxprotocol.clob.order_pb2 import Order
+
+from dydx_v4_client import MAX_CLIENT_ID, OrderFlags
+from dydx_v4_client.indexer.rest.constants import OrderType
+from dydx_v4_client.indexer.rest.indexer_client import IndexerClient
+from dydx_v4_client.network import TESTNET
+from dydx_v4_client.node.client import NodeClient
+from dydx_v4_client.node.market import Market
+from dydx_v4_client.wallet import Wallet
+from tests.conftest import DYDX_TEST_MNEMONIC, TEST_ADDRESS
+
+MARKET_ID = "ETH-USD"
+
+
+async def test():
+
+    node = await NodeClient.connect(TESTNET.node)
+    indexer = IndexerClient(TESTNET.rest_indexer)
+
+    market = Market(
+        (await indexer.markets.get_perpetual_markets(MARKET_ID))["markets"][MARKET_ID]
+    )
+    wallet = await Wallet.from_mnemonic(node, DYDX_TEST_MNEMONIC, TEST_ADDRESS)
+
+    current_block = await node.latest_block_height()
+    good_til_block = current_block + 1 + 10
+
+    order_id = market.order_id(
+        TEST_ADDRESS, 0, random.randint(0, MAX_CLIENT_ID), OrderFlags.SHORT_TERM
+    )
+
+    place = await node.place_order(
+        wallet,
+        market.order(
+            order_id,
+            OrderType.LIMIT,
+            Order.Side.SIDE_SELL,
+            size=0.01,
+            price=40000,
+            time_in_force=Order.TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
+            reduce_only=False,
+            good_til_block=good_til_block,
+        ),
+    )
+    print(place)
+    # FIXME(piwonskp): Remove
+    wallet.sequence += 1
+    time.sleep(5)
+
+    cancel = await node.cancel_order(
+        wallet, order_id, good_til_block=good_til_block + 10
+    )
+    print(cancel)
+
+
+asyncio.run(test())
 ```
 
-See reference implementations: [[Python]]()
+```rust
+mod support;
+use anyhow::{Error, Result};
+use dydx::config::ClientConfig;
+use dydx::indexer::{AnyId, IndexerClient, Ticker};
+use dydx::node::{NodeClient, OrderBuilder, OrderSide, Wallet};
+use dydx_proto::dydxprotocol::clob::order::TimeInForce;
+use support::constants::TEST_MNEMONIC;
+use tokio::time::{sleep, Duration};
+
+const ETH_USD_TICKER: &str = "ETH-USD";
+
+pub struct OrderPlacer {
+    client: NodeClient,
+    indexer: IndexerClient,
+    wallet: Wallet,
+}
+
+impl OrderPlacer {
+    pub async fn connect() -> Result<Self> {
+        let config = ClientConfig::from_file("client/tests/testnet.toml").await?;
+        let client = NodeClient::connect(config.node).await?;
+        let indexer = IndexerClient::new(config.indexer);
+        let wallet = Wallet::from_mnemonic(TEST_MNEMONIC)?;
+        Ok(Self {
+            client,
+            indexer,
+            wallet,
+        })
+    }
+}
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    tracing_subscriber::fmt().try_init().map_err(Error::msg)?;
+    #[cfg(feature = "telemetry")]
+    support::telemetry::metrics_dashboard().await?;
+    let mut placer = OrderPlacer::connect().await?;
+    let mut account = placer.wallet.account(0, &mut placer.client).await?;
+    let subaccount = account.subaccount(0)?;
+
+    let ticker = Ticker(ETH_USD_TICKER.into());
+    let market = placer
+        .indexer
+        .markets()
+        .get_perpetual_market(&ticker)
+        .await?;
+
+    let current_block_height = placer.client.get_latest_block_height().await?;
+    let good_until = current_block_height.ahead(10);
+
+    let (order_id, order) = OrderBuilder::new(market, subaccount)
+        .limit(OrderSide::Buy, 100, 3)
+        .reduce_only(false)
+        .time_in_force(TimeInForce::Unspecified)
+        .until(good_until.clone())
+        .build(AnyId)?;
+
+    let place_tx_hash = placer.client.place_order(&mut account, order).await?;
+    tracing::info!("Place order transaction hash: {:?}", place_tx_hash);
+
+    sleep(Duration::from_secs(5)).await;
+
+    // Cancel order
+    let cancel_tx_hash = placer
+        .client
+        .cancel_order(&mut account, order_id, good_until)
+        .await?;
+    tracing::info!("Cancel order transaction hash: {:?}", cancel_tx_hash);
+
+    Ok(())
+}
+```
 
 #### Request
 
@@ -971,12 +1102,15 @@ Programmatic users of the API must take care to store Mnemonics. dYdX does not s
 
 Description: Deposit funds into your dYdX subaccount
 
-| Parameter       | Type           | Required? | Description                          |
-| --------------- | -------------- | --------- | ------------------------------------ |
-| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
-| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
-| `quantums`      | Long           | yes       | quantums to calculate size           |
-| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+| Parameter           | Type            | Required? | Description                           |
+| ------------------- | --------------- | --------- | ------------------------------------- |
+| `subaccount`        | SubaccountInfo  | yes       | The subaccount to deposit to          |
+| `clientId`          | number          | yes       | The asset ID of the asset to deposit  |
+| `orderFlags`        | OrderFlags      | yes       |                                       |
+| `clobPairId`        | number          | yes       |                                       |
+| `goodTilBlock`      | number          | no        |                                       |
+| `goodTilBlockTime`  | number          | no        |                                       |
+| `broadcastMode`     | BroadcastMode   | no        | The broadcast mode                    |
 
 #### Response
 
