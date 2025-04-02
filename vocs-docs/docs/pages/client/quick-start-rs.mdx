@@ -50,6 +50,55 @@ let account_upd = wallet.account(0, &mut client).await?;
 
 The code above creates a connection to the dYdX mainnet and authenticates you using your API credentials. Think of this as opening a secure communication channel between your application and the exchange. If you're just exploring, you can use the testnet instead for risk-free experimentation.
 
+## Creating a Configuration File
+
+Setting up a separate configuration file is a practical approach for managing your dydx settings, especially when dealing with different environments or sensitive credentials. Here's how to implement a clean configuration system:
+
+:::warning
+
+The endpoints presented below are chosen randomly and are not a recommendation. You can find a complete list of available gRPC endpoints at the [Endpoints](/endpoints) section.
+
+:::
+
+:::code-group
+
+```toml [mainnet.toml]
+[node]
+endpoint = "https://dydx-ops-grpc.kingnodes.com:443"
+chain_id = "dydx-mainnet-1"
+fee_denom = "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5"
+
+[indexer]
+http.endpoint = "https://indexer.dydx.trade"
+ws.endpoint = "wss://indexer.dydx.trade/v4/ws"
+
+[noble] # optional
+endpoint = "http://noble-grpc.polkachu.com:21590"
+chain_id = "noble-1"
+fee_denom = "uusdc"
+```
+
+```toml [testnet.toml]
+[node]
+endpoint = "https://test-dydx-grpc.kingnodes.com"
+chain_id = "dydx-testnet-4"
+fee_denom = "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5"
+
+[indexer]
+http.endpoint = "https://indexer.v4testnet.dydx.exchange"
+ws.endpoint = "wss://indexer.v4testnet.dydx.exchange/v4/ws"
+
+[noble] # optional
+endpoint = "http://noble-testnet-grpc.polkachu.com:21590"
+chain_id = "grand-1"
+fee_denom = "uusdc"
+
+[faucet] # optional
+endpoint = "https://faucet.v4testnet.dydx.exchange"
+```
+
+:::
+
 ## Fetching Market Data
 
 Text

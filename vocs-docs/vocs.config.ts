@@ -22,6 +22,10 @@ export default defineConfig({
       ],
     },
     {
+      text: 'Endpoints',
+      link: '/endpoints',
+    },
+    {
       text: 'Getting Started',
       link: '/getting-started',
     },
