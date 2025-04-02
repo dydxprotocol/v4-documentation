@@ -633,11 +633,11 @@ Description: Deposit funds into your dYdX subaccount
 
 ### Placing an Order
 
-Examples on how to deposit funds into a subaccount.
+Examples on how to place an order
 
-**Deposit Example: `examples/transfer_example_deposit`**
+**Place order example: `examples/market_order_example.py`(https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-py-v2/examples/market_order_example.py)**
 
-> Deposit
+> Place order
 
 ```typescript
 import {
@@ -671,7 +671,127 @@ const tx = await client.post.placeOrder(
 ```
 
 ```python
+import asyncio
+import random
 
+from dydx_v4_client import MAX_CLIENT_ID, OrderFlags
+from v4_proto.dydxprotocol.clob.order_pb2 import Order
+
+from dydx_v4_client.indexer.rest.constants import OrderType
+from dydx_v4_client.indexer.rest.indexer_client import IndexerClient
+from dydx_v4_client.network import TESTNET
+from dydx_v4_client.node.client import NodeClient
+from dydx_v4_client.node.market import Market
+from dydx_v4_client.wallet import Wallet
+
+MARKET_ID = "ETH-USD"
+DYDX_TEST_MNEMONIC = "this is a test mnemonic"
+TEST_ADDRESS = "this is test address"
+
+async def place_market_order(size: float):
+    node = await NodeClient.connect(TESTNET.node)
+    indexer = IndexerClient(TESTNET.rest_indexer)
+
+    market = Market(
+        (await indexer.markets.get_perpetual_markets(MARKET_ID))["markets"][MARKET_ID]
+    )
+    wallet = await Wallet.from_mnemonic(node, DYDX_TEST_MNEMONIC, TEST_ADDRESS)
+
+    order_id = market.order_id(
+        TEST_ADDRESS, 0, random.randint(0, MAX_CLIENT_ID), OrderFlags.SHORT_TERM
+    )
+
+    current_block = await node.latest_block_height()
+
+    new_order = market.order(
+        order_id=order_id,
+        order_type=OrderType.MARKET,
+        side=Order.Side.SIDE_SELL,
+        size=size,
+        price=0,  # Recommend set to oracle price - 5% or lower for SELL, oracle price + 5% for BUY
+        time_in_force=Order.TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
+        reduce_only=False,
+        good_til_block=current_block + 10,
+    )
+
+    transaction = await node.place_order(
+        wallet=wallet,
+        order=new_order,
+    )
+
+    print(transaction)
+    wallet.sequence += 1
+
+
+asyncio.run(place_market_order(0.00001))
+```
+
+```rust
+mod support;
+use anyhow::{Error, Result};
+use bigdecimal::BigDecimal;
+use chrono::{TimeDelta, Utc};
+use dydx::config::ClientConfig;
+use dydx::indexer::{ClientId, IndexerClient, Ticker};
+use dydx::node::{NodeClient, OrderBuilder, OrderSide, Wallet};
+use dydx_proto::dydxprotocol::clob::order::TimeInForce;
+use support::constants::TEST_MNEMONIC;
+
+const ETH_USD_TICKER: &str = "ETH-USD";
+
+pub struct OrderPlacer {
+    client: NodeClient,
+    indexer: IndexerClient,
+    wallet: Wallet,
+}
+
+impl OrderPlacer {
+    pub async fn connect() -> Result<Self> {
+        let config = ClientConfig::from_file("client/tests/testnet.toml").await?;
+        let client = NodeClient::connect(config.node).await?;
+        let indexer = IndexerClient::new(config.indexer);
+        let wallet = Wallet::from_mnemonic(TEST_MNEMONIC)?;
+        Ok(Self {
+            client,
+            indexer,
+            wallet,
+        })
+    }
+}
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    tracing_subscriber::fmt().try_init().map_err(Error::msg)?;
+    #[cfg(feature = "telemetry")]
+    support::telemetry::metrics_dashboard().await?;
+    let mut placer = OrderPlacer::connect().await?;
+    let mut account = placer.wallet.account(0, &mut placer.client).await?;
+
+    // Test values
+    let subaccount = account.subaccount(0)?;
+    let client_id = ClientId::random();
+    let ticker = Ticker(ETH_USD_TICKER.into());
+    let market = placer
+        .indexer
+        .markets()
+        .get_perpetual_market(&ticker)
+        .await?;
+
+    let now = Utc::now();
+    let time_in_force_seconds = now + TimeDelta::seconds(60);
+
+    let (_id, order) = OrderBuilder::new(market, subaccount)
+        .limit(OrderSide::Buy, 123, BigDecimal::new(2.into(), 2))
+        .time_in_force(TimeInForce::Unspecified)
+        .until(time_in_force_seconds)
+        .long_term()
+        .build(client_id)?;
+
+    let tx_hash = placer.client.place_order(&mut account, order).await?;
+    tracing::info!("Broadcast transaction hash: {:?}", tx_hash);
+
+    Ok(())
+}
 ```
 
 See reference implementations: [[Python]]()
@@ -684,12 +804,23 @@ Programmatic users of the API must take care to store Mnemonics. dYdX does not s
 
 Description: Deposit funds into your dYdX subaccount
 
-| Parameter       | Type           | Required? | Description                          |
-| --------------- | -------------- | --------- | ------------------------------------ |
-| `subaccount`    | SubaccountInfo | yes       | The subaccount to deposit to         |
-| `assetId`       | number         | yes       | The asset ID of the asset to deposit |
-| `quantums`      | Long           | yes       | quantums to calculate size           |
-| `broadcastMode` | BroadcastMode  | no        | The broadcast mode                   |
+| Parameter                         | Type                  | Required? | Description                          |
+| --------------------------------- | --------------------- | --------- | ------------------------------------ |
+| `subaccount`                      | SubaccountInfo        | yes       | The subaccount to deposit to         |
+| `assetId`                         | number                | yes       | The asset ID of the asset to deposit |
+| `clobPairId`                      | number                | yes       | The clob pair id of the asset        |
+| `side`                            | Order_Side            | yes       |                                      |
+| `quantums`                        | Long                  | yes       | quantums to calculate size           |
+| `subticks`                        | Long                  | yes       |                                      |
+| `timeInForce`                     | Order_TimeInforce     | yes       |                                      |
+| `orderFlags`                      | number                | yes       |                                      |
+| `reduceOnly`                      | boolean               | yes       |                                      |
+| `goodTilBlock`                    | number                | no        |                                      |
+| `goodTilBlockTime`                | number                | no        |                                      |
+| `clientMetadata`                  | number                | no        |                                      |
+| `conditionType`                   | Order_ConditionType   | no        |                                      |
+| `conditionalOrderTriggerSubticks` | Long                  | no        |                                      |
+| `broadcastMode`                   | BroadcastMode         | no        | The broadcast mode                   |
 
 #### Response
 
