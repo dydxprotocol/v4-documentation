@@ -125,7 +125,37 @@ let indexer = IndexerClient::new(config.indexer);
 
 ## Fetching Market Data
 
+### Creating a Ticker Instance
+
+A ticker represents a specific trading pair on dYdX, in this case Bitcoin against US Dollar.
+
+```rust [main.rs]
+let ticker = Ticker::from("ETH-USD");
+```
+
+You can create it from a string if you know it exactly, or get their list using the `list_perpetual_markets()` method of the `IndexerClient`.
+
+### Preparing Options for Calling a Method
+
+Most methods have optional parameters, for example, you can limit the number of records in the response. In our example, we want to extract a list of trades for an instrument, so we will fill in the `GetTradesOpts` structure.
+
+```rust [main.rs]
+let opts = GetTradesOpts {
+    limit: Some(1),
+    ..Default::default()
+};
+```
+
+We set the `limit` field to `1` to get only the last trade, to determine the current market price.
+
+### Calling a Method to Get Trades
+
+### Extracting Trading Data
+
 Text
+
+
+
 
 ## Setting Up a Wallet (for On-Chain Operations)
 
