@@ -38,27 +38,15 @@ You can also use the `cargo add` command if you have [cargo-edit](https://github
 cargo add dydx
 ```
 
-## Basic Setup and Authentication
-
-With the library added, let's write our first code to connect to the dYdX exchange. This is where the magic begins:
-
-```rust [main.rs]
-let config = ClientConfig::from_file("dydx.toml").await?;
-let mut client = NodeClient::connect(config.node).await?;
-let account_upd = wallet.account(0, &mut client).await?;
-```
-
-The code above creates a connection to the dYdX mainnet and authenticates you using your API credentials. Think of this as opening a secure communication channel between your application and the exchange. If you're just exploring, you can use the testnet instead for risk-free experimentation.
+:::note
+The project also includes the `anyhow` crate for convenient error handling and the `tokio` async runtime.
+:::
 
 ## Creating a Configuration File
 
-Setting up a separate configuration file is a practical approach for managing your dydx settings, especially when dealing with different environments or sensitive credentials. Here's how to implement a clean configuration system:
+The client library works with a configuration file that allows you to manage various client parameters. Let's define the configuration file that our program will use.
 
-:::warning
-
-The endpoints presented below are chosen randomly and are not a recommendation. You can find a complete list of available gRPC endpoints at the [Endpoints](/endpoints) section.
-
-:::
+For example, you can create a configuration file for accessing the main network *(mainnet)* or for tests oriented towards the test network *(testnet)*.
 
 :::code-group
 
@@ -98,6 +86,42 @@ endpoint = "https://faucet.v4testnet.dydx.exchange"
 ```
 
 :::
+
+:::warning
+The endpoints presented above are chosen randomly and are not a recommendation. You can find a complete list of available API endpoints at the [Endpoints](/endpoints) section.
+:::
+
+
+
+
+
+
+## Basic Setup and Authentication
+
+
+### Reading Configuration
+
+The configuration can be loaded from a TOML file using the `from_file` method provided by the `ClientConfig` struct. This allows you to separate your environment-specific settings from your code.
+
+```rust [main.rs]
+let config = ClientConfig::from_file("dydx.toml").await?;
+```
+
+### Creating a Node Client
+
+A `NodeClient` is needed to send transactions to the blockchain. It establishes a connection to a dYdX node and enables operations like placing orders, managing positions, and other on-chain activities.
+
+```rust [main.rs]
+let mut client = NodeClient::connect(config.node).await?;
+```
+
+### Creating an Indexer Client
+
+An `IndexerClient` is used to retrieve trading data such as market prices, order book information, and historical trades. It connects to the dYdX indexer service which provides read-only access to trading information.
+
+```rust [main.rs]
+let indexer = IndexerClient::new(config.indexer);
+```
 
 ## Fetching Market Data
 
