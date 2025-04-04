@@ -208,6 +208,7 @@ let mut account = wallet.account(0, &mut client).await?;
 ```
 
 This is all done using the wallet's `account()` method, which takes an account number and a reference to the client to make a request for obtaining the account address in the network and a sequence number for creating the next transaction.
+From the same mnemonic/`Wallet` several (independent, non-publicly linked) accounts can be used. Here, we derive the account at index `0`:
 
 
 ### Access to a Subaccount
@@ -245,6 +246,9 @@ let current_block_height = client.get_latest_block_height().await?;
 ```
 
 ## Preparing an Order
+
+Entering, managing, and closing positions is made by placing orders. There are two types of orders: short-term orders and long-term orders. # TODO explain difference: https://docs.dydx.exchange/api_integration-trading/short_term_vs_stateful
+Here, we'll use short-term orders.
 
 An order in dYdX is actually a transaction that can be accepted into a block if the order conditions are met. Therefore, before sending it, we must prepare and assemble it by setting all parameters that serve as criteria for its execution or cancellation.
 
@@ -303,11 +307,66 @@ This flag is only available for orders that are executed in a single trade or ar
     .build(123456)?; // [!code focus]
 ```
 
-## Placing an Order
+Creating an order requires parameters (`OrderMarketParams`) associated with the traded perpetual.
+These can be fetched using the `IndexerClient`. For example for the `ETH-USD` pair:
 
 ```rust [main.rs]
-let tx_hash = client.place_order(&mut account, order).await?;
+let market = indexer
+    .markets()
+    .get_perpetual_market("ETH-USD".into())
+    .await?;
 ```
+
+To ease order creation, an `OrderBuilder` is provided to build orders.
+As minimum requirements,
+- the market parameters (`market`), and the Subaccount (`subaccount`) which the order will be placed under;
+- the order type: Limit (`limit()`), Market (`market()`), StopLimit (`stop_limit()`), StopMarket (`stop_market()`), TakeProfitLimit (`take_profit_limit()`), TakeProfitMarket (`take_profit_market()`). The order type must also have the respective:
+    - side: `Buy` or `Sell`, variants of `OrderSide`;
+    - price: an integer with the price in USDC, or a `BigDecimal` with decimal parts;
+    - size: an integer with the order size, or a `BigDecimal` with decimal parts;
+- validity of the order, set using `until()`. For short-term order this is the block height (20 blocks max validity), for long-term orders this is the timestamp (28 days max validity);
+- the client ID, set by the user to identify the order. Can be any value in the `u32` range.
+
+For more building options please refer to [`OrderBuilder`](https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/src/node/order.rs#L171) and the [examples](https://github.com/dydxprotocol/v4-clients/tree/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples). # Though maybe we can explain them here (the OrderBuilder setters, in another section).
+
+Here, we create a `Buy` order for 3 units of `ETH-USD` at a price of 1500 USDC, with a validity of 10 blocks (~10 seconds):
+
+```rust [main.rs]
+let client_id = 123456;
+let (order_id, order) = OrderBuilder::new(market, subaccount)
+    .limit(OrderSide::Buy, 1500, 3)
+    .until(current_block_height.ahead(10))
+    .build(client_id)?;
+```
+
+The `OrderBuilder` upon finalization (through `build()`), returns: the order ID which uniquely identifies the order, and the order.
+
+To broadcast the order to the network, `NodeClient::place_order()` is employed. The account owning the subaccount of the order, and order are required:
+
+```rust [main.rs]
+let tx_hash = client
+    .place_order(&mut account, order)
+    .await?;
+```
+
+This returns the transaction hash if successful, or an error with the message reason returned by the server.
+
+### Cancelling an order
+
+Unmatched and unfilled orders can be cancelled.
+To cancel an order, the order ID returned by the `OrderBuilder` and the validity of the cancel request must be provided:
+
+```rust [main.rs]
+let tx_hash = client
+    .cancel_order(&mut account, order_id, good_until)
+    .await?;
+```
+
+This returns the transaction hash if successful, or an error with the message reason returned by the server.
+
+:::note
+Issuing order cancellations does not affect open positions. To close or reduce any open position, a new order must be issued with the opposite side to the position.
+:::
 
 ## Error Handling
 
