@@ -262,9 +262,9 @@ Creating an order requires parameters (`OrderMarketParams`) associated with the 
 These can be fetched using the optional `IndexerClient` through the `get_perpetual_market()` method.
 
 To create an order, the `OrderBuilder` is used, a special structure with a set of convenient methods.
-As minimum requirements,
+As minimum requirements, the user should be provide,
 - the market parameters (`market`), and the Subaccount (`subaccount`) which the order will be placed under;
-- the order type: Limit (`limit()`), Market (`market()`), StopLimit (`stop_limit()`), StopMarket (`stop_market()`), TakeProfitLimit (`take_profit_limit()`), TakeProfitMarket (`take_profit_market()`). The order type must also have the respective:
+- the order type: options are Limit (`limit()`), Market (`market()`), among other available [types](https://help.dydx.trade/en/articles/166981-perpetual-order-types-on-dydx-chain). The order type must also have the respective:
     - side: `Buy` or `Sell`, variants of `OrderSide`;
     - price: an integer with the price in USDC, or a `BigDecimal` with decimal parts;
     - size: an integer with the order size, or a `BigDecimal` with decimal parts;
