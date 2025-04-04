@@ -269,12 +269,12 @@ As minimum requirements,
 
 For more building options please refer to [`OrderBuilder`](https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/src/node/order.rs#L171) and the [examples](https://github.com/dydxprotocol/v4-clients/tree/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples). # Though maybe we can explain them here (the OrderBuilder setters, in another section).
 
-Here, we create a `Buy` order for 3 units of `ETH-USD` at a price of 1500 USDC, with a validity of 10 blocks (~10 seconds):
+Here, we create a `Buy` order for 0.1 units of `ETH-USD` at a price of 1500 USDC, with a validity of 10 blocks (~10 seconds):
 
 ```rust [main.rs]
 let client_id = 123456;
 let (order_id, order) = OrderBuilder::new(market, subaccount)
-    .limit(OrderSide::Buy, 1500, BigDecimal::from_str("0.02")?)
+    .limit(OrderSide::Buy, 1500, BigDecimal::from_str("0.1")?)
     .until(current_block_height.ahead(10))
     .build(client_id)?;
 ```
