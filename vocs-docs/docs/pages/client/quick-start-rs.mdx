@@ -182,13 +182,132 @@ let price = &trade.price;
 
 
 
+
+
 ## Setting Up a Wallet (for On-Chain Operations)
 
-Text
+To create a wallet instance for trading operations, you'll need a `Wallet` object that's responsible for transaction signing. You can create it using the `from_mnemonic` method which expects a mnemonic phrase as text.
+
+```rust [main.rs]
+let wallet = Wallet::from_mnemonic(mnemonic)?;
+```
+
+This phrase is not stored in the configuration file, and you should decide for yourself how you want to obtain this value in a secure manner.
+
+:::warning
+Since storing such values in plaintext is not secure, you might want to encrypt it and access it using a password.
+:::
+
+
+### Deriving an Account
+
+Since the Wallet functions as a private key, another key is derived from it based on a number to work with multiple accounts. This not only enhances security but also simplifies key management, as a single key provides access to multiple accounts while not being used in its raw form.
+
+```rust [main.rs]
+let mut account = wallet.account(0, &mut client).await?;
+```
+
+This is all done using the wallet's `account()` method, which takes an account number and a reference to the client to make a request for obtaining the account address in the network and a sequence number for creating the next transaction.
+
+
+### Access to a Subaccount
+
+To create orders, we will additionally need a subaccount, which we can obtain by calling the method of the same name and passing a number. The method will return a Subaccount instance that contains the address and the specified number.
+
+```rust [main.rs]
+let subaccount = account.subaccount(0)?;
+```
+
+## Obtaining Parameters
+
+We will also need information about the trading instrument to place an order (this is used to adjust the order price to market criteria, as each instrument has its own fractional precision and step size).
+
+### Market Information
+
+Such information can be obtained from the `Indexer` using the `get_perpetual_market()` method by passing a reference to the `Ticker`.
+
+```rust [main.rs]
+let market = indexer.markets().get_perpetual_market(&ticker).await?;
+```
+
+### The Chain Height
+
+Order placement also requires an expiration value, which is calculated from the number of blocks in the chain, as time is not a reliable criterion in consensus-based networks.
+
+:::tip
+Nevertheless, you can approximately predict how long an order will remain active based on the average block formation speed in the network.
+:::
+
+To get the current height, use the `get_latest_block_height()` method from the `NodeClient`.
+
+```rust [main.rs]
+let current_block_height = client.get_latest_block_height().await?;
+```
+
+## Preparing an Order
+
+An order in dYdX is actually a transaction that can be accepted into a block if the order conditions are met. Therefore, before sending it, we must prepare and assemble it by setting all parameters that serve as criteria for its execution or cancellation.
+
+To create an order, the `OrderBuilder` is used, a special structure with a set of convenient methods. To create a builder instance, you need to call the `new()` method, passing the market parameters and subaccount.
+
+```rust [main.rs]
+let (_id, order) = OrderBuilder::new(market, subaccount)
+```
+
+When the order is created, we will receive a pair consisting of an identifier and an order instance, which is why we saved them in the corresponding variables in advance.
+
+:::note
+Please note that the statement is not completed, as we will continue to build a chain of calls from the same builder below.
+:::
+
+### Order Parameters
+
+Orders come in different types, and the builder contains corresponding methods. For example, to create a market order, the `market()` method is provided (executed at any price, but you can set a limit in case of significant slippage).
+
+We will create a limit order using the `limit()` method, which expects:
+
+* order direction (buy or sell)
+* Transaction price
+* Quantity
+
+```rust [main.rs]
+let (_id, order) = OrderBuilder::new(market, subaccount)
+    .limit(OrderSide::Buy, price.to_owned(), BigDecimal::from_str("0.02")?) // [!code focus]
+```
+
+### Reduce Only
+
+Since trading occurs with perpetual instruments, a position can easily be opened in any direction. If you want to create an order to close a position, you will need to set the Reduce Only flag using the corresponding method.
+
+This will prevent the order from flipping the position in the opposite direction if the unfilled remainder exceeds the size of the current position.
+
+This flag is only available for orders that are executed in a single trade or are canceled - FOK (Fill or Kill) or IOC (Immediate or Cancel), if the remainder is canceled.
+
+```rust [main.rs]
+    .limit(OrderSide::Buy, price.to_owned(), BigDecimal::from_str("0.02")?)
+    .reduce_only(false) // [!code focus]
+```
+
+```rust [main.rs]
+    .reduce_only(false)
+    .time_in_force(TimeInForce::Unspecified) // [!code focus]
+```
+
+```rust [main.rs]
+    .time_in_force(TimeInForce::Unspecified)
+    .until(current_block_height.ahead(10)) // [!code focus]
+```
+
+```rust [main.rs]
+    .until(current_block_height.ahead(10))
+    .build(123456)?; // [!code focus]
+```
 
 ## Placing an Order
 
-Text
+```rust [main.rs]
+let tx_hash = client.place_order(&mut account, order).await?;
+```
 
 ## Error Handling
 

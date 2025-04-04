@@ -2,6 +2,7 @@ import { defineConfig } from 'vocs'
 
 export default defineConfig({
   title: 'dYdX Documentation',
+  basePath: '/dydx-documentation',
   sidebar: [
     {
       text: 'Use a client library',
