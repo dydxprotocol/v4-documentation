@@ -260,10 +260,28 @@ When the order is created, we will receive a pair consisting of an identifier an
 Please note that the statement is not completed, as we will continue to build a chain of calls from the same builder below.
 :::
 
+### Order Parameters
+
+Orders come in different types, and the builder contains corresponding methods. For example, to create a market order, the `market()` method is provided (executed at any price, but you can set a limit in case of significant slippage).
+
+We will create a limit order using the `limit()` method, which expects:
+
+* order direction (buy or sell)
+* Transaction price
+* Quantity
+
 ```rust [main.rs]
 let (_id, order) = OrderBuilder::new(market, subaccount)
     .limit(OrderSide::Buy, price.to_owned(), BigDecimal::from_str("0.02")?) // [!code focus]
 ```
+
+### Reduce Only
+
+Since trading occurs with perpetual instruments, a position can easily be opened in any direction. If you want to create an order to close a position, you will need to set the Reduce Only flag using the corresponding method.
+
+This will prevent the order from flipping the position in the opposite direction if the unfilled remainder exceeds the size of the current position.
+
+This flag is only available for orders that are executed in a single trade or are canceled - FOK (Fill or Kill) or IOC (Immediate or Cancel), if the remainder is canceled.
 
 ```rust [main.rs]
     .limit(OrderSide::Buy, price.to_owned(), BigDecimal::from_str("0.02")?)
