@@ -182,9 +182,41 @@ let price = &trade.price;
 
 
 
+
+
 ## Setting Up a Wallet (for On-Chain Operations)
 
-Text
+To create a wallet instance for trading operations, you'll need a `Wallet` object that's responsible for transaction signing. You can create it using the `from_mnemonic` method which expects a mnemonic phrase as text.
+
+```rust [main.rs]
+let wallet = Wallet::from_mnemonic(mnemonic)?;
+```
+
+This phrase is not stored in the configuration file, and you should decide for yourself how you want to obtain this value in a secure manner.
+
+:::warning
+Since storing such values in plaintext is not secure, you might want to encrypt it and access it using a password.
+:::
+
+
+### Deriving an Account
+
+Since the Wallet functions as a private key, another key is derived from it based on a number to work with multiple accounts. This not only enhances security but also simplifies key management, as a single key provides access to multiple accounts while not being used in its raw form.
+
+```rust [main.rs]
+let mut account = wallet.account(0, &mut client).await?;
+```
+
+This is all done using the wallet's `account()` method, which takes an account number and a reference to the client to make a request for obtaining the account address in the network and a sequence number for creating the next transaction.
+
+
+## Access to a Subaccount
+
+To create orders, we will additionally need a subaccount, which we can obtain by calling the method of the same name and passing a number. The method will return a Subaccount instance that contains the address and the specified number.
+
+```rust [main.rs]
+let subaccount = account.subaccount(0)?;
+```
 
 ## Placing an Order
 
