@@ -252,72 +252,12 @@ Here, we'll use short-term orders.
 
 An order in dYdX is actually a transaction that can be accepted into a block if the order conditions are met. Therefore, before sending it, we must prepare and assemble it by setting all parameters that serve as criteria for its execution or cancellation.
 
-To create an order, the `OrderBuilder` is used, a special structure with a set of convenient methods. To create a builder instance, you need to call the `new()` method, passing the market parameters and subaccount.
-
-```rust [main.rs]
-let (_id, order) = OrderBuilder::new(market, subaccount)
-```
-
-When the order is created, we will receive a pair consisting of an identifier and an order instance, which is why we saved them in the corresponding variables in advance.
-
-:::note
-Please note that the statement is not completed, as we will continue to build a chain of calls from the same builder below.
-:::
-
 ### Order Parameters
 
-Orders come in different types, and the builder contains corresponding methods. For example, to create a market order, the `market()` method is provided (executed at any price, but you can set a limit in case of significant slippage).
-
-We will create a limit order using the `limit()` method, which expects:
-
-* order direction (buy or sell)
-* Transaction price
-* Quantity
-
-```rust [main.rs]
-let (_id, order) = OrderBuilder::new(market, subaccount)
-    .limit(OrderSide::Buy, price.to_owned(), BigDecimal::from_str("0.02")?) // [!code focus]
-```
-
-### Reduce Only
-
-Since trading occurs with perpetual instruments, a position can easily be opened in any direction. If you want to create an order to close a position, you will need to set the Reduce Only flag using the corresponding method.
-
-This will prevent the order from flipping the position in the opposite direction if the unfilled remainder exceeds the size of the current position.
-
-This flag is only available for orders that are executed in a single trade or are canceled - FOK (Fill or Kill) or IOC (Immediate or Cancel), if the remainder is canceled.
-
-```rust [main.rs]
-    .limit(OrderSide::Buy, price.to_owned(), BigDecimal::from_str("0.02")?)
-    .reduce_only(false) // [!code focus]
-```
-
-```rust [main.rs]
-    .reduce_only(false)
-    .time_in_force(TimeInForce::Unspecified) // [!code focus]
-```
-
-```rust [main.rs]
-    .time_in_force(TimeInForce::Unspecified)
-    .until(current_block_height.ahead(10)) // [!code focus]
-```
-
-```rust [main.rs]
-    .until(current_block_height.ahead(10))
-    .build(123456)?; // [!code focus]
-```
-
 Creating an order requires parameters (`OrderMarketParams`) associated with the traded perpetual.
-These can be fetched using the `IndexerClient`. For example for the `ETH-USD` pair:
+These can be fetched using the optional `IndexerClient` through the `get_perpetual_market()` method.
 
-```rust [main.rs]
-let market = indexer
-    .markets()
-    .get_perpetual_market("ETH-USD".into())
-    .await?;
-```
-
-To ease order creation, an `OrderBuilder` is provided to build orders.
+To create an order, the `OrderBuilder` is used, a special structure with a set of convenient methods.
 As minimum requirements,
 - the market parameters (`market`), and the Subaccount (`subaccount`) which the order will be placed under;
 - the order type: Limit (`limit()`), Market (`market()`), StopLimit (`stop_limit()`), StopMarket (`stop_market()`), TakeProfitLimit (`take_profit_limit()`), TakeProfitMarket (`take_profit_market()`). The order type must also have the respective:
@@ -334,14 +274,16 @@ Here, we create a `Buy` order for 3 units of `ETH-USD` at a price of 1500 USDC, 
 ```rust [main.rs]
 let client_id = 123456;
 let (order_id, order) = OrderBuilder::new(market, subaccount)
-    .limit(OrderSide::Buy, 1500, 3)
+    .limit(OrderSide::Buy, 1500, BigDecimal::from_str("0.02")?)
     .until(current_block_height.ahead(10))
     .build(client_id)?;
 ```
 
 The `OrderBuilder` upon finalization (through `build()`), returns: the order ID which uniquely identifies the order, and the order.
 
-To broadcast the order to the network, `NodeClient::place_order()` is employed. The account owning the subaccount of the order, and order are required:
+### Placing an Order
+
+To broadcast an order to the network, `NodeClient::place_order()` is employed. The account owning the subaccount of the order, and order are required:
 
 ```rust [main.rs]
 let tx_hash = client
@@ -351,10 +293,10 @@ let tx_hash = client
 
 This returns the transaction hash if successful, or an error with the message reason returned by the server.
 
-### Cancelling an order
+### Cancelling an Order
 
 Unmatched and unfilled orders can be cancelled.
-To cancel an order, the order ID returned by the `OrderBuilder` and the validity of the cancel request must be provided:
+To cancel an order, `NodeClient::cancel_order()` is employed. The order ID returned by the `OrderBuilder` and the validity of the cancel request must be provided:
 
 ```rust [main.rs]
 let tx_hash = client
