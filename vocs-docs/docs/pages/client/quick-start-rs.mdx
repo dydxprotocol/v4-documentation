@@ -203,12 +203,12 @@ Since storing such values in plaintext is not secure, you might want to encrypt 
 
 Since the Wallet functions as a private key, another key is derived from it based on a number to work with multiple accounts. This not only enhances security but also simplifies key management, as a single key provides access to multiple accounts while not being used in its raw form.
 
+This is all done using the wallet's `account()` method, which takes an account number and a reference to the client to make a request for obtaining the account address in the network and a sequence number for creating the next transaction.
+From the same mnemonic/`Wallet` several (independent, non-publicly linked) accounts can be derived. Here, we derive the account at index `0`:
+
 ```rust [main.rs]
 let mut account = wallet.account(0, &mut client).await?;
 ```
-
-This is all done using the wallet's `account()` method, which takes an account number and a reference to the client to make a request for obtaining the account address in the network and a sequence number for creating the next transaction.
-From the same mnemonic/`Wallet` several (independent, non-publicly linked) accounts can be used. Here, we derive the account at index `0`:
 
 
 ### Access to a Subaccount
@@ -267,7 +267,7 @@ As minimum requirements,
 - validity of the order, set using `until()`. For short-term order this is the block height (20 blocks max validity), for long-term orders this is the timestamp (28 days max validity);
 - the client ID, set by the user to identify the order. Can be any value in the `u32` range.
 
-For more building options please refer to [`OrderBuilder`](https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/src/node/order.rs#L171) and the [examples](https://github.com/dydxprotocol/v4-clients/tree/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples). # Though maybe we can explain them here (the OrderBuilder setters, in another section).
+For more building options please refer to [`OrderBuilder`](https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/src/node/order.rs#L171) and the [examples](https://github.com/dydxprotocol/v4-clients/tree/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples). # TODO Explain in another section.
 
 Here, we create a `Buy` order for 0.1 units of `ETH-USD` at a price of 1500 USDC, with a validity of 10 blocks (~10 seconds):
 
