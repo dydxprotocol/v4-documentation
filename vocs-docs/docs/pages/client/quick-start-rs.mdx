@@ -210,12 +210,38 @@ let mut account = wallet.account(0, &mut client).await?;
 This is all done using the wallet's `account()` method, which takes an account number and a reference to the client to make a request for obtaining the account address in the network and a sequence number for creating the next transaction.
 
 
-## Access to a Subaccount
+### Access to a Subaccount
 
 To create orders, we will additionally need a subaccount, which we can obtain by calling the method of the same name and passing a number. The method will return a Subaccount instance that contains the address and the specified number.
 
 ```rust [main.rs]
 let subaccount = account.subaccount(0)?;
+```
+
+## Obtaining Parameters
+
+We will also need information about the trading instrument to place an order (this is used to adjust the order price to market criteria, as each instrument has its own fractional precision and step size).
+
+### Market Information
+
+Such information can be obtained from the `Indexer` using the `get_perpetual_market()` method by passing a reference to the `Ticker`.
+
+```rust [main.rs]
+let market = indexer.markets().get_perpetual_market(&ticker).await?;
+```
+
+### The Chain Height
+
+Order placement also requires an expiration value, which is calculated from the number of blocks in the chain, as time is not a reliable criterion in consensus-based networks.
+
+:::tip
+Nevertheless, you can approximately predict how long an order will remain active based on the average block formation speed in the network.
+:::
+
+To get the current height, use the `get_latest_block_height()` method from the `NodeClient`.
+
+```rust [main.rs]
+let current_block_height = client.get_latest_block_height().await?;
 ```
 
 ## Placing an Order
