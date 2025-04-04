@@ -247,8 +247,12 @@ let current_block_height = client.get_latest_block_height().await?;
 
 ## Preparing an Order
 
-Entering, managing, and closing positions is made by placing orders. There are two types of orders: short-term orders and long-term orders. # TODO explain difference: https://docs.dydx.exchange/api_integration-trading/short_term_vs_stateful
+Entering, managing, and closing positions is made by placing orders. There are two types of orders: short-term orders and long-term orders.
 Here, we'll use short-term orders.
+
+:::note
+Check the [differences](https://docs.dydx.exchange/api_integration-trading/short_term_vs_stateful) between short-term and long-term orders.
+:::
 
 An order in dYdX is actually a transaction that can be accepted into a block if the order conditions are met. Therefore, before sending it, we must prepare and assemble it by setting all parameters that serve as criteria for its execution or cancellation.
 
