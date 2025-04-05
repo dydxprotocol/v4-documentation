@@ -182,8 +182,6 @@ let price = &trade.price;
 
 
 
-
-
 ## Setting Up a Wallet (for On-Chain Operations)
 
 To create a wallet instance for trading operations, you'll need a `Wallet` object that's responsible for transaction signing. You can create it using the `from_mnemonic` method which expects a mnemonic phrase as text.
@@ -203,12 +201,11 @@ Since storing such values in plaintext is not secure, you might want to encrypt 
 
 Since the Wallet functions as a private key, another key is derived from it based on a number to work with multiple accounts. This not only enhances security but also simplifies key management, as a single key provides access to multiple accounts while not being used in its raw form.
 
-This is all done using the wallet's `account()` method, which takes an account number and a reference to the client to make a request for obtaining the account address in the network and a sequence number for creating the next transaction.
-From the same mnemonic/`Wallet` several (independent, non-publicly linked) accounts can be derived. Here, we derive the account at index `0`:
-
 ```rust [main.rs]
 let mut account = wallet.account(0, &mut client).await?;
 ```
+
+This is all done using the wallet's `account()` method, which takes an account number and a reference to the client to make a request for obtaining the account address in the network and a sequence number for creating the next transaction.
 
 
 ### Access to a Subaccount
@@ -247,72 +244,68 @@ let current_block_height = client.get_latest_block_height().await?;
 
 ## Preparing an Order
 
-Entering, managing, and closing positions is made by placing orders. There are two types of orders: short-term orders and long-term orders.
-Here, we'll use short-term orders.
+An order in dYdX is actually a transaction that can be accepted into a block if the order conditions are met. Therefore, before sending it, we must prepare and assemble it by setting all parameters that serve as criteria for its execution or cancellation.
+
+To create an order, the `OrderBuilder` is used, a special structure with a set of convenient methods. To create a builder instance, you need to call the `new()` method, passing the market parameters and subaccount.
+
+```rust [main.rs]
+let (_id, order) = OrderBuilder::new(market, subaccount)
+```
+
+When the order is created, we will receive a pair consisting of an identifier and an order instance, which is why we saved them in the corresponding variables in advance.
 
 :::note
-Check the [differences](https://docs.dydx.exchange/api_integration-trading/short_term_vs_stateful) between short-term and long-term orders.
+Please note that the statement is not completed, as we will continue to build a chain of calls from the same builder below.
 :::
-
-An order in dYdX is actually a transaction that can be accepted into a block if the order conditions are met. Therefore, before sending it, we must prepare and assemble it by setting all parameters that serve as criteria for its execution or cancellation.
 
 ### Order Parameters
 
-Creating an order requires parameters (`OrderMarketParams`) associated with the traded perpetual.
-These can be fetched using the optional `IndexerClient` through the `get_perpetual_market()` method.
+Orders come in different types, and the builder contains corresponding methods. For example, to create a market order, the `market()` method is provided (executed at any price, but you can set a limit in case of significant slippage).
 
-To create an order, the `OrderBuilder` is used, a special structure with a set of convenient methods.
-As minimum requirements, the user should be provide,
-- the market parameters (`market`), and the Subaccount (`subaccount`) which the order will be placed under;
-- the order type: options are Limit (`limit()`), Market (`market()`), among other available [types](https://help.dydx.trade/en/articles/166981-perpetual-order-types-on-dydx-chain). The order type must also have the respective:
-    - side: `Buy` or `Sell`, variants of `OrderSide`;
-    - price: an integer with the price in USDC, or a `BigDecimal` with decimal parts;
-    - size: an integer with the order size, or a `BigDecimal` with decimal parts;
-- validity of the order, set using `until()`. For short-term order this is the block height (20 blocks max validity), for long-term orders this is the timestamp (28 days max validity);
-- the client ID, set by the user to identify the order. Can be any value in the `u32` range.
+We will create a limit order using the `limit()` method, which expects:
 
-For more building options please refer to [`OrderBuilder`](https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/src/node/order.rs#L171) and the [examples](https://github.com/dydxprotocol/v4-clients/tree/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples). # TODO Explain in another section.
-
-Here, we create a `Buy` order for 0.1 units of `ETH-USD` at a price of 1500 USDC, with a validity of 10 blocks (~10 seconds):
+* order direction (buy or sell)
+* Transaction price
+* Quantity
 
 ```rust [main.rs]
-let client_id = 123456;
-let (order_id, order) = OrderBuilder::new(market, subaccount)
-    .limit(OrderSide::Buy, 1500, BigDecimal::from_str("0.1")?)
+let (_id, order) = OrderBuilder::new(market, subaccount)
+    .limit(OrderSide::Buy, price.to_owned(), BigDecimal::from_str("0.02")?) // [!code focus]
+```
+
+### Reduce Only
+
+Since trading occurs with perpetual instruments, a position can easily be opened in any direction. If you want to create an order to close a position, you will need to set the Reduce Only flag using the corresponding method.
+
+This will prevent the order from flipping the position in the opposite direction if the unfilled remainder exceeds the size of the current position.
+
+This flag is only available for orders that are executed in a single trade or are canceled - FOK (Fill or Kill) or IOC (Immediate or Cancel), if the remainder is canceled.
+
+```rust [main.rs]
+    .limit(OrderSide::Buy, price.to_owned(), BigDecimal::from_str("0.02")?)
+    .reduce_only(false) // [!code focus]
+```
+
+```rust [main.rs]
+    .reduce_only(false)
+    .time_in_force(TimeInForce::Unspecified) // [!code focus]
+```
+
+```rust [main.rs]
+    .time_in_force(TimeInForce::Unspecified)
+    .until(current_block_height.ahead(10)) // [!code focus]
+```
+
+```rust [main.rs]
     .until(current_block_height.ahead(10))
-    .build(client_id)?;
+    .build(123456)?; // [!code focus]
 ```
 
-The `OrderBuilder` upon finalization (through `build()`), returns: the order ID which uniquely identifies the order, and the order.
-
-### Placing an Order
-
-To broadcast an order to the network, `NodeClient::place_order()` is employed. The account owning the subaccount of the order, and order are required:
+## Placing an Order
 
 ```rust [main.rs]
-let tx_hash = client
-    .place_order(&mut account, order)
-    .await?;
+let tx_hash = client.place_order(&mut account, order).await?;
 ```
-
-This returns the transaction hash if successful, or an error with the message reason returned by the server.
-
-### Cancelling an Order
-
-Unmatched and unfilled orders can be cancelled.
-To cancel an order, `NodeClient::cancel_order()` is employed. The order ID returned by the `OrderBuilder` and the validity of the cancel request must be provided:
-
-```rust [main.rs]
-let tx_hash = client
-    .cancel_order(&mut account, order_id, good_until)
-    .await?;
-```
-
-This returns the transaction hash if successful, or an error with the message reason returned by the server.
-
-:::note
-Issuing order cancellations does not affect open positions. To close or reduce any open position, a new order must be issued with the opposite side to the position.
-:::
 
 ## Error Handling
 
