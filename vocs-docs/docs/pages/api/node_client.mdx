@@ -1,17 +1,24 @@
-# Test
+:::danger
+This page is currently focused on the Rust client.
+:::
 
-## Preparing an Order
+# Orders
 
 Entering, managing, and closing positions is made by placing orders. There are two types of orders: short-term orders and long-term orders.
-Here, we'll use short-term orders.
 
 :::note
 Check the [differences](https://docs.dydx.exchange/api_integration-trading/short_term_vs_stateful) between short-term and long-term orders.
 :::
 
-An order in dYdX is actually a transaction that can be accepted into a block if the order conditions are met. Therefore, before sending it, we must prepare and assemble it by setting all parameters that serve as criteria for its execution or cancellation.
+An order in dYdX is a transaction that can be accepted if the order conditions are met. Therefore, before sending it, we must prepare and assemble it by setting all parameters that serve as criteria for its execution or cancellation.
 
-### Order Parameters
+## Order Parameters
+
+:::tip
+We should focus here on the low-level [parameters](https://docs.dydx.exchange/api_integration-guides/how_to_interpret_block_data_for_trades) that allow to create an order instead. I.e.: quantums, subticks per tick.
+
+This section is currently focused on the `OrderBuilder` of the Rust client. Optimally, this will go into a separate section, or add it to the source docs, published on crates.io with a link to there here.
+:::
 
 Creating an order requires parameters (`OrderMarketParams`) associated with the traded perpetual.
 These can be fetched using the optional `IndexerClient` through the `get_perpetual_market()` method.
@@ -26,7 +33,7 @@ As minimum requirements, the user should be provide,
 - validity of the order, set using `until()`. For short-term order this is the block height (20 blocks max validity), for long-term orders this is the timestamp (28 days max validity);
 - the client ID, set by the user to identify the order. Can be any value in the `u32` range.
 
-For more building options please refer to [`OrderBuilder`](https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/src/node/order.rs#L171) and the [examples](https://github.com/dydxprotocol/v4-clients/tree/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples). # TODO Explain in another section.
+For more building options please refer to [`OrderBuilder`](https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/src/node/order.rs#L171) and the [examples](https://github.com/dydxprotocol/v4-clients/tree/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples).
 
 Here, we create a `Buy` order for 0.1 units of `ETH-USD` at a price of 1500 USDC, with a validity of 10 blocks (~10 seconds):
 
@@ -40,9 +47,15 @@ let (order_id, order) = OrderBuilder::new(market, subaccount)
 
 The `OrderBuilder` upon finalization (through `build()`), returns: the order ID which uniquely identifies the order, and the order.
 
-### Placing an Order
+### Place an Order
 
-To broadcast an order to the network, `NodeClient::place_order()` is employed. The account owning the subaccount of the order, and order are required:
+:::tip
+We can follow the structure of the [v3 docs](https://dydxprotocol.github.io/v3-teacher/?python#create-a-new-order).
+Move the code snippet to some sort of tab / leave it below though tabbed as a sibling to the other languages examples.
+Remove the focus of Rust here, and add the [gRPC arguments / structures fields](https://github.com/dydxprotocol/v4-chain/blob/d2d65905a844ed607aef7850168c23844533d8ee/proto/dydxprotocol/clob/tx.proto#L78) instead.
+:::
+
+To broadcast an order to the network, `NodeClient::place_order()` is employed. The account owning the subaccount of the order, and order are required.
 
 ```rust [main.rs]
 let tx_hash = client
@@ -50,12 +63,30 @@ let tx_hash = client
     .await?;
 ```
 
+### Request
+
+:::info
+gRPC URL: `dydxprotocol.clob.MsgPlaceOrder`
+:::
+
+| Parameter | Description |
+| --- | --- |
+| `Account` | User's account |
+| `Order` | The built order |
+
+### Response
+
 This returns the transaction hash if successful, or an error with the message reason returned by the server.
 
-### Cancelling an Order
+| Parameter | Description |
+| --- | --- |
+| `TxHash` | Transaction hash |
+
+
+## Cancel an Order
 
 Unmatched and unfilled orders can be cancelled.
-To cancel an order, `NodeClient::cancel_order()` is employed. The order ID returned by the `OrderBuilder` and the validity of the cancel request must be provided:
+To cancel an order, `NodeClient::cancel_order()` is employed. The order ID returned by the `OrderBuilder` and the validity of the cancel request must be provided.
 
 ```rust [main.rs]
 let tx_hash = client
@@ -63,9 +94,35 @@ let tx_hash = client
     .await?;
 ```
 
-This returns the transaction hash if successful, or an error with the message reason returned by the server.
-
 :::note
 Issuing order cancellations does not affect open positions. To close or reduce any open position, a new order must be issued with the opposite side to the position.
 :::
 
+
+### Request
+
+:::info
+gRPC URL: `dydxprotocol.clob.MsgCancelOrder`
+:::
+
+| Parameter | Description |
+| --- | --- |
+| `Account` | User's account |
+| `OrderId` | Order ID |
+| `OrderGoodUntil` | Cancellation validity block / time |
+
+### Response
+
+This returns the transaction hash if successful, or an error with the message reason returned by the server.
+
+| Parameter | Description |
+| --- | --- |
+| `TxHash` | Transaction hash |
+
+# MegaVault
+
+Text 
+
+# Authenticators
+
+Text
