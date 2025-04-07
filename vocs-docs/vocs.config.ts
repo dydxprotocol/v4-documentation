@@ -34,5 +34,19 @@ export default defineConfig({
       text: 'Example',
       link: '/example',
     },
+    {
+      text: 'API',
+      link: '/api',
+      items: [
+          {
+              text: 'Client',
+              link: '/api/node_client',
+          },
+          {
+              text: 'Indexer',
+              link: '/api/indexer_client',
+          },
+      ]
+    },
   ],
 })
