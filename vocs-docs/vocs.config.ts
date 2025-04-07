@@ -45,8 +45,12 @@ export default defineConfig({
       link: '/api',
       items: [
           {
+              text: 'Order Parameters 🚧',
+              link: '/api/order_parameters',
+          },
+          {
               text: 'Placing An Order 🚧',
-              link: '/api/node_client',
+              link: '/api/place_order',
           },
           {
               text: 'Cancelling An Order 🚧',
