@@ -54,7 +54,7 @@ export default defineConfig({
           },
           {
               text: 'Cancelling An Order 🚧',
-              link: '/api/node_client',
+              link: '/api/cancel_order',
           },
       ]
     },
