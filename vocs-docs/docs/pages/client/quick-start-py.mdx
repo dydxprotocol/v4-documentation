@@ -1,0 +1,221 @@
+# Quick start with Python
+
+This guide will walk you through the steps to set up and start using the `dydx` library in your Python project. Whether you're building a trading bot, analyzing market data, or just exploring decentralized exchanges, dydx provides a powerful and intuitive API to interact with the dYdX protocol.
+
+Below you will create a Python application and connect it to an exchange, just follow the steps.
+
+::::steps
+
+
+## Creating a New Python Project
+
+Let's start our journey by creating a fresh Python project. This guide use python virtual environment and assume `python` and `pip` is already available in the system.
+
+### Create a project directory
+
+Create a new directory for your project
+
+```bash
+mkdir my_python_project
+cd my_python_project
+```
+
+### Set up virtual environment
+
+It's a good practice to use virtual environment to isolate dependencies for a project. Run the following command to create virtual environment in the `my_python_project` directory.
+
+```bash
+python -m venv myenv
+```
+
+Activate the virtual environment:
+
+- On Windows
+
+```powershell
+myenv\Scripts\ctivate
+```
+
+- On macOS/Linux
+
+```bash
+source myenv/bin/activate
+```
+
+After activation, you should see the environment name in the terminal prompt, indicating you are in a virtual environment.
+
+## Adding the `dydx` Dependency
+
+Now that we have our project setup, let's add the `dydx-v4-client` library. Create `requirements.txt` file in the `my_python_project` directory. Add the following line in the r`equirements.txt` file.
+```text [requirements.txt]
+dydx-v4-client==1.1.4 # replace the version with the latest or desired version
+```
+
+You can also use the `pip install` command to add the dependencies. It will install the latest version of the client in the current virtual environment.
+
+```bash
+pip install dydx-v4-client
+```
+
+For more details on the `dydx-v4-client` library installation, please check the [readme of the python client](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-py-v2/README.md).
+
+## Creating a Configuration File
+
+The client library works with a configuration file that allows you to manage various client parameters. Let's define the configuration file that our program will use.
+
+For example, you can create a configuration file for accessing the main network *(mainnet)* or for tests oriented towards the test network *(testnet)*.
+
+:::code-group
+
+```json [mainnet.json]
+{
+  "node": {
+    "endpoint": "https://dydx-ops-grpc.kingnodes.com:443",
+    "chain_id": "dydx-mainnet-1",
+    "fee_denom": "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5"
+  },
+  "indexer": {
+    "http": {
+      "endpoint": "https://indexer.dydx.trade"
+    },
+    "ws": {
+      "endpoint": "wss://indexer.dydx.trade/v4/ws"
+    }
+  },
+  "noble": {
+    "endpoint": "http://noble-grpc.polkachu.com:21590",
+    "chain_id": "noble-1",
+    "fee_denom": "uusdc"
+  }
+}
+```
+
+```json [testnet.json]
+{
+  "node": {
+    "endpoint": "https://test-dydx-grpc.kingnodes.com",
+    "chain_id": "dydx-testnet-4",
+    "fee_denom": "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5"
+  },
+  "indexer": {
+    "http": {
+      "endpoint": "https://indexer.v4testnet.dydx.exchange"
+    },
+    "ws": {
+      "endpoint": "wss://indexer.v4testnet.dydx.exchange/v4/ws"
+    }
+  },
+  "noble": {
+    "endpoint": "http://noble-testnet-grpc.polkachu.com:21590",
+    "chain_id": "grand-1",
+    "fee_denom": "uusdc"
+  },
+  "faucet": {
+    "endpoint": "https://faucet.v4testnet.dydx.exchange"
+  }
+}
+```
+
+:::
+
+:::warning
+The endpoints presented above are chosen randomly and are not a recommendation. You can find a complete list of available API endpoints at the [Endpoints](/endpoints) section.
+:::
+
+## Basic Setup and Authentication
+
+
+### Reading Configuration
+
+The configuration can be loaded from a JSON file using the `open` method. This allows you to separate your environment-specific settings from your code.
+
+```python [main.py]
+ith open('mainnet.json', 'r') as config_file:
+    config = json.load(config_file)
+```
+
+### Creating a Node Client
+
+A `NodeClient` is needed to send transactions to the blockchain. It establishes a connection to a dYdX node and enables operations like placing orders, managing positions, and other on-chain activities.
+
+```python [main.py]
+client = await NodeClient.connect(TESTNET.node)
+```
+
+### Creating an Indexer Client
+
+An `IndexerClient` is used to retrieve trading data such as market prices, order book information, and historical trades. It connects to the dYdX indexer service which provides read-only access to trading information.
+
+```python [main.py]
+indexer = IndexerClient(TESTNET.rest_indexer)
+```
+
+## Fetching Market Data
+
+### Creating a Ticker/Market Instance
+
+A ticker/market represents a specific trading pair on dYdX, in this case Bitcoin against US Dollar.
+
+```python [main.py]
+market = "ETH-USD"
+```
+
+You can get their list using the `get_perpetual_markets()` method of the `IndexerClient`.
+
+### Calling a Method to Get Trades
+
+To obtain trades, we will call the `get_perpetual_market_trades()` method of the `IndexerClient` structure. The client itself is divided into sections:
+
+* **Accounts** - for obtaining information about accounts and transfers
+* **Markets** - operational trading information, order book, trades
+* **Utility** - service information, such as the current blockchain height (number of blocks) or recorded time
+* **Vaults** - for working with MegaVaults
+* **Feed** - streaming subscriptions for information about trades and orders
+
+In our case, we need the `markets` section accessible by calling the method of the same name:
+
+```python [main.py]
+trades = await indexer.markets.get_perpetual_market_trades(market=market, limit=1)
+```
+
+The method call returns a `dict` with trades, although we limited their number to only the last trade.
+
+### Extracting Trading Data
+
+Each trade is represented by a `id, side, price, type, createdAt, and createdHeight` information. We simply extract this structure from the dictionary and retrieve the price (the `price` field of the mentioned structure).
+
+```python [main.py]
+if trades["trades"]:
+    trade = trades["trades"][0]
+    price = trade["price"]
+    print(price)
+else:
+    print("Trades are not available")
+```
+
+
+## Setting Up a Wallet (for On-Chain Operations)
+
+Text
+
+## Placing an Order
+
+Text
+
+## Error Handling
+
+Text
+
+## Handling Websocket Connections
+
+Text
+
+## Building and Running
+
+Text
+
+## Next Steps
+
+Text
+
+::::
