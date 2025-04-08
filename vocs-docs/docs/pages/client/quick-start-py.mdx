@@ -130,7 +130,7 @@ The endpoints presented above are chosen randomly and are not a recommendation. 
 The configuration can be loaded from a JSON file using the `open` method. This allows you to separate your environment-specific settings from your code.
 
 ```python [main.py]
-ith open('mainnet.json', 'r') as config_file:
+with open('mainnet.json', 'r') as config_file:
     config = json.load(config_file)
 ```
 
@@ -157,7 +157,7 @@ indexer = IndexerClient(TESTNET.rest_indexer)
 A ticker/market represents a specific trading pair on dYdX, in this case Bitcoin against US Dollar.
 
 ```python [main.py]
-market = "ETH-USD"
+MARKET_ID = "ETH-USD"
 ```
 
 You can get their list using the `get_perpetual_markets()` method of the `IndexerClient`.
@@ -175,7 +175,7 @@ To obtain trades, we will call the `get_perpetual_market_trades()` method of the
 In our case, we need the `markets` section accessible by calling the method of the same name:
 
 ```python [main.py]
-trades = await indexer.markets.get_perpetual_market_trades(market=market, limit=1)
+trades = await indexer.markets.get_perpetual_market_trades(market=MARKET_ID, limit=1)
 ```
 
 The method call returns a `dict` with trades, although we limited their number to only the last trade.
@@ -196,15 +196,210 @@ else:
 
 ## Setting Up a Wallet (for On-Chain Operations)
 
-Text
+To create a wallet instance for trading operations, you'll need a `Wallet` object that's responsible for transaction signing. You can create it using the `from_mnemonic` method which expects a NodeClient, mnemonic phrase as text, and a test address.
+
+```python [main.py]
+wallet = await Wallet.from_mnemonic(client, "DYDX TEST MNEMONIC", "TEST ADDRESS")
+```
+
+This phrase is not stored in the configuration file, and you should decide for yourself how you want to obtain this value in a secure manner.
+
+:::warning
+Since storing such values in plaintext is not secure, you might want to encrypt it and access it using a password.
+:::
+
+
+### Deriving an Account
+
+Since the Wallet functions as a private key, another key is derived from it based on a number to work with multiple accounts. This not only enhances security but also simplifies key management, as a single key provides access to multiple accounts while not being used in its raw form.
+
+```python [main.py]
+account = indexer.account
+```
+
+This is all done using the wallet's `account()` method, which takes an account number and a reference to the client to make a request for obtaining the account address in the network and a sequence number for creating the next transaction.
+
+
+### Access to a Subaccount
+
+To create orders, we will additionally need a subaccount, which we can obtain by calling the method of the same name and passing a number. The method will return a Subaccount instance that contains the address and the specified number.
+
+```python [main.py]
+subaccount = await account.get_subaccount("TEST_ADDRESS", 0)
+```
+
+## Obtaining Parameters
+
+We will also need information about the trading instrument to place an order (this is used to adjust the order price to market criteria, as each instrument has its own fractional precision and step size).
+
+### Market Information
+
+Such information can be obtained from the `Indexer` using the `get_perpetual_market()` method by passing a reference to the `Ticker`.
+
+```python [main.py]
+markets = await indexer.markets.get_perpetual_markets(market=MARKET_ID)
+```
+
+### The Chain Height
+
+Order placement also requires an expiration value, which is calculated from the number of blocks in the chain, as time is not a reliable criterion in consensus-based networks.
+
+:::tip
+Nevertheless, you can approximately predict how long an order will remain active based on the average block formation speed in the network.
+:::
+
+To get the current height, use the `get_latest_block_height()` method from the `NodeClient`.
+
+```python [main.py]
+latest_block_height = await client.latest_block_height()
+```
+
+## Preparing an Order
+
+An order in dYdX is actually a transaction that can be accepted into a block if the order conditions are met. Therefore, before sending it, we must prepare and assemble it by setting all parameters that serve as criteria for its execution or cancellation.
+
+To create an order, the `Market` is used.
+
+### Create Market instance
+
+```python [main.py]
+market = Market((await indexer.markets.get_perpetual_markets(MARKET_ID))["markets"][MARKET_ID])
+
+### Generate order id
+
+```python [main.py]
+order_id = market.order_id(TEST_ADDRESS, 0, random.randint(0, MAX_CLIENT_ID), OrderFlags.SHORT_TERM)
+```
+
+### Order Parameters
+
+Orders come in different types, and the builder contains corresponding methods. For example, to create a market order, the `market()` method is provided (executed at any price, but you can set a limit in case of significant slippage).
+
+```python [main.py]
+new_order = market.order(
+  order_id=order_id,
+  order_type=OrderType.MARKET,
+  side=Order.Side.SIDE_SELL,
+  size=size,
+  price=0,  # Recommend set to oracle price - 5% or lower for SELL, oracle price + 5% for BUY
+  time_in_force=Order.TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
+  reduce_only=False,
+  good_til_block=current_block + 10,
+)
+```
+
+### Reduce Only
+
+Since trading occurs with perpetual instruments, a position can easily be opened in any direction. If you want to create an order to close a position, you will need to set the Reduce Only flag using the corresponding method.
+
+This will prevent the order from flipping the position in the opposite direction if the unfilled remainder exceeds the size of the current position.
+
+This flag is only available for orders that are executed in a single trade or are canceled - FOK (Fill or Kill) or IOC (Immediate or Cancel), if the remainder is canceled.
+
+```python [main.py]
+new_order.reduce_only = False
+```
 
 ## Placing an Order
 
-Text
+After the order is prepared, you can invoke the client to place on order using `place_order` method.
+
+```python [main.py]
+transaction = await client.place_order(
+  wallet=wallet,
+  order=new_order,
+)
+```
 
 ## Error Handling
 
-Text
+Error handling in `Python` is managed using `try`, `except`, `else`, and `finally` blocks. These blocks allow you to catch exceptions (errors) during the execution of a program and handle them gracefully, rather than letting the program crash.
+
+Here's a breakdown of how error handling works in Python:
+
+```python
+try:
+    # Code that may raise an exception
+except SomeException as e:
+    # Code that runs if an exception occurs
+    print(f"An error occurred: {e}")
+else:
+    # Code that runs if no exception occurs
+    print("No error occurred.")
+finally:
+    # Code that runs no matter what (whether an exception occurred or not)
+    print("This will run regardless of errors.")
+```
+
+**Components**:
+
+`try block`: Contains the code that may potentially raise an exception.
+
+`except block`: Contains the code to handle the exception if it occurs. You can specify a particular exception type or catch all exceptions.
+
+`else block`: (Optional) Runs if no exception occurs.
+
+`finally block`: (Optional) Runs no matter what, after the try-except blocks, and is often used for cleanup actions (e.g., closing files, releasing resources).
+
+**Example 1: Catching a Specific Exception**
+
+```
+try:
+    x = 10 / 0  # This will raise a ZeroDivisionError
+except ZeroDivisionError as e:
+    print(f"Error: {e}")
+```
+
+**Example 2: Catching Multiple Exceptions**
+
+You can handle different types of exceptions in separate except blocks.
+
+```python
+try:
+    x = int("abc")  # This will raise a ValueError
+except ValueError as ve:
+    print(f"ValueError: {ve}")
+except ZeroDivisionError as zde:
+    print(f"ZeroDivisionError: {zde}")
+```
+**Example 3: Catching All Exceptions**
+
+To catch all exceptions, you can use a generic except block, but it's generally recommended to handle specific exceptions.
+
+```python
+try:
+    y = 10 / 0
+except Exception as e:  # Catching all exceptions
+    print(f"An unexpected error occurred: {e}")
+```
+
+**Example 4: Using else and finally**
+
+```python
+try:
+    x = 10 / 2
+except ZeroDivisionError:
+    print("Cannot divide by zero.")
+else:
+    print("Division was successful.")
+finally:
+    print("Execution completed.")
+```
+
+**Raising Exceptions**
+You can also raise exceptions manually using the raise keyword.
+
+```python
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Division by zero is not allowed.")
+    return a / b
+
+try:
+    result = divide(10, 0)
+except ValueError as ve:
+    print(ve)
+```
 
 ## Handling Websocket Connections
 
