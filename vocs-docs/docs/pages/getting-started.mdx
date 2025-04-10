@@ -1,0 +1,471 @@
+# Get started
+
+Hello world!
+
+
+# Node Client
+
+
+## connect
+
+:::codeblock
+
+```python [python]
+@staticmethod
+async def connect(config: NodeConfig) -> Self:
+```
+```typescript [typescript]
+static async connect(network: Network): Promise<CompositeClient>
+```
+```rust [rust]
+pub async fn connect(config: NodeConfig) -> Result<Self, Error>
+```
+
+This method connect a node with a chain.
+
+
+## deposit
+
+:::codeblock
+
+```python [python]
+async def deposit(
+    self,
+    wallet: Wallet,
+    sender: str,
+    recipient_subaccount: SubaccountId,
+    asset_id: int,
+    quantums: int,
+)
+```
+
+```typescript [typescript]
+async depositToSubaccount(
+    subaccount: SubaccountInfo,
+    amount: string,
+    memo?: string,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx> 
+
+
+depositToSubaccountMessage(subaccount: SubaccountInfo, amount: string): EncodeObject
+
+async depositToMegavault(
+    subaccount: SubaccountInfo,
+    amountUsdc: number,
+    broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+
+depositToMegavaultMessage(subaccount: SubaccountInfo, amountUsdc: number): EncodeObject
+```
+
+```rust [rust]
+pub async fn deposit(
+    &mut self,
+    account: &mut Account,
+    sender: Address,
+    recipient: Subaccount,
+    amount: impl Into<Usdc>,
+) -> Result<TxHash, NodeError>
+```
+
+## withdraw
+
+:::codeblock
+
+```python [python]
+async def withdraw(
+    self,
+    wallet: Wallet,
+    sender_subaccount: SubaccountId,
+    recipient: str,
+    asset_id: int,
+    quantums: int,
+):
+```
+
+```typescript [typescript]
+async withdrawFromSubaccount(
+    subaccount: SubaccountInfo,
+    amount: string,
+    recipient?: string,
+    memo?: string,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+
+withdrawFromSubaccountMessage(
+    subaccount: SubaccountInfo,
+    amount: string,
+    recipient?: string,
+  ): EncodeObject
+
+async withdrawFromMegavault(
+    subaccount: SubaccountInfo,
+    shares: number,
+    minAmount: number,
+    broadcastMode?: BroadcastMode,
+  ): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+
+
+withdrawFromMegavaultMessage(
+    subaccount: SubaccountInfo,
+    shares: number,
+    minAmount: number,
+): EncodeObject
+```
+
+```rust [rust]
+pub async fn withdraw(
+    &mut self,
+    account: &mut Account,
+    sender: Subaccount,
+    recipient: Address,
+    amount: impl Into<Usdc>,
+) -> Result<TxHash, NodeError>
+```
+
+## send_token
+
+:::codeblock
+
+```python [python]
+async def send_token(
+    self,
+    wallet: Wallet,
+    sender: str,
+    recipient: str,
+    quantums: int,
+    denomination: str,
+):
+```
+
+```typescript [typescript]
+sendTokenMessage(wallet: LocalWallet, amount: string, recipient: string): EncodeObject
+```
+
+```rust [rust]
+pub async fn send_token(
+    &mut self,
+    account: &mut Account,
+    sender: Address,
+    recipient: Address,
+    token: impl Tokenized,
+) -> Result<TxHash, NodeError>
+
+pub async fn send_token_ibc(
+    &mut self,
+    account: &mut Account,
+    sender: Address,
+    recipient: Address,
+    token: impl Tokenized,
+    source_channel: String,
+) -> Result<TxHash, NodeError>
+```
+
+## transfer
+
+:::codeblock
+
+```python [python]
+async def transfer(
+    self,
+    wallet: Wallet,
+    sender_subaccount: SubaccountId,
+    recipient_subaccount: SubaccountId,
+    asset_id: int,
+    amount: int,
+):
+```
+
+```typescript [typescript]
+async transferToSubaccount(
+    subaccount: SubaccountInfo,
+    recipientAddress: string,
+    recipientSubaccountNumber: number,
+    amount: string,
+    memo?: string,
+    broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+
+transferToSubaccountMessage(
+    subaccount: SubaccountInfo,
+    recipientAddress: string,
+    recipientSubaccountNumber: number,
+    amount: string,
+): EncodeObject
+```
+
+```rust [rust]
+pub async fn transfer(
+    &mut self,
+    account: &mut Account,
+    sender: Subaccount,
+    recipient: Subaccount,
+    amount: impl Into<Usdc>,
+) -> Result<TxHash, NodeError>
+```
+
+
+## place order
+
+:::codeblock
+
+```python [python]
+async def place_order(
+    self,
+    wallet: Wallet,
+    order: Order,
+    tx_options: Optional[TxOptions] = None,
+)
+```
+
+```typescript [typescript]
+async placeOrder(
+    subaccount: SubaccountInfo,
+    marketId: string,
+    type: OrderType,
+    side: OrderSide,
+    price: number,
+    size: number,
+    clientId: number,
+    timeInForce?: OrderTimeInForce,
+    goodTilTimeInSeconds?: number,
+    execution?: OrderExecution,
+    postOnly?: boolean,
+    reduceOnly?: boolean,
+    triggerPrice?: number,
+    marketInfo?: MarketInfo,
+    currentHeight?: number,
+    goodTilBlock?: number,
+    memo?: string,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+
+async signPlaceOrder(
+    subaccount: SubaccountInfo,
+    marketId: string,
+    type: OrderType,
+    side: OrderSide,
+    price: number,
+    // trigger_price: number,   // not used for MARKET and LIMIT
+    size: number,
+    clientId: number,
+    timeInForce: OrderTimeInForce,
+    goodTilTimeInSeconds: number,
+    execution: OrderExecution,
+    postOnly: boolean,
+    reduceOnly: boolean,
+): Promise<string>
+```
+
+```rust [rust]
+pub async fn place_order(
+    &mut self,
+    account: &mut Account,
+    order: Order,
+) -> Result<TxHash, NodeError>
+```
+
+## Cancel order
+
+:::codeblock
+
+```python [python]
+async def cancel_order(
+    self,
+    wallet: Wallet,
+    order_id: OrderId,
+    good_til_block: int = None,
+    good_til_block_time: int = None,
+    tx_options: Optional[TxOptions] = None,
+)
+
+async def batch_cancel_orders(
+    self,
+    wallet: Wallet,
+    subaccount_id: SubaccountId,
+    short_term_cancels: List[OrderBatch],
+    good_til_block: int,
+    tx_options: Optional[TxOptions] = None,
+)
+```
+
+```typescript [typescript]
+async cancelOrder(
+    subaccount: SubaccountInfo,
+    clientId: number,
+    orderFlags: OrderFlags,
+    marketId: string,
+    goodTilBlock?: number,
+    goodTilTimeInSeconds?: number,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+
+async signCancelOrder(
+    subaccount: SubaccountInfo,
+    clientId: number,
+    orderFlags: OrderFlags,
+    clobPairId: number,
+    goodTilBlock: number,
+    goodTilBlockTime: number,
+): Promise<string>
+```
+
+```rust [rust]
+pub async fn cancel_order(
+    &mut self,
+    account: &mut Account,
+    order_id: OrderId,
+    until: impl Into<OrderGoodUntil>,
+) -> Result<TxHash, NodeError>
+
+pub async fn batch_cancel_orders(
+        &mut self,
+        account: &mut Account,
+        subaccount: Subaccount,
+        short_term_cancels: Vec<OrderBatch>,
+        until_block: Height,
+    ) -> Result<TxHash, NodeError>
+```
+
+## Add authenticator
+
+:::codeblock
+
+```python [python]
+async def add_authenticator(
+    self,
+    wallet: Wallet,
+    authenticator: Authenticator,
+):
+```
+
+```typescript [typescript]
+async addAuthenticator(
+    subaccount: SubaccountInfo,
+    authenticatorType: AuthenticatorType,
+    data: Uint8Array,
+)
+```
+
+```rust [rust]
+pub async fn add(
+    &mut self,
+    account: &mut Account,
+    address: Address,
+    authenticator: Authenticator,
+) -> Result<TxHash, NodeError>
+```
+
+## Remove authenticator
+
+```python [python]
+async def remove_authenticator(self, wallet: Wallet, authenticator_id: int)
+```
+
+```typescript [typescript]
+async removeAuthenticator(
+    subaccount: SubaccountInfo,
+    id: Long,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [rust]
+pub async fn remove(
+    &mut self,
+    account: &mut Account,
+    address: Address,
+    id: u64,
+) -> Result<TxHash, NodeError>
+```
+
+## Broadcast a transaction
+
+:::codeblock
+
+```python [python]
+async def broadcast(self, transaction: Tx, mode=BroadcastMode.BROADCAST_MODE_SYNC)
+```
+
+```typescript [typescript]
+```
+
+```rust [rust]
+pub async fn broadcast_transaction(&mut self, tx_raw: tx::Raw) -> Result<TxHash, NodeError>
+```
+
+## Simulate a transaction
+
+:::codeblock
+
+```python [python]
+async def simulate(self, transaction: Tx)
+```
+
+```typescript [typescript]
+async simulate(
+    wallet: LocalWallet,
+    messaging: () => Promise<EncodeObject[]>,
+    gasPrice?: GasPrice,
+    memo?: string,
+    account?: () => Promise<Account>,
+): Promise<StdFee>
+```
+
+```rust [rust]
+pub async fn simulate(&mut self, tx_raw: &tx::Raw) -> Result<GasInfo, NodeError>diploma
+```
+
+## Send a transaction
+
+:::codeblock
+
+```python [python]
+async def send(self, wallet: Wallet, transaction: Tx, mode=BroadcastMode.BROADCAST_MODE_SYNC)
+```
+
+```typescript [typescript]
+async send(
+    wallet: LocalWallet,
+    messaging: () => Promise<EncodeObject[]>,
+    zeroFee: boolean,
+    gasPrice?: GasPrice,
+    memo?: string,
+    broadcastMode?: BroadcastMode,
+    account?: () => Promise<Account>,
+    authenticators?: Long[],
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [rust]
+```
+
+## Send a message
+
+:::codeblock
+
+```python [python]
+async def send_message(self, wallet: Wallet, message: Message, mode=BroadcastMode.BROADCAST_MODE_SYNC)
+```
+
+```typescript [typescript]
+```
+
+```rust [rust]
+```
+
+## Broadcast a message
+
+:::codeblock
+
+```python [python]
+async def broadcast_message(
+    self,
+    wallet: Wallet,
+    message: Message,
+    mode=BroadcastMode.BROADCAST_MODE_SYNC,
+    tx_options: Optional[TxOptions] = None,
+)
+```
+
+```typescript [typescript]
+```
+
+```rust [rust]
+```
