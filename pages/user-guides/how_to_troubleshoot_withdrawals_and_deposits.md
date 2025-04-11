@@ -1,133 +1,383 @@
-# Troubleshooting withdrawals and deposits on dYdX Chain
+dYdX Chain: Deposits, Withdrawals & Troubleshooting Guide
 
-If you have initiated a deposit or withdrawal from dYdX v4 and your funds haven't arrived within an hour, follow this guide to better understand where your transaction is in the process and how to troubleshoot it.
+This guide provides a **step-by-step** explanation of deposit and withdrawal processes on the dYdX Chain. It includes instructions for **Skip Go Fast (“Instant”), Skip Go (“Default”), Coinbase deposits**, and **direct IBC transfers**, along with **troubleshooting methods** and best practices to ensure seamless transactions.
 
-> **Important:**: After submitting a deposit, make sure you do not close the tab or web browser, as leaving the website will lead to funds getting delayed en route to your dYdX address.
+Deposit & Withdrawal Methods
 
-## Withdrawal and Deposit Process
+| Method | Description | Finality | Chains Supported | Fee Range (USD) |
+| :---- | :---- | :---- | :---- | :---- |
+| **Skip Go Fast ("Instant Deposit")** | The fastest bridging option for rapid deposits | 10-30 seconds | Ethereum Mainnet, Arbitrum, Optimism, Base, Polygon, Avalanche (withdraw) | 10 bps on the transfer size \+ source chain fee: Ethereum: \~$5 L2s: $0.01-$0.10 |
+| **Skip Go ("Default")** | A universal interoperability platform supporting multiple bridges | 2-30 minutes | Ethereum Mainnet, Arbitrum, Optimism, Base, Polygon, Avalanche (withdraw), Solana, Neutron, Osmosis, Noble | Deposits \~$0.02 Withdrawals: \~$0.1-$7 \+ source chain gas fee: Ethereum: gas price L2s: gas price Cosmos: gas price Solana: gas price |
+| **Deposit / Withdrawal with Coinbase via Noble** | Direct deposit or withdrawal via Noble Wallet with automatic IBC transfer | 1-3 minutes | Coinbase to dYdX only | Coinbase withdrawal fee \+ IBC fee ($0.1-$0.2) |
+| **Direct IBC Transfer** | For users familiar with Cosmos ecosystem transfers | 15-30 seconds | All Cosmos chains with IBC enabled | \~$0.1-0.5 |
 
-There are 2 main withdrawal and deposit flows on the dYdX front end.
-We can categorize them in:
+1\. Skip Go Fast ("Instant Deposit")
 
-1. **CCTP**: USDC deposits or withdrawals via Etherium, Arbitrum, Optimism and Avalanche.
-2. **Axelar** or non-CCTP: If they do not fall into the CCTP category, they are by default using the Axelar route. This includes USDC transfers on non-CCTP supported chains, and all other assets from other chains.
+Skip Go Fast is a **decentralized bridging protocol**, developed by **Skip**, that enables **rapid and secure cross-chain transactions** across major blockchain ecosystems such as Ethereum, Cosmos, and Solana. Go Fast accelerates cross-chain actions by up to 25 times, **reducing onboarding times from 10+ minutes to seconds**. Learn more [here](https://docs.skip.build/go/advanced-transfer/go-fast#go-fast).
 
-![Withdrawals & Deposit process](../../artifacts/how_to_troubleshoot_withdrawals_1.png)
+Supported Chains & Assets
 
-## Troubleshooting CCTP Transactions
+* **Chains:** Ethereum Mainnet, Arbitrum, Avalanche, Base, Optimism, Polygon  
+* **Assets:** USDC, ETH, POL
 
-### CCTP Flow
+Minimum & Maximum Transfer Sizes
 
-If your deposit is routed via CCTP, the process is as follows:
+| Source Chain | Min Transfer (USD) | Max Transfer (USD) |
+| ----- | ----- | ----- |
+| Ethereum Mainnet | 50 | 17,500 |
+| Arbitrum | 1 | 17,500 |
+| Base | 1 | 17,500 |
+| Optimism | 1 | 17,500 |
+| Polygon | 1 | 17,500 |
 
-1. Native USDC is burned on the source chain
-2. The same amount of USDC is minted on Noble chain
-3. USDC is routed to dYdX Chain via IBC
+For the latest Minimum & Maximum Transfer Sizes, checkout the Skip API [documents](https://docs.skip.build/go/advanced-transfer/go-fast#what-are-the-minimum-and-maximum-transfer-sizes-for-go-fast%3F). 
 
-Withdrawals follow the opposite flow, with Noble USDC being burned on Noble chain and Native USDC being minted on the destination chain.
-For more info on this flow, see: [https://dydx.exchange/blog/cctp](https://dydx.exchange/blog/cctp).
+**Note:** If starting with an asset that is not USDC, Skip Go will swap the asset to USDC on the source chain, and the post-swap amount is used to determine if it falls within the min/max transfer size limits.
 
-### CCTP deposits troubleshooting
+Fees
 
-1.  **Check dYdX Frontend status**
+All Skip Go Fast 
 
-    Refresh your browser and check on the dYdX front end if your deposit has succeeded.
-    If you notice after **one hour** that your deposit is still on the "bridging tokens" step, continue to step 2.
-    ​
+10 bps on the transfer size \+ source chain fee:
 
-2.  **Check tracker tool**
+| Source Chain | Fee (USD) |
+| ----- | ----- |
+| Ethereum Mainnet | \~$5 (depends on gas fees) |
+| Arbitrum | \~$0.01-$0.1 (depends on gas fees) |
+| Base | \~$0.01-$0.1 (depends on gas fees) |
+| Optimism | \~$0.01-$0.1 (depends on gas fees) |
+| Polygon | \~$0.01-$0.1 (depends on gas fees) |
 
-    Check whether your USDC has been bridged, by entering the transaction hash on [https://usdc.range.org/usdc](https://usdc.range.org/usdc).
+For the latest source chain fees, checkout the Skip API [documents](https://docs.skip.build/go/advanced-transfer/go-fast#what-is-the-fee-model-for-go-fast%3F). 
 
-    > **Tip**: Be sure to tick the "Show Pending" box.
+Process Flow (Deposit)
 
-    ​![USDC.range](../../artifacts/how_to_troubleshoot_withdrawals_2.png)
+1. **Connect your wallet** to the dYdX interface and navigate to the "Deposit" section  
+2. **Enter the amount** you wish to transfer (ensure it meets minimum requirements)  
+3. **Select “Instant”** as your deposit method  
+4. **Choose the source chain and asset** you wish to deposit  
+5. **Review the transaction details** including estimated fees and finality time  
+6. **Confirm and sign** the transaction from your wallet  
+7. **Skip Go Fast protocol's solvers** monitor for confirmation of fund arrival at Noble  
+   * *Note: This process relies on Skip's decentralized solver network*  
+   * *If your source token is not USDC, an automatic swap occurs via integrated DEXs*  
+8. **Once confirmed**, funds are automatically **sent to dYdX Chain** via IBC transfer  
+   * *This step uses Cosmos IBC relayers to complete the cross-chain transfer*  
+9. **Final step:** Funds are **moved from the main account to the subaccount for trading**  
+   * *This internal transfer is handled by dYdX Chain’s infrastructure*
 
-    <br></br>
+Example Deposit (Base → dYdX via Skip Go Fast)
 
-    1. If the status shows "finalized", USDC should have arrived on Noble, and you can move on to step 3.
+```
+{
+    "operations": [
+        {
+            "evm_swap": {
+                "from_chain_id": "8453",
+                "denom_in": "base-native",
+                "denom_out": "USDC",
+                "amount_in": "10511954965182950",
+                "amount_out": "21430265",
+                "swap_venues": [
+                    {"name": "base-uniswap"}
+                ]
+            }
+        },
+        {
+            "cctp_transfer": {
+                "from_chain_id": "8453",
+                "to_chain_id": "noble-1",
+                "denom_in": "USDC",
+                "denom_out": "uusdc",
+                "bridge_id": "CCTP"
+            }
+        },
+        {
+            "transfer": {
+                "from_chain_id": "noble-1",
+                "to_chain_id": "dydx-mainnet-1",
+                "denom_in": "uusdc",
+                "denom_out": "ibc/USDC",
+                "bridge_id": "IBC"
+            }
+        }
+    ]
+}
+```
 
-    2. If the status shows "Pending" for more than one hour, raise a support ticket to _[https://dydx.trade](https://dydx.trade) > Help > Live Chat_ and make sure to share:
-       - Transaction hash
-       - EVM address
-       - dYdX address
+### How Skip Go Fast Works
 
-3.  **Check destination address**
+Skip Go Fast uses an innovative solver-based approach to achieve near-instant finality:
 
-    Now check whether your funds have arrived on dYdX: [https://www.mintscan.io/dydx](https://www.mintscan.io/dydx).
-    You should see a "deposit to subaccount" transaction there.
+1. **User Intent Submission**  
+   * When you initiate a transfer, you call the `submitOrder` function on the protocol contract  
+   * This broadcasts your intent to transfer assets across chains  
+   * Your intent specifies the assets, destination address, and any additional message payload  
+2. **Solver Network**  
+   * Permissionless participants called "solvers" watch for these intents  
+   * Solvers evaluate whether they can fulfill your intent based on:  
+     * Their available liquidity on the destination chain  
+     * Potential reward for fulfilling the intent  
+   * When a solver agrees to fulfill your intent, they use their own capital to front the assets  
+3. **Instant Fulfillment**  
+   * The solver calls the `fillOrder` function on the destination chain  
+   * This transfers the specified assets and processes any additional actions  
+   * From your perspective, the assets appear on the destination chain almost instantly  
+4. **Settlement Process**  
+   * After fulfilling your transfer, the solver initiates settlement to recover their fronted assets  
+   * The protocol verifies the solver's actions via a cross-chain messaging system  
+   * Once confirmed, the solver receives their assets back plus any earned fees  
+   * This settlement happens in the background and doesn't affect your user experience.
 
-    - If not, you can confirm whether USDC has arrived on Noble, by checking [https://www.mintscan.io/noble](https://www.mintscan.io/noble) or [https://ibc.range.org](https://ibc.range.org).
-    - You need to make sure you have the dYdX front end opened and wallet connected. The dYdX front end will detect your funds on Noble and auto-sweep it to your dYdX address. For this to happen, you need to actively open the front end and connect your wallet.
-      ​
+2\. Skip Go ("Normal")
 
-4.  **Manual process stuck funds**
+Skip Go API is a **universal interoperability platform**, allowing **seamless swaps and transfers** across multiple blockchain ecosystems via **bridges such as CCTP and Axelar**.
 
-    If for some reason, you have done step 3, but you still don't see your funds on dYdX, you can always manually IBC transfer your funds to your dYdX address, by importing your secret phrase into Keplr and performing a manual IBC transaction from Noble to your dYdX address.
+Supported Chains & Assets
 
-## Troubleshooting Axelar transactions
+* **Chains:** Ethereum Mainnet, Arbitrum, Avalanche, Base, Optimism, Polygon, Solana, and Cosmos chains  
+* **Assets:** USDC, ETH, POL
 
-### Axelar Flow
+Minimum & Maximum Transfer Sizes
 
-If your deposit is routed via Axelar, the process is as follows:
+| Source Chain | Min Transfer (USD) | Max Transfer (USD) |
+| ----- | ----- | ----- |
+| Ethereum Mainnet | \~$0.05 | \~$1,000,000 |
+| Other EVM Chains | \~$0.05 | \~$1,000,000 |
+| Solana | \~$0.05 | \~$1,000,000 |
+| Cosmos Chains | \~$0.05 | \~$1,000,000 |
 
-1. Squid routes funds to axlUSDC on EVM using Axelar General Message Passing (GMP)
-2. axlUSDC on EVM gets burned and axlUSDC minted on Axelar
-3. axlUSDC is sent to Osmosis and swapped to Noble USDC
-4. Bridge Noble USDC from Osmosis -> Noble chain -> dYdX Chain
+Fees  
+Source chain gas fees \+ Deposits \~$0.02 Withdrawals: \~$0.1-$7
 
-Withdrawals follow the opposite flow.
-For more info on this flow, see [https://dydx.exchange/blog/1-click-onboarding](https://dydx.exchange/blog/1-click-onboarding).
+| Source Chain | Fee (USD) |
+| ----- | ----- |
+| Ethereum Mainnet | Deposits \~$0.02 Withdrawals: \~$0.1-$7 |
+| Other EVM Chains | Deposits \~$0.02 Withdrawals: \~$0.1-$7 |
+| Solana | Deposits \~$0.02 Withdrawals: \~$0.1-$7 |
+| Cosmos Chains | Deposits \~$0.02 Withdrawals: \~$0.1-$7  |
 
-### Axelar troubleshooting
+Process Flow (Deposit)
 
-1. **Check dYdX Frontend status**
+1. **Connect your wallet** to the dYdX interface and navigate to the "Deposit" section  
+2. **Enter the amount** you wish to transfer (First time 1.25 USDC will be kept in wallet for gas fees)  
+3. **Select “Normal”** as your deposit method  
+4. **Choose source chain and asset** you wish to deposit  
+5. **Review the transaction details** including estimated fees and finality time  
+6. **Confirm and sign** the transaction from your wallet  
+7. **Third-party protocol interactions begin:**  
+   * *If your source token is not USDC, an automatic swap occurs via integrated DEXs*  
+   * *Funds are sent to bridge contracts (CCTP, Axelar, etc.) based on optimal route*  
+   * *These bridges rely on external validators and relayers to verify cross-chain transactions*  
+8. **Wait for confirmation** across all involved networks (may take 10-20 minutes)  
+   * *Multiple relayer networks and validators must reach consensus*  
+   * *Each bridge and network has its own finality period*  
+9. **Once confirmed**, funds are available in your dYdX account  
+   * *Relayers monitor and trigger the final IBC transfer to dYdX Chain*
 
-   Refresh your browser and check on the dYdX front end if your deposit has succeeded. If you notice after one hour that your deposit is still on the "bridging tokens" step, continue to step 2.
-   ​
+Example Deposit (Ethereum → dYdX via Skip Go)
 
-2. **Check tracker tool**
+```
+{
+    "operations": [
+        {
+            "cctp_transfer": {
+                "from_chain_id": "1",
+                "to_chain_id": "noble-1",
+                "denom_in": "USDC",
+                "denom_out": "uusdc",
+                "bridge_id": "CCTP"
+            }
+        },
+        {
+            "transfer": {
+                "from_chain_id": "noble-1",
+                "to_chain_id": "dydx-mainnet-1",
+                "denom_in": "uusdc",
+                "denom_out": "ibc/USDC",
+                "bridge_id": "IBC"
+            }
+        }
+    ]
+}
+```
 
-   Check whether your funds have arrived on the destination side, by entering the transaction hash on [https://tracker.squidrouter.com/](https://tracker.squidrouter.com/).
+3\. Deposit with Coinbase
 
-   ​![Squid Tracker tool](../../artifacts/how_to_troubleshoot_withdrawals_3.png)
+**Coinbase deposits** involve an **automatic Noble Wallet to dYdX IBC transfer** without needing a third-party bridge.
 
-   **For Deposits**
+Process Flow (Deposit)
 
-   1. If the status shows "Succeeded", funds should have arrived on dYdX and you can move on to step 3.
+1. **On dYdX, select "Coinbase" to display the Noble address associated with the trader's dYdX address.**   
+   * The trader can then scan the QR code on Coinbase using the Coinbase QR code scanner, or copy and paste the Noble address into the destination address on the Coinbase withdrawal modal. Traders should make sure the Noble address is correct when depositing from Coinbase.  
+2. **Open Coinbase app** and navigate to the USDC asset page  
+3. **Select "Send"** and choose "Coinbase Pay" as the destination  
+4. **Enter your Noble address wallet address** (starts with "noble1...")  
+5. **Enter the amount** you wish to transfer  
+6. **Confirm the transaction** in Coinbase  
+7. **Wait for confirmation** (typically 1-3 minutes)  
+   * *Note: This process relies on Coinbase's infrastructure and Noble's IBC integration*  
+   * *Coinbase handles the initial funds transfer to Noble's USDC hub*  
+8. **Funds will automatically route** through Noble to dYdX via IBC  
+   * *This automatic routing uses the IBC relayer network*  
+   * *No swaps occur in this process as USDC moves directly between compatible chains*
 
-   2. If the status shows "Ongoing" for more than one hour, check at which "hop" the funds got stuck.
-      ​
+Example Deposit (Coinbase → dYdX)
 
-      - If the funds are stuck on Osmosis or Noble, move on to step 3, to manually troubleshoot where your funds are.
+```
+{
+    "operations": [
+        {
+            "transfer": {
+                "from_chain_id": "noble-1",
+                "to_chain_id": "dydx-mainnet-1",
+                "denom_in": "uusdc",
+                "denom_out": "ibc/USDC",
+                "bridge_id": "IBC"
+            }
+        }
+    ]
+}
+```
 
-      - If the funds are stuck on Axelar, raise a support ticket via:
-        _[https://dydx.trade](https://dydx.trade) > Help > Live Chat_ and make sure to share:
-        ​
-        - Transaction hash
-        - EVM address
-        - dYdX address
+4\. Direct IBC Transfer
 
-   **For Withdrawals**
+For users familiar with the Cosmos ecosystem, direct IBC transfers provide a straightforward method to deposit funds.
 
-   1. If the status shows "Succeeded", funds should have arrived on your destination address and you can move on to step 3.
+Supported Cosmos Chains
 
-   2. If the status shows "Ongoing" for more than one hour, check at which hop the funds got stuck.
-      ​ - If the funds are stuck on Axelar or Osmosis, raise a support ticket via
-      _[https://dydx.trade](https://dydx.trade) > Help > Live Chat_ and make sure to share
-      ​ - Transaction hash - EVM address - dYdX address
+* Osmosis  
+* Cosmos Hub  
+* Kujira  
+* Noble  
+* Injective  
+* And other IBC-enabled chains
 
-3. **Check destination**
+Process Flow (Deposit)
 
-   Now check whether your funds have arrived on the destination address.
-   For deposits [https://www.mintscan.io/dydx](https://www.mintscan.io/dydx), you should see a "deposit to subaccount" transaction in your transactions.
-   ​
+1. **Open your Cosmos wallet** (Keplr, Leap, etc.)  
+2. **Navigate to the IBC Transfer section**  
+3. **Select dYdX Chain as the destination**  
+4. **Enter your dYdX wallet address**  
+5. **Enter the amount** you wish to transfer  
+6. **Confirm the transaction**  
+7. **IBC relayer network processes the transfer:**  
+   * *IBC relayers run by validators and third-party services handle the cross-chain message delivery*  
+   * *No centralized entity controls this process; it's based on the Cosmos IBC protocol*  
+   * *If transferring a non-native token, ensure it's an IBC-supported asset on both chains*  
+8. **Wait for confirmation** (typically 15-30 seconds)  
+   * *Faster than bridging solutions as it doesn't require multi-chain consensus*
 
-   - If not, you can confirm whether the USDC has arrived on Noble, by checking [https://www.mintscan.io/noble](https://www.mintscan.io/noble).
+Withdrawal Process
 
-   - You need to make sure you have the dYdX front end opened and your wallet connected. The dYdX front end will detect your funds on Noble and auto-sweep it to your dYdX address. For this to happen, you need to actively open the front end and connect your wallet.
-     ​
+Withdrawing from dYdX Chain requires first moving funds from your trading subaccount to your main account before bridging to your destination chain.
 
-4. **Manual process stuck funds**
+Step-by-Step Withdrawal Guide
 
-   If for some reason, you have done step 3, but you still don't see the funds, you can always manually IBC transfer your funds to your dYdX address, by importing your secret phrase into Keplr and and perform a manual IBC transaction to your dYdX address.
+1. **Connect your wallet** to the dYdX interface  
+2. **Navigate to "Portfolio" \> "Balances"**  
+3. **Navigate to "Withdraw" section**  
+4. **Select your preferred withdrawal method:**  
+   * Skip Go (for more chain options)  
+   * Direct IBC Transfer (for Cosmos destinations)  
+5. **Choose destination chain and asset**  
+   * *If withdrawing to a non-USDC token, a swap will be executed by third-party DEXs*  
+6. **Enter withdrawal amount (minimum 11 USDC)**  
+7. **Review transaction details**  
+   * *Pay attention to the relayers and bridges involved in your specific route*  
+8. **Confirm and sign the transaction**  
+9. **Third-party services process your withdrawal:**  
+   * *For Skip methods: Relayers monitor for your transaction and execute cross-chain transfers*  
+   * *For IBC transfers: IBC relayer network handles the IBC*  
+   * *Multiple validators may need to confirm your transaction depending on the route*  
+10. **Wait for confirmation** across all networks  
+    * *Timeframes vary based on network congestion and the third-party services involved*
+
+Withdrawal Timeframes
+
+| Withdrawal Method | Approximate Time |
+| ----- | ----- |
+| Skip Go | 1-5 minutes |
+| Direct IBC | 30 seconds |
+
+## **Troubleshooting**
+
+### **Common Deposit Issues**
+
+1. **Funds not appearing in your dYdX account**  
+   * Verify transaction succeeded on source blockchain explorer  
+   * Check Noble explorer for IBC transfer confirmation  
+   * Ensure you've connected the correct wallet to dYdX interface; this is important for the autosweeping to happen from noble to dYdX chain and to sweep into your dYdX subaccount  
+   * Check [Range Tracker Tool](https://usdc.range.org/usdc) to see if relayers have picked up your transaction  
+   * Wait at least 30 minutes for all confirmations to complete  
+2. **Transaction stuck or pending**  
+   * For EVM chains, check if gas price was too low  
+   * Verify if transaction was rejected on source chain  
+   * For Skip bridges, check status on [Range](https://usdc.range.org/usdc) to see if relayers have picked up your transaction  
+   * Check if relayer networks are experiencing delays or outages  
+   * Verify all involved third-party services are operational  
+3. **Insufficient funds error**  
+   * Ensure you're accounting for network fees in addition to transfer amount  
+   * Verify minimum transfer requirements are met  
+   * For swaps, account for price impact and slippage  
+4. **Failed at swap stage**  
+   * Check if the DEX had sufficient liquidity for your swap  
+   * Verify slippage settings were appropriate for market conditions  
+   * Consider trying another deposit method that doesn't require a swap
+
+### **Bridge-Specific Troubleshooting**
+
+For detailed troubleshooting guides specific to each bridge, please refer to:
+
+1. **Skip Transaction Troubleshooting**  
+   * [Skip Documentation Portal](https://docs.skip.money)  
+   * Input *tx\_hash* and source chain *chain\_id* into [Skip API](https://docs.skip.build/go/api-reference/prod/transaction/get-v2txstatus?playground=open)  
+2. **CCTP Troubleshooting Guide**  
+   * [dYdX CCTP Documentation](https://dydx.exchange/blog/cctp)  
+   * [Circle CCTP Status Page](https://status.circle.com)  
+   * [USDC Tracker Tool](https://usdc.range.org/usdc)  
+   * **dYdX Chain Explorer**: [https://www.mintscan.io/dydx](https://www.mintscan.io/dydx)  
+   * **Noble Chain Explorer**: [https://www.mintscan.io/noble](https://www.mintscan.io/noble)  
+   * **Source Chain Explorer**: Etherscan, Arbiscan, etc.  
+3. **IBC Transfer Issues**  
+   * [Mintscan IBC Explorer](https://www.mintscan.io/ibc)  
+   * [IBC Relayer Status](https://ibc.range.org)  
+4. **Relayer issues**  
+   * Check status pages for relayer networks involved in your transaction  
+   * Wait for relayer networks to resume normal operation if experiencing downtime  
+   * Consider using an alternative deposit method if persistent issues occur
+
+If you encounter persistent bridging issues, follow these steps:
+
+1. **Identify where your funds are currently located**  
+   * Use block explorers for each relevant chain (source, Noble, dYdX)  
+   * For Skip transactions, check the `transfer_asset_release` field in the API response  
+2. **Try manual recovery methods if needed**  
+   * For IBC: Use Keplr or Leap wallet to manually complete pending transfers  
+   * For CCTP: Follow the manual process described in the CCTP section  
+   * For Skip: Contact Skip support through their Discord  
+3. **Contact appropriate support**  
+   * **Check the [dYdX Status Page](https://status.dydx.exchange)** for any known issues  
+   * **Join the [dYdX Discord](https://discord.gg/dydx)** for community support  
+   * **Open a support ticket** via the dYdX interface  
+   * **Skip issues:** [Skip Discord](https://discord.gg/skip-protocol)  
+   * **Noble issues:** [Noble Discord](https://discord.gg/noble)
+
+Remember to include transaction details, wallet addresses, and a clear description of the issue for faster resolution.
+
+## **Best Practices**
+
+1. **Always start with a small test transaction** when using a new deposit or withdrawal method  
+2. **Keep your wallet connected** to dYdX frontend for auto-sweeping  
+3. **Save transaction hashes** for all operations  
+4. **Double-check all addresses** before confirming transactions  
+5. **Ensure your destination wallet supports** the asset you're withdrawing  
+6. **For large transfers, use Skip Go** instead of Skip Go Fast for better reliability  
+7. **Always move funds from sub account to main account** before initiating withdrawals  
+8. **Understand third-party dependencies** in your chosen transfer route:  
+   * *Skip relies on their own solver network and DEX integrations*  
+   * *IBC transfers depend on the Cosmos relayer infrastructure*  
+   * *Coinbase deposits rely on Coinbase's infrastructure and Noble's IBC integration*  
+9. **Monitor relayer and bridge status** during high network congestion periods  
+10. **Have backup withdrawal methods** in case one bridge or relayer network experiences issues
+
