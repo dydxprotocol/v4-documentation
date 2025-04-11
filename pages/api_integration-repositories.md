@@ -8,6 +8,7 @@ Please find the open source repositories on our [GitHub](https://github.com/dydx
 * [Clients](https://github.com/dydxprotocol/v4-clients)
 * [Frontend](https://github.com/dydxprotocol/v4-web)
 * [iOS](https://github.com/dydxprotocol/v4-native-ios)
+* [Android](https://github.com/dydxprotocol/v4-native-android)
 * [Terraform](https://github.com/dydxprotocol/v4-infrastructure)
 
 When contributing, please ensure your commits are verified. You can follow these steps to do so:
