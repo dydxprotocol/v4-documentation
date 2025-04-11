@@ -1,8 +1,8 @@
-dYdX Chain: Deposits, Withdrawals & Troubleshooting Guide
+# dYdX Chain: Deposits, Withdrawals & Troubleshooting Guide
 
 This guide provides a **step-by-step** explanation of deposit and withdrawal processes on the dYdX Chain. It includes instructions for **Skip Go Fast (“Instant”), Skip Go (“Default”), Coinbase deposits**, and **direct IBC transfers**, along with **troubleshooting methods** and best practices to ensure seamless transactions.
 
-Deposit & Withdrawal Methods
+## Deposit & Withdrawal Methods
 
 | Method | Description | Finality | Chains Supported | Fee Range (USD) |
 | :---- | :---- | :---- | :---- | :---- |
@@ -11,16 +11,16 @@ Deposit & Withdrawal Methods
 | **Deposit / Withdrawal with Coinbase via Noble** | Direct deposit or withdrawal via Noble Wallet with automatic IBC transfer | 1-3 minutes | Coinbase to dYdX only | Coinbase withdrawal fee \+ IBC fee ($0.1-$0.2) |
 | **Direct IBC Transfer** | For users familiar with Cosmos ecosystem transfers | 15-30 seconds | All Cosmos chains with IBC enabled | \~$0.1-0.5 |
 
-1\. Skip Go Fast ("Instant Deposit")
+### 1\. Skip Go Fast ("Instant Deposit")
 
 Skip Go Fast is a **decentralized bridging protocol**, developed by **Skip**, that enables **rapid and secure cross-chain transactions** across major blockchain ecosystems such as Ethereum, Cosmos, and Solana. Go Fast accelerates cross-chain actions by up to 25 times, **reducing onboarding times from 10+ minutes to seconds**. Learn more [here](https://docs.skip.build/go/advanced-transfer/go-fast#go-fast).
 
-Supported Chains & Assets
+#### Supported Chains & Assets
 
 * **Chains:** Ethereum Mainnet, Arbitrum, Avalanche, Base, Optimism, Polygon  
 * **Assets:** USDC, ETH, POL
 
-Minimum & Maximum Transfer Sizes
+#### Minimum & Maximum Transfer Sizes
 
 | Source Chain | Min Transfer (USD) | Max Transfer (USD) |
 | ----- | ----- | ----- |
@@ -34,7 +34,7 @@ For the latest Minimum & Maximum Transfer Sizes, checkout the Skip API [document
 
 **Note:** If starting with an asset that is not USDC, Skip Go will swap the asset to USDC on the source chain, and the post-swap amount is used to determine if it falls within the min/max transfer size limits.
 
-Fees
+#### Fees
 
 All Skip Go Fast 
 
@@ -50,7 +50,7 @@ All Skip Go Fast
 
 For the latest source chain fees, checkout the Skip API [documents](https://docs.skip.build/go/advanced-transfer/go-fast#what-is-the-fee-model-for-go-fast%3F). 
 
-Process Flow (Deposit)
+#### Process Flow (Deposit)
 
 1. **Connect your wallet** to the dYdX interface and navigate to the "Deposit" section  
 2. **Enter the amount** you wish to transfer (ensure it meets minimum requirements)  
@@ -66,7 +66,7 @@ Process Flow (Deposit)
 9. **Final step:** Funds are **moved from the main account to the subaccount for trading**  
    * *This internal transfer is handled by dYdX Chain’s infrastructure*
 
-Example Deposit (Base → dYdX via Skip Go Fast)
+#### Example Deposit (Base → dYdX via Skip Go Fast)
 
 ```
 {
@@ -105,7 +105,7 @@ Example Deposit (Base → dYdX via Skip Go Fast)
 }
 ```
 
-### How Skip Go Fast Works
+#### How Skip Go Fast Works
 
 Skip Go Fast uses an innovative solver-based approach to achieve near-instant finality:
 
@@ -129,7 +129,7 @@ Skip Go Fast uses an innovative solver-based approach to achieve near-instant fi
    * Once confirmed, the solver receives their assets back plus any earned fees  
    * This settlement happens in the background and doesn't affect your user experience.
 
-2\. Skip Go ("Normal")
+### 2\. Skip Go ("Normal")
 
 Skip Go API is a **universal interoperability platform**, allowing **seamless swaps and transfers** across multiple blockchain ecosystems via **bridges such as CCTP and Axelar**.
 
@@ -138,7 +138,7 @@ Supported Chains & Assets
 * **Chains:** Ethereum Mainnet, Arbitrum, Avalanche, Base, Optimism, Polygon, Solana, and Cosmos chains  
 * **Assets:** USDC, ETH, POL
 
-Minimum & Maximum Transfer Sizes
+#### Minimum & Maximum Transfer Sizes
 
 | Source Chain | Min Transfer (USD) | Max Transfer (USD) |
 | ----- | ----- | ----- |
@@ -147,7 +147,7 @@ Minimum & Maximum Transfer Sizes
 | Solana | \~$0.05 | \~$1,000,000 |
 | Cosmos Chains | \~$0.05 | \~$1,000,000 |
 
-Fees  
+####Fees  
 Source chain gas fees \+ Deposits \~$0.02 Withdrawals: \~$0.1-$7
 
 | Source Chain | Fee (USD) |
@@ -157,7 +157,7 @@ Source chain gas fees \+ Deposits \~$0.02 Withdrawals: \~$0.1-$7
 | Solana | Deposits \~$0.02 Withdrawals: \~$0.1-$7 |
 | Cosmos Chains | Deposits \~$0.02 Withdrawals: \~$0.1-$7  |
 
-Process Flow (Deposit)
+#### Process Flow (Deposit)
 
 1. **Connect your wallet** to the dYdX interface and navigate to the "Deposit" section  
 2. **Enter the amount** you wish to transfer (First time 1.25 USDC will be kept in wallet for gas fees)  
@@ -175,7 +175,7 @@ Process Flow (Deposit)
 9. **Once confirmed**, funds are available in your dYdX account  
    * *Relayers monitor and trigger the final IBC transfer to dYdX Chain*
 
-Example Deposit (Ethereum → dYdX via Skip Go)
+#### Example Deposit (Ethereum → dYdX via Skip Go)
 
 ```
 {
@@ -202,7 +202,7 @@ Example Deposit (Ethereum → dYdX via Skip Go)
 }
 ```
 
-3\. Deposit with Coinbase
+### 3\. Deposit with Coinbase
 
 **Coinbase deposits** involve an **automatic Noble Wallet to dYdX IBC transfer** without needing a third-party bridge.
 
@@ -222,7 +222,7 @@ Process Flow (Deposit)
    * *This automatic routing uses the IBC relayer network*  
    * *No swaps occur in this process as USDC moves directly between compatible chains*
 
-Example Deposit (Coinbase → dYdX)
+#### Example Deposit (Coinbase → dYdX)
 
 ```
 {
@@ -240,7 +240,7 @@ Example Deposit (Coinbase → dYdX)
 }
 ```
 
-4\. Direct IBC Transfer
+### 4\. Direct IBC Transfer
 
 For users familiar with the Cosmos ecosystem, direct IBC transfers provide a straightforward method to deposit funds.
 
@@ -253,7 +253,7 @@ Supported Cosmos Chains
 * Injective  
 * And other IBC-enabled chains
 
-Process Flow (Deposit)
+#### Process Flow (Deposit)
 
 1. **Open your Cosmos wallet** (Keplr, Leap, etc.)  
 2. **Navigate to the IBC Transfer section**  
@@ -268,7 +268,7 @@ Process Flow (Deposit)
 8. **Wait for confirmation** (typically 15-30 seconds)  
    * *Faster than bridging solutions as it doesn't require multi-chain consensus*
 
-Withdrawal Process
+#### Withdrawal Process
 
 Withdrawing from dYdX Chain requires first moving funds from your trading subaccount to your main account before bridging to your destination chain.
 
@@ -293,7 +293,7 @@ Step-by-Step Withdrawal Guide
 10. **Wait for confirmation** across all networks  
     * *Timeframes vary based on network congestion and the third-party services involved*
 
-Withdrawal Timeframes
+#### Withdrawal Timeframes
 
 | Withdrawal Method | Approximate Time |
 | ----- | ----- |
