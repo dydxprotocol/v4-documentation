@@ -1,0 +1,39 @@
+### Get MegaVaults Positions
+
+MegaVault positions.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+async getMegavaultPositions(): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_megavault_positions(&self) -> Result<Vec<VaultPosition>, Error>
+```
+
+```url [API]
+/v4/vault/v1/megavault/positions
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+#### Response
+
+| Status | Meaning     | Schema                        |
+| ------ | ----------- | ----------------------------- |
+| `200`  | [OK]        | [VaultPosition] ⛁             |
+
+[OK]: /types/ok
+[VaultPosition]: /types/vault_position

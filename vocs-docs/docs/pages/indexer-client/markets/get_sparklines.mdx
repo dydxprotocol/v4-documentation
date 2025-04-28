@@ -1,0 +1,52 @@
+### Get Sparklines
+
+Retrieves sparkline data for perpetual markets.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_perpetual_market_sparklines(
+    self,
+    period: str = TimePeriod.ONE_DAY
+) -> dict
+```
+
+```typescript [TypeScript]
+async getPerpetualMarketSparklines(
+    period: string = TimePeriod.ONE_DAY,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_sparklines(
+    &self,
+    period: SparklineTimePeriod,
+) -> Result<SparklineResponseObject, Error>
+```
+
+```url [API]
+/v4/sparklines
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type                  | Required | Description                                                             |
+| ------------------- | -------- | --------------------- | -------- | ----------------------------------------------------------------------- |
+| `period`            | query    | [SparklineTimePeriod] | true     | The time period for the sparkline data (e.g., "ONE_DAY", "SEVEN_DAYS"). |
+
+#### Response
+
+| Status | Meaning     | Schema                      | Description         |
+| ------ | ----------- | --------------------------- | ------------------- |
+| `200`  | [OK]        | [SparklineResponseObject] ⛁ | The sparkline data. |
+
+[OK]: /types/ok
+[SparklineTimePeriod]: /types/sparkline_time_period
+[SparklineResponseObject]: /types/sparkline_response_object

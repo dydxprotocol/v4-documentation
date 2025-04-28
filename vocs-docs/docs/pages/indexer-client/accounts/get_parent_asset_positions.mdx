@@ -1,0 +1,49 @@
+### Get Parent Asset Positions
+
+Query for asset positions (size, buy/sell etc) for a parent subaccount.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+
+```
+
+```rust [Rust]
+pub async fn get_parent_asset_positions(
+    &self,
+    subaccount: &ParentSubaccount,
+) -> Result<Vec<AssetPositionResponseObject>, Error>
+```
+
+```url [API]
+/v4/assetPositions/parentSubaccountNumber
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                     | Location  | Type               | Required | Description                                                           |
+| ------------------------------| --------- | ------------------ | -------- | --------------------------------------------------------------------- |
+| `address`                     | query     | [Address]          | true     | The wallet address that owns the subaccount.                          |
+| `parent_subaccount_number`    | query     | [SubaccountNumber] | true     | The parent subaccount number of this wallet                           |
+
+#### Response
+
+| Status | Meaning     | Schema                          |
+| ------ | ----------- | ------------------------------- |
+| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |
+
+[Address]: /types/address
+[SubaccountNumber]: /types/subaccount_number
+[AssetPositionResponseObject]: /types/asset_position_response_object
+[OK]: /types/ok

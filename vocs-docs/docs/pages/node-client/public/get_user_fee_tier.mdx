@@ -1,0 +1,57 @@
+### Get User Fee Tier
+
+The `Get User Fee Tier` function retrieves the perpetual fee tier associated with a specific wallet address, providing information on the user's current fee structure.
+
+This is essential for users to understand the fees applicable to their transactions on the platform.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_user_fee_tier(
+    self, address: str
+) -> fee_tier_query.QueryUserFeeTierResponse
+```
+
+```typescript [TypeScript]
+async getUserFeeTier(address: string): Promise<FeeTierModule.QueryUserFeeTierResponse>
+```
+
+```rust [Rust]
+pub async fn get_user_fee_tier(
+    &mut self,
+    address: Address,
+) -> Result<PerpetualFeeTier, Error>
+```
+
+```url [API]
+/dydxprotocol.feetiers.Query/UserFeeTier
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Required    | Description                                                           |
+| ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
+| `user`              | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
+
+#### Response
+
+| Status | Meaning     | Schema                          |
+| ------ | ----------- | ------------------------------- |
+| `200`  | [OK]        | [PerpetualFeeTier]              |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L176
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L73
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L113
+
+[Address]: /types/address
+[OK]: /types/ok
+[PerpetualFeeTier]: /types/perpetual_fee_tier

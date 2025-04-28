@@ -1,0 +1,48 @@
+### Get Clob Pair
+
+The `Get Clob Pair` function fetches the order book pair identified by a given ID, allowing users to retrieve detailed information about a specific trading pair within a Central Limit Order Book (CLOB) system.
+
+The response typically includes data structured within the `ClobPair` schema.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_clob_pair(self, pair_id: int) -> clob_pair_type.ClobPair
+```
+
+```typescript [TypeScript]
+async getClobPair(pairId: number): Promise<ClobModule.QueryClobPairResponse>
+```
+
+```rust [Rust]
+pub async fn get_clob_pair(&mut self, pair_id: u32) -> Result<ClobPair, Error>
+```
+
+```url [API]
+/dydxprotocol.clob.Query/ClobPair
+```
+
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type     | Required  | Description   |
+| ------------------- | -------- | -------- | --------- | ------------- |
+| `id`                | query    | [u32]    | true      | Clob pair id  |
+
+#### Response
+
+| Status | Meaning | Schema     |
+| ------ | ------- | ---------- |
+| `200`  | [OK]    | [ClobPair] |
+
+Examples: [Python] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L86
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L71
+
+[u32]: /types/u32
+[OK]: /types/ok
+[ClobPair]: /types/clob_pair

@@ -1,0 +1,67 @@
+### Get Delegator Unbounding Delegations
+
+The [Get Delegator Unbonding Delegations] function allows you to query all unbonding delegations associated with a specific delegator address.
+
+This is particularly useful for tracking assets that are in the process of being unbonded from validators, providing insight into pending delegation changes.
+
+[Get Delegator Unbonding Delegations]: https://github.com/cosmos/cosmos-sdk/tree/main/x/staking#delegatorunbondingdelegations
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_delegator_unbonding_delegations(
+    self, delegator_addr: str
+) -> staking_query.QueryDelegatorUnbondingDelegationsResponse
+```
+
+```typescript [TypeScript]
+async getDelegatorUnbondingDelegations(
+    delegatorAddr: string,
+): Promise<StakingModule.QueryDelegatorUnbondingDelegationsResponse>
+```
+
+```rust [Rust]
+pub async fn get_delegator_unbonding_delegations(
+    &mut self,
+    delegator_address: Address,
+    pagination: Option<CosmosPageRequest>,
+) -> Result<Vec<UnbondingDelegation>, Error>
+```
+
+```url [API]
+/cosmos.staking.v1beta1.Query/DelegatorUnbondingDelegations
+```
+
+:::
+
+:::details[Unification Plan]
+- Python and TypeScript don't contain options
+- Options in protocol are not optional
+- Two types of options (v4 and cosmos, are the same, please use cosmos)
+:::
+
+#### Parameters
+
+| Parameter        | Location | Type          | Required | Description                                  |
+| ---------------- | -------- | ------------- | -------- | -------------------------------------------- |
+| `delegator_addr` | query    | [Address]     | true     | The wallet address that owns the subaccount. |
+| `pagination`     | query    | [PageRequest] | false    | Parameters of pagination.                    |
+
+#### Response
+
+| Status | Meaning | Schema                  |
+| ------ | ------- | ----------------------- |
+| `200`  | [OK]    | [UnbondingDelegation] ⛁ |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L150
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L113
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L98
+
+[Address]: /types/address
+[OK]: /types/ok
+[PageRequest]: /types/page_request
+[UnbondingDelegation]: /types/unbonding_delegations

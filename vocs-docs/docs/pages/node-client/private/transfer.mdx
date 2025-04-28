@@ -1,0 +1,65 @@
+### Transfer
+
+Transfer funds (USDC) between subaccounts.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def transfer(
+    self,
+    wallet: Wallet,
+    sender_subaccount: SubaccountId,
+    recipient_subaccount: SubaccountId,
+    asset_id: int,
+    amount: int,
+)
+```
+
+```typescript [TypeScript]
+TODO: transfer
+```
+
+```rust [Rust]
+pub async fn transfer(
+    &mut self,
+    account: &mut Account,
+    sender: Subaccount,
+    recipient: Subaccount,
+    amount: impl Into<Usdc>,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                 | Location  | Type              | Required  | Description                                       |
+| ------------------------- | --------- | ----------------- | --------- | ------------------------------------------------- |
+| `wallet`                  | query     | [Wallet]          | true      | The wallet to use for signing the transaction.    |
+| `sender_subaccount`       | query     | [SubaccountId]    | true      | The sender subaccount ID.                         |
+| `recipient_subaccount`    | query     | [SubaccountId]    | true      | The recipient subaccount ID.                      |
+| `asset_id`                | query     | int               | true      | The asset ID.                                     |
+| `amount`                  | query     | int               | true      | The amount to transfer.                           |
+
+#### Response
+
+| Status | Meaning     | Schema |
+| ------ | ----------- | ------ |
+| `200`  | [OK]        | string |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-py-v2/examples/transfer_example_transfer.py
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/transfer_example_subaccount_transfer.ts
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/transfer.rs
+
+[Wallet]: /types/wallet
+[SubaccountId]: /types/subaccount_id

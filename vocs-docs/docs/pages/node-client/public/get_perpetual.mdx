@@ -1,0 +1,54 @@
+### Get Perpetual
+
+The `Get Perpetual` method queries a specific perpetual contract by its unique `perpetual_id`, returning details about the contract.
+
+This is an asynchronous function typically used to retrieve data such as market conditions or contract specifications.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_perpetual(self, perpetual_id: int) -> QueryPerpetualResponse
+```
+
+```typescript [TypeScript]
+async getPerpetual(perpetualId: number): Promise<PerpetualsModule.QueryPerpetualResponse>
+```
+
+```rust [Rust]
+pub async fn get_perpetual(
+    &mut self,
+    perpetual_id: u32,
+) -> Result<Perpetual, Error>
+```
+
+```url [API]
+/dydxprotocol.perpetuals.Query/Perpetual
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter | Location | Type   |Required   |  Description  |
+| --------- | -------- | ------ | --------- | ------------- |
+| `id`      | query    | [u32]  |true       | Perpetual id  |
+
+#### Response
+
+| Status | Meaning     | Schema         |
+| ------ | ----------- | -------------  |
+| `200`  | [OK]        | [Perpetual]    |
+
+Examples: [Python] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L118
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L83
+
+[u32]: /types/u32
+[OK]: /types/ok
+[Perpetual]: /types/perpetual

@@ -1,0 +1,60 @@
+### Fill
+
+add USDC to a subaccount
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def fill(
+    self,
+    address: str,
+    subaccount_number: int,
+    amount: float,
+    headers: Optional[Dict] = None,
+) -> httpx.Response
+```
+
+```rust [Rust]
+pub async fn fill(&self, subaccount: &Subaccount, amount: &Usdc) -> Result<(), Error>
+
+```
+
+```typescript [TypeScript]
+public async fill(
+    address: string,
+    subaccountNumber: number,
+    amount: number,
+    headers?: {},
+): Promise<Response>
+```
+
+```url [API]
+/faucet/tokens
+```
+:::
+
+#### Parameters
+
+| Parameter             | Location  | Type                  | Required      | Description                                                           |
+| --------------------- | --------- | --------------------- | ------------- | --------------------------------------------------------------------- |
+| `address`             | body      | [Address]             | true          | The wallet address that owns the subaccount.                          |
+| `subaccount_number`   | body      | [SubaccountNumber]    | true          | A number that identifies a certain subaccount of the address          |
+| `amount`              | body      | [BigDecimal]          | true          | Amount to fill                                                        |
+
+#### Response
+
+| Status | Meaning     | Schema                         | Description                                   |
+| ------ | ----------- | ------------------------------ | --------------------------------------------- |
+| `200`  | [OK]        |                                | The response                                  |
+
+Examples: [Python] | [TypeScript]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-py-v2/examples/faucet_endpoint.py
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/faucet_endpoint.ts
+
+[Address]: /types/address
+[SubaccountNumber]: /types/subaccount_number
+[BigDecimal]: /types/big_decimal
+[OK]: /types/ok

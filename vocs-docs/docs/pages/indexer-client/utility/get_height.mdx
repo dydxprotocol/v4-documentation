@@ -1,0 +1,45 @@
+### Get Height
+
+Current block height and block time (UTC) parsed by Indexer.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_height(self) -> Dict[str, str]
+```
+
+```typescript [TypeScript]
+async getHeight(): Promise<HeightResponse>
+```
+
+```rust [Rust]
+pub async fn get_height(&self) -> Result<HeightResponse, Error>
+```
+
+```url [API]
+/v4/height
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Required    | Description                                                           |
+| ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
+| `limit`             | query    | [u32]              | false       | Maximum number of asset positions to return in the response.          |
+
+#### Response
+
+| Status | Meaning     | Schema                          | Description |
+| ------ | ----------- | ------------------------------- | ----------- |
+| `200`  | [OK]        | [HeightResponse] ⛁ | Dictionary containing the block height and time. |
+
+[Address]: /types/address
+[OK]: /types/ok
+[HeightResponse]: /types/height_response

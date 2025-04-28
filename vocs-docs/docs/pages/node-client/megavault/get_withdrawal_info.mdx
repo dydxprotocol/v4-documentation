@@ -1,0 +1,52 @@
+### Get Withdrawal Info
+
+// TODO: Add description
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+async getMegavaultWithdrawalInfo(
+    sharesToWithdraw: bigint,
+): Promise<VaultModule.QueryMegavaultWithdrawalInfoResponse>
+```
+
+```rust [Rust]
+pub async fn get_withdrawal_info(
+    &mut self,
+    shares: &BigInt,
+) -> Result<QueryMegavaultWithdrawalInfoResponse, Error>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Description                                                           |
+| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
+
+:::details[Optional]
+
+| Parameter                     | Location | Type   | Description                                                  |
+| ----------------------------- | -------- | -----  | ------------------------------------------------------------ |
+| `limit`                       | query    | [u32]  | Maximum number of asset positions to return in the response. |
+
+:::
+
+#### Response
+
+| Status | Meaning     | Schema                          |
+| ------ | ----------- | ------------------------------- |
+| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |

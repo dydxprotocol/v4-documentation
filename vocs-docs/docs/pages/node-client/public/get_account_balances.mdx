@@ -1,0 +1,57 @@
+### Get Account Balances
+
+The [Get Account Balances] method retrieves the balance for a specific wallet address across all currency denominations within the account.
+
+It provides the balance details encapsulated in a response structure, typically including the coin type and respective amounts.
+
+[Get Account Balances]: https://github.com/cosmos/cosmos-sdk/tree/main/x/bank#allbalances
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_account_balances(
+        self,
+        address: str,
+) -> bank_query.QueryAllBalancesResponse
+```
+
+```typescript [TypeScript]
+async getAccountBalances(address: string): Promise<Coin[]>
+```
+
+```rust [Rust]
+pub async fn get_account_balances(
+    &mut self,
+    address: &Address,
+) -> Result<Vec<Coin>, Error>
+```
+
+```url [API]
+/cosmos.bank.v1beta1.Query/AllBalances
+```
+
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Required    | Description                                                           |
+| ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
+
+#### Response
+
+| Status | Meaning     | Schema                          | Description                                   |
+| ------ | ----------- | ------------------------------- | --------------------------------------------- |
+| `200`  | [OK]        | [Coin] ⛁                        | The response containing all account balances. |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L20
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L17
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L35o
+
+[Address]: /types/address
+[OK]: /types/ok
+[Coin]: /types/coin

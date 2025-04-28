@@ -1,0 +1,38 @@
+### Get Account Balance
+
+Query token balance of an account/address.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_account_balance(
+    self, address: str, denom: str
+) -> bank_query.QueryBalanceResponse
+```
+
+```rust [Rust]
+pub async fn get_account_balance(
+    &mut self,
+    address: Address,
+    denom: &Denom,
+) -> Result<Coin, Error>
+```
+
+```typescript
+  getAccountBalance(denom: string): Promise<Coin>
+```
+
+```url [API]
+```
+
+:::
+
+#### Parameters
+
+#### Response
+
+Examples: [TypeScript]
+
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/noble_example.ts#L93

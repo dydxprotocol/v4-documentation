@@ -1,0 +1,43 @@
+### Get Time
+
+Get current server time of Indexer
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_time(self) -> Dict[str, str]
+```
+
+```typescript [TypeScript]
+async getTime(): Promise<TimeResponse>
+```
+
+```rust [Rust]
+pub async fn get_time(&self) -> Result<TimeResponse, Error>
+```
+
+```url [API]
+/v4/time
+```
+
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Required    | Description                                                           |
+| ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
+| `limit`             | query    | [i32]              | false       | Maximum number of asset positions to return in the response.          |
+
+#### Response
+
+| Status | Meaning     | Schema         |
+| ------ | ----------- | -------------- |
+| `200`  | [OK]        | [TimeResponse] |
+
+[Address]: /types/address
+[OK]: /types/ok
+[TimeResponse]: /types/time_response
+[i32]: /types/i32

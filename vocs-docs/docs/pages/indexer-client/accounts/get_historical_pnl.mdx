@@ -1,0 +1,81 @@
+### Get Historical Pnl
+
+Retrieves historical profit and loss (PNL) data for a specific subaccount on the exchange.
+
+This function queries the dYdX indexer API to fetch historical PNL records
+associated with a particular subaccount. The endpoint being called is '/v4/historical-pnl'.
+
+These records provide insights into the trading performance over time.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_subaccount_historical_pnls(
+    self,
+    address: str,
+    subaccount_number: int,
+    effective_before_or_at: Optional[str] = None,
+    effective_at_or_after: Optional[str] = None,
+) -> Any
+```
+
+```typescript [TypeScript]
+async getSubaccountHistoricalPNLs(
+    address: string,
+    subaccountNumber: number,
+    createdBeforeOrAtHeight?: number | null,
+    createdBeforeOrAt?: string | null,
+    createdOnOrAfterHeight?: number | null,
+    createdOnOrAfter?: string | null,
+    limit?: number | null,
+    page?: number | null,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_historical_pnl(
+    &self,
+    subaccount: &Subaccount,
+    opts: Option<GetHistoricalPnlOpts>,
+) -> Result<Vec<PnlTicksResponseObject>, Error>
+```
+
+```url [API]
+/v4/historical-pnl
+```
+
+:::
+
+:::details[Unification Plan]
+- Parameter `created_on_or_after_height` is missing
+- Parameter `created_on_or_after` is missing
+:::
+
+#### Parameters
+
+| Parameter                     | Location | Type               | Required   | Description                                                                                  |
+| ----------------------------- | -------- | ------------------ | ---------- | -------------------------------------------------------------------------------------------- |
+| `address`                     | query    | [Address]          | true       | The wallet address that owns the subaccount.                                                 |
+| `subaccount_number`           | query    | [SubaccountNumber] | true       | The identifier for the specific subaccount within the wallet address.                        |
+| `limit`                       | query    | [u32]              | false      | Maximum number of asset positions to return in the response.                                 |
+| `created_before_or_at_height` | query    | [Height]           | false      | Restricts results to positions created at or before a specific blockchain height.            |
+| `created_before_or_at`        | query    | [DateTime]         | false      | Restricts results to positions created at or before a specific timestamp (ISO 8601 format).  |
+| `created_on_or_after_height`  | query    | [Height]           | false      | Restricts results to positions created on or after a specific blockchain height.             |
+| `created_on_or_after`         | query    | [DateTime in utc]  | false      | Restricts results to positions created on or after a specific timestamp (ISO 8601 format).   |
+| `page`                        | query    | [u32]              | false      | The page number for paginated results.                                                       |
+
+#### Response
+
+| Status | Meaning     | Schema                     | Description               |
+| ------ | ----------- | -------------------------- | ------------------------- |
+| `200`  | [OK]        | [PnlTicksResponseObject] ⛁ | The historical PnLs data. |
+
+[Address]: /types/address
+[SubaccountNumber]: /types/subaccount_number
+[OK]: /types/ok
+[PnlTicksResponseObject]: /types/pnl_ticks_response_object
+[u32]: /types/u32
+[Height]: /types/height
+[DateTime in utc]: /types/date_time

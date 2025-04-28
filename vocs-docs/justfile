@@ -1,0 +1,5 @@
+dev:
+    pnpm dev
+
+install:
+    pnpm install

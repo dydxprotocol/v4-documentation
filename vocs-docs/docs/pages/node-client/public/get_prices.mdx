@@ -1,0 +1,56 @@
+### Get Prices
+
+The `Get Prices` method is used to query all market prices from the system, providing an overview of current market values.
+
+It can include optional pagination parameters to manage large sets of data efficiently (not in all clients yet).
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_prices(self) -> QueryAllMarketPricesResponse
+```
+
+```typescript [TypeScript]
+async getAllPrices(): Promise<PricesModule.QueryAllMarketPricesResponse>
+```
+
+```rust [Rust]
+pub async fn get_prices(
+    &mut self,
+    pagination: Option<V4PageRequest>,
+) -> Result<Vec<MarketPrice>, Error>
+```
+
+```url [API]
+/dydxprotocol.prices.Query/AllMarketPrices
+```
+
+:::
+
+:::details[Unification Plan]
+- Python and TypeScript don't contain options
+:::
+
+#### Parameters
+
+| Parameter     | Location | Type          | Required | Description               |
+| ------------- | -------- | ------------- | -------- | ------------------------- |
+| `pagination`  | query    | [PageRequest] | false    | Parameters of pagination. |
+
+#### Response
+
+| Status | Meaning | Schema          |
+| ------ | ------- | --------------- |
+| `200`  | [OK]    | [MarketPrice] ⛁ |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L110
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L57
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L80
+
+[OK]: /types/ok
+[PageRequest]: /types/page_request
+[MarketPrice]: /types/market_price

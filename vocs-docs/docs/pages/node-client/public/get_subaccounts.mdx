@@ -1,0 +1,44 @@
+### Get Subaccounts
+
+The `Get Subaccounts` function retrieves a comprehensive list of all subaccounts associated with an account, returning structured information encapsulated in a response object.
+
+This aids in managing and viewing details of subaccounts under a main account efficiently.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_subaccounts(self) -> QuerySubaccountAllResponse
+```
+
+```typescript [TypeScript]
+async getSubaccounts(): Promise<SubaccountsModule.QuerySubaccountAllResponse>
+```
+
+```rust [Rust]
+pub async fn get_subaccounts(&mut self) -> Result<Vec<SubaccountInfo>, Error>
+```
+
+```url [API]
+/dydxprotocol.subaccounts.Query/SubaccountAll
+```
+
+:::
+
+#### Parameters
+
+#### Response
+
+| Status | Meaning     | Schema             |
+| ------ | ----------- | ------------------ |
+| `200`  | [OK]        | [SubaccountInfo] ⛁ |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L77
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L25
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L68
+
+[OK]: /types/ok
+[SubaccountInfo]: /types/subaccount_info

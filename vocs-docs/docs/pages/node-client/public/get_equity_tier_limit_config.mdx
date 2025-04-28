@@ -1,0 +1,53 @@
+### Get Equity Tier Limit Config
+
+The [Equity Tier Limit Configuration] is a method used to fetch the configuration details that outline the limits set for different tiers of equity.
+
+It provides essential data that defines the specific constraints and parameters associated with each equity tier.
+
+[Equity Tier Limit Configuration]: /https://docs.rs/dydx-proto/0.2.0/x86_64-unknown-linux-gnu/dydx_proto/dydxprotocol/clob/struct.EquityTierLimitConfiguration.html
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_equity_tier_limit_config(
+    self,
+) -> equity_tier_limit_config_type.EquityTierLimitConfiguration:
+```
+
+```typescript [TypeScript]
+async getEquityTierLimitConfiguration(): Promise<ClobModule.QueryEquityTierLimitConfigurationResponse>
+```
+
+```rust [Rust]
+pub async fn get_equity_tier_limit_config(
+    &mut self,
+) -> Result<EquityTierLimitConfiguration, Error>
+```
+
+```url [API]
+/dydxprotocol.clob.Query/EquityTierLimitConfiguration
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+#### Response
+
+| Status | Meaning     | Schema                         |
+| ------ | ----------- | ------------------------------ |
+| `200`  | [OK]        | [EquityTierLimitConfiguration] |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L134
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L89
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L89
+
+[OK]: /types/ok
+[EquityTierLimitConfiguration]: /types/equity_tier_limit_configuration

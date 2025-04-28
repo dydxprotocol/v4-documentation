@@ -1,0 +1,49 @@
+### Get Screen
+
+Query for screening results (compliance) of the address.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def screen(self, address: str) -> Dict[str, bool]:
+```
+
+```typescript [TypeScript]
+async screen(address: string): Promise<ComplianceResponse>
+```
+
+```rust [Rust]
+pub async fn get_screen(
+    &self,
+    query: &Address,
+) -> Result<ComplianceResponse, Error>
+```
+
+```url [API]
+/v4/screen
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Required    | Description                                                           |
+| ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
+| `limit`             | query    | [u32]              | false       | Maximum number of asset positions to return in the response.          |
+
+#### Response
+
+| Status | Meaning     | Schema                          |
+| ------ | ----------- | ------------------------------- |
+| `200`  | [OK]        | [ComplianceResponse] ⛁ |
+
+[Address]: /types/address
+[u32]: /types/u32
+[OK]: /types/ok
+[ComplianceResponse]: /types/compliance_response

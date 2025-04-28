@@ -1,0 +1,52 @@
+### Create Transaction
+
+Create a transaction.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+def build_transaction(self, wallet: Wallet, messages: List[Message], fee: Fee)
+```
+
+```typescript [TypeScript]
+
+```
+
+```rust [Rust]
+pub async fn create_transaction(
+    &mut self,
+    account: &mut Account,
+    msg: impl ToAny,
+    auth: Option<&Address>,
+) -> Result<Raw, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Description                                                           |
+| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
+
+:::details[Optional]
+
+| Parameter                     | Location | Type                      | Description                                                  |
+| ----------------------------- | -------- | ------------------------- | ------------------------------------------------------------ |
+| `limit`                       | query    | [u32]                     | Maximum number of asset positions to return in the response. |
+
+:::
+
+#### Response
+
+| Status | Meaning     | Schema                          |
+| ------ | ----------- | ------------------------------- |
+| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |

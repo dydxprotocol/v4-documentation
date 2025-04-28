@@ -1,0 +1,60 @@
+### Deposit
+
+Deposit funds (USDC) from the address to the subaccount.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+async depositToMegavault(
+    subaccount: SubaccountInfo,
+    amountUsdc: number,
+    broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+
+depositToMegavaultMessage(subaccount: SubaccountInfo, amountUsdc: number): EncodeObject
+```
+
+```rust [Rust]
+pub async fn deposit(
+    &mut self,
+    account: &mut Account,
+    subaccount: Subaccount,
+    amount: impl Into<Usdc>,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Description                                                           |
+| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
+
+:::details[Optional]
+
+| Parameter                     | Location | Type                      | Description                                                  |
+| ----------------------------- | -------- | ------------------------- | ------------------------------------------------------------ |
+| `limit`                       | query    | [u32]                     | Maximum number of asset positions to return in the response. |
+
+:::
+
+#### Response
+
+| Status | Meaning     | Schema     |
+| ------ | ----------- | ---------- |
+| `200`  | [OK]        | [TxHash] ⛁ |
+
+[TxHash]: /types/tx_hash

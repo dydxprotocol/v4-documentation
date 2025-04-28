@@ -1,0 +1,51 @@
+### Get Price
+
+The `Get Price` method is used to retrieve the current market price for a specified market, identified by its `id`.
+
+It returns the price as a `MarketPrice` object when the request is successful.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_price(self, market_id: int) -> market_price_type.MarketPrice
+```
+
+```typescript [TypeScript]
+async getPrice(marketId: number): Promise<PricesModule.QueryMarketPriceResponse>
+```
+
+```rust [Rust]
+pub async fn get_price(&mut self, market_id: u32) -> Result<MarketPrice, Error>
+```
+
+```url [API]
+/dydxprotocol.prices.Query/MarketPrice
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Required    | Description                                                           |
+| ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
+| `id`                | query    | [u32]              | true        | market id to get price                                                |
+
+#### Response
+
+| Status | Meaning     | Schema                          |
+| ------ | ----------- | ------------------------------- |
+| `200`  | [OK]        | [MarketPrice] |
+
+Examples: [Python] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L102
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L102
+
+[u32]: /types/u32
+[OK]: /types/ok
+[MarketPrice]: /types/market_price

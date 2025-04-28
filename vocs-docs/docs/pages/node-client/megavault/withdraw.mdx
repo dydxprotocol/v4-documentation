@@ -1,0 +1,59 @@
+### Withdraw
+
+// TODO: Add description
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+export async function withdrawFromMegavault(
+  subaccountNumber: number,
+  shares: number,
+  minAmount: number,
+): Promise<string>
+```
+
+```rust [Rust]
+pub async fn withdraw(
+    &mut self,
+    account: &mut Account,
+    subaccount: Subaccount,
+    min_amount: impl Into<Usdc>,
+    shares: Option<&BigInt>,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Description                                                           |
+| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
+
+:::details[Optional]
+
+| Parameter                     | Location | Type                      | Description                                                  |
+| ----------------------------- | -------- | ------------------------- | ------------------------------------------------------------ |
+| `limit`                       | query    | [u32]                     | Maximum number of asset positions to return in the response. |
+
+:::
+
+#### Response
+
+| Status | Meaning     | Schema     |
+| ------ | ----------- | ---------- |
+| `200`  | [OK]        | [TxHash] ⛁ |
+
+[TxHash]: /types/tx_hash

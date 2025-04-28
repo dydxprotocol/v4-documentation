@@ -1,0 +1,53 @@
+### Close Position
+
+Close position for a given market.
+
+Opposite short-term market orders are used. If provided, the position is only reduced by a size of reduce_by. Note that at the moment dYdX doesn’t support spot trading.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+
+```
+
+```rust [Rust]
+pub async fn close_position(
+    &mut self,
+    account: &mut Account,
+    subaccount: Subaccount,
+    market_params: impl Into<OrderMarketParams>,
+    reduce_by: Option<BigDecimal>,
+    client_id: impl Into<ClientId>,
+) -> Result<Option<TxHash>, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Required    | Description                                                           |
+| ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
+| `limit`             | query    | [u32]              | false       | Maximum number of asset positions to return in the response.          |
+
+#### Response
+
+| Status | Meaning     | Schema                          |
+| ------ | ----------- | ------------------------------- |
+| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |
+
+Examples: [Rust]
+
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/close_position.rs

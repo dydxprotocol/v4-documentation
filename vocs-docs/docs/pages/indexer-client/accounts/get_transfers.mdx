@@ -1,0 +1,73 @@
+### Get Transfers
+
+Retrieves the transfer history for a specific subaccount.
+
+This method allows you to query and filter the transfer transactions associated with a particular subaccount.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_subaccount_transfers(
+    self,
+    address: str,
+    subaccount_number: int,
+    limit: Optional[int] = None,
+    created_before_or_at_height: Optional[int] = None,
+    created_before_or_at: Optional[str] = None,
+) -> Any
+```
+
+```typescript [TypeScript]
+async getSubaccountTransfers(
+    address: string,
+    subaccountNumber: number,
+    limit?: number | null,
+    createdBeforeOrAtHeight?: number | null,
+    createdBeforeOrAt?: string | null,
+    page?: number | null,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_transfers(
+    &self,
+    subaccount: &Subaccount,
+    opts: Option<GetTransfersOpts>,
+) -> Result<Vec<TransferResponseObject>, Error>
+```
+
+```url [API]
+/v4/transfers
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                     | Location | Type               | Required   | Description                                                                          |
+| ----------------------------- | -------- | ------------------ | ---------- | ------------------------------------------------------------------------------------ |
+| `address`                     | query    | [Address]          | true       | The wallet address that owns the subaccount.                                         |
+| `subaccount_number`           | query    | [SubaccountNumber] | true       | The identifier for the specific subaccount within the wallet address.                |
+| `limit`                       | query    | [u32]              | false      | Maximum number of items in the response.                                             |
+| `created_before_or_at_height` | query    | [Height]           | false      | Restricts results to positions created at or before a specific blockchain height.    |
+| `created_before_or_at`        | query    | [DateTime]         | false      | Restricts results to positions created at or before a specific timestamp.            |
+| `page`                        | query    | [u32]              | false      | The page number for paginated results.                                               |
+
+#### Response
+
+| Status | Meaning     | Schema                     | Description         |
+| ------ | ----------- | -------------------------- | ------------------- |
+| `200`  | [OK]        | [TransferResponseObject] ⛁ | The transfers data. |
+
+[Address]: /types/address
+[SubaccountNumber]: /types/subaccount_number
+[OK]: /types/OK
+[TransferResponseObject]: /types/transfer_response_object
+[u32]: /types/u32
+[Height]: /types/height
+[DateTime]: /types/date_time

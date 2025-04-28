@@ -1,0 +1,63 @@
+### Get Rewards
+
+Retrieves historical block trading rewards for the specified address.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_historical_block_trading_rewards(
+    self,
+    address: str,
+    limit: Optional[int] = None,
+) -> Any
+```
+
+```typescript [TypeScript]
+async getHistoricalBlockTradingRewards(
+    address: string,
+    limit?: number,
+    startingBeforeOrAt?: string,
+    startingBeforeOrAtHeight?: string,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_rewards(
+    &self,
+    address: &Address,
+    opts: Option<GetTradingRewardsOpts>,
+) -> Result<Vec<HistoricalBlockTradingReward>, Error>
+```
+
+```url [API]
+/v4/historicalBlockTradingRewards/{address}
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                         | Location  | Type              | Required  | Description                                                           |
+| --------------------------------- | --------- | ----------------- | --------- | --------------------------------------------------------------------- |
+| `address`                         | path      | [Address]         | true      | The wallet address that owns the subaccount.                          |
+| `limit`                           | query     | [u32]             | false     | Maximum number of asset positions to return in the response.          |
+| `starting_before_or_at_height`    | query     | [Height]          | false     | The timestamp filter for rewards starting before or at.               |
+| `starting_before_or_at`           | query     | [DateTime in utc] | false     | The block height filter for rewards starting before or at.            |
+
+#### Response
+
+| Status | Meaning     | Schema                           | Description                                |
+| ------ | ----------- | -------------------------------- | ------------------------------------------ |
+| `200`  | [OK]        | [HistoricalBlockTradingReward] ⛁ | The historical block trading rewards data. |
+
+[OK]: /types/ok
+[u32]: /types/u32
+[Address]: /types/address
+[HistoricalBlockTradingReward]: /types/get_historical_block_trading_reward
+[Height]: /types/height
+[DateTime in utc]: /types/date_time

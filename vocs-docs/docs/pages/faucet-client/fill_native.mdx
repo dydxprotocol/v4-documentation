@@ -1,0 +1,50 @@
+### Fill Native
+
+add native dYdX testnet token to an address
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def fill_native(
+    self,
+    address: str,
+    headers: Optional[Dict] = None,
+) -> httpx.Response
+```
+
+```rust [Rust]
+pub async fn fill_native(&self, address: &Address) -> Result<(), Error>
+```
+
+```typescript [TypeScript]
+public async fillNative(address: string, headers?: {}): Promise<Response>
+```
+
+```url [API]
+/faucet/native-token
+```
+
+:::
+
+#### Parameters
+
+| Parameter             | Location  | Type                  | Required      | Description                                                           |
+| --------------------- | --------- | --------------------- | ------------- | --------------------------------------------------------------------- |
+| `address`             | body      | [Address]             | true          | The wallet address that owns the subaccount.                          |
+
+#### Response
+
+| Status | Meaning     | Schema                         | Description                                   |
+| ------ | ----------- | ------------------------------ | --------------------------------------------- |
+| `200`  | [OK]        |                                | The response                                  |
+
+Examples: [Python]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/fund_account_example.py#L25
+
+[Address]: /types/address
+[OK]: /types/ok
+
+

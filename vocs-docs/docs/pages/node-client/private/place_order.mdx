@@ -1,0 +1,86 @@
+### Place Order
+
+The `Place Order` method is used to execute a transaction that places an order on a market.
+
+This function takes parameters for wallet authentication, various order details, and optional transaction options to manage specific order types and behaviors.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def place_order(
+    self,
+    wallet: Wallet,
+    order: Order,
+    tx_options: Optional[TxOptions] = None,
+)
+```
+
+```typescript [TypeScript]
+async placeOrder(
+    subaccount: SubaccountInfo,
+    marketId: string,
+    type: OrderType,
+    side: OrderSide,
+    price: number,
+    size: number,
+    clientId: number,
+    timeInForce?: OrderTimeInForce,
+    goodTilTimeInSeconds?: number,
+    execution?: OrderExecution,
+    postOnly?: boolean,
+    reduceOnly?: boolean,
+    triggerPrice?: number,
+    marketInfo?: MarketInfo,
+    currentHeight?: number,
+    goodTilBlock?: number,
+    memo?: string,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [Rust]
+pub async fn place_order(
+    &mut self,
+    account: &mut Account,
+    order: Order,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+- Use a convenient `Wallet` and `Order` pair for all clients
+- TypeScript doesn't use authenticators
+- In Python we use them explicitly
+- Consider to do the same like in Rust (set it automatically)
+:::
+
+#### Parameters
+
+| Parameter     | Location  | Type          | Required  | Description                                           |
+| ------------- | --------- | ------------- | --------- | ----------------------------------------------------- |
+| `wallet`      | query     | [Wallet]      | true      | The wallet to use for signing the transaction.        |
+| `order`       | query     | [Order]       | true      | The order to place.                                   |
+| `tx_options`  | query     | [TxOptions]   | false     | Options for transaction to support authenticators.    |
+
+#### Response
+
+| Status | Meaning     | Schema   |
+| ------ | ----------- | -------- |
+| `200`  | [OK]        | [TxHash] |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/short_term_order_cancel_example.py#L36
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/short_term_order_composite_example.ts
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/place_order_short_term.rs
+
+[Wallet]: /types/wallet
+[OK]: /types/ok
+[Order]: /types/order
+[TxHash]: /types/tx_hash
+[TxOptions]: /types/tx_options

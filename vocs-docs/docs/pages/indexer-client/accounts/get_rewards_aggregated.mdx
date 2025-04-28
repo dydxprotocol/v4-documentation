@@ -1,0 +1,70 @@
+### Get Rewards Aggregated
+
+Retrieves aggregated historical trading rewards for the specified address.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_historical_trading_rewards_aggregated(
+    self,
+    address: str,
+    period: TradingRewardAggregationPeriod = TradingRewardAggregationPeriod.DAILY,
+    limit: Optional[int] = None,
+    starting_before_or_at: Optional[str] = None,
+    starting_before_or_at_height: Optional[int] = None,
+) -> Any
+```
+
+```typescript [TypeScript]
+async getHistoricalTradingRewardsAggregations(
+    address: string,
+    period: TradingRewardAggregationPeriod,
+    limit?: number,
+    startingBeforeOrAt?: string,
+    startingBeforeOrAtHeight?: string,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_rewards_aggregated(
+    &self,
+    address: &Address,
+    period: TradingRewardAggregationPeriod,
+    opts: Option<GetAggregationsOpts>,
+) -> Result<Vec<HistoricalTradingRewardAggregation>, Error>
+```
+
+```url [API]
+/v4/historicalTradingRewardAggregations/{address}
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                         | Location  | Type                              | Required  | Description                                                   |
+| --------------------------------- | --------- | --------------------------------- | --------- | ------------------------------------------------------------- |
+| `address`                         | path      | [Address]                         | true      | The wallet address that owns the subaccount.                  |
+| `period`                          | query     | [TradingRewardAggregationPeriod]  | true      | The aggregation period.                                       |
+| `limit`                           | query     | [u32]                             | false     | The maximum number of aggregated rewards to retrieve.         |
+| `starting_before_or_at`           | query     | [DateTime]                        | false     | The timestamp filter for rewards starting before or at.       |
+| `starting_before_or_at_height`    | query     | [Height]                          | false     | The block height filter for rewards starting before or at.    |
+
+#### Response
+
+| Status | Meaning     | Schema                                 | Description                                     |
+| ------ | ----------- | -------------------------------------- | ----------------------------------------------- |
+| `200`  | [OK]        | [HistoricalTradingRewardAggregation] ⛁ | The aggregated historical trading rewards data. |
+
+[OK]: /types/ok
+[u32]: /types/u32
+[Address]: /types/address
+[DateTime]: /types/date_time
+[Height]: /types/height
+[TradingRewardAggregationPeriod]: /types/trading_reward_aggregation_period
+[HistoricalTradingRewardAggregation]: /types/historical_trading_reward_aggregation

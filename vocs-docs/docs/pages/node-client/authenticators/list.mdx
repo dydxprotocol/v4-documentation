@@ -1,0 +1,58 @@
+### List
+
+List down added authenticators.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_authenticators(
+    self,
+    address: str,
+) -> accountplus_query.GetAuthenticatorsResponse
+```
+
+```typescript [TypeScript]
+async getAuthenticators(
+    address: string,
+): Promise<GetAuthenticatorsResponse>
+```
+
+```rust [Rust]
+pub async fn list(
+    &mut self,
+    address: Address,
+) -> Result<Vec<AccountAuthenticator>, Error>
+```
+
+```url [API]
+/dydxprotocol.accountplus.Query/GetAuthenticators
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Required    | Description                                                           |
+| ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
+| `account`           | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
+
+#### Response
+
+| Status | Meaning     | Schema                          |
+| ------ | ----------- | ------------------------------- |
+| `200`  | [OK]        | [AccountAuthenticator] ⛁        |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/authenticator_management.py#L62
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/authenticator_management.py#L62
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/authenticator.rs#L93
+
+[Address]: /types/address
+[OK]: /types/ok
+[AccountAuthenticator]: /types/account_authenticator

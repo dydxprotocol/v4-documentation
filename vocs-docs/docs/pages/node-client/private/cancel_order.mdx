@@ -1,0 +1,76 @@
+### Cancel Order
+
+The `Cancel Order` method terminates an existing order using the provided `order_id` and related parameters, such as block validity periods and transaction options. This method supports asynchronous operations for efficient order cancellation across different platforms.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def cancel_order(
+    self,
+    wallet: Wallet,
+    order_id: OrderId,
+    good_til_block: int = None,
+    good_til_block_time: int = None,
+    tx_options: Optional[TxOptions] = None,
+)
+```
+
+```typescript [TypeScript]
+async cancelOrder(
+    subaccount: SubaccountInfo,
+    clientId: number,
+    orderFlags: OrderFlags,
+    marketId: string,
+    goodTilBlock?: number,
+    goodTilTimeInSeconds?: number,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [Rust]
+pub async fn cancel_order(
+    &mut self,
+    account: &mut Account,
+    order_id: OrderId,
+    until: impl Into<OrderGoodUntil>,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+
+```
+
+:::
+
+:::details[Unification Plan]
+- Check the `marketId` is really needed (used in `TypeScript`)
+:::
+
+#### Parameters
+
+| Parameter             | Location  | Type          | Required  | Description                                                           |
+| --------------------- | --------- | ------------- | --------- | --------------------------------------------------------------------- |
+| `wallet`              | query     | [Wallet]      | true      | The wallet to use for signing the transaction.                        |
+| `order_id`            | query     | [OrderId]     | true      | The ID of the order to cancel.                                        |
+| `good_til_block`      | query     | [i32]         | false     | The block number until which the order is valid. Defaults to None.    |
+| `good_til_block_time` | query     | [i32]         | false     | The block time until which the order is valid. Defaults to None.      |
+| `tx_options`          | query     | [TxOptions]   | false     | Options for transaction to support authenticators.                    |
+
+:::
+
+#### Response
+
+| Status | Meaning     | Schema   |
+| ------ | ----------- | -------- |
+| `200`  | [OK]        | [TxHash] |
+
+Examples: [Rust]
+
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/cancel_order.rs
+
+[Wallet]: /types/wallet
+[OrderId]: /types/order_id
+[i32]: /types/i32
+[TxOptions]: /types/tx_options
+[TxHash]: /types/tx_options

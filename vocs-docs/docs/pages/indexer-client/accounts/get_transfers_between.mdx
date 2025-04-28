@@ -1,0 +1,46 @@
+### Get Transfers Between
+
+TODO
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+TODO: Not available
+```
+
+```typescript [TypeScript]
+async getTransfersBetween(
+  sourceAddress: string,
+  sourceSubaccountNumber: string,
+  recipientAddress: string,
+  recipientSubaccountNumber: string,
+  createdBeforeOrAtHeight?: number | null,
+  createdBeforeOrAt?: string | null,
+): Promise<Data>
+```
+
+```rust [Rust]
+TODO: Not available
+```
+
+```url [API]
+/v4/transfers/between
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                   | Location  | Type    | Required  | Description                                                                                 |
+| --------------------------- | --------- | ------- | --------- | ------------------------------------------------------------------------------------------- |
+| `sourceAddress`             | query     | string  | true      | Sender's wallet address                                                                     |
+| `sourceSubaccountNumber`    | query     | string  | true      | The identifier for the specific subaccount within the sender wallet address.                |
+| `recipientAddress`          | query     | string  | true      | Receiver wallet address                                                                     |
+| `recipientSubaccountNumber` | query     | string  | true      | The identifier for the specific subaccount within the receiver wallet address.              |
+| `createdBeforeOrAtHeight`   | query     | number  | false     | Restricts results to positions created at or before a specific blockchain height.           |
+| `createdBeforeOrAt`         | query     | string  | false     | Restricts results to positions created at or before a specific timestamp (ISO 8601 format). |

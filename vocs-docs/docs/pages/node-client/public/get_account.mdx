@@ -1,0 +1,57 @@
+### Get Account
+
+The [Get Account] function retrieves an account using its unique wallet address, returning detailed account information encapsulated in the `BaseAccount` structure.
+
+This is essential for obtaining ownership details and balances associated with the account address provided.
+
+[Get Account]: https://github.com/cosmos/cosmos-sdk/tree/main/x/auth#account-1
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_account(self, address: str) -> BaseAccount
+```
+
+```typescript [TypeScript]
+async getAccount(address: string): Promise<Account>
+```
+
+```rust [Rust]
+pub async fn get_account(
+    &mut self,
+    address: &Address,
+) -> Result<BaseAccount, Error>
+```
+
+```url [API]
+/cosmos.bank.v1beta1.Query/Balance
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Required    | Description                                                           |
+| ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
+
+#### Response
+
+| Status | Meaning     | Schema         |
+| ------ | ----------- | -------------- | 
+| `200`  | [OK]        | [BaseAccount]  |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L12
+[typescript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L9
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L32
+
+[Address]: /types/address
+[OK]: /types/ok
+[BaseAccount]: /types/base_account
