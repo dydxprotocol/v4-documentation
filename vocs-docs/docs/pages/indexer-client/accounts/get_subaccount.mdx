@@ -1,0 +1,57 @@
+### Get Subaccount
+
+Retrieves a specific subaccount associated with a given address and subaccount number.
+This method allows you to access detailed information about a single subaccount rather than retrieving all subaccounts for an address.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_subaccount(
+    self,
+    address: str,
+    subaccount_number: int,
+) -> Any
+```
+
+```typescript [TypeScript]
+async getSubaccount(
+    address: string,
+    subaccountNumber: number,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_subaccount(
+    &self,
+    subaccount: &Subaccount,
+) -> Result<SubaccountResponseObject, Error>
+```
+
+```url [API]
+/v4/addresses/{address}/subaccountNumber/{subaccount_number}
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Required    | Description                                          |
+| ------------------- | -------- | ------------------ | ----------- | ---------------------------------------------------- |
+| `address`           | query    | [Address]          | true        | The primary address to which the subaccount belongs. |
+| `subaccount_number` | query    | [SubaccountNumber] | true        | The specific subaccount number to retrieve.          |
+
+#### Response
+
+| Status | Meaning     | Schema                          | Description          |
+| ------ | ----------- | ------------------------------- | -------------------- |
+| `200`  | [OK]        | [SubaccountResponseObject]      | The subaccount data. |
+
+[Address]: /types/address
+[SubaccountNumber]: /types/subaccount_number
+[OK]: https://datatracker.ietf.org/doc/html/rfc7231#section-6.3.1
+[SubaccountResponseObject]: /types/subaccount_response_object

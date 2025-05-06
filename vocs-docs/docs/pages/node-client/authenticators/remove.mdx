@@ -1,0 +1,58 @@
+### Remove
+
+Remove an added authenticator.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def remove_authenticator(self, wallet: Wallet, authenticator_id: int)
+```
+
+```typescript [TypeScript]
+async removeAuthenticator(
+    subaccount: SubaccountInfo,
+    id: Long,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [Rust]
+pub async fn remove(
+    &mut self,
+    account: &mut Account,
+    address: Address,
+    id: u64,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter             | Location  | Type      | Required  | Description                                                                   |
+| --------------------- | --------- | --------- | --------- | ----------------------------------------------------------------------------- |
+| `wallet`              | query     | [Wallet]  | true      | The wallet to use for signing the transaction or authenticating the request.  |
+| `authenticator_id`    | query     | int       | true      | The authenticator identifier.                                                 |
+
+#### Response
+
+| Status | Meaning     | Schema   |
+| ------ | ----------- | -------- |
+| `200`  | [OK]        | [TxHash] |
+
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/authenticator_management.py#L68
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/permissioned_keys_example.ts#L50
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/authenticator.rs#L146
+
+[Wallet]: /types/wallet
+[TxHash]: /types/tx_hash

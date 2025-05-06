@@ -1,0 +1,112 @@
+# dYdX v4 Client.js Compact Guide
+
+This guide will walk you through setting up and using the `@dydxprotocol/v4-client-js` package to interact with the dYdX v4 protocol. By the end, you'll have a functioning application that can connect to the dYdX network, manage wallets, fetch market data, and execute trades.
+
+::::steps
+
+## Creating a new TypeScript project
+
+Let's start by creating a new TypeScript project using Bun:
+
+```bash
+mkdir dydx-client-app && cd dydx-client-app
+bun init
+```
+
+This will generate a basic TypeScript project structure, including a `package.json` file and an `index.ts` entry point.
+
+## Adding `dydx` Dependency
+
+Now let's install the required dependencies:
+
+```bash
+bun add @dydxprotocol/v4-client-js
+```
+
+You also need additional dependencies for certain features:
+
+```bash
+bun add protobufjs long lodash
+```
+
+## Creating a Configuration file
+
+Text
+
+## Basic Setup and Authentication
+
+### Create a Node Client
+
+```typescript
+const network = Network.testnet();
+const client = await CompositeClient.connect(network);
+console.log('Connected to dYdX network');
+```
+
+### Creating an Indexer Client
+
+IndexerClient can be fetched from `client` object
+
+```typescript
+indexerClient = client.indexerClient
+```
+
+### Creating a Ticker/Market Instance
+
+A ticker/market represents a specific trading pair on dYdX, in this case Ethereum against US Dollar.
+
+```typeScript
+market = 'ETH-USD'
+```
+
+### Calling a Method to Get Trades
+
+To obtain trades, we will call the `getPerpetualMarketTrades()` method of the `IndexerClient` structure. The client itself is divided into sections:
+
+* **Accounts** - for obtaining information about accounts and transfers
+* **Markets** - operational trading information, order book, trades
+* **Utility** - service information, such as the current blockchain height (number of blocks) or recorded time
+* **Vaults** - for working with MegaVaults
+* **Feed** - streaming subscriptions for information about trades and orders
+
+In our case, we need the `markets` section accessible by calling the method of the same name:
+
+```typescript
+const tradesResponse = await client
+    .indexerClient
+    .markets
+    .getPerpetualMarketTrades(market);
+    console.log('Recent trades:', tradesResponse.trades.slice(0, 3));
+```
+
+### Extracting Trading Data
+
+Each trade is represented by a `id, side, price, type, createdAt, and createdHeight` information. We simply extract this structure from the dictionary and retrieve the price (the `price` field of the mentioned structure).
+
+
+
+## Setting Up a Wallet (for On-Chain Operations)
+
+Text
+
+## Placing an Order
+
+Text
+
+## Error Handling
+
+Text
+
+## Handling Websocket Connections
+
+Text
+
+## Building and Running
+
+Text
+
+## Next Steps
+
+Text
+
+::::
