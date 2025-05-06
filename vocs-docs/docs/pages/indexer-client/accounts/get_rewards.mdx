@@ -44,10 +44,10 @@ pub async fn get_rewards(
 
 | Parameter                         | Location  | Type              | Required  | Description                                                           |
 | --------------------------------- | --------- | ----------------- | --------- | --------------------------------------------------------------------- |
-| `address`                         | path      | [Address]         | true      | The wallet address that owns the subaccount.                          |
+| `address`                         | path      | [Address]         | true      | The wallet address that owns the account.                             |
 | `limit`                           | query     | [u32]             | false     | Maximum number of asset positions to return in the response.          |
 | `starting_before_or_at_height`    | query     | [Height]          | false     | The timestamp filter for rewards starting before or at.               |
-| `starting_before_or_at`           | query     | [DateTime in utc] | false     | The block height filter for rewards starting before or at.            |
+| `starting_before_or_at`           | query     | [DateTime in UTC] | false     | The block height filter for rewards starting before or at.            |
 
 #### Response
 
@@ -60,4 +60,4 @@ pub async fn get_rewards(
 [Address]: /types/address
 [HistoricalBlockTradingReward]: /types/get_historical_block_trading_reward
 [Height]: /types/height
-[DateTime in utc]: /types/date_time
+[DateTime in UTC]: /types/date_time

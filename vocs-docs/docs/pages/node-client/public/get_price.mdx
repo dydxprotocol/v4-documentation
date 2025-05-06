@@ -1,6 +1,6 @@
 ### Get Price
 
-The `Get Price` method is used to retrieve the current market price for a specified market, identified by its `id`.
+The `Get Price` method is used to retrieve the current market price for a specified market, identified by its Clob pair `id`.
 
 It returns the price as a `MarketPrice` object when the request is successful.
 
@@ -33,7 +33,7 @@ pub async fn get_price(&mut self, market_id: u32) -> Result<MarketPrice, Error>
 
 | Parameter           | Location | Type               | Required    | Description                                                           |
 | ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
-| `id`                | query    | [u32]              | true        | market id to get price                                                |
+| `id`                | query    | [u32]              | true        | Market (Clob pair) ID                                                 |
 
 #### Response
 

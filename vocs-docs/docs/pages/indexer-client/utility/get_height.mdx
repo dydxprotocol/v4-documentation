@@ -1,6 +1,6 @@
 ### Get Height
 
-Current block height and block time (UTC) parsed by Indexer.
+Current block height and block time (UTC) parsed by the Indexer.
 
 #### Method Declaration
 
@@ -31,8 +31,6 @@ pub async fn get_height(&self) -> Result<HeightResponse, Error>
 
 | Parameter           | Location | Type               | Required    | Description                                                           |
 | ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
-| `address`           | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
-| `limit`             | query    | [u32]              | false       | Maximum number of asset positions to return in the response.          |
 
 #### Response
 

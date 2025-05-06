@@ -57,8 +57,6 @@ pub async fn cancel_order(
 | `good_til_block_time` | query     | [i32]         | false     | The block time until which the order is valid. Defaults to None.      |
 | `tx_options`          | query     | [TxOptions]   | false     | Options for transaction to support authenticators.                    |
 
-:::
-
 #### Response
 
 | Status | Meaning     | Schema   |
@@ -69,6 +67,7 @@ Examples: [Rust]
 
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/cancel_order.rs
 
+[OK]: /types/ok
 [Wallet]: /types/wallet
 [OrderId]: /types/order_id
 [i32]: /types/i32

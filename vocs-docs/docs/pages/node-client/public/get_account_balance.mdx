@@ -2,7 +2,7 @@
 
 The [Get Account Balance] query retrieves the balance of a specified account address for a particular denomination.
 
-This function is crucial for obtaining the current funds available in a wallet within blockchain network.
+This function is used to obtain the current funds of a token available in a wallet within the blockchain network.
 
 [Get Account Balance]: https://github.com/cosmos/cosmos-sdk/tree/main/x/bank#balance
 
@@ -42,10 +42,10 @@ pub async fn get_account_balance(
 
 #### Parameters
 
-| Parameter | Location  | Type      | Required  | Description                                   |
-| --------- | --------- | --------- | --------- | --------------------------------------------- |
-| `address` | query     | [Address] | true      | The wallet address that owns the subaccount.  |
-| `denom`   | query     | [Denom]   | true      | The denomination of the balance.              |
+| Parameter | Location  | Type      | Required  | Description                                            |
+| --------- | --------- | --------- | --------- | ------------------------------------------------------ |
+| `address` | query     | [Address] | true      | The wallet address that owns the account.              |
+| `denom`   | query     | [Denom]   | true      | Denomination of the token associated with the request. |
 
 #### Response
 

@@ -51,7 +51,7 @@ pub async fn get_transfers(
 
 | Parameter                     | Location | Type               | Required   | Description                                                                          |
 | ----------------------------- | -------- | ------------------ | ---------- | ------------------------------------------------------------------------------------ |
-| `address`                     | query    | [Address]          | true       | The wallet address that owns the subaccount.                                         |
+| `address`                     | query    | [Address]          | true       | The wallet address that owns the account.                                            |
 | `subaccount_number`           | query    | [SubaccountNumber] | true       | The identifier for the specific subaccount within the wallet address.                |
 | `limit`                       | query    | [u32]              | false      | Maximum number of items in the response.                                             |
 | `created_before_or_at_height` | query    | [Height]           | false      | Restricts results to positions created at or before a specific blockchain height.    |

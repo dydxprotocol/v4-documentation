@@ -49,7 +49,7 @@ pub async fn get_rewards_aggregated(
 
 | Parameter                         | Location  | Type                              | Required  | Description                                                   |
 | --------------------------------- | --------- | --------------------------------- | --------- | ------------------------------------------------------------- |
-| `address`                         | path      | [Address]                         | true      | The wallet address that owns the subaccount.                  |
+| `address`                         | path      | [Address]                         | true      | The wallet address that owns the account.                     |
 | `period`                          | query     | [TradingRewardAggregationPeriod]  | true      | The aggregation period.                                       |
 | `limit`                           | query     | [u32]                             | false     | The maximum number of aggregated rewards to retrieve.         |
 | `starting_before_or_at`           | query     | [DateTime]                        | false     | The timestamp filter for rewards starting before or at.       |

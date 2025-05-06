@@ -2,7 +2,7 @@
 
 The `Get Clob Pair` function fetches the order book pair identified by a given ID, allowing users to retrieve detailed information about a specific trading pair within a Central Limit Order Book (CLOB) system.
 
-The response typically includes data structured within the `ClobPair` schema.
+The response includes data structured within the `ClobPair` schema.
 
 #### Method Declaration
 
@@ -30,7 +30,7 @@ pub async fn get_clob_pair(&mut self, pair_id: u32) -> Result<ClobPair, Error>
 
 | Parameter           | Location | Type     | Required  | Description   |
 | ------------------- | -------- | -------- | --------- | ------------- |
-| `id`                | query    | [u32]    | true      | Clob pair id  |
+| `id`                | query    | [u32]    | true      | Clob pair ID  |
 
 #### Response
 

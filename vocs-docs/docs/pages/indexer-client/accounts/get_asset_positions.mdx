@@ -2,10 +2,8 @@
 
 Retrieves asset positions for a specific subaccount on the dYdX exchange.
 
-This function queries the dYdX indexer API to fetch asset positions (including
+This function queries the dYdX Indexer API to fetch asset positions (including
 size, side, and other details) associated with a particular subaccount.
-
-The endpoint being called is `/v4/assetPositions`.
 
 #### Method Declaration
 
@@ -59,7 +57,7 @@ pub async fn get_asset_positions(
 
 | Parameter                     | Location | Type                       | Required  | Description                                                                                                                   |
 | ----------------------------- | -------- | -------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `address`                     | query    | [Address]                  | true      | The wallet address that owns the subaccount.                                                                                  |
+| `address`                     | query    | [Address]                  | true      | The wallet address that owns the account.                                                                                     |
 | `subaccount_number`           | query    | [SubaccountNumber]         | true      | The identifier for the specific subaccount within the wallet address.                                                         |
 | `status`                      | query    | [PerpetualPositionStatus]  | false     | Filter to retrieve positions with a specific status. If not provided, all positions will be returned regardless of status.    |
 | `limit`                       | query    | [u32]                      | false     | Maximum number of asset positions to return in the response.                                                                  |

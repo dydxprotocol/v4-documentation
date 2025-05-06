@@ -60,7 +60,7 @@ pub async fn list_orders(
 
 | Parameter                             | Location | Type               | Required  | Description                                                           |
 | ------------------------------------- | -------- | ------------------ | --------- | --------------------------------------------------------------------- |
-| `address`                             | query    | [Address]          | true      | The wallet address that owns the subaccount.                          |
+| `address`                             | query    | [Address]          | true      | The wallet address that owns the account.                             |
 | `subaccount_number`                   | query    | [SubaccountNumber] | true      | The identifier for the specific subaccount within the wallet address. |
 | `limit`                               | query    | [u32]              | false     | Maximum number of asset positions to return in the response.          |
 | `ticker`                              | query    | [Ticker]           | false     | The ticker filter.                                                    |
@@ -68,7 +68,7 @@ pub async fn list_orders(
 | `status`                              | query    | [OrderStatus]      | false     | The order status filter.                                              |
 | `type`                                | query    | [OrderType]        | false     | The order type filter.                                                |
 | `good_til_block_before_or_at`         | query    | [Height]           | false     | The block number filter for orders good until before or at.           |
-| `good_til_block_time_before_or_at`    | query    | [DateTime in utc]  | false     | The timestamp filter for orders good until before or at.              |
+| `good_til_block_time_before_or_at`    | query    | [DateTime in UTC]  | false     | The timestamp filter for orders good until before or at.              |
 | `return_latest_orders`                | query    | bool               | false     | Whether to return only the latest orders.                             |
 
 #### Response
@@ -85,6 +85,6 @@ pub async fn list_orders(
 [OrderStatus]: /types/order_status
 [OrderType]: /types/order_type
 [Height]: /types/height
-[DateTime in utc]: /types/date_time
+[DateTime in UTC]: /types/date_time
 [ListOrdersResponse]: /types/list_orders_response
 [OK]: /types/ok

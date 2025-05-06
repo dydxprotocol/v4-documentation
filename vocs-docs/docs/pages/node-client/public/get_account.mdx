@@ -26,7 +26,7 @@ pub async fn get_account(
 ```
 
 ```url [API]
-/cosmos.bank.v1beta1.Query/Balance
+/cosmos.auth.v1beta1.Query/BaseAccount
 ```
 
 :::
@@ -38,7 +38,7 @@ pub async fn get_account(
 
 | Parameter           | Location | Type               | Required    | Description                                                           |
 | ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
-| `address`           | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
+| `address`           | query    | [Address]          | true        | The wallet address that owns the account.                             |
 
 #### Response
 

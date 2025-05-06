@@ -1,9 +1,9 @@
-### Get Historical Pnl
+### Get Historical PNL
 
 Retrieves historical profit and loss (PNL) data for a specific subaccount on the exchange.
 
-This function queries the dYdX indexer API to fetch historical PNL records
-associated with a particular subaccount. The endpoint being called is '/v4/historical-pnl'.
+This function queries the dYdX Indexer API to fetch historical PNL records
+associated with a particular subaccount.
 
 These records provide insights into the trading performance over time.
 
@@ -57,13 +57,13 @@ pub async fn get_historical_pnl(
 
 | Parameter                     | Location | Type               | Required   | Description                                                                                  |
 | ----------------------------- | -------- | ------------------ | ---------- | -------------------------------------------------------------------------------------------- |
-| `address`                     | query    | [Address]          | true       | The wallet address that owns the subaccount.                                                 |
+| `address`                     | query    | [Address]          | true       | The wallet address that owns the account.                                                    |
 | `subaccount_number`           | query    | [SubaccountNumber] | true       | The identifier for the specific subaccount within the wallet address.                        |
 | `limit`                       | query    | [u32]              | false      | Maximum number of asset positions to return in the response.                                 |
 | `created_before_or_at_height` | query    | [Height]           | false      | Restricts results to positions created at or before a specific blockchain height.            |
-| `created_before_or_at`        | query    | [DateTime]         | false      | Restricts results to positions created at or before a specific timestamp (ISO 8601 format).  |
+| `created_before_or_at`        | query    | [DateTime in UTC]  | false      | Restricts results to positions created at or before a specific timestamp (ISO 8601 format).  |
 | `created_on_or_after_height`  | query    | [Height]           | false      | Restricts results to positions created on or after a specific blockchain height.             |
-| `created_on_or_after`         | query    | [DateTime in utc]  | false      | Restricts results to positions created on or after a specific timestamp (ISO 8601 format).   |
+| `created_on_or_after`         | query    | [DateTime in UTC]  | false      | Restricts results to positions created on or after a specific timestamp (ISO 8601 format).   |
 | `page`                        | query    | [u32]              | false      | The page number for paginated results.                                                       |
 
 #### Response
@@ -78,4 +78,4 @@ pub async fn get_historical_pnl(
 [PnlTicksResponseObject]: /types/pnl_ticks_response_object
 [u32]: /types/u32
 [Height]: /types/height
-[DateTime in utc]: /types/date_time
+[DateTime in UTC]: /types/date_time
