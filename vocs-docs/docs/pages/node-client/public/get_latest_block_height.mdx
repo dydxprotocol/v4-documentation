@@ -1,0 +1,42 @@
+### Get Latest Block Height
+
+The `Get Latest Block Height` function asynchronously retrieves the most recent block height from a blockchain network.
+
+This information is typically returned as an integer value wrapped in a specific data type or promise, indicating the current height of the blockchain.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def latest_block_height(self) -> int
+```
+
+```typescript [TypeScript]
+async latestBlockHeight(): Promise<number>
+```
+
+```rust [Rust]
+pub async fn get_latest_block_height(&mut self) -> Result<Height, Error>
+```
+
+```url [API]
+```
+
+:::
+
+#### Parameters
+
+#### Response
+
+| Status | Meaning     | Schema   |
+| ------ | ----------- | -------- |
+| `200`  | [OK]        | [Height] |
+
+Examples: [Python] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L44
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L56
+
+[OK]: /types/ok
+[Height]: /types/height

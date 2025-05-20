@@ -1,0 +1,59 @@
+### Simulate
+
+The `Simulate` function allows for the pre-execution simulation of a transaction, predicting its execution cost and resource usage without committing any changes.
+
+This method typically returns information like estimated gas fees or other transaction-related metrics to anticipate the impact of operations before they are executed on the blockchain.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def simulate(self, transaction: Tx)
+```
+
+```typescript [TypeScript]
+async simulate(
+    wallet: LocalWallet,
+    messaging: () => Promise<EncodeObject[]>,
+    gasPrice: GasPrice = this.getGasPrice(),
+    memo?: string,
+    account?: () => Promise<Account>,
+): Promise<StdFee>
+```
+
+```rust [Rust]
+pub async fn simulate(&mut self, tx_raw: &Raw) -> Result<GasInfo, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+- Some extra parameters in TypeScript? What to do with them?
+:::
+
+#### Parameters
+
+| Parameter     | Location  | Type  | Required  | Description                   |
+| ------------- | --------- | ----- |---------- | ----------------------------- |
+| `transaction` | query     | [Tx]  | true      | The transaction to simulate.  |
+
+
+#### Response
+
+| Status | Meaning     | Schema     |
+| ------ | ----------- | ---------- |
+| `200`  | [OK]        | [GasInfo]  |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/transfer_example_withdraw_other.py#L20
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/transfer_example_withdraw_other.ts#L37
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/withdraw_other.rs#L52
+
+[Tx]: /types/tx
+[GasInfo]: /types/gas_info
+[OK]: /types/ok

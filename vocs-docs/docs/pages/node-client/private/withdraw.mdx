@@ -1,0 +1,66 @@
+### Withdraw
+
+Withdraw funds (USDC) from the subaccount to the address.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def withdraw(
+    self,
+    wallet: Wallet,
+    sender_subaccount: SubaccountId,
+    recipient: str,
+    asset_id: int,
+    quantums: int,
+)
+```
+
+```typescript [TypeScript]
+TODO: withdraw
+```
+
+```rust [Rust]
+pub async fn withdraw(
+    &mut self,
+    account: &mut Account,
+    sender: Subaccount,
+    recipient: Address,
+    amount: impl Into<Usdc>,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                 | Location  | Type              | Required  | Description                                       |
+| ------------------------- | --------- | ----------------- | --------- | ------------------------------------------------- |
+| `wallet`                  | query     | [Wallet]          | true      | The wallet to use for signing the transaction.    |
+| `sender_subaccount`       | query     | [SubaccountId]    | true      | The sender subaccount ID.                         |
+| `recipient`               | query     | string            | true      | The recipient subaccount ID.                      |
+| `asset_id`                | query     | int               | true      | The asset ID.                                     |
+| `quantums`                | query     | int               | true      | The amount of quantums to withdraw.               |
+
+#### Response
+
+| Status | Meaning     | Schema |
+| ------ | ----------- | ------ |
+| `200`  | [OK]        | string |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/transfer_example_subaccount_transfer.ts
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/transfer_example_withdraw.ts
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/withdraw.rs
+
+
+[Wallet]: /types/wallet
+[SubaccountId]: /types/subaccount_id

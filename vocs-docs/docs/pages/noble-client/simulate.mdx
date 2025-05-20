@@ -1,0 +1,31 @@
+### Simulate
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+```
+
+```rust [Rust]
+async fn simulate(&mut self, tx_raw: &tx::Raw) -> Result<GasInfo, Error>
+```
+
+```typescript [TypeScript]
+async simulateTransaction(
+    messages: readonly EncodeObject[],
+    gasPrice: GasPrice = GasPrice.fromString('0.1uusdc'),
+    memo?: string,
+): Promise<StdFee>
+```
+
+:::
+
+#### Parameters
+
+
+#### Response
+
+Examples: [TypeScript]
+
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/noble_example.ts#L78

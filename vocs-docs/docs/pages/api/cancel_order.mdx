@@ -1,0 +1,35 @@
+## Cancel an Order
+
+Unmatched and unfilled orders can be cancelled.
+To cancel an order, `NodeClient::cancel_order()` is employed. The order ID returned by the `OrderBuilder` and the validity of the cancel request must be provided.
+
+```rust [main.rs]
+let tx_hash = client
+    .cancel_order(&mut account, order_id, good_until)
+    .await?;
+```
+
+:::note
+Issuing order cancellations does not affect open positions. To close or reduce any open position, a new order must be issued with the opposite side to the position.
+:::
+
+
+### Request
+
+:::info
+gRPC URL: `dydxprotocol.clob.MsgCancelOrder`
+:::
+
+| Parameter         | Description                           |
+| ----------------- | ------------------------------------- |
+| `Account`         | User's account                        |
+| `OrderId`         | Order ID                              |
+| `OrderGoodUntil`  | Cancellation validity block / time    |
+
+### Response
+
+This returns the transaction hash if successful, or an error with the message reason returned by the server.
+
+| Parameter | Description       |
+| --------- | ----------------- |
+| `TxHash`  | Transaction hash  |

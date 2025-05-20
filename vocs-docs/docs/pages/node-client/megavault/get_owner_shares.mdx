@@ -1,0 +1,50 @@
+### Get Owner Shares
+
+Query the shares associated with an [`Address`].
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+export async function getMegavaultOwnerShares(payload: string): Promise<string>
+```
+
+```rust [Rust]
+pub async fn get_owner_shares(
+    &mut self,
+    address: &Address,
+) -> Result<QueryMegavaultOwnerSharesResponse, Error>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Description                                                           |
+| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
+
+:::details[Optional]
+
+| Parameter                     | Location | Type                      | Description                                                  |
+| ----------------------------- | -------- | ------------------------- | ------------------------------------------------------------ |
+| `limit`                       | query    | [u32]                     | Maximum number of asset positions to return in the response. |
+
+:::
+
+#### Response
+
+| Status | Meaning     | Schema                          |
+| ------ | ----------- | ------------------------------- |
+| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |

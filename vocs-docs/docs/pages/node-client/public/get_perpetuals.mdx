@@ -1,0 +1,56 @@
+### Get Perpetuals
+
+The `Get Perpetuals` function allows you to retrieve a list of all perpetuals currently available in the system.
+
+It's designed to support pagination, so you can specify pagination parameters to control the volume of data retrieved in each query (no in all clients yet).
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_perpetuals(self) -> QueryAllPerpetualsResponse
+```
+
+```typescript [TypeScript]
+async getAllPerpetuals(): Promise<PerpetualsModule.QueryAllPerpetualsResponse>
+```
+
+```rust [Rust]
+pub async fn get_perpetuals(
+    &mut self,
+    pagination: Option<V4PageRequest>,
+) -> Result<Vec<Perpetual>, Error>
+```
+
+```url [API]
+/dydxprotocol.perpetuals.Query/AllPerpetuals
+```
+
+:::
+
+:::details[Unification Plan]
+- Python and TypeScript don't contain options
+- Options in protocol are not optional
+:::
+
+#### Parameters
+
+| Parameter     | Location | Type          | Required | Description               |
+| ------------- | -------- | ------------- | -------- | ------------------------- |
+| `pagination`  | query    | [PageRequest] | false    | Parameters of pagination. |
+
+#### Response
+
+| Status | Meaning     | Schema        |
+| ------ | ----------- | ------------- |
+| `200`  | [OK]        | [Perpetual] ⛁ |
+
+Examples: [Python] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L126
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L86
+
+[OK]: /types/ok
+[PageRequest]: /types/page_request
+[Perpetual]: /types/perpetual
