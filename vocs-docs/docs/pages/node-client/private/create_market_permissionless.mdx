@@ -39,20 +39,20 @@ pub async fn create_market_permissionless(
 
 #### Parameters
 
-| Parameter           | Location | Type               | Description                                                           |
-| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
-| `address`           | query    | [Address]          | The wallet address that owns the account.                             |
-
-:::details[Optional]
-
-| Parameter                     | Location | Type                      | Description                                                  |
-| ----------------------------- | -------- | ------------------------- | ------------------------------------------------------------ |
-| `limit`                       | query    | [u32]                     | Maximum number of asset positions to return in the response. |
-
-:::
+| Parameter         | Location  | Type              | Description                   |
+| ----------------- | --------- | ----------------- | ----------------------------- |
+| `account`         | query     | [Account]         | Account information           |
+| `ticker`          | query     | [Tikcer]          | Ticker information            | 
+| `subaccount`      | query     | [SubaccountInfo]  | Subaccount information        |
 
 #### Response
 
-| Status | Meaning     | Schema                          |
-| ------ | ----------- | ------------------------------- |
-| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |
+| Status | Meaning     | Schema     |
+| ------ | ----------- | ---------  |
+| `200`  | [OK]        | [TxHash]   |
+
+[Account]: /types/account
+[Ticker]: /types/ticker
+[SubaccountInfo]: /types/subaccount_info
+[OK]: /types/ok
+[TxHash]: /types/tx_hash

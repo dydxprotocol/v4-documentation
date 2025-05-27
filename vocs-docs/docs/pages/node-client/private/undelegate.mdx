@@ -1,0 +1,50 @@
+### Undelegate
+
+TODO: Add description
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+```
+
+```rust [Rust]
+```
+
+```typescript [TypeScript]
+async undelegate(
+    subaccount: SubaccountInfo,
+    delegator: string,
+    validator: string,
+    amount: string,
+    broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```uri
+```
+
+:::
+
+#### Parameters
+
+| Parameter     | Location  | Type              | Mandatory | Description           |
+| ------------- | --------- | ----------------- | --------- | --------------------- |
+| subaccount    | query     | [SubaccountInfo]  | true      | Subaccount number     |
+| delegator     | query     | string            | true      | Delegator information |
+| validator     | query     | string            | true      | validator information |
+| amount        | string    | string            | true      | Amount to delegate    |
+| broadcastMode | query     | [BroadcastMode]   | false     | Mode of broadcast     |
+
+#### Response
+
+| Status    | Meaning   | Schema                                                                |
+| --------- | --------- | --------------------------------------------------------------------- |
+| `200`     | [OK]      | [BroadcastTxAsyncResponse] | [BroadcastTxSyncResponse] | [IndexedTx]  |
+
+[SubaccountInfo]: /types/subaccount_info
+[BroadcastMode]: /types/broadcast_mode
+[BroadcastTxAsyncResponse]: /types/cosmos
+[BroadcastTxSyncResponse]: /types/cosmos
+[IndexedTx]: /types/cosmos

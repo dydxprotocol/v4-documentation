@@ -1,8 +1,6 @@
 ### Batch Cancel Orders
 
-Cancel a batch of short-terms [Orders].
-
-[Orders]: https://docs.rs/dydx-proto/0.2.0/x86_64-unknown-linux-gnu/dydx_proto/dydxprotocol/clob/struct.Order.html
+Cancel a batch of short-terms orders.
 
 #### Method Declaration
 
@@ -20,7 +18,12 @@ async def batch_cancel_orders(
 ```
 
 ```typescript [TypeScript]
-TODO: batchCancelShortTermOrders
+async batchCancelShortTermOrdersWithMarketId(
+  subaccount: SubaccountInfo,
+  shortTermOrders: OrderBatchWithMarketId[],
+  goodTilBlock: number,
+  broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
 ```
 
 ```rust [Rust]
@@ -34,13 +37,13 @@ pub async fn batch_cancel_orders(
 ```
 
 ```url [API]
+/dydxprotocol.clob.Msg/BatchCancel
 ```
 
 :::
 
 :::details[Unification Plan]
 - `TxOptions` is not available in Rust
-- No implementation if TypeScript?
 :::
 
 #### Parameters
@@ -57,7 +60,7 @@ pub async fn batch_cancel_orders(
 
 | Status | Meaning     | Schema   |
 | ------ | ----------- | -------- |
-| `200`  | [OK]        | [String] |
+| `200`  | [OK]        | [TxHash] |
 
 Examples: [Python] | [TypeScript] | [Rust]
 
@@ -66,6 +69,7 @@ Examples: [Python] | [TypeScript] | [Rust]
 [Rust]:https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/batch_cancel_orders.rs
 
 [Wallet]: /types/wallet
+[OK]: /types/ok
 [SubaccountId]: /types/subaccount_id
 [OrderBatch]: /types/order_batch
 [TxOptions]: /types/tx_options

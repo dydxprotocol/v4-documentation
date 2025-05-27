@@ -1,1 +1,556 @@
-# Watch Orderbook
+# Watch orderbook
+
+Depending on your trading strategy, keeping track of the current orderbook can be essential. The orderbook is a list of all the unmatched orders, divided into the **bids** (buy orders) and the **asks** (sell orders).
+
+We'll use the Indexer WebSockets data streams for this.
+
+::::steps
+
+## Subscribe to the Orders feed
+
+Lets take as reference the previous [section](/interaction/data/feeds). Subscribe to the Orders feed.
+
+:::code-group
+
+```python [Python]
+def handler(ws: IndexerSocket, message: dict):
+  if message["type"] == "connected":
+      # Subscribe. [!code focus]
+      ws.orders.subscribe(ETH_USD) # [!code focus]
+  print(message)
+```
+
+```typescript [TypeScript]
+// In the `handler()` function [!code focus]
+// ...
+      if (data.type === IncomingMessageTypes.CONNECTED) {
+        // Subscribe. [!code focus]
+        mySocket.subscribeToOrders('ETH-USD');  // [!code focus]
+      }
+// ...
+```
+
+```rust [Rust]
+// Subscribe.
+let trades_feed = indexer.feed().orders(&"ETH-USD", false).await?;
+```
+:::
+
+## Parse the update messages
+
+Grab the bids and asks lists from the incoming messages.
+Each incoming bid and ask entry is the updated _level_ in the orderbook.
+Each level is associated with a certain price and a total size. The total size is the current aggregated orders size for that price.
+
+:::code-group
+
+```python [Python]
+def handler(ws: IndexerSocket, message: dict):
+    if message["type"] == "connected":
+        ws.order_book.subscribe(ETH_USD, False)
+    elif message["channel"] == "v4_orderbook" and "contents" in message: # [!code focus]
+        # Bids levels. # [!code focus]
+        if "bids" in contents: # [!code focus]
+            for bid in contents["bids"]: # [!code focus]
+                price = bid["price"] # [!code focus]
+                size = bid["size"] # [!code focus]
+        # Asks levels. # [!code focus]
+        if "asks" in contents: # [!code focus]
+            for ask in contents["asks"]: # [!code focus]
+                price = ask["price"] # [!code focus]
+                size = ask["size"] # [!code focus]
+```
+
+```typescript [TypeScript]
+// In the `handler()` function [!code focus]
+// ...
+      if (data.type === IncomingMessageTypes.CONNECTED) {
+        // Subscribe.
+        mySocket.subscribeToOrders('ETH-USD');
+      }
+      const orderBookDataList = data.contents; // [!code focus]
+      if (Array.isArray(orderBookDataList)) { // [!code focus]
+        orderBookDataList.forEach(entry => { // [!code focus]
+          const bids = entry.bids?.[0]; // [!code focus]
+          const asks = entry.asks?.[0]; // [!code focus]
+        }); // [!code focus]
+      } // [!code focus]
+// ...
+```
+
+```rust [Rust]
+// Continuous handler loop.
+while let Some(msg) = self.traders_feed.recv().await {
+    match msg {  // [!code focus]
+        // The initial message (on-subscription).  // [!code focus]
+        OrdersMessage::Initial(init) => {  // [!code focus]
+            let bids = init.contents.bids;  // [!code focus]
+            let asks = init.contents.asks;  // [!code focus]
+        }  // [!code focus]
+        // Update messages. Bids and asks are optional.  // [!code focus]
+        OrdersMessage::Update(upd) => {  // [!code focus]
+            if let Some(bids) = upd.contents.bids { }  // [!code focus]
+            if let Some(asks) = upd.contents.asks { }  // [!code focus]
+        }  // [!code focus]
+    }  // [!code focus]
+}
+```
+
+:::
+
+## Keeping track
+
+On a continuous loop, keep recording all the incoming bids and asks and update your local orderbook.
+
+:::code-group
+
+```python [Python]
+def handler(ws: IndexerSocket, message: dict):
+    if message["type"] == "connected":
+        ws.order_book.subscribe(ETH_USD, False)
+    elif message["channel"] == "v4_orderbook" and "contents" in message:
+        # Modify the above snippet. # [!code focus]
+        # For full snapshot (initial subscribed message), reset the orderbook. # [!code focus]
+        if message["type"] == "subscribed": # [!code focus]
+            orderbook["bids"] = {} # [!code focus]
+            orderbook["asks"] = {} # [!code focus]
+        # Process bids levels. # [!code focus]
+        if "bids" in contents:
+            for bid in contents["bids"]:
+                process_price_level(bid, "bids") # [!code focus]
+
+        # Process asks levels. # [!code focus]
+        if "asks" in contents:
+            for ask in contents["asks"]:
+                process_price_level(ask, "asks") # [!code focus]
+
+# Orderbook state. Levels are stored as [price, size, offset]. # [!code focus]
+orderbook = { # [!code focus]
+    "bids": {}, # [!code focus]
+    "asks": {} # [!code focus]
+} # [!code focus]
+
+def process_price_level(level, side): # [!code focus]
+    """Process a single price level (bid or ask)""" # [!code focus]
+    if isinstance(level, dict): # [!code focus]
+        # Full snapshot format # [!code focus]
+        price = level["price"] # [!code focus]
+        size = level["size"] # [!code focus]
+        offset = level.get("offset", "0") # [!code focus]
+    else: # [!code focus]
+        # Incremental update format # [!code focus]
+        price = level[0] # [!code focus]
+        size = level[1] # [!code focus]
+        offset = level[2] if len(level) > 2 else "0" # [!code focus]
+
+    # Update local orderbook. # [!code focus]
+    if float(size) > 0: # [!code focus]
+        orderbook[side][price] = [price, size, offset] # [!code focus]
+    elif price in orderbook[side]: # [!code focus]
+        del orderbook[side][price] # [!code focus]
+```
+
+```typescript [TypeScript]
+// In the `handler()` function// [!code focus] 
+// ...
+        mySocket.subscribeToOrders('ETH-USD');
+      }
+      const orderBookDataList = data.contents;
+      // Modify above snippet.// [!code focus] 
+      const messageId = data.message_id;// [!code focus] 
+      if (orderBookDataList instanceof Array) {// [!code focus] 
+        // common orderBook data // [!code focus] 
+        [bidList, askList] = updateOrderBook(// [!code focus] 
+          orderBookDataList,// [!code focus] 
+          bidList,// [!code focus] 
+          askList,// [!code focus] 
+          messageId,// [!code focus] 
+        );// [!code focus] 
+ 
+        // Sort. // [!code focus] 
+        bidList.sort((a, b) => b[0] - a[0]); // descending // [!code focus]
+        askList.sort((a, b) => a[0] - b[0]); // ascending // [!code focus]
+ 
+      } else if (orderBookDataList !== null && orderBookDataList !== undefined) {// [!code focus] 
+        // initial OrderBook data// [!code focus] 
+        setInitialOrderBook(orderBookDataList, bidList, askList, messageId);// [!code focus] 
+      }// [!code focus] 
+// ... 
+ 
+type Level = [number, number, number];// [!code focus] 
+ 
+const setInitialOrderBook = (// [!code focus] 
+  orderBookDataList: { bids: { price: string; size: string }[]; asks: { price: string; size: string }[] }, // [!code focus] 
+  bidList: Level[],// [!code focus] 
+  askList: Level[],// [!code focus] 
+  messageId: number// [!code focus] 
+): void => {// [!code focus] 
+  const convertToLevel = (item: { price: string; size: string }): Level => [// [!code focus] 
+    Number(item.price),// [!code focus] 
+    Number(item.size),// [!code focus] 
+    messageId,// [!code focus] 
+  ];// [!code focus] 
+ 
+  bidList.push(...orderBookDataList.bids.map(convertToLevel));// [!code focus] 
+  askList.push(...orderBookDataList.asks.map(convertToLevel));// [!code focus] 
+};// [!code focus] 
+ 
+const updateOrderBook = (// [!code focus] 
+  updates: { bids: number[][]; asks: number[][] }[],// [!code focus] 
+  bidList: Level[],// [!code focus] 
+  askList: Level[],// [!code focus] 
+  messageId: number// [!code focus] 
+): [Level[], Level[]] => {// [!code focus] 
+  const updateList = (updateEntries: number[][], list: Level[]) => {// [!code focus] 
+    updateEntries.forEach(([price, size]) => {// [!code focus] 
+      const index = list.findIndex(([p]) => p === price);// [!code focus] 
+      if (size === 0) {// [!code focus] 
+        if (index !== -1) list.splice(index, 1);// [!code focus] 
+      } else if (index !== -1) {// [!code focus] 
+        list[index] = [price, size, messageId];// [!code focus] 
+      } else {// [!code focus] 
+        list.push([price, size, messageId]);// [!code focus] 
+      }// [!code focus] 
+    });// [!code focus] 
+  };// [!code focus] 
+ 
+  updates.forEach(({ bids, asks }) => {// [!code focus] 
+    if (bids.length) updateList(bids, bidList);// [!code focus] 
+    if (asks.length) updateList(asks, askList);// [!code focus] 
+  });// [!code focus] 
+ 
+  return [bidList, askList];// [!code focus] 
+};// [!code focus] 
+```
+
+```rust [Rust]
+// Update the previous loop to record the incoming bids/asks.
+let mut order_book = OrderBook::default();
+while let Some(msg) = traders_feed.recv().await {
+    match msg {
+        OrdersMessage::Initial(init) => {
+            order_book.update_bids(init.contents.bids);
+            order_book.update_asks(init.contents.asks);
+        }
+        OrdersMessage::Update(upd) => {
+            if let Some(bids) = upd.contents.bids {
+                order_book.update_bids(bids);
+            }
+            if let Some(asks) = upd.contents.asks {
+                order_book.update_asks(asks);
+            }
+        }
+    }
+}
+
+// ...
+
+// Keep track of the orderbook using this struct.
+#[derive(Default, Debug)]
+pub struct OrderBook {
+    // Use `BTreeMap` for easier sorting. 
+    pub bids: BTreeMap<Price, (Quantity, u64)>,
+    pub asks: BTreeMap<Price, (Quantity, u64)>,
+    pub offset: u64,
+}
+
+impl OrderBook {
+    pub fn update_bids(&mut self, bids: Vec<OrderbookResponsePriceLevel>) {
+        Self::update(&mut self.bids, bids, &mut self.offset);
+    }
+
+    pub fn update_asks(&mut self, asks: Vec<OrderbookResponsePriceLevel>) {
+        Self::update(&mut self.asks, asks, &mut self.offset);
+    }
+
+    fn update(map: &mut BTreeMap<Price, (Quantity, u64)>, levels: Vec<OrderbookResponsePriceLevel>, offset: &mut u64) {
+        for level in levels {
+            if level.size.is_zero() {
+                map.remove(&level.price);
+            } else {
+                map.insert(level.price, (level.size, *offset));
+                *offset += 1;
+            }
+        }
+    }
+}
+```
+
+:::
+
+## Uncrossing the orderbook
+
+Given the decentralized nature of dYdX, sometimes, some of the bids will be higher than some of the asks.
+
+:::info
+:::details[Crossed orderbook]
+There is no guarantee that prices do not cross (a bid higher than a ask) because there is no centralized orderbook. For that reason, the software does not include a global offset. The _correct_ orderbook at any given time is whatever the current block proposer has in its mempool, which is not what the indexer or the front end can directly see. The block proposer changes every block, so there is a new canonical mempool, and therefore, a new canonical orderbook every block. Due to the particulars of message propagation, that means there will be slight differences in the canonical orderbook every block. The prices will uncross eventually.
+:::
+
+If trader needs the orderbook uncrossed, then one way is to use the order of messages as a logical timestamp. That is, when a message is received, update a global locally-held offset. Each WebSockets update has a `message-id` which is a logical offset to use. Using a timestamp is also an option.
+
+:::code-group
+
+```python [Python]
+# In the handler() function
+# ...
+        # Process asks levels.
+        if "asks" in contents:
+            for ask in contents["asks"]:
+                process_price_level(ask, "asks")
+        
+        # Uncross the orderbook.# [!code focus] 
+        uncross_orderbook()# [!code focus] 
+ 
+def get_sorted_book():# [!code focus] 
+    """Get sorted lists of bids and asks"""# [!code focus] 
+    bids_list = list(orderbook["bids"].values())# [!code focus] 
+    asks_list = list(orderbook["asks"].values())# [!code focus] 
+ 
+    bids_list.sort(key=lambda x: float(x[0]), reverse=True)# [!code focus] 
+    asks_list.sort(key=lambda x: float(x[0]))# [!code focus] 
+ 
+    return bids_list, asks_list# [!code focus] 
+ 
+def uncross_orderbook():# [!code focus] 
+    """Remove crossed orders from the orderbook"""# [!code focus] 
+    bids_list, asks_list = get_sorted_book()# [!code focus] 
+ 
+    if not bids_list or not asks_list:# [!code focus] 
+        return# [!code focus] 
+ 
+    top_bid = float(bids_list[0][0])# [!code focus] 
+    top_ask = float(asks_list[0][0])# [!code focus] 
+ 
+    while bids_list and asks_list and top_bid >= top_ask:# [!code focus] 
+        bid = bids_list[0]# [!code focus] 
+        ask = asks_list[0]# [!code focus] 
+ 
+        bid_price = float(bid[0])# [!code focus] 
+        ask_price = float(ask[0])# [!code focus] 
+        bid_size = float(bid[1])# [!code focus] 
+        ask_size = float(ask[1])# [!code focus] 
+        bid_offset = int(bid[2]) if len(bid) > 2 else 0# [!code focus] 
+        ask_offset = int(ask[2]) if len(ask) > 2 else 0# [!code focus] 
+ 
+        if bid_price >= ask_price:# [!code focus] 
+            # Remove older entry.# [!code focus] 
+            if bid_offset < ask_offset:# [!code focus] 
+                bids_list.pop(0)# [!code focus] 
+            elif bid_offset > ask_offset:# [!code focus] 
+                asks_list.pop(0)# [!code focus] 
+            else:# [!code focus] 
+                # Same offset, handle based on size.# [!code focus] 
+                if bid_size > ask_size:# [!code focus] 
+                    asks_list.pop(0)# [!code focus] 
+                    bid[1] = str(bid_size - ask_size)# [!code focus] 
+                elif bid_size < ask_size:# [!code focus] 
+                    ask[1] = str(ask_size - bid_size)# [!code focus] 
+                    bids_list.pop(0)# [!code focus] 
+                else:# [!code focus] 
+                    # Both filled exactly.# [!code focus] 
+                    asks_list.pop(0)# [!code focus] 
+                    bids_list.pop(0)# [!code focus] 
+        else:# [!code focus] 
+            # No crossing.# [!code focus] 
+            break# [!code focus] 
+ 
+        if bids_list and asks_list:# [!code focus] 
+            top_bid = float(bids_list[0][0])# [!code focus] 
+            top_ask = float(asks_list[0][0])# [!code focus] 
+ 
+    # Update the orderbook with uncrossed data.# [!code focus] 
+    orderbook["bids"] = {bid[0]: bid for bid in bids_list}# [!code focus] 
+    orderbook["asks"] = {ask[0]: ask for ask in asks_list}# [!code focus] 
+```
+
+```typescript [TypeScript]
+// In the handler() function // [!code focus]
+// ...
+        // Sort.
+        bidList.sort((a, b) => b[0] - a[0]); // descending
+        askList.sort((a, b) => a[0] - b[0]); // ascending
+
+        // Resolving crossed orderbook. // [!code focus]
+        [bidList, askList] = resolveCrossedOrderBook( // [!code focus]
+          bidList, // [!code focus]
+          askList, // [!code focus]
+        ); // [!code focus]
+// ...
+
+// Uncross the orderbook. // [!code focus]
+const resolveCrossedOrderBook = (// [!code focus] 
+  bidList: Level[],// [!code focus] 
+  askList: Level[],// [!code focus] 
+): [Level[], Level[]] => {// [!code focus] 
+  while (bidList.length && askList.length && bidList[0][0] >= askList[0][0]) {// [!code focus] 
+    const bid = bidList[0];// [!code focus] 
+    const ask = askList[0];// [!code focus] 
+ 
+    // Compare message IDs to resolve duplicates// [!code focus] 
+    if (bid[2] < ask[2]) {// [!code focus] 
+      bidList.shift();// [!code focus] 
+    } else if (bid[2] > ask[2]) {// [!code focus] 
+      askList.shift();// [!code focus] 
+    } else {// [!code focus] 
+      const tradedAmount = Math.min(bid[1], ask[1]);// [!code focus] 
+      bid[1] -= tradedAmount;// [!code focus] 
+      ask[1] -= tradedAmount;// [!code focus] 
+ 
+      if (bid[1] === 0) bidList.shift();// [!code focus] 
+      if (ask[1] === 0) askList.shift();// [!code focus] 
+    }// [!code focus] 
+  }// [!code focus] 
+ 
+  return [bidList, askList];// [!code focus] 
+};// [!code focus] 
+```
+
+```rust [Rust]
+// Update the previous loop to uncross the orderbook.// [!code focus] 
+while let Some(msg) = traders_feed.recv().await {
+    match msg {
+        // ...
+    }
+    order_book.uncross();// [!code focus] 
+}
+
+// ...
+
+impl OrderBook {
+// ...
+    pub fn uncross(&mut self) {// [!code focus] 
+        while !self.bids.is_empty() && !self.asks.is_empty() {// [!code focus] 
+            let highest_bid_price = match self.bids.keys().last() {// [!code focus] 
+                Some(price) => price.clone(),// [!code focus] 
+                None => break,// [!code focus] 
+            };// [!code focus] 
+            // [!code focus] 
+            let lowest_ask_price = match self.asks.keys().next() {// [!code focus] 
+                Some(price) => price.clone(),// [!code focus] 
+                None => break,// [!code focus] 
+            };// [!code focus] 
+            // [!code focus] 
+            // Check if there's a cross.// [!code focus] 
+            if highest_bid_price >= lowest_ask_price {// [!code focus] 
+                // Get entries for the crossed orders// [!code focus] 
+                let (highest_bid_qty, highest_bid_offset) = self.bids.get(&highest_bid_price).unwrap().clone();// [!code focus] 
+                let (lowest_ask_qty, lowest_ask_offset) = self.asks.get(&lowest_ask_price).unwrap().clone();// [!code focus] 
+                // [!code focus] 
+                // Remove oldest entry.// [!code focus] 
+                if highest_bid_offset < lowest_ask_offset {// [!code focus] 
+                    self.bids.remove(&highest_bid_price);// [!code focus] 
+                } else if highest_bid_offset > lowest_ask_offset {// [!code focus] 
+                    self.asks.remove(&lowest_ask_price);// [!code focus] 
+                } else {// [!code focus] 
+                    // Same offset, compare sizes// [!code focus] 
+                    if highest_bid_qty > lowest_ask_qty {// [!code focus] 
+                        let new_qty = highest_bid_qty - lowest_ask_qty;// [!code focus] 
+                        if new_qty.is_zero() {// [!code focus] 
+                            self.bids.remove(&highest_bid_price);// [!code focus] 
+                        } else {// [!code focus] 
+                            self.bids.insert(highest_bid_price, (new_qty, highest_bid_offset));// [!code focus] 
+                        }// [!code focus] 
+                    } else if highest_bid_qty < lowest_ask_qty {// [!code focus] 
+                        self.bids.remove(&highest_bid_price);// [!code focus] 
+                        let new_qty = lowest_ask_qty - highest_bid_qty;// [!code focus] 
+                        if new_qty.is_zero() {// [!code focus] 
+                            self.asks.remove(&lowest_ask_price);// [!code focus] 
+                        } else {// [!code focus] 
+                            self.asks.insert(lowest_ask_price, (new_qty, lowest_ask_offset));// [!code focus] 
+                        }// [!code focus] 
+                    } else {// [!code focus] 
+                        // Equal sizes, remove both// [!code focus] 
+                        self.bids.remove(&highest_bid_price);// [!code focus] 
+                        self.asks.remove(&lowest_ask_price);// [!code focus] 
+                    }// [!code focus] 
+                }// [!code focus] 
+            } else {// [!code focus] 
+                // No crossing.// [!code focus] 
+                break;// [!code focus] 
+            }// [!code focus] 
+        }// [!code focus] 
+    }// [!code focus] 
+// ...
+}
+```
+:::
+
+## Additional logic
+
+Now with an always up-to-date orderbook, implement your trading strategy based on this data. For simplicity here, we'll just print the current state.
+
+:::code-group
+
+```python [Python]
+def print_orderbook():# [!code focus] 
+    """Print n levels"""# [!code focus] 
+    bids_list, asks_list = get_sorted_book()# [!code focus] 
+ 
+    print(f"\n--- Orderbook for {ETH_USD} ---")# [!code focus] 
+ 
+    # Print asks. # [!code focus] 
+    for price, size in reversed(asks_list): # [!code focus]
+        print(f"ASK: {price:<12} | {size:<16}") # [!code focus]
+ 
+    print("----------------") # [!code focus]
+ 
+    # Print bids. # [!code focus] 
+    for price, size in bids_list: # [!code focus]
+        print(f"BID: {price:<12} | {size:<16}") # [!code focus]
+
+    print("")# [!code focus] 
+# ... 
+print_orderbook()# [!code focus] 
+ 
+```
+
+```typescript [TypeScript]
+const printOrderBook = (
+  bidList: Level[],
+  askList: Level[]
+): void => {
+  console.log(`OrderBook for ETH-USD:`);
+  console.log(`Price     Qty`);
+  const printRow = (price: number, qty: number) => {
+    console.log(`${String(price).padEnd(10)}${qty}`);
+  };
+  // Print asks (in reverse order).
+  askList.reverse().forEach(([price, qty]) => {
+    printRow(price, qty);
+  });
+  console.log('---------------------');
+  // Print bids.
+  bidList.forEach(([price, qty]) => {
+    printRow(price, qty);
+  });
+
+  console.log('');
+};
+```
+
+```rust [Rust]
+impl fmt::Display for OrderBook {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        // Print asks.
+        for (price, (size, _)) in &self.inner.asks {
+            writeln!(f, "ASK: {} - {}", price, size)?;
+        }
+        println!("---------------------");
+        // Print bids.
+        for (price, (size, _)) in &self.inner.bids {
+            writeln!(f, "BID: {} - {}", price, size)?;
+        }
+        Ok(())
+    }
+}
+// ...
+println!("{}", order_book);
+```
+:::
+
+::::
+
+:::info
+
+See more examples in the repository: [Python (TODO)](), [TypeScript](https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/websocket_orderbook_example.ts), [Rust](https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/support/order_book.rs).

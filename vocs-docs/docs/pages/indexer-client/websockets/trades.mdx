@@ -1,0 +1,55 @@
+import BatchedArray from '../../../components/BatchedArray';
+
+### Trades
+
+Data feed of the trades on a market. Data contains order fills updates, such as the order side, price and size.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+# class `Trades`
+def subscribe(self, market: str, batched: bool = True) -> Self
+def unsubscribe(self, market: str)
+```
+
+```typescript [TypeScript]
+// class `IndexerSocket`
+subscribeToTrades(market: string): void
+unsubscribeFromTrades(market: string): void
+```
+
+```rust [Rust]
+// struct `Feeds`
+pub async fn trades(
+    &mut self,
+    ticker: &Ticker,
+    batched: bool,
+) -> Result<Feed<TradesMessage>, FeedError>
+// The stream is unsubscribed when the `Feed` object is dropped
+```
+
+```url [Channel]
+v4_orderbook
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Schema
+
+The field `id` is the market/ticker as a string.
+
+The field `contents` is serialized using the following schemas.
+
+##### Messages
+
+| Initial | Update     |
+| ------ | ----------- | 
+| [`TradesInitialMessage`] | [`TradesUpdateMessage`] <BatchedArray/> |
+
+[`TradesInitialMessage`]: /types/trades_initial_message
+[`TradesUpdateMessage`]: /types/trades_update_message

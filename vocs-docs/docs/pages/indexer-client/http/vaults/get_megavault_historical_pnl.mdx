@@ -1,0 +1,51 @@
+import { Button } from 'vocs/components'
+
+### Get MegaVault Historical Pnl
+
+MegaVault historical PnL.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+async getMegavaultHistoricalPnl(resolution?: PnlTickInterval | null): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_megavault_historical_pnl(
+    &self,
+    resolution: PnlTickInterval,
+) -> Result<Vec<PnlTicksResponseObject>, Error>
+```
+
+```url [API]
+/v4/vault/v1/megavault/historicalPnl
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter     | Location | Type               | Required  | Description                                                           |
+| ------------- | -------- | ------------------ | --------- | --------------------------------------------------------------------- |
+| `resolution`  | query    | [PnlTickInterval]  | true      | PnL tick resolution.                                                  |
+
+#### Response
+
+| Status | Meaning     | Schema                          |
+| ------ | ----------- | ------------------------------- |
+| `200`  | [OK]        | [PnlTicksResponseObject] ⛁      |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/vault/v1/megavault/historicalPnl?resolution=day">API Example</Button>
+
+[PnlTickInterval]: /types/pnl_tick_interval
+[OK]: /types/ok 
+[PnlTicksResponseObject]: /types/pnl_ticks_response_object

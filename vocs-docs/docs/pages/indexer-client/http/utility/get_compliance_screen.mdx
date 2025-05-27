@@ -1,0 +1,46 @@
+import { Button } from 'vocs/components'
+
+### Get Compliance Screen
+
+Screen an address to see if it is restricted
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+```
+
+```rust [Rust]
+```
+
+```typescript [TypeScript]
+async complianceScreen(address: string): Promise<ComplianceV2Response>
+```
+
+```url
+/v4/compliance/screen/${address}
+```
+
+:::
+
+:::details[Unification Plan]
+Implement Python and rust method
+:::
+
+#### Parameters
+
+| Parameter | Location  |  Type     | Required  | Description           |
+| --------- | --------- | --------- | --------- | --------------------- |
+| address   | Path      | string    | true      | evm or dydx address   |
+
+#### Response
+
+| Status | Meaning     | Schema                 | Description                                   |
+| ------ | ----------- | ---------------------- | --------------------------------------------- |
+| `200`  | [OK]        | [ComplianceV2Response] | whether the specified address is restricted   |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/compliance/screen/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art">API Example</Button>
+
+[OK]: /types/ok
+[ComplianceV2Response]: /types/compliance_v2_response

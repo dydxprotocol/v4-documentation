@@ -7,11 +7,17 @@ Create a transaction.
 :::code-group
 
 ```python [Python]
-def build_transaction(self, wallet: Wallet, messages: List[Message], fee: Fee)
+
 ```
 
 ```typescript [TypeScript]
-
+async signTransaction(
+    messages: EncodeObject[],
+    transactionOptions: TransactionOptions,
+    fee?: StdFee,
+    memo: string = '',
+    publicKey?: Secp256k1Pubkey,
+): Promise<Uint8Array>
 ```
 
 ```rust [Rust]
@@ -20,7 +26,7 @@ pub async fn create_transaction(
     account: &mut Account,
     msg: impl ToAny,
     auth: Option<&Address>,
-) -> Result<Raw, NodeError>
+) -> Result<tx::Raw, NodeError>
 ```
 
 ```url [API]
@@ -33,20 +39,19 @@ pub async fn create_transaction(
 
 #### Parameters
 
-| Parameter           | Location | Type               | Description                                                           |
-| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
-| `address`           | query    | [Address]          | The wallet address that owns the account.                             |
-
-:::details[Optional]
-
-| Parameter                     | Location | Type                      | Description                                                  |
-| ----------------------------- | -------- | ------------------------- | ------------------------------------------------------------ |
-| `limit`                       | query    | [u32]                     | Maximum number of asset positions to return in the response. |
-
-:::
+| Parameter           | Location | Type               | Mandatory   | Description                                           |
+| ------------------- | -------- | ------------------ | ----------- | ----------------------------------------------------- |
+| `account`           | query    | [Account]          | true        | Owner's account information                           |
+| `msg`               | query    | Any                | true        | Message during create transaction                     |
+| `auth`              | query    | [Address]          | false       |                                                       |
 
 #### Response
 
-| Status | Meaning     | Schema                          |
-| ------ | ----------- | ------------------------------- |
-| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |
+| Status | Meaning     | Schema     |
+| ------ | ----------- | ---------- |
+| `200`  | [OK]        | [tx::Raw]  |
+
+[Account]: /types/account
+[Address]: /types/address
+[OK]: /types/ok
+[tx::Raw]: /types/cosmos

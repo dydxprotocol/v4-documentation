@@ -1,0 +1,426 @@
+# Index Prices
+
+The `Index Price` for each trading pair is used for the following:
+
+* Calculating the funding rate
+* Triggering "triggerable" order types such as Stop-Limit and Take-Profit orders
+
+## Calculation
+
+Index prices are equal to the median of several exchanges' spot prices.
+
+Each exchange's spot price is calculated as the median of the best-ask, best-bid, and last-traded prices of its spot pair.
+
+If the exchange's quote-asset is a non-USD asset (including USDT), the price is adjusted by our index price for that asset.
+
+## Exchange Sources
+
+#### USDT-USD
+
+For `USDT` pairs where `USDT` is the quote asset, the implied price of `USDT` is taken to be the reciprocal of: the exchange price divided by the index price of the base asset.
+
+* Binance: `USDT-USDC`
+* Bitstamp: `USDT-USD`
+* Bybit: `USDC-USDT`
+* CoinbasePro: `USDT-USD`
+* Crypto: `USDT-USD`
+* Huobi: `ETH-USDT`
+* Kraken: `USDT-USD`
+* KuCoin: `BTC-USDT`
+* MEXC: `ETH-USDT`
+* OKX: `BTC-USDT`
+
+### ETH-USD
+
+* Binance: `ETH-USDT`
+* Bitstamp: `ETH-USD`
+* Bybit: `ETH-USDT`
+* CoinbasePro: `ETH-USD`
+* Kraken: `ETH-USD`
+* KuCoin: `ETH-USDT`
+* OKX: `ETH-USDT`
+
+### BTC-USD
+
+* Binance: `BTC-USDT`
+* Bitstamp: `BTC-USD`
+* Bybit: `BTC-USDT`
+* CoinbasePro: `BTC-USD`
+* Kraken: `BTC-USD`
+* KuCoin: `BTC-USDT`
+* OKX: `BTC-USDT`
+
+### LINK-USD
+
+* Binance: `LINK-USDT`
+* Bybit: `LINK-USDT`
+* CoinbasePro: `LINK-USD`
+* Huobi: `LINK-USDT`
+* Kraken: `LINK-USD`
+* KuCoin: `LINK-USDT`
+* MEXC: `LINK-USDT`
+* OKX: `LINK-USDT`
+
+### AAVE-USD
+
+* Binance: `AAVE-USDT`
+* Bybit: `AAVE-USDT`
+* CoinbasePro: `AAVE-USD`
+* Huobi: `AAVE-USDT`
+* Kraken: `AAVE-USD`
+* KuCoin: `AAVE-USDT`
+* MEXC: `AAVE-USDT`
+* OKX: `AAVE-USDT`
+
+### UNI-USD
+
+* Binance: `UNI-USDT`
+* Bybit: `UNI-USDT`
+* CoinbasePro: `UNI-USD`
+* Gate: `UNI-USDT`
+* Huobi: `UNI-USDT`
+* Kraken: `UNI-USD`
+* MEXC: `UNI-USDT`
+* OKX: `UNI-USDT`
+
+### SUSHI-USD
+
+* Binance: `SUSHI-USDT`
+* Bybit: `SUSHI-USDT`
+* CoinbasePro: `SUSHI-USD`
+* Gate: `SUSHI-USDT`
+* Huobi: `SUSHI-USDT`
+* Kraken: `SUSHI-USD`
+* KuCoin: `SUSHI-USDT`
+* MEXC: `SUSHI-USDT`
+* OKX: `SUSHI-USDT`
+
+### SOL-USD
+
+* Binance: `SOL-USDT`
+* Bybit: `SOL-USDT`
+* CoinbasePro: `SOL-USD`
+* Huobi: `SOL-USDT`
+* Kraken: `SOL-USD`
+* KuCoin: `SOL-USDT`
+* MEXC: `SOL-USDT`
+* OKX: `SOL-USDT`
+
+### YFI-USD
+
+* Binance: `YFI-USDT`
+* Bybit: `YFI-USDT`
+* CoinbasePro: `YFI-USD`
+* Gate: `YFI-USDT`
+* Huobi: `YFI-USDT`
+* Kraken: `YFI-USD`
+* MEXC: `YFI-USDT`
+* OKX: `YFI-USDT`
+
+### 1INCH-USD
+
+* Binance: `1INCH-USDT`
+* Bybit: `1INCH-USDT`
+* CoinbasePro: `1INCH-USD`
+* Gate: `1INCH-USDT`
+* Huobi: `1INCH-USDT`
+* KuCoin: `1INCH-USDT`
+* MEXC: `1INCH-USDT`
+* OKX: `1INCH-USDT`
+
+### AVAX-USD
+
+* Binance: `AVAX-USDT`
+* Bybit: `AVAX-USDT`
+* Coinbase: `AVAX-USD`
+* Gate: `AVAX-USDT`
+* Huobi: `AVAX-USDT`
+* Kraken: `AVAX-USD`
+* KuCoin: `AVAX-USDT`
+* OKX: `AVAX-USDT`
+
+### SNX-USD
+
+* Binance: `SNX-USDT`
+* Bybit: `SNX-USDT`
+* CoinbasePro: `SNX-USD`
+* Gate: `SNX-USDT`
+* Huobi: `SNX-USDT`
+* Kraken: `SNX-USD`
+* Kucoin: `SNX-USDT`
+* MEXC: `SNX-USDT`
+* OKX: `SNX-USDT`
+
+### CRV-USD
+
+* Binance: `CRV-USDT`
+* Bybit: `CRV-USDT`
+* CoinbasePro: `CRV-USD`
+* Gate: `CRV-USDT`
+* Huobi: `CRV-USDT`
+* Kraken: `CRV-USD`
+* Kucoin: `CRV-USDT`
+* MEXC: `CRV-USDT`
+* OKX: `CRV-USDT`
+
+### UMA-USD
+
+* Binance: `UMA-USDT`
+* Bybit: `UMA-USDT`
+* CoinbasePro: `UMA-USD`
+* Gate: `UMA-USDT`
+* Huobi: `UMA-USDT`
+* KuCoin: `UMA-USDT`
+* MEXC: `UMA-USDT`
+* OKX: `UMA-USDT`
+
+### DOT-USD
+
+* Binance: `DOT-USDT`
+* Bybit: `DOT-USDT`
+* Coinbase: `DOT-USD`
+* Gate: `DOT-USDT`
+* Huobi: `DOT-USDT`
+* Kraken: `DOT-USD`
+* KuCoin: `DOT-USDT`
+* OKX: `DOT-USDT`
+
+### DOGE-USD
+
+* Binance: `DOGE-USDT`
+* Bybit: `DOGE-USDT`
+* Coinbase: `DOGE-USD`
+* Gate: `DOGE-USDT`
+* Huobi: `DOGE-USDT`
+* Kraken: `DOGE-USD`
+* KuCoin: `DOGE-USDT`
+* OKX: `DOGE-USDT`
+
+### MATIC-USD
+
+* Binance: `MATIC-USDT`
+* Bybit: `MATIC-USDT`
+* CoinbasePro: `MATIC-USD`
+* Gate: `MATIC-USDT`
+* Huobi: `MATIC-USDT`
+* Kraken: `MATIC-USD`
+* KuCoin: `MATIC-USDT`
+* OKX: `MATIC-USDT`
+
+### MKR-USD
+
+* Binance: `MKR-USDT`
+* Bybit: `MKR-USDT`
+* CoinbasePro: `MKR-USD`
+* Gate: `MKR-USDT`
+* Huobi: `MKR-USDT`
+* Kraken: `MKR-USD`
+* KuCoin: `MKR-USDT`
+* OKX: `MKR-USDT`
+
+### FIL-USD
+
+* Binance: `FIL-USDT`
+* Bybit: `FIL-USDT`
+* CoinbasePro: `FIL-USD`
+* Gate: `FIL-USDT`
+* Huobi: `FIL-USDT`
+* Kraken: `FIL-USD`
+* KuCoin: `FIL-USDT`
+* OKX: `FIL-USDT`
+
+### ADA-USD
+
+* Binance: `ADA-USDT`
+* Bybit: `ADA-USDT`
+* CoinbasePro: `ADA-USD`
+* Gate: `ADA-USDT`
+* Huobi: `ADA-USDT`
+* Kraken: `ADA-USD`
+* KuCoin: `ADA-USDT`
+* OKX: `ADA-USDT`
+
+### ATOM-USD
+
+* Binance: `ATOM-USDT`
+* ByBit: `ATOM-USDT`
+* CoinbasePro: `ATOM-USD`
+* Huobi: `ATOM-USDT`
+* Kraken: `ATOM-USD`
+* KuCoin: `ATOM-USDT`
+* MEXC: `ATOM-USDT`
+* OKX: `ATOM-USDT`
+
+### COMP-USD
+
+* Binance: `COMP-USDT`
+* ByBit: `COMP-USDT`
+* CoinbasePro: `COMP-USD`
+* Huobi: `COMP-USDT`
+* Kraken: `COMP-USD`
+* KuCoin: `COMP-USDT`
+* MEXC: `COMP-USDT`
+* OKX: `COMP-USDT`
+
+### BCH-USD
+
+* Binance: `BCH-USDT`
+* Bybit: `BCH-USDT`
+* CoinbasePro: `BCH-USD`
+* Huobi: `BCH-USDT`
+* Kraken: `BCH-USD`
+* KuCoin: `BCH-USDT`
+* MEXC: `BCH-USDT`
+* OKX: `BCH-USDT`
+
+### LTC-USD
+
+* Binance: `LTC-USDT`
+* ByBit: `LTC-USDT`
+* CoinbasePro: `LTC-USD`
+* Huobi: `LTC-USDT`
+* Kraken: `LTC-USD`
+* KuCoin: `LTC-USDT`
+* MEXC: `LTC-USDT`
+* OKX: `LTC-USDT`
+
+### EOS-USD
+
+* Binance: `EOS-USDT`
+* Bybit: `EOS-USDT`
+* CoinbasePro: `EOS-USD`
+* Huobi: `EOS-USDT`
+* Kraken: `EOS-USD`
+* KuCoin: `EOS-USDT`
+* MEXC: `EOS-USDT`
+* OKX: `EOS-USDT`
+
+### ALGO-USD
+
+* Binance: `ALGO-USDT`
+* Bybit: `ALGO-USDT`
+* CoinbasePro: `ALGO-USD`
+* Gate: `ALGO-USDT`
+* Huobi: `ALGO-USDT`
+* Kraken: `ALGO-USD`
+* KuCoin: `ALGO-USDT`
+* OKX: `ALGO-USDT`
+
+### ZRX-USD
+
+* Binance: `ZRX-USDT`
+* Bybit: `ZRX-USDT`
+* CoinbasePro: `ZRX-USD`
+* Gate: `ZRX-USDT`
+* Huobi: `ZRX-USDT`
+* Kraken: `ZRX-USD`
+* MEXC: `ZRX-USDT`
+* OKX: `ZRX-USDT`
+
+### XMR-USD
+
+* Gate: `XMR-USDT`
+* Huobi: `XMR-USDT`
+* Kraken: `XMR-USD`
+* KuCoin: `XMR-USDT`
+* MEXC: `XMR-USDT`
+
+### ZEC-USD
+
+* Binance: `ZEC-USDT`
+* CoinbasePro: `ZEC-USD`
+* Gate: `ZEC-USDT`
+* HTX: `ZEC-USDT`
+* Kraken: `ZEC-USD`
+* KuCoin: `ZEC-USDT`
+* MEXC: `ZEC-USDT`
+
+### ENJ-USD
+
+* Binance: `ENJ-USDT`
+* CoinbasePro: `ENJ-USD`
+* Gate: `ENJ-USDT`
+* Huobi: `ENJ-USDT`
+* Kraken: `ENJ-USD`
+* MEXC: `ENJ-USDT`
+
+### ETC-USD
+
+* Binance: `ETC-USDT`
+* Bybit: `ETC-USDT`
+* CoinbasePro: `ETC-USD`
+* Gate: `ETC-USDT`
+* Huobi: `ETC-USDT`
+* Kraken: `ETC-USD`
+* KuCoin: `ETC-USDT`
+* OKX: `ETC-USDT`
+
+### XLM-USD
+
+* Binance: `XLM-USDT`
+* Bybit: `XLM-USDT`
+* CoinbasePro: `XLM-USD`
+* Gate: `XLM-USDT`
+* Kraken: `XLM-USD`
+* KuCoin: `XLM-USDT`
+* OKX: `XLM-USDT`
+
+### TRX-USD
+
+* Binance: `TRX-USDT`
+* Bybit: `TRX-USDT`
+* Gate: `TRX-USDT`
+* Huobi: `TRX-USDT`
+* KuCoin: `TRX-USDT`
+* MEXC: `TRX-USDT`
+* OKX: `TRX-USDT`
+
+### XTZ-USD
+
+* Binance: `XTZ-USDT`
+* Bybit: `XTZ-USDT`
+* CoinbasePro: `XTZ-USD`
+* Gate: `XTZ-USDT`
+* Huobi: `XTZ-USDT`
+* Kraken: `XTZ-USD`
+* KuCoin: `XTZ-USDT`
+* OKX: `XTZ-USDT`
+
+### ICP-USD
+
+* Binance: `ICP-USDT`
+* Bybit: `ICP-USDT`
+* CoinbasePro: `ICP-USD`
+* Gate: `ICP-USDT`
+* Huobi: `ICP-USDT`
+* KuCoin: `ICP-USDT`
+* OKX: `ICP-USDT`
+
+### RUNE-USD
+
+* Binance: `RUNE-USDT`
+* Bybit: `RUNE-USDT`
+* Bitget: `RUNE-USDT`
+* Gate: `RUNE-USDT`
+* Kraken: `RUNE-USD`
+* KuCoin: `RUNE-USDT`
+
+### NEAR-USD
+
+* Binance: `NEAR-USDT`
+* ByBit: `NEAR-USDT`
+* CoinbasePro `NEAR-USD`
+* Gate: `NEAR-USDT`
+* Huobi: `NEAR-USDT`
+* KuCoin: `NEAR-USDT`
+* OKX: `NEAR-USDT`
+
+### CELO-USD
+
+* Binance: `CELO-USDT`
+* Bybit: `CELO-USDT`
+* CoinbasePro: `CELO-USD`
+* Gate: `CELO-USDT`
+* KuCoin: `CELO-USDT`
+* MEXC: `CELO-USDT`
+* OKX: `CELO-USDT`

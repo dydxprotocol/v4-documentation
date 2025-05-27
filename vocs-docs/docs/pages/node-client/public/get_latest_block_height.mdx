@@ -4,6 +4,8 @@ The `Get Latest Block Height` function asynchronously retrieves the most recent 
 
 This information is typically returned as an integer value wrapped in a specific data type or promise, indicating the current height of the blockchain.
 
+Internally it uses the [`Get Latest Block`](#get-latest-block) API call.
+
 #### Method Declaration
 
 :::code-group
@@ -18,9 +20,6 @@ async latestBlockHeight(): Promise<number>
 
 ```rust [Rust]
 pub async fn get_latest_block_height(&mut self) -> Result<Height, Error>
-```
-
-```url [API]
 ```
 
 :::

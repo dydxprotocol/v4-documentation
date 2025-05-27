@@ -1,0 +1,54 @@
+import { Button } from 'vocs/components'
+
+### Get Perpetual Markets
+
+Retrieves perpetual markets.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+def get_perpetual_markets(self, market: str = None) -> Response
+```
+
+```typescript [TypeScript]
+async getPerpetualMarkets(market?: string): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn list_perpetual_markets(
+    &self,
+    opts: Option<ListPerpetualMarketsOpts>,
+) -> Result<HashMap<Ticker, PerpetualMarket>, Error>
+```
+
+```url [API]
+/v4/perpetualMarkets
+```
+
+:::
+
+:::details[Unification Plan]
+- Add alias for the return type in Rust: `PerpetualMarketsMap`
+:::
+
+#### Parameters
+
+| Parameter                     | Location | Type                      | Required   | Description                                                                        |
+| ----------------------------- | -------- | ------------------------- | ---------- | ---------------------------------------------------------------------------------- |
+| `market`                      | query    | [Ticker]                  | false      | The specific market ticker to retrieve. If not provided, all markets are returned. |
+| `limit`                       | query    | [u32]                     | false      | Maximum number of asset positions to return in the response.                       |
+
+#### Response
+
+| Status | Meaning     | Schema                 |
+| ------ | ----------- | ---------------------- |
+| `200`  | [OK]        | [PerpetualMarketMap]   |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/perpetualMarkets">API Example</Button>
+
+[Ticker]: /types/ticker
+[PerpetualMarketMap]: /types/perpetual_market_map
+[OK]: /types/ok
+[u32]: /types/u32

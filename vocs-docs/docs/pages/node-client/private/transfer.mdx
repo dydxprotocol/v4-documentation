@@ -18,7 +18,14 @@ async def transfer(
 ```
 
 ```typescript [TypeScript]
-TODO: transfer
+async transfer(
+  subaccount: SubaccountInfo,
+  recipientAddress: string,
+  recipientSubaccountNumber: number,
+  assetId: number,
+  amount: Long,
+  broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
 ```
 
 ```rust [Rust]
@@ -32,6 +39,7 @@ pub async fn transfer(
 ```
 
 ```url [API]
+/dydxprotocol.sending.Msg/CreateTransfer
 ```
 
 :::
@@ -51,9 +59,9 @@ pub async fn transfer(
 
 #### Response
 
-| Status | Meaning     | Schema |
-| ------ | ----------- | ------ |
-| `200`  | [OK]        | string |
+| Status | Meaning     | Schema   |
+| ------ | ----------- | -------- |
+| `200`  | [OK]        | [TxHash] |
 
 Examples: [Python] | [TypeScript] | [Rust]
 
@@ -63,3 +71,5 @@ Examples: [Python] | [TypeScript] | [Rust]
 
 [Wallet]: /types/wallet
 [SubaccountId]: /types/subaccount_id
+[OK]: /types/ok
+[TxHash]: /types/tx_hash

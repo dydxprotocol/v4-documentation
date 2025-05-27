@@ -1,17 +1,17 @@
-### Send Token Ibc
+### Send Token IBC
 
-Transfer a token asset between blockchain networks.
+Transfer a token asset between dYdX and Noble networks.
 
 #### Method Declaration
 
 :::code-group
 
 ```python [Python]
-
+# Coming soon.
 ```
 
 ```typescript [TypeScript]
-
+// Coming soon.
 ```
 
 ```rust [Rust]
@@ -26,29 +26,36 @@ pub async fn send_token_ibc(
 ```
 
 ```url [API]
+/ibc.applications.transfer.v1.Msg/Transfer
 ```
 
 :::
 
 :::details[Unification Plan]
+- Generalize to all IBC/blockchains.
+- Missing in Python.
+- Missing in TS: user required to produce the low-level message and then `post.send()` it.
 :::
 
 #### Parameters
 
-| Parameter           | Location | Type               | Description                                                           |
-| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
-| `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
+| Parameter         | Location  | Type          | Mandatory | Description                       |
+| ----------------- | --------- | ------------- | --------- | --------------------------------- |
+| `account`         | query     | [Account]     | true      | The account.                      |
+| `sender`          | query     | [Address]     | true      | Address of the sender.            |
+| `recipient`       | query     | [Address]     | true      | Address of the recipient.         |
+| `token`           | query     | int           | true      | Token type and amount to transfer.|
+| `source_channel`  | query     | String        | true      | Source IBC relay channel.         |           
 
-:::details[Optional]
 
-| Parameter                     | Location | Type                      | Description                                                  |
-| ----------------------------- | -------- | ------------------------- | ------------------------------------------------------------ |
-| `limit`                       | query    | [u32]                     | Maximum number of asset positions to return in the response. |
-
-:::
 
 #### Response
 
-| Status | Meaning     | Schema                          |
-| ------ | ----------- | ------------------------------- |
-| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |
+| Status | Meaning     | Schema     |
+| ------ | ----------- | ---------- |
+| `200`  | [OK]        | [TxHash]   |
+
+[OK]: /types/ok
+[Account]: /types/account
+[Address]: /types/address
+[Tokenized]: /types/tokenized

@@ -1,6 +1,6 @@
 ### Withdraw
 
-// TODO: Add description
+Withdraw funds (USDC) from the subaccount to the address.
 
 #### Method Declaration
 
@@ -38,22 +38,19 @@ pub async fn withdraw(
 
 #### Parameters
 
-| Parameter           | Location | Type               | Description                                                           |
-| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
-| `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
-
-:::details[Optional]
-
-| Parameter                     | Location | Type                      | Description                                                  |
-| ----------------------------- | -------- | ------------------------- | ------------------------------------------------------------ |
-| `limit`                       | query    | [u32]                     | Maximum number of asset positions to return in the response. |
-
-:::
+| Parameter           | Location | Type               | Description                         |
+| ------------------- | -------- | ------------------ | ----------------------------------- |
+| `account`           | query    | [Account]          | Owner's account                     |
+| `subaccount`        | query    | [SubaccountInfo]   | Subaccount information              |
+| `min_amount`        | query    | int                | Minimum amount to withdraw          |
+| `shares`            | query    | BigInt             | Number of shares                    |
 
 #### Response
 
 | Status | Meaning     | Schema     |
 | ------ | ----------- | ---------- |
-| `200`  | [OK]        | [TxHash] ⛁ |
+| `200`  | [OK]        | [TxHash]   |
 
+[Account]: /types/account
+[SubaccountInfo]: /types/subaccount_info
 [TxHash]: /types/tx_hash

@@ -18,7 +18,13 @@ async def withdraw(
 ```
 
 ```typescript [TypeScript]
-TODO: withdraw
+async withdraw(
+  subaccount: SubaccountInfo,
+  assetId: number,
+  quantums: Long,
+  recipient?: string,
+  broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
 ```
 
 ```rust [Rust]
@@ -32,6 +38,7 @@ pub async fn withdraw(
 ```
 
 ```url [API]
+/dydxprotocol.sending.Msg/WithdrawFromSubaccount
 ```
 
 :::
@@ -51,9 +58,9 @@ pub async fn withdraw(
 
 #### Response
 
-| Status | Meaning     | Schema |
-| ------ | ----------- | ------ |
-| `200`  | [OK]        | string |
+| Status | Meaning     | Schema   |
+| ------ | ----------- | -------- |
+| `200`  | [OK]        | [TxHash] |
 
 Examples: [Python] | [TypeScript] | [Rust]
 
@@ -64,3 +71,5 @@ Examples: [Python] | [TypeScript] | [Rust]
 
 [Wallet]: /types/wallet
 [SubaccountId]: /types/subaccount_id
+[OK]: /types/ok
+[TxHash]: /types/tx_hash

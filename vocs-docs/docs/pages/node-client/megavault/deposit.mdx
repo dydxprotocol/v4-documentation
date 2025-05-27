@@ -39,22 +39,18 @@ pub async fn deposit(
 
 #### Parameters
 
-| Parameter           | Location | Type               | Description                                                           |
-| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
-| `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
-
-:::details[Optional]
-
-| Parameter                     | Location | Type                      | Description                                                  |
-| ----------------------------- | -------- | ------------------------- | ------------------------------------------------------------ |
-| `limit`                       | query    | [u32]                     | Maximum number of asset positions to return in the response. |
-
-:::
+| Parameter           | Location | Type               | Description                                         |
+| ------------------- | -------- | ------------------ | --------------------------------------------------- |
+| `account`           | query    | [Account]          | Owner's account information                         |
+| `subaccount`        | query    | [SubaccountInfo]   | Subaccount information                              |
+| `amount`            | query    | int                | Amount to deposit                                   |
 
 #### Response
 
 | Status | Meaning     | Schema     |
 | ------ | ----------- | ---------- |
-| `200`  | [OK]        | [TxHash] ⛁ |
+| `200`  | [OK]        | [TxHash]   |
 
+[Account]: /types/account
+[SubaccountInfo]: /types/subaccount_info
 [TxHash]: /types/tx_hash

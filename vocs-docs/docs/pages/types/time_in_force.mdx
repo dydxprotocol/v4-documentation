@@ -1,0 +1,12 @@
+# Time in Force
+
+An enum which indicates how long an order will remain active before it is executed or expires.
+
+- `UNSPECIFIED`: represents the default behavior where an order will first match with existing orders on the book, and any remaining size will be added to the book as a maker order;
+- `IOC` enforces that an order only be matched with maker orders on the book. If the order has remaining size after matching with existing orders on the book, the remaining size is not placed on the book;
+- `POST_ONLY`: enforces that an order only be placed on the book as a maker order. Note this means that validators will cancel any newly-placed post only orders that would cross with other maker orders;
+- `FILL_OR_KILL`: enforces that an order will either be filled completely and immediately by maker orders on the book or canceled if the  entire amount can‘t be matched.
+
+:::warning
+The `FILL_OR_KILL` option is deprecated and will be removed in a future version.
+:::

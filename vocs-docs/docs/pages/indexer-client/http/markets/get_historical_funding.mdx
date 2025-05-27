@@ -1,0 +1,69 @@
+import { Button } from 'vocs/components'
+
+### Get Historical Funding
+
+Retrieves historical funding rates for a specific perpetual market.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_perpetual_market_historical_funding(
+    self,
+    market: str,
+    effective_before_or_at: Optional[str] = None,
+    effective_before_or_at_height: Optional[int] = None,
+    limit: Optional[int] = None,
+) -> dict
+```
+
+```typescript [TypeScript]
+async getPerpetualMarketHistoricalFunding(
+    market: string,
+    effectiveBeforeOrAt?: string | null,
+    effectiveBeforeOrAtHeight?: number | null,
+    limit?: number | null,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_historical_funding(
+    &self,
+    ticker: &Ticker,
+    opts: Option<GetHistoricalFundingOpts>,
+) -> Result<Vec<HistoricalFundingResponseObject>, Error>
+```
+
+```url [API]
+/v4/historicalFunding/{market}
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                         | Location  | Type          | Required  | Description                                                           |
+| --------------------------------- | --------- | ------------- | --------- | --------------------------------------------------------------------- |
+| `market`                          | path      | [Ticker]      | true      | The market ticker.                                                    |
+| `limit`                           | query     | [u32]         | false     | The maximum number of funding rates to retrieve.                      |
+| `effectiveBeforeOrAt`             | query     | [DateTime]    | false     | The timestamp to retrieve funding rates effective before or at.       |
+| `effectiveBeforeOrAtHeight`       | query     | [Height]      | false     | The block height to retrieve funding rates effective before or at.    |
+
+#### Response
+
+| Status | Meaning     | Schema                              | Description                        |
+| ------ | ----------- | ----------------------------------- | ---------------------------------- |
+| `200`  | [OK]        | [HistoricalFundingResponseObject] ⛁ | The historical funding rates data. |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/historicalFunding/BTC-USD">API Example</Button>
+
+[Ticker]: /types/ticker
+[OK]: /types/ok
+[u32]: /types/u32
+[Height]: /types/height
+[DateTime]: /types/date_time
+[HistoricalFundingResponseObject]: /types/historical_funding_response_object

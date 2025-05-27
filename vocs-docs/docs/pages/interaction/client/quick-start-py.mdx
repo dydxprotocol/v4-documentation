@@ -1,0 +1,77 @@
+# Quick start with Python
+
+This guide will walk you through the steps to set up and start using the `dydx` client library.
+
+Below you will use existing example provided with `dydx` Python client.
+
+::::steps
+
+## Install Python3 and Poetry
+
+Choose and install [Python 3.9+](https://www.python.org/downloads/) and [Poetry](https://python-poetry.org/docs#installing-with-the-official-installer) for your system.
+
+## Clone the dydx client repo
+
+```bash
+git clone https://github.com/dydxprotocol/v4-clients.git
+```
+
+## Set up virtual environment (Only for Linux)
+
+It's a good practice to use virtual environment to isolate dependencies for a project. Run the following command to create virtual environment.
+
+```bash
+python -m venv myenv
+```
+
+Activate the virtual environment:
+
+```bash
+source myenv/bin/activate
+```
+
+After activation, you should see the environment name in the terminal prompt, indicating you are in a virtual environment.
+
+## Adding the `dydx` Dependency
+
+Use the `pip install` command to add the dependencies. It will install the latest version of the client.
+
+```bash
+pip install dydx-v4-client
+```
+
+For more details on the `dydx-v4-client` library installation, please check the [readme of the python client](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-py-v2/README.md).
+
+## Install poetry
+
+The `dydx` uses `poetry` library for dependency management. Install the poetry using `pip`.
+
+```bash
+pip install poetry
+```
+
+## Install all dependencies
+
+Go to the Python client library.
+
+```bash
+cd v4-clients/v4-client-py-v2
+```
+
+Install the project dependencies using the following command:
+
+```bash
+poetry install
+```
+
+## Run an example
+
+Now, we can run an example file. Let's run `example/accounts_endpoint.py` file.
+
+```bash
+python examples/account_endpoints.py
+```
+
+::::
+
+**Now, you can play around with all the available examples. Happy trading!**

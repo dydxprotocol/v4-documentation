@@ -1,0 +1,20 @@
+# Oracle Prices
+
+Oracle prices on the dYdX are aggregated market prices used to ensure accurate collateralization, trigger specific order types (like Stop-Limit and Take-Profit), and manage liquidations. These prices are a core part of the dYdX v4 open-source software and play a critical role in maintaining trading integrity.
+
+## How Prices Are Determined
+
+Validators on the dYdX Chain are responsible for calculating and agreeing on fair market prices. The process includes:
+- Each validator continuously computing price data.
+- A block proposer suggesting price updates in a new block.
+- Other validators applying price-acceptance rules to verify that the suggested changes are reasonable.
+
+Consensus ensures that only fair and stable prices are accepted, preventing manipulation or faulty data from impacting the system.
+
+## Handling Volatility and Price Stability
+
+To prevent extreme or sudden price changes from affecting the platform:
+- Validators enforce rules that reject price updates significantly different from previous values.
+- This system maintains market stability and guards against abrupt shifts that could trigger unwanted liquidations or invalid order executions.
+
+By coordinating through consensus and applying strict criteria, the dYdX Chain ensures reliable and secure oracle pricing.

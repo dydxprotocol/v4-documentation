@@ -5,6 +5,12 @@
 :::code-group
 
 ```python [Python]
+async def simulate_transaction(
+    self,
+    messages: List[dict],
+    gas_price: str = "0.025uusdc",
+    memo: Optional[str] = None,
+) -> Fee:
 ```
 
 ```rust [Rust]

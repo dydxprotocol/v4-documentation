@@ -28,17 +28,17 @@ pub async fn get_node_info(&mut self) -> Result<GetNodeInfoResponse, Error>
 
 #### Parameters
 
-| Parameter           | Location | Type               | Required    | Description                                                           |
-| ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
-| `address`           | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
-| `limit`             | query    | [u32]              | false       |  Maximum number of asset positions to return in the response.         |
 
 #### Response
 
-| Status | Meaning     | Schema                          |
-| ------ | ----------- | ------------------------------- |
-| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |
+| Status | Meaning     | Schema                 |
+| ------ | ----------- | ---------------------  |
+| `200`  | [OK]        | [GetNodeInfoResponse]  |
 
-Examples: [Rust]
+Examples: [Rust] | [API]
 
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L44
+[API]: https://test-dydx-rest.kingnodes.com/cosmos/base/tendermint/v1beta1/node_info
+
+[GetNodeInfoResponse]: /types/get_node_info_response
+[OK]: /types/ok

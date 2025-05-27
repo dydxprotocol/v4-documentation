@@ -18,7 +18,12 @@ async def deposit(
 ```
 
 ```typescript [TypeScript]
-TODO: Deposit
+async deposit(
+  subaccount: SubaccountInfo,
+  assetId: number,
+  quantums: Long,
+  broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
 ```
 
 ```rust [Rust]
@@ -32,6 +37,7 @@ pub async fn deposit(
 ```
 
 ```url [API]
+/dydxprotocol.sending.Msg/DepositToSubaccount
 ```
 
 :::
@@ -51,9 +57,11 @@ pub async fn deposit(
 
 #### Response
 
-| Status | Meaning     | Schema |
-| ------ | ----------- | ------ |
-| `200`  | [OK]        | string |
+| Status | Meaning     | Schema   |
+| ------ | ----------- | -------- |
+| `200`  | [OK]        | [TxHash] |
 
 [Wallet]: /types/wallet
 [SubaccountId]: /types/Subaccount_id
+[OK]: /types/ok
+[TxHash]: /types/tx_hash

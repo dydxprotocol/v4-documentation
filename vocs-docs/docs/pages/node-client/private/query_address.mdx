@@ -35,16 +35,8 @@ pub async fn query_address(
 | ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
 | `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
 
-:::details[Optional]
-
-| Parameter                     | Location | Type                      | Description                                                  |
-| ----------------------------- | -------- | ------------------------- | ------------------------------------------------------------ |
-| `limit`                       | query    | [u32]                     | Maximum number of asset positions to return in the response. |
-
-:::
-
 #### Response
 
-| Status | Meaning     | Schema                          |
-| ------ | ----------- | ------------------------------- |
-| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |
+| Status | Meaning     | Schema                         |
+| ------ | ----------- | ------------------------------ |
+| `200`  | [OK]        | Pair of ([u64], [u64])         |

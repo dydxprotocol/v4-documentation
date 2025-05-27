@@ -1,0 +1,99 @@
+# WebSockets API
+
+The WebSockets API provides data feeds providing the trader real-time information.
+
+See the [guide](/interaction/data/feeds) for examples on how to use the WebSockets API.
+
+## Common schemas
+
+Interactions with the WebSockets endpoint is done using common base JSON schemas for all channels/feed types.
+For specific feeds, see the following [subsections](#feeds).
+
+### Subscribe
+
+Use the following schema to subscribe to a feed.
+
+#### JSON Schema
+
+| Parameter           | Type               | Description                                                           |
+| ------------------- | ------------------ | --------------------------------------------------------------------- |
+| `type`              | string             | Message type (`subscribe`).                                           |
+| `channel`           | string             | Feed type identifier.                                                 |
+| `id`                | string             | Selector for channel-specific data. Only used in some channels.       |
+| `batched`           | bool               | Reduce incoming messages by batching contents.                        |
+
+:::details[Example]
+```tsx
+{ 
+    "type": "subscribe", 
+    "channel": "v4_trades",
+    "id": "BTC-USD",
+    "batched": false
+}
+```
+:::
+
+#### Response
+
+| Parameter           | Type               | Description                                                           |
+| ------------------- | ------------------ | --------------------------------------------------------------------- |
+| `type`              | string             | Message type (`subscribed`).                                          |
+| `connection_id`     | string             | String identifying the subscription.                                  |
+| `message_id`        | int                | Message sequence number sent on the subscription.                     |
+| `id`                | string             | Selector for channel-specific data.                                   |
+| `contents`          | value              | Feed-specific initial data.                                           |
+
+### Unsubscribe
+
+Use the following schema to unsubscribe from a feed.
+Similar scheme to the `subscribe` schema, however with the `unsubscribe` type, and without the `batched` field.
+
+#### JSON Schema
+
+| Parameter           | Type               | Description                                                           |
+| ------------------- | ------------------ | --------------------------------------------------------------------- |
+| `type`              | string             | Message type (`unsubscribe`).                                         |
+| `channel`           | string             | Feed type identifier.                                                 |
+| `id`                | string             | Selector for channel-specific data.                                   |
+
+:::details[Example]
+```tsx
+{
+    "type": "unsubscribe",
+    "channel": "v4_trades",
+    "id": "BTC-USD"
+}
+```
+:::
+
+#### Response
+
+| Parameter           | Type               | Description                                                           |
+| ------------------- | ------------------ | --------------------------------------------------------------------- |
+| `type`              | string             | Message type (`unsubscribed`).                                        |
+| `connection_id`     | string             | String identifying the subscription.                                  |
+| `channel`           | string             | Feed type identifier.                                                 |
+| `message_id`        | int                | Message sequence number sent on the subscription.                     |
+| `id`                | string             | Selector for channel-specific data. Only used in some channels.       |
+
+### Data
+
+After subscription, the incoming messages will be serialized using the following schema.
+
+#### JSON Schema
+
+| Parameter           | Type               | Description                                                           |
+| ------------------- | ------------------ | --------------------------------------------------------------------- |
+| `connection_id`     | string             | String identifying the subscription.                                  |
+| `channel`           | string             | Feed type identifier.                                                 |
+| `id`                | string             | Selector for channel-specific data. Only used in some channels.       |
+| `message_id`        | int                | Message sequence number sent on the subscription.                     |
+| `version`           | string             | Protocol identifier.                                                  |
+| `contents`          | value              | Feed-specific message data.                                            |
+
+## Feeds
+
+The available clients API is presented below.
+For each, the subscription and unsubscription functions are shown. Internally, these functions send messages serialized in the [subscribe](#json-schema) and [unsubscribe](#json-schema-1) JSON schemas above.
+
+For each channel/feed type the sub-schemas employed in the `contents` field of the received [Data](#json-schema-2) (after subscription) are shown. 

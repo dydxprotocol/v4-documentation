@@ -1,0 +1,326 @@
+# Quick start with Rust
+
+This guide will walk you through the steps to set up and start using the `dydx` crate in your Rust project. Whether you're building a trading bot, analyzing market data, or just exploring decentralized exchanges, dydx provides a powerful and intuitive API to interact with the dYdX protocol.
+
+Below you will create a Rust application and connect it to an exchange, just follow the steps.
+
+::::steps
+
+
+## Creating a New Rust Project
+
+Let's start our journey by creating a fresh Rust project. The Cargo tool makes this process straightforward and sets up all the necessary files for you:
+
+```bash [cargo]
+cargo new --bin dydx-bot
+```
+
+Once executed, you'll see a new directory structure with a basic `main.rs` file and a `Cargo.toml` configuration file. This is your blank canvas for building something amazing!
+
+## Adding the `dydx` Dependency
+
+Now that we have our project skeleton, let's add the `dydx` crate to our toolkit. Open your `Cargo.toml` file and add the dependency:
+
+```toml [Cargo.toml]
+[dependencies]
+dydx = "0.2.0"  # Replace with the latest version // [!code ++]
+```
+
+This tells Cargo to fetch and compile the `dydx` crate the next time you build your project. The Rust package manager will handle all the dependencies automatically, saving you from dependency headaches.
+
+:::tip
+The crate being used fully supports `async` and can be used together with the [tokio](https://tokio.rs) asynchronous runtime.
+:::
+
+You can also use the `cargo add` command if you have [cargo-edit](https://github.com/killercup/cargo-edit) installed, which will immediately add the most current version of the crate:
+
+```bash [cargo]
+cargo add dydx
+```
+
+:::note
+The project also includes the `anyhow` crate for convenient error handling and the `tokio` async runtime.
+:::
+
+## Creating a Configuration File
+
+The client library works with a configuration file that allows you to manage various client parameters. Let's define the configuration file that our program will use.
+
+For example, you can create a configuration file for accessing the main network *(mainnet)* or for tests oriented towards the test network *(testnet)*.
+
+:::code-group
+
+```toml [mainnet.toml]
+[node]
+endpoint = "https://dydx-ops-grpc.kingnodes.com:443"
+chain_id = "dydx-mainnet-1"
+fee_denom = "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5"
+
+[indexer]
+http.endpoint = "https://indexer.dydx.trade"
+ws.endpoint = "wss://indexer.dydx.trade/v4/ws"
+
+[noble] # optional
+endpoint = "http://noble-grpc.polkachu.com:21590"
+chain_id = "noble-1"
+fee_denom = "uusdc"
+```
+
+```toml [testnet.toml]
+[node]
+endpoint = "https://test-dydx-grpc.kingnodes.com"
+chain_id = "dydx-testnet-4"
+fee_denom = "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5"
+
+[indexer]
+http.endpoint = "https://indexer.v4testnet.dydx.exchange"
+ws.endpoint = "wss://indexer.v4testnet.dydx.exchange/v4/ws"
+
+[noble] # optional
+endpoint = "http://noble-testnet-grpc.polkachu.com:21590"
+chain_id = "grand-1"
+fee_denom = "uusdc"
+
+[faucet] # optional
+endpoint = "https://faucet.v4testnet.dydx.exchange"
+```
+
+:::
+
+:::warning
+The endpoints presented above are chosen randomly and are not a recommendation. You can find a complete list of available API endpoints at the endpoints section.
+:::
+
+
+
+
+
+
+## Basic Setup and Authentication
+
+
+### Reading Configuration
+
+The configuration can be loaded from a TOML file using the `from_file` method provided by the `ClientConfig` struct. This allows you to separate your environment-specific settings from your code.
+
+```rust [main.rs]
+let config = ClientConfig::from_file("dydx.toml").await?;
+```
+
+### Creating a Node Client
+
+A `NodeClient` is needed to send transactions to the blockchain. It establishes a connection to a dYdX node and enables operations like placing orders, managing positions, and other on-chain activities.
+
+```rust [main.rs]
+let mut client = NodeClient::connect(config.node).await?;
+```
+
+### Creating an Indexer Client
+
+An `IndexerClient` is used to retrieve trading data such as market prices, order book information, and historical trades. It connects to the dYdX indexer service which provides read-only access to trading information.
+
+```rust [main.rs]
+let indexer = IndexerClient::new(config.indexer);
+```
+
+## Fetching Market Data
+
+### Creating a Ticker Instance
+
+A ticker represents a specific trading pair on dYdX, in this case Bitcoin against US Dollar.
+
+```rust [main.rs]
+let ticker = Ticker::from("ETH-USD");
+```
+
+You can create it from a string if you know it exactly, or get their list using the `list_perpetual_markets()` method of the `IndexerClient`.
+
+### Preparing Options for Calling a Method
+
+Most methods have optional parameters, for example, you can limit the number of records in the response. In our example, we want to extract a list of trades for an instrument, so we will fill in the `GetTradesOpts` structure.
+
+```rust [main.rs]
+let opts = GetTradesOpts {
+    limit: Some(1),
+    ..Default::default()
+};
+```
+
+We set the `limit` field to `1` to get only the last trade, to determine the current market price.
+
+### Calling a Method to Get Trades
+
+To obtain trades, we will call the `get_trades()` method of the `IndexerClient` structure. The client itself is divided into sections:
+
+* **Accounts** - for obtaining information about accounts and transfers
+* **Markets** - operational trading information, order book, trades
+* **Utility** - service information, such as the current blockchain height (number of blocks) or recorded time
+* **Vaults** - for working with MegaVaults
+* **Feed** - streaming subscriptions for information about trades and orders
+
+In our case, we need the `markets` section accessible by calling the method of the same name:
+
+```rust [main.rs]
+let trades = indexer
+    .markets()
+    .get_trades(&ticker, Some(opts))
+    .await?;
+```
+
+The method call returns a `Vec` with trades, although we limited their number to only the last trade.
+
+### Extracting Trading Data
+
+Each trade is represented by a `TradeResponseObject` structure. We simply extract this structure from the vector and retrieve the price (the `price` field of the mentioned structure).
+
+```rust [main.rs]
+let trade = trades
+    .first()
+    .ok_or_else(|| anyhow!("Trades are not available"))?;
+let price = &trade.price;
+```
+
+
+
+## Setting Up a Wallet (for On-Chain Operations)
+
+To create a wallet instance for trading operations, you'll need a `Wallet` object that's responsible for transaction signing. You can create it using the `from_mnemonic` method which expects a mnemonic phrase as text.
+
+```rust [main.rs]
+let wallet = Wallet::from_mnemonic(mnemonic)?;
+```
+
+This phrase is not stored in the configuration file, and you should decide for yourself how you want to obtain this value in a secure manner.
+
+:::warning
+Since storing such values in plaintext is not secure, you might want to encrypt it and access it using a password.
+:::
+
+
+### Deriving an Account
+
+Since the Wallet functions as a private key, another key is derived from it based on a number to work with multiple accounts. This not only enhances security but also simplifies key management, as a single key provides access to multiple accounts while not being used in its raw form.
+
+```rust [main.rs]
+let mut account = wallet.account(0, &mut client).await?;
+```
+
+This is all done using the wallet's `account()` method, which takes an account number and a reference to the client to make a request for obtaining the account address in the network and a sequence number for creating the next transaction.
+
+
+### Access to a Subaccount
+
+To create orders, we will additionally need a subaccount, which we can obtain by calling the method of the same name and passing a number. The method will return a Subaccount instance that contains the address and the specified number.
+
+```rust [main.rs]
+let subaccount = account.subaccount(0)?;
+```
+
+## Obtaining Parameters
+
+We will also need information about the trading instrument to place an order (this is used to adjust the order price to market criteria, as each instrument has its own fractional precision and step size).
+
+### Market Information
+
+Such information can be obtained from the `Indexer` using the `get_perpetual_market()` method by passing a reference to the `Ticker`.
+
+```rust [main.rs]
+let market = indexer.markets().get_perpetual_market(&ticker).await?;
+```
+
+### The Chain Height
+
+Order placement also requires an expiration value, which is calculated from the number of blocks in the chain, as time is not a reliable criterion in consensus-based networks.
+
+:::tip
+Nevertheless, you can approximately predict how long an order will remain active based on the average block formation speed in the network.
+:::
+
+To get the current height, use the `get_latest_block_height()` method from the `NodeClient`.
+
+```rust [main.rs]
+let current_block_height = client.get_latest_block_height().await?;
+```
+
+## Preparing an Order
+
+An order in dYdX is actually a transaction that can be accepted into a block if the order conditions are met. Therefore, before sending it, we must prepare and assemble it by setting all parameters that serve as criteria for its execution or cancellation.
+
+To create an order, the `OrderBuilder` is used, a special structure with a set of convenient methods. To create a builder instance, you need to call the `new()` method, passing the market parameters and subaccount.
+
+```rust [main.rs]
+let (_id, order) = OrderBuilder::new(market, subaccount)
+```
+
+When the order is created, we will receive a pair consisting of an identifier and an order instance, which is why we saved them in the corresponding variables in advance.
+
+:::note
+Please note that the statement is not completed, as we will continue to build a chain of calls from the same builder below.
+:::
+
+### Order Parameters
+
+Orders come in different types, and the builder contains corresponding methods. For example, to create a market order, the `market()` method is provided (executed at any price, but you can set a limit in case of significant slippage).
+
+We will create a limit order using the `limit()` method, which expects:
+
+* order direction (buy or sell)
+* Transaction price
+* Quantity
+
+```rust [main.rs]
+let (_id, order) = OrderBuilder::new(market, subaccount)
+    .limit(OrderSide::Buy, price.to_owned(), BigDecimal::from_str("0.02")?) // [!code focus]
+```
+
+### Reduce Only
+
+Since trading occurs with perpetual instruments, a position can easily be opened in any direction. If you want to create an order to close a position, you will need to set the Reduce Only flag using the corresponding method.
+
+This will prevent the order from flipping the position in the opposite direction if the unfilled remainder exceeds the size of the current position.
+
+This flag is only available for orders that are executed in a single trade or are canceled - FOK (Fill or Kill) or IOC (Immediate or Cancel), if the remainder is canceled.
+
+```rust [main.rs]
+    .limit(OrderSide::Buy, price.to_owned(), BigDecimal::from_str("0.02")?)
+    .reduce_only(false) // [!code focus]
+```
+
+```rust [main.rs]
+    .reduce_only(false)
+    .time_in_force(TimeInForce::Unspecified) // [!code focus]
+```
+
+```rust [main.rs]
+    .time_in_force(TimeInForce::Unspecified)
+    .until(current_block_height.ahead(10)) // [!code focus]
+```
+
+```rust [main.rs]
+    .until(current_block_height.ahead(10))
+    .build(123456)?; // [!code focus]
+```
+
+## Placing an Order
+
+```rust [main.rs]
+let tx_hash = client.place_order(&mut account, order).await?;
+```
+
+## Error Handling
+
+Text
+
+## Handling Websocket Connections
+
+Text
+
+## Building and Running
+
+Text
+
+## Next Steps
+
+Text
+
+::::
