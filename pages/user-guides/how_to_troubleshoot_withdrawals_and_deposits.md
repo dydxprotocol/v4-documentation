@@ -24,11 +24,11 @@ Skip Go Fast is a **decentralized bridging protocol**, developed by **Skip**, th
 
 | Source Chain     | Min Transfer (USD) | Max Transfer (USD) |
 | ---------------- | ------------------ | ------------------ |
-| Ethereum Mainnet | 50                 | 17,500             |
-| Arbitrum         | 1                  | 17,500             |
-| Base             | 1                  | 17,500             |
-| Optimism         | 1                  | 17,500             |
-| Polygon          | 1                  | 17,500             |
+| Ethereum Mainnet | 50                 | 25,000             |
+| Arbitrum         | 1                  | 25,000             |
+| Base             | 1                  | 25,000             |
+| Optimism         | 1                  | 25,000             |
+| Polygon          | 1                  | 25,000             |
 
 For the latest Minimum & Maximum Transfer Sizes, checkout the Skip API [documents](https://docs.skip.build/go/advanced-transfer/go-fast#what-are-the-minimum-and-maximum-transfer-sizes-for-go-fast%3F).
 
