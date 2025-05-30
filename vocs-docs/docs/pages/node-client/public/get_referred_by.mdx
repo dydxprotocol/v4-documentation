@@ -1,0 +1,42 @@
+### Get Referred By
+
+Get referred by
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+```
+
+```rust [Rust]
+```
+
+```typescript [TypeScript]
+async getReferredBy(address: string): Promise<AffiliateModule.ReferredByResponse>
+```
+
+```uri
+/dydxprotocol.affiliates.Query/ReferredBy
+```
+
+:::
+
+#### Parameters
+
+| Parameter | Location  | Type      | Mandatory | Description                   |
+| --------- | --------- | --------- | --------- | ----------------------------- |
+| address   | Query     | string    | true      | Address to get referred by    |
+
+#### Response
+
+| Status    | Meaning   | Schema                                |
+| --------- | --------- | ------------------------------------- |
+| `200`     | [OK]      | [AffiliateModule.ReferredByResponse]  |
+
+Examples: [API]
+
+[API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/affiliates/referred_by/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art
+
+[OK]: /types/ok
+[AffiliateModule.ReferredByResponse]: /types/cosmos

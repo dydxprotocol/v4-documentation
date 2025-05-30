@@ -1,0 +1,56 @@
+### Deposit
+
+Deposit funds (USDC) from the address to the subaccount.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+async depositToMegavault(
+    subaccount: SubaccountInfo,
+    amountUsdc: number,
+    broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+
+depositToMegavaultMessage(subaccount: SubaccountInfo, amountUsdc: number): EncodeObject
+```
+
+```rust [Rust]
+pub async fn deposit(
+    &mut self,
+    account: &mut Account,
+    subaccount: Subaccount,
+    amount: impl Into<Usdc>,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Description                                         |
+| ------------------- | -------- | ------------------ | --------------------------------------------------- |
+| `account`           | query    | [Account]          | Owner's account information                         |
+| `subaccount`        | query    | [SubaccountInfo]   | Subaccount information                              |
+| `amount`            | query    | int                | Amount to deposit                                   |
+
+#### Response
+
+| Status | Meaning     | Schema     |
+| ------ | ----------- | ---------- |
+| `200`  | [OK]        | [TxHash]   |
+
+[Account]: /types/account
+[SubaccountInfo]: /types/subaccount_info
+[TxHash]: /types/tx_hash

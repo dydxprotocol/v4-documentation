@@ -1,0 +1,58 @@
+import { Button } from 'vocs/components'
+
+### Get Order
+
+Retrieves detailed information about a specific order based on its unique identifier.
+
+This method allows clients to fetch the details of a particular order from the exchange by providing its order ID.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_order(
+    self,
+    order_id: str,
+) -> Any
+```
+
+```typescript [TypeScript]
+async getOrder(
+    orderId: string,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_order(
+    &self,
+    order_id: &OrderId,
+) -> Result<OrderResponseObject, Error>
+```
+
+```url [API]
+/v4/orders/{order_id}
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter     | Location | Type                      | Required   | Description   |
+| ------------- | -------- | ------------------------- | ---------- | ------------- |
+| `orderId`     | path     | [OrderId]                 | true       | The order ID. |
+
+#### Response
+
+| Status | Meaning     | Schema                  | Description     |
+| ------ | ----------- | ----------------------- | --------------- |
+| `200`  | [OK]        | [OrderResponseObject] ⛁ | The order data. |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/orders/66390c15-ebad-53f8-86ad-99b3dfedbc85">API Example</Button>
+
+[OK]: /types/ok
+[OrderId]: /types/order_id
+[OrderResponseObject]: /types/order_response_object

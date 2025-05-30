@@ -1,0 +1,56 @@
+import BatchedArray from '../../../components/BatchedArray';
+
+### Candles
+
+Data feed of the [candles](https://en.wikipedia.org/wiki/Candlestick_chart) of a market. Data contains updates for open, low, high, and close prices, trade volume, for a certain time resolution.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+# class `Candles`
+def subscribe(self, id: str, resolution: CandlesResolution, batched: bool = True) -> Self
+def unsubscribe(self, id: str, resolution: CandlesResolution)
+```
+
+```typescript [TypeScript]
+// class `IndexerSocket`
+subscribeToCandles(market: string, resolution: CandlesResolution): void
+unsubscribeFromCandles(market: string, resolution: CandlesResolution): void
+```
+
+```rust [Rust]
+// struct `Feeds`
+pub async fn candles(
+    &mut self,
+    ticker: &Ticker,
+    resolution: CandleResolution,
+    batched: bool,
+) -> Result<Feed<CandlesMessage>, FeedError>
+// The stream is unsubscribed when the `Feed` object is dropped
+```
+
+```url [Channel]
+v4_candles
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Schema
+
+The field `id` is a string containing the market and candle resolution. It is formatted as `{market}/{resolution}`.
+
+The field `contents` is serialized using the following schemas.
+
+##### Messages
+
+| Initial | Update     |
+| ------ | ----------- | 
+| [`CandlesInitialMessage`] | [`CandlesUpdateMessage`] <BatchedArray/> |
+
+[`CandlesInitialMessage`]: /types/candles_initial_message
+[`CandlesUpdateMessage`]: /types/candles_update_message

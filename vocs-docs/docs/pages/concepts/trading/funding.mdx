@@ -1,0 +1,56 @@
+# Funding
+
+Funding payments are exchanged between long and short traders to encourage the price of a perpetual contract to trade close to the price of the underlying. If the perpetual trades at a premium relative to the index, long traders will typically make payments to short traders, whereas if the perpetual trades at a discount relative to the index, short traders will typically make payments to long traders.
+
+The payments are credited or debited at the start of each hour, and are included in the realized PnL for the position.
+
+## Funding Rate Units
+
+Since funding payments are exchanged every hour, the dYdX funding rate is usually represented as a 1-hour rate, which represents the return a position may expect to earn or pay every hour.
+
+When calculating the funding rate, the premium is scaled to have a realization period of 8 hours. That means, for example, that if a certain perpetual market trades consistently at a 0.1% premium relative to the underlying, long traders may expect to pay ~0.1% every 8 hours, and short traders may expect to earn a ~0.1% return every 8 hours (not accounting for the interest rate component).
+
+## Funding Payment Calculation
+
+At the start of each hour, an account receives USDC (if `F` is positive) or pays USDC (if `F` is negative) in an amount equal to:
+
+<pre class="center-column">
+F = (-1) &times; S &times; P &times; R
+</pre>
+
+Where:
+
+* `S` is the size of the position (positive if long, negative if short)
+* `P` is the oracle price for the market
+* `R` is the funding rate (as a 1-hour rate)
+
+## Funding Rate Calculation
+
+The main component of the funding rate is a premium that takes into account market activity for the perpetual. It is calculated for each market, every minute (at a random point within the minute) using the formula:
+
+<pre class="center-column">
+Premium = (Max(0, Impact Bid Price - Index Price) - Max(0, Index Price - Impact Ask Price)) / Index Price
+</pre>
+
+Where the impact bid and impact ask prices are defined as:
+
+<pre class="center-column">
+Impact Bid Price = Average execution price for a market sell of the impact notional value
+Impact Ask Price = Average execution price for a market buy of the impact notional value
+</pre>
+
+And the impact notional amount for a market is:
+
+<pre class="center-column">
+Impact Notional Amount = 500 USDC / Initial Margin Fraction
+</pre>
+
+For example, for a market with a 10% initial margin fraction, the impact notional value is 5,000 USDC.
+
+At the end of each hour, the premium component is calculated as the simple average (i.e. TWAP) of the 60 premiums calculated over the course of the last hour. In addition to the premium component, each market has a fixed interest rate component that aims to account for the difference in interest rates of the base and quote currencies. The funding rate is then:
+
+<pre class="center-column">
+Funding Rate = (Premium Component / 8) + Interest Rate Component
+</pre>
+
+Currently, the interest rate component for all dYdX markets is `0.00125%` (equivalent to `0.01%` per 8 hours).

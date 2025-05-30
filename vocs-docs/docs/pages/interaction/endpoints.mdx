@@ -1,0 +1,336 @@
+# Connecting to dYdX
+
+dYdX provides two networks for trading: a __mainnet__, and a __testnet__:
+- __mainnet__: The core network where real financial transactions occur;
+- __testnet__: A separate, risk-free, network. Served mainly for the purposes of testing and experimenting before transitioning to the __mainnet__.
+It is advisable that for the purposes of learning and trying out the dYdX ecosystem that the __testnet__ is used and preferred over the __mainnet__.
+
+For the purposes of this guide, we'll assume that the __testnet__ is being used. Nevertheless, the API is exactly the same for both the __mainnet__ and the __testnet__, so any code working in the __testnet__ should work in the __mainnet__.
+
+## Available clients
+
+Interacting with the dYdX network API is made through several sets of methods grouped with structures referred to as clients. Each of these clients essentially connects to a different server with its own functionality and purpose.
+
+### Node client
+
+The Node client (also known as the Validator client) is the main client for interacting with the dYdX network. It provides the [Node API](/node-client/index) allowing the user to do operations that require authentication (e.g., issue trading orders) through the [Private API](/node-client/private/index), or query data through the [Public API](/node-client/public/index).
+
+You'll need an endpoint to setup the Node client. Grab an RPC/gRPC endpoint from [here](#testnet).
+
+:::code-group
+
+```python [Python]
+from dydx_v4_client.network import TESTNET
+from dydx_v4_client.node.client import NodeClient
+# from dydx_v4_client.network import make_testnet, make_mainnet
+
+# Using a pre-configured endpoint. # [!code focus]
+config = TESTNET.node # [!code focus]
+# Or configuring your endpoints:
+# ```python
+# config = make_testnet(
+#    node_url="your-custom-grpc-node.com"
+#    rest_indexer="https://your-custom-rest-indexer.com",
+#    websocket_indexer="wss://your-custom-websocket-indexer.com",
+# ).node
+# ```
+
+# Connect to the network. # [!code focus]
+node = await NodeClient.connect(config) # [!code focus]
+```
+
+```typescript [TypeScript]
+import { ValidatorClient, Network } from '@dydxprotocol/v4-client-js';
+
+// Using a pre-configured endpoint. // [!code focus]
+const config = Network.testnet().validatorConfig; // [!code focus]
+// You can modify the endpoint doing `config.restEndpoint = "...";`
+// Connect to the network. // [!code focus]
+const client = await ValidatorClient.connect(config); // [!code focus]
+```
+
+```rust [Rust]
+use dydx::{config::ClientConfig, node::NodeClient};
+
+// The configuration file should have the endpoint. Use a gRPC endpoint. // [!code focus]
+let config = ClientConfig::from_file("config.toml").await?; // [!code focus]
+// Connect to the network. // [!code focus]
+let client = NodeClient::connect(config.node).await?; // [!code focus]
+```
+
+:::
+
+
+### Indexer client
+
+The Indexer is a high-availability system designed to provide structured data and offload computational burden from the core full nodes. The Indexer client provides methods from the [Indexer API](/indexer-client/index). It serves both as a spontaneuous source of data retrieval through its REST endpoint, or a continuous feed of trading data through its WebSockets endpoint.
+
+The Indexer client is further divided into two sub-clients associated with the two different protocols. 
+You'll need two endpoints to setup each Indexer sub-client. Grab these from [here](#testnet-1).
+
+:::code-group
+
+```python [Python]
+from dydx_v4_client.network import TESTNET
+from dydx_v4_client.indexer.rest.indexer_client import IndexerClient
+from dydx_v4_client.indexer.socket.websocket import IndexerSocket
+
+# Using a pre-configured endpoint. # [!code focus]
+network = TESTNET # [!code focus]
+# Or configuring your endpoints:
+# ```python
+# config = make_testnet(
+#    node_url="your-custom-grpc-node.com"
+#    rest_indexer="https://your-custom-rest-indexer.com",
+#    websocket_indexer="wss://your-custom-websocket-indexer.com",
+# ).node
+# ```
+
+# Instantiate the HTTP sub-client. # [!code focus]
+indexer = IndexerClient(network.rest_indexer) # [!code focus]
+# Instatiate the WebSockets sub-client, connecting to the network. # [!code focus]
+socket = await IndexerSocket(network.websocket_indexer).connect() # [!code focus]
+```
+
+```typescript [TypeScript]
+import { IndexerClient, Network, SocketClient } from '@dydxprotocol/v4-client-js';
+
+const apiTimeout = 1000;
+// Using a pre-configured endpoint. // [!code focus]
+const config = Network.testnet().indexerConfig; // [!code focus]
+// You can modify the HTTP endpoint doing `config.restEndpoint = "...";` [!code focus]
+// You can modify the WebSockets endpoint doing `config.websocketEndpoint = "...";` [!code focus]
+
+// Instantiate the HTTP client. // [!code focus]
+const client = new IndexerClient(config, apiTimeout); // [!code focus]
+// Instantiate the WebSockets client, connecting to the network. // [!code focus]
+const socket = new SocketClient( // [!code focus]
+  config.indexerConfig, // [!code focus]
+  () => {}, // onOpenCallback
+  () => {}, // onCloseCallback
+  () => {}, // onMessageCallback
+  () => {}  // onErrorCallback
+); // [!code focus]
+socket.connect(); // [!code focus]
+
+
+```
+
+```rust [Rust]
+use dydx::{config::ClientConfig, indexer::IndexerClient};
+
+// The configuration file should have the endpoint. // [!code focus]
+let config = ClientConfig::from_file("config.toml").await?; // [!code focus]
+// Instantiate the client. // [!code focus]
+// Both HTTP and WebSockets methods are provided with the `indexer`. // [!code focus]
+let indexer = IndexerClient::new(config.indexer); // [!code focus]
+```
+
+:::
+
+### Composite client (TypeScript only)
+
+The Composite client groups commonly used methods into a single structure. It is essentially composed by both the Node and Indexer clients.
+
+```typescript [TypeScript]
+import { CompositeClient, Network } from '@dydxprotocol/v4-client-js';
+
+const network = Network.testnet();
+const client = await CompositeClient.connect(network); // [!code focus]
+```
+
+:::info
+The Python and Rust APIs do not have a Composite client. The explicit Node and Indexer clients should be used instead.
+:::
+
+### Faucet client
+
+To test your trading strategy, test funds can be requested from the Faucet client. This client only works in the __testnet__. The acquired test funds can only be used in the __testnet__.
+
+:::code-group
+
+```python [Python]
+from dydx_v4_client.network import TESTNET_FAUCET
+from dydx_v4_client.faucet_client import FaucetClient
+
+faucet = FaucetClient(TESTNET_FAUCET) # [!code focus]
+```
+
+```typescript [TypeScript]
+import { FaucetApiHost, FaucetClient } from '@dydxprotocol/v4-client-js';
+
+const client = new FaucetClient(FaucetApiHost.TESTNET); // [!code focus]
+```
+
+```rust [Rust]
+// The feature `faucet` must be enabled.
+use anyhow::anyhow as err;
+use dydx::{config::ClientConfig, faucet::FaucetClient};
+
+let config = ClientConfig::from_file("config.toml").await?;
+let faucet = FaucetClient::new( // [!code focus]
+    config // [!code focus]
+        .faucet // [!code focus]
+        .ok_or_else(|| err!("The config file must contain a [faucet] config!"))?, // [!code focus]
+); // [!code focus]
+```
+
+:::
+
+### Noble client
+
+To move assets in and out of the dYdX network, the Noble network is commonly employed.
+
+:::tip[Alternatives]
+Moving assets is not restricted to using the Noble client directly. Please see the [Deposits and Withdrawals](/interaction/deposits-and-withdrawals) page.
+:::
+
+:::code-group
+
+```python [Python]
+# To be supported.
+```
+
+```typescript [TypeScript]
+import { NobleClient } from '@dydxprotocol/v4-client-js';
+
+const client = new NobleClient('https://rpc.testnet.noble.strange.love', 'Noble example'); // [!code focus]
+```
+
+```rust [Rust]
+// The feature `noble` must be enabled.
+use anyhow::anyhow as err;
+use dydx::{config::ClientConfig, noble::NobleClient};
+
+let config = ClientConfig::from_file("config.toml").await?;
+let noble = NobleClient::connect( // [!code focus]
+    config // [!code focus]
+        .noble // [!code focus]
+        .ok_or_else(|| err!("The config file must contain a [noble] config!"))?, // [!code focus]
+).await?; // [!code focus]
+```
+
+:::
+
+## Endpoints
+
+Some known endpoints are provided below. Use these to connect to the dYdX networks.
+
+### Node
+
+Connections with the full nodes are established using the (g)RPC protocol.
+
+#### mainnet
+
+##### gRPC
+
+| Team          | URI                                                                                                                                                                                                                                                 | Rate limit |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| Polkachu      | `https://dydx-dao-grpc-1.polkachu.com:443` <br/> `https://dydx-dao-grpc-2.polkachu.com:443` <br/> `https://dydx-dao-grpc-3.polkachu.com:443` <br/> `https://dydx-dao-grpc-4.polkachu.com:443` <br/> `https://dydx-dao-grpc-5.polkachu.com:443` | 300 req/m  |
+| KingNodes     | `https://dydx-ops-grpc.kingnodes.com:443`                                                                                                                                                                                                           | 250 req/m  |
+| Enigma        | `https://dydx-dao-grpc.enigma-validator.com:443`                                                                                                                                                                                                    |            |
+| Lavender.Five | `https://dydx.lavendarfive.com:443`                                                                                                                                                                                                            |            |
+| PublicNode    | `https://dydx-grpc.publicnode.com:443`                                                                                                                                                                                                              |            |
+| Silk Nodes    | `https://dydx.grpc.silknodes.io:443`                                                                                                                                                                                                                |            |
+
+##### RPC
+
+| Team          | URI                                                    | Rate limit |
+| ------------- | ------------------------------------------------------ | ---------- |
+| Polkachu      | `https://dydx-dao-rpc.polkachu.com:443`                | 300 req/m  |
+| KingNodes     | `https://dydx-ops-rpc.kingnodes.com:443`               | 250 req/m  |
+| Enigma        | `https://dydx-dao-rpc.enigma-validator.com:443`        |            |
+| Lavender.Five | `https://dydx-rpc.lavenderfive.com:443`                |            |
+| AutoStake     | `https://dydx-mainnet-rpc.autostake.com:443`           | 4 req/s    |
+| EcoStake      | `https://rpc-dydx.ecostake.com:443`                    |            |
+| PublicNode    | `https://dydx-rpc.publicnode.com:443`                  |            |
+| Silk Nodes    | `https://dydx.rpc.silknodes.io:443`                    |            |
+
+##### REST
+
+| Team          | URI                                                    | Rate limit |
+| ------------- | ------------------------------------------------------ | ---------- |
+| Polkachu      | `https://dydx-dao-api.polkachu.com:443`                | 300 req/m  |
+| KingNodes     | `https://dydx-ops-rest.kingnodes.com:443`              | 250 req/m  |
+| Enigma        | `https://dydx-dao-lcd.enigma-validator.com:443`        |            |
+| Lavender.Five | `https://dydx-api.lavenderfive.com:443`                |            |
+| AutoStake     | `https://dydx-mainnet-lcd.autostake.com:443`           | 4 req/s    |
+| EcoStake      | `https://rest-dydx.ecostake.com:443`                   |            |
+| PublicNode    | `https://dydx-rest.publicnode.com:443`                 |            |
+| Silk Nodes    | `https://dydx.api.silknodes.io:443`                    |            |
+
+#### testnet
+
+##### gRPC
+
+| Team          | URI                                                |
+| ------------- | -------------------------------------------------- |
+| Lavender Five | `testnet-dydx.lavenderfive.com:443 (TLS)`          |
+| King Nodes    | `test-dydx-grpc.kingnodes.com:443 (TLS)`           |
+| Polkachu      | `dydx-testnet-grpc.polkachu.com:23890 (plaintext)` |
+
+##### RPC
+
+| Team          | URI                                             |
+| ------------- | ----------------------------------------------- |
+| Enigma        | `https://dydx-rpc-testnet.enigma-validator.com` |
+| Lavender Five | `https://testnet-dydx-rpc.lavenderfive.com`     |
+| King Nodes    | `https://test-dydx-rpc.kingnodes.com`           |
+| Polkachu      | `https://dydx-testnet-rpc.polkachu.com`         |
+
+##### REST
+
+| Team          | URI                                             |
+| ------------- | ----------------------------------------------- |
+| Enigma        | `https://dydx-lcd-testnet.enigma-validator.com` |
+| Lavender Five | `https://testnet-dydx-api.lavenderfive.com`     |
+| King Nodes    | `https://test-dydx-rest.kingnodes.com`          |
+| Polkachu      | `https://dydx-testnet-api.polkachu.com`         |
+
+### Indexer
+
+Connections with the Indexer are established either using HTTP (for spontaneuous data retrieval) or WebSockets (for data streaming).
+
+#### mainnet
+
+| Type | URI                              |
+| ---- | -------------------------------- |
+| HTTP  | `https://indexer.dydx.trade/v4` |
+| WS   | `wss://indexer.dydx.trade/v4/ws` |
+
+#### testnet
+
+| Type | URI                                           |
+| ---- | --------------------------------------------- |
+| HTTP  | `https://indexer.v4testnet.dydx.exchange`    |
+| WS   | `wss://indexer.v4testnet.dydx.exchange/v4/ws` |
+
+### Faucet
+
+Used to retrieve test funds.
+
+#### testnet
+
+`https://faucet.v4testnet.dydx.exchange`
+
+### Noble
+
+Connections with the Noble blockchain. Similarly to the dYdX networks, Noble also has a __mainnet__ and a __testnet__.
+
+#### mainnet
+
+| Team          | URI                                                |
+| ------------- | -------------------------------------------------- |
+| Polkachu      | `http://noble-grpc.polkachu.com:21590 (plaintext)` |
+
+
+#### testnet
+
+| Team          | URI                                                |
+| ------------- | -------------------------------------------------- |
+| Polkachu      | `noble-testnet-grpc.polkachu.com:21590 (plaintext)`|
+
+:::info
+In the Cosmos blockchains (dYdX, Noble, etc.) inter-blockchain communications require IBC relayers to be present that facilitate bridging between networks.
+These IBC relayers may not be active, specially for the __testnet__ networks.
+:::
