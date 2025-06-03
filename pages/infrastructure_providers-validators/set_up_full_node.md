@@ -4,16 +4,19 @@ Installing and running a full node allows you to read orderbook and onchain data
 > Code snippets on this page use example values. Replace them with your own. See the [Network Configuration](../infrastructure_providers-network/network_constants.mdx) section of the documentation for network constants and other resources you need to configure a full node.
 
 ## Prerequisites
-To run a full node, the system that hosts the node must meet the following minimum requirements:
-- Linux (Ubuntu Server 22.04.3 or later recommended)
-- 8-core CPU (ARM or x86_64 architecture)
-- 64 GB RAM
-- 500 GB SSD NVMe Storage
+
+The minimum recommended specs for running a node is the following:
+
+- 16-core, x86_64 architecture processor
+- 64 GiB RAM
+- 500 GiB of locally attached SSD storage
+
+For example, an AWS instance like the `r6id.4xlarge`, or equivalent.
 
 ## Choose a Method
 To set up a full node, you can either:
 
-1. Use [this script](https://github.com/dydxprotocol/v4-chain/blob/main/protocol/scripts/create_full_node.sh), provided by dYdX, to automate setup. 
+1. Use [this script](https://github.com/dydxprotocol/v4-chain/blob/main/protocol/scripts/create_full_node.sh), provided by dYdX, to automate setup.
 
 Save the script with an `.sh` extension in your `$HOME` directory. Edit the script, replacing default values in fields such `VERSION` and `CHAIN-ID` with your own. Run the script with the following commands:
 
@@ -114,8 +117,8 @@ A seed node acts as an address book and helps your node join the network. To upd
 
 ```bash
 # Example for DYDX token holders on mainnet
-SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856", 
-"65b740ee326c9260c30af1f044e9cda63c73f7c1@seeds.kingnodes.net:23856", 
+SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856",
+"65b740ee326c9260c30af1f044e9cda63c73f7c1@seeds.kingnodes.net:23856",
 "d8e106274b24ec64ce724a611def6a3637226745@dydx-mainnet-seed.bwarelabs.com:36656",
 "20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856",
 "c2c2fcb5e6e4755e06b83b499aff93e97282f8e8@tenderseed.ccvalidators.com:26401",
