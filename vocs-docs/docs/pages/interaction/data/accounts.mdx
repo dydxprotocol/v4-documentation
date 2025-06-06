@@ -1,0 +1,137 @@
+# Accounts
+
+All of your trading activity is associated with your account which corresponds to an address.
+In dYdX, accounts are also composed by subaccounts. All trading is done through a subaccount. See more on the [Accounts and Subaccounts](/concepts/trading/accounts) page.
+
+## Account Data
+
+An account can have multiple subaccounts. To fetch all known (with some activity) subaccounts associated with an account the account's address is required.
+
+:::code-group
+
+```python [Python]
+response = await indexer.account.get_subaccounts(ADDRESS)
+```
+
+```typescript [TypeScript]
+const response = await indexer.account.getSubaccounts(ADDRESS);
+```
+
+```rust [Rust]
+let subaccounts = indexer.accounts().get_subaccounts(address).await?;
+```
+
+:::
+
+To fetch a specific subaccount, use the account's address the the subaccount number.
+
+:::code-group
+
+```python [Python]
+# Fetch subaccount '0' information.
+subaccount_resp = await indexer.account.get_subaccount(ADDRESS, 0)
+```
+
+```typescript [TypeScript]
+// Fetch subaccount '0' information.
+const subaccountResp = await indexer.account.getSubaccount(ADDRESS, 0);
+```
+
+```rust [Rust]
+// Fetch subaccount '0' information.
+let subaccount_resp = indexer.accounts().get_subaccount(&subaccount).await?;
+
+```
+
+:::
+
+### Balance
+
+The responses above will contain information such as the subaccount's equity, also known as the total account value. Your equity is a combination of the account's USDC balance and sum of the open positions values. A minimum amount of funds is required to trade, see more on [Margin](/concepts/trading/margin) and [Other Limits](/concepts/trading/other-limits).
+
+:::code-group
+
+```python [Python]
+subaccount = subaccount_resp["subaccount"]
+print("Equity: ", subaccount["equity"])
+print("Open positions: ", subaccount["openPerpetualPositions"])
+```
+
+```typescript [TypeScript]
+const subaccount = subaccountResp.subaccount;
+console.log('Equity: ', subaccount.equity);
+console.log('Open positions: ', subaccount.openPerpetualPositions);
+```
+
+```rust [Rust]
+println!("Equity: {:?}", subaccount_resp.equity);
+println!("Open positions: {:?}", subaccount_resp.open_perpetual_positions);
+```
+
+:::
+
+::::note
+dYdX is built on the Cosmos SDK and therefore has related methods available. To see the balances of your assets/tokens please see the methods below.
+::::details[Cosmos Bank Balances]
+
+Get the account balance of all assets types (currently USDC and dYdX tokens).
+
+:::code-group
+
+```python [Python]
+response = await node.get_account_balances(ADDRESS)
+```
+
+```typescript [TypeScript]
+const coins = await node.get.getAccountBalances(ADDRESS);
+```
+
+```rust [Rust]
+let balance = client
+    .get_account_balances(&address)
+    .await?;
+```
+
+:::
+
+The balance of a specific asset can also be fetched instead.
+
+:::code-group
+
+```python [Python]
+# `adv4tnt` is the dYdX token (testnet) denomination.
+response = await node.get_account_balance(ADDRESS, "adv4tnt") # [!code focus]
+```
+
+```typescript [TypeScript]
+// `adv4tnt` is the dYdX token (testnet) denomination.
+const coins = await node.get.getAccountBalance(ADDRESS, "adv4tnt"); // [!code focus]
+```
+
+```rust [Rust]
+// `adv4tnt` is the dYdX token (testnet) denomination.
+let balance = node // [!code focus]
+    .get_account_balance(&address, &"adv4tnt".parse()?) // [!code focus]
+    .await?; // [!code focus]
+```
+
+:::
+::::
+
+
+## Asset Transfers
+
+Methods are available to transfer [assets](/concepts/trading/assets#assets-and-collateral) among accounts and subaccounts. See the table below for the different transfer paths.
+Links point to the API reference.
+
+| Source     | Destination | Method                                        |
+| ---------- | ----------- | -----------------------------------------     |
+| Account    | Subaccount  | [Deposit](/node-client/private#deposit)       |
+| Subaccount | Account     | [Withdraw](/node-client/private#withdraw)     |
+| Subaccount | Subaccount  | [Transfer](/node-client/private#transfer)     |
+| Account    | Account     | [Send Token](/node-client/private#send-token) | 
+
+:::info
+To transfer assets in and out of the dYdX network, please see the [Deposits and Withdawals](/interaction/deposits-and-withdrawals) page. If using the __testnet__, please the [Faucet client](/interaction/endpoints#faucet-client) on how to request test funds.
+:::
+

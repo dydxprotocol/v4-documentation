@@ -1,4 +1,4 @@
-# Feeds
+# WebSockets
 
 The Indexer can provide realtime data through its WebSockets endpoint.
 
@@ -16,8 +16,6 @@ To get realtime updates, we first need to establish a connection with the WebSoc
 # The message handler, triggered when a message is received.
 def handler(ws: IndexerSocket, message: dict):
     print(message)
-# Create a socket and establish the connection.
-socket = IndexerSocket(TESTNET.websocket_indexer, on_message=handler).connect()
 ```
 
 ```typescript [TypeScript]
@@ -43,6 +41,7 @@ mySocket.connect();
 
 ```rust [Rust]
 // Establish the connection.
+// An internal loop is spawned which handles the connection state.
 let mut indexer = IndexerClient::new(config.indexer);
 ```
 
@@ -65,7 +64,7 @@ This message maybe abstracted away, depending on the client.
 ## Subscribe
 
 After a connection is established, you may subscribe to several feeds, containing different types of data.
-Feeds include information on __markets__, __trades__, __orders__, __candles__, and __subaccounts__.
+WebSockets include information on __markets__, __trades__, __orders__, __candles__, and __subaccounts__.
 
 :::code-group
 

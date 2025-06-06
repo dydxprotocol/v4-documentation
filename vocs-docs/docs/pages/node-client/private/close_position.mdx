@@ -37,17 +37,27 @@ pub async fn close_position(
 
 #### Parameters
 
-| Parameter           | Location | Type               | Required    | Description                                                           |
-| ------------------- | -------- | ------------------ | ----------- | --------------------------------------------------------------------- |
-| `address`           | query    | [Address]          | true        | The wallet address that owns the subaccount.                          |
-| `limit`             | query    | [u32]              | false       | Maximum number of asset positions to return in the response.          |
+| Parameter         | Location | Type                   | Required    | Description                                     |
+| ----------------- | -------- | ---------------------- | ----------- | ----------------------------------------------- |
+| `account`         | query    | [Account]              | true        | The wallet address that owns the subaccount.    |
+| `subaccount`      | query    | [Subaccount]           | true        | Subaccount to close                             |
+| `market_params`   | query    | [OrderMarketParams]    | true        | Market parameters                               |
+| `reduced_by`      | query    | [BigDecimal]           | false       |                                                 |
+| `client_id`       | query    | [ClientId]             | true        |                                                 |
+
 
 #### Response
 
 | Status | Meaning     | Schema                          |
 | ------ | ----------- | ------------------------------- |
-| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |
+| `200`  | [OK]        | [TxHash]                        |
 
 Examples: [Rust]
 
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/close_position.rs
+[Account]: /types/account
+[Subaccount]: /types/subaccount
+[OrderMarketParams]: /types/order_market_params
+[BigDecimal]: /types/big_decimal
+[ClientId]: /types/client_id
+[TxHash]: /types/tx_hash

@@ -1,56 +1,86 @@
 # Funding
 
-Funding payments are exchanged between long and short traders to encourage the price of a perpetual contract to trade close to the price of the underlying. If the perpetual trades at a premium relative to the index, long traders will typically make payments to short traders, whereas if the perpetual trades at a discount relative to the index, short traders will typically make payments to long traders.
+:::note
+Funding rates contemplated in the default v4 software will be subject to adjustments by the applicable Governance Community.
+:::
 
-The payments are credited or debited at the start of each hour, and are included in the realized PnL for the position.
+## What are funding rates?
 
-## Funding Rate Units
+Perpetual contracts have no expiry date and therefore no final settlement or delivery. Funding payments are therefore used to incentivize the price of the perpetual to trade at the price of the underlying.
+ 
+The purpose of the funding rate is to keep the price of each perpetual market trading close to its Oracle Price. When the price is too high, longs pay shorts, incentivizing more traders to sell / go short, and driving the price down. When the price is too low, shorts pay longs, incentivizing more traders to buy / go long, driving the price up.
+ 
+## How are funding rates calculated on dYdX ?
 
-Since funding payments are exchanged every hour, the dYdX funding rate is usually represented as a 1-hour rate, which represents the return a position may expect to earn or pay every hour.
-
-When calculating the funding rate, the premium is scaled to have a realization period of 8 hours. That means, for example, that if a certain perpetual market trades consistently at a 0.1% premium relative to the underlying, long traders may expect to pay ~0.1% every 8 hours, and short traders may expect to earn a ~0.1% return every 8 hours (not accounting for the interest rate component).
-
-## Funding Payment Calculation
-
-At the start of each hour, an account receives USDC (if `F` is positive) or pays USDC (if `F` is negative) in an amount equal to:
-
-<pre class="center-column">
-F = (-1) &times; S &times; P &times; R
-</pre>
-
-Where:
-
-* `S` is the size of the position (positive if long, negative if short)
-* `P` is the oracle price for the market
-* `R` is the funding rate (as a 1-hour rate)
-
-## Funding Rate Calculation
-
-The main component of the funding rate is a premium that takes into account market activity for the perpetual. It is calculated for each market, every minute (at a random point within the minute) using the formula:
-
-<pre class="center-column">
+The main component of the funding rate is a premium that considers market activity for a perpetual. It is calculated for every market using the formula:
+ 
+```
 Premium = (Max(0, Impact Bid Price - Index Price) - Max(0, Index Price - Impact Ask Price)) / Index Price
-</pre>
-
+```
+ 
 Where the impact bid and impact ask prices are defined as:
+- `Impact Bid Price` = Average execution price for a market sell of the impact notional value
+- `Impact Ask Price` = Average execution price for a market buy of the impact notional value
+- `Impact Notional Amount = 500 USDC / Initial Margin Fraction`
+ 
+For example, at a 10% initial margin fraction, the impact notional value is 5,000 USDC.
+At the end of each hour, the one-hour premium is calculated as the simple average (i.e. TWAP) of the 60 premiums calculated over the last hour. 
+ 
+How is the sample calculated? 
+ 
+At a high level, the proposer determines the premium for each block based on their local view of the order book and then proposes a `FundingPremiumVote`. At the end of each `funding-sample` period (default to 1 minute), the median `FundingPremiumVote` is taken as the sample for that period. Therefore, at the end of each `funding-tick` period (default to 1 hour), the average of the past samples is used as the final funding rate.
+ 
+In addition to the premium component, each market has a fixed interest rate component that aims to account for the difference in interest rates of the base and quote currencies. The funding rate is then:
 
-<pre class="center-column">
-Impact Bid Price = Average execution price for a market sell of the impact notional value
-Impact Ask Price = Average execution price for a market buy of the impact notional value
-</pre>
-
-And the impact notional amount for a market is:
-
-<pre class="center-column">
-Impact Notional Amount = 500 USDC / Initial Margin Fraction
-</pre>
-
-For example, for a market with a 10% initial margin fraction, the impact notional value is 5,000 USDC.
-
-At the end of each hour, the premium component is calculated as the simple average (i.e. TWAP) of the 60 premiums calculated over the course of the last hour. In addition to the premium component, each market has a fixed interest rate component that aims to account for the difference in interest rates of the base and quote currencies. The funding rate is then:
-
-<pre class="center-column">
+```
 Funding Rate = (Premium Component / 8) + Interest Rate Component
-</pre>
+```
+ 
+As part of the default settings of the v4 open source software, the interest rate component for all markets is 0% . The funding rate is simply the one-hour premium for markets with no interest rate component.
+ 
+## What role do block proposers play in funding rates on dYdX?
 
-Currently, the interest rate component for all dYdX markets is `0.00125%` (equivalent to `0.01%` per 8 hours).
+As part of the default settings of the v4 open source software, there are two distinct epochs established with the Epochs module. Every block proposer proposes a `FundingPremiumVote` during each block. At the end of a `funding-sample` epoch, the state machine deterministically computes a funding sample from all the `FundingPremiumVote`s in this epoch (1 minute).
+ 
+The second epoch is the "funding-tick epoch," which occurs every hour at the start of the hour and is responsible for adjusting funding rates based on the funding samples collected from the preceding epoch.
+ 
+## Where is the funding rate for a particular market located on dYdX?
+
+Please see the [Get Historical Funding](/indexer-client/http#get-historical-funding) API method.
+ 
+## What is a funding rate cap?
+
+The funding rate cap refers to a predetermined maximum limit on the funding rate applied to a particular contract. It aims to limit the potential costs incurred by traders, especially during volatile market conditions. As part of the default settings of the v4 open source software, there’s a cap on each funding sample (per minute) and the funding rate (per hour).
+ 
+## How is the funding rate cap calculated?
+
+The 8-hour rate cap is calculated by `600% * (Initial Margin - Maintenance Margin)`.
+
+| Market | Initial margin | Maintenance margin |
+| ------ | -------------- | ------------------ |
+| Large-Cap | 5%  | 3%  |
+| Mid-Cap   | 10% | 5%  |
+| Long-Tail | 20% | 10% |
+ 
+For example, for BTC-USD, which falls under Large-Cap, the 8-hour rate is capped by `600% * (IMF - MMF) = 600% * (5% - 3%) = 12%`.
+ 
+## FAQ
+ 
+> What Funding parameters can be controlled by Governance?
+
+Governance has the ability to adjust Funding Rate parameters:
+- Funding rate clamp factor, premium vote clamp factor, and min number of votes per premium sample. Proto
+- Epoch information, which defines the funding interval and premium sampling interval. Proto
+- Liquidity Tier, which defines the impact notional value. Proto
+ 
+>  How does the funding rate impact P&L?
+
+Realized P&L increases or decreases while you hold a position due to funding fees, which are paid or received every hour depending on your position and the funding rate.
+ 
+> When are the funding rates charged? 
+
+We charge funding rates every hour on our platform. The funding rate is calculated at the end of each hour and is based on the average of premiums collected over the last 60 minutes. This hourly funding rate helps keep the perpetual contract prices aligned with their underlying asset prices.
+ 
+> Where can I find the details of how much I paid for the funding rate and view my payment history?
+
+Funding Rate Payment History feature is currently under development and will be available soon. Stay tuned for updates!

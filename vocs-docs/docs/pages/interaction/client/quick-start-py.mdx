@@ -1,8 +1,6 @@
-# Quick start with Python
+# Quick Start with Python
 
-This guide will walk you through the steps to set up and start using the `dydx` client library.
-
-Below you will use existing example provided with `dydx` Python client.
+This guide will walk you through the steps to set up and start using the dYdX API Python library.
 
 ::::steps
 
@@ -14,40 +12,6 @@ Choose and install [Python 3.9+](https://www.python.org/downloads/) and [Poetry]
 
 ```bash
 git clone https://github.com/dydxprotocol/v4-clients.git
-```
-
-## Set up virtual environment (Only for Linux)
-
-It's a good practice to use virtual environment to isolate dependencies for a project. Run the following command to create virtual environment.
-
-```bash
-python -m venv myenv
-```
-
-Activate the virtual environment:
-
-```bash
-source myenv/bin/activate
-```
-
-After activation, you should see the environment name in the terminal prompt, indicating you are in a virtual environment.
-
-## Adding the `dydx` Dependency
-
-Use the `pip install` command to add the dependencies. It will install the latest version of the client.
-
-```bash
-pip install dydx-v4-client
-```
-
-For more details on the `dydx-v4-client` library installation, please check the [readme of the python client](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-py-v2/README.md).
-
-## Install poetry
-
-The `dydx` uses `poetry` library for dependency management. Install the poetry using `pip`.
-
-```bash
-pip install poetry
 ```
 
 ## Install all dependencies
@@ -69,9 +33,16 @@ poetry install
 Now, we can run an example file. Let's run `example/accounts_endpoint.py` file.
 
 ```bash
-python examples/account_endpoints.py
+poetry run python -m examples.account_endpoints
 ```
 
 ::::
 
 **Now, you can play around with all the available examples. Happy trading!**
+
+:::tip[Python Package]
+The Python client is also available through the PyPI [package](https://pypi.org/project/dydx-v4-client/) `dydx-v4-client`.
+```bash [Installation]
+pip install dydx-v4-client
+```
+:::

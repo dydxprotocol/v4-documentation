@@ -46,7 +46,7 @@ mv <path_to_major_version> $DAEMON_HOME/cosmovisor/upgrades/<name>/bin
 
 💡 **IMPORTANT**: Do this before the upgrade height, so that `cosmovisor` can make the switch.
 
-That’s it! The old binary will stop itself at the upgrade height, and `cosmovisor` will switch to the new binary automatically. For a `Plan` with name `v0.1.0`, your `cosmovisor/` directory should look like this:
+That's it! The old binary will stop itself at the upgrade height, and `cosmovisor` will switch to the new binary automatically. For a `Plan` with name `v0.1.0`, your `cosmovisor/` directory should look like this:
 
 ```
 cosmovisor/
@@ -127,7 +127,7 @@ chmod 755 dydxprotocold
 ## Rollback
 
 
-In the case of an unsuccessful chain upgrade, an incorrect `AppHash` might get persisted by Tendermint. To move forward, validators will need to rollback to the previous state so that upon restart, Tendermint can replay the last block to get the correct `AppHash`. **Please note:** validators should never rollback further than the last invalid block. In extreme edge cases, transactions could be reverted / re-applied for the last black and cause issues.
+In the case of an unsuccessful chain upgrade, an incorrect `AppHash` might get persisted by Tendermint. To move forward, validators will need to rollback to the previous state so that upon restart, Tendermint can replay the last block to get the correct `AppHash`. **Please note:** validators should never rollback further than the last invalid block. In extreme edge cases, transactions could be reverted / re-applied for the last block and cause issues.
 
 
 ### ⚒️ Cosmovisor Users
@@ -150,7 +150,7 @@ cosmovisor run start --p2p.seeds="[seed_node_id]@[seed_node_ip_addr]:26656" --br
 
 ### 🦾 Manual Users
 
-If you don’t have a data backup:
+If you don't have a data backup:
 
 1. Stop the node (e.g. Ctrl+C)
 2. Rollback the application and Tendermint state by one block height.

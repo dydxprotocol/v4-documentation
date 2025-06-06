@@ -1,0 +1,272 @@
+# Trading Data
+
+This section guides you on how to fetch some important data points.
+We focus here on getting data using spontaneous (single) requests. For continuous data streams of data see also the [WebSockets guide](/interaction/data/feeds).
+
+## List Positions
+
+Assets are used to trade and manage (perpetual) positions opened and closed by [issuing orders](/interaction/trading#place-an-order). See the example below on how to check your perpetual positions. 
+
+:::code-group
+
+```python [Python]
+from dydx_v4_client.indexer.rest.constants import PositionStatus
+
+# Fetch all subaccount '0' positions. [!code focus]
+perpetual_positions_response = await indexer # [!code focus]
+    .account # [!code focus]
+    .get_subaccount_perpetual_positions(ADDRESS, 0) # [!code focus]
+
+# Fetch only open positions. # [!code focus]
+perpetual_positions_response = await indexer
+    .account
+    .get_subaccount_perpetual_positions(address, 0, PositionStatus.OPEN) # [!code focus]
+```
+
+```typescript [TypeScript]
+// Fetch all subaccount '0' positions. 
+const response = await indexer
+  .account
+  .getSubaccountPerpetualPositions(ADDRESS, 0);
+
+// Fetch only open positions. 
+const response = await indexer
+  .account
+  .getSubaccountPerpetualPositions(ADDRESS, 0, PositionStatus.OPEN);
+```
+
+```rust [Rust]
+use dydx::indexer::PerpetualPositionStatus; 
+
+// Fetch all subaccount '0' positions. [!code focus]
+let positions = indexer // [!code focus]
+    .accounts() // [!code focus]
+    .list_positions(&subaccount, None) // [!code focus]
+    .await?; // [!code focus]
+
+// Fetch only open positions. // [!code focus]
+let opts = ListPositionsOpts { // [!code focus]
+    status: PerpetualPositionStatus::Open.into(), // [!code focus]
+    ..Default::default() // [!code focus]
+}; // [!code focus]
+let positions = indexer  // [!code focus]
+    .accounts()  // [!code focus]
+    .list_positions(&subaccount, Some(opts)) // [!code focus]
+    .await?;  // [!code focus]
+```
+
+:::
+
+See the [API reference](/indexer-client/http/accounts/list_positions) for the complete method definition.
+
+## Market List
+
+A market (sometimes referred by the ticker name, e.g., `ETH-USD`) is associated with a perpetual and it is the place where trading happens.
+To fetch the available markets see the code below.
+
+:::code-group
+
+```python [Python]
+response = await indexer.markets.get_perpetual_markets() # [!code focus]
+print(response["markets"]) # [!code focus]
+```
+
+```typescript [TypeScript]
+const response = await indexer.markets.getPerpetualMarkets(); // [!code focus]
+console.log(response.markets); // [!code focus]
+```
+
+```rust [Rust]
+let markets = indexer // [!code focus]
+        .markets() // [!code focus]
+        .list_perpetual_markets(None) // `None`: Use default options.  // [!code focus]
+        .await?; // [!code focus]
+println!("{markets:?}"); // [!code focus]
+```
+
+:::
+
+See the [API reference](/indexer-client/http/markets/get_perpetual_markets) for the complete method definition.
+
+## List Orders
+
+Retrieve orders for a specific subaccount, with various filtering options to narrow down the results based on order characteristics.
+
+:::code-group
+
+```python [Python]
+orders_response = indexer.account.get_subaccount_orders(address, 0) # [!code focus]
+```
+
+```typescript [TypeScript]
+const response = await indexer.account.getSubaccountOrders(ADDRESS, 0);
+```
+
+```rust [Rust]
+let orders = indexer // [!code focus]
+    .accounts() // [!code focus]
+    .list_orders(&subaccount, None) // [!code focus]
+    .await?; // [!code focus]
+```
+
+:::
+
+See the [API reference](/indexer-client/http/accounts/list_orders) the complete method definition.
+
+:::tip[Orderbook]
+
+For some trading strategies it is useful to have a continouos view of the [orderbook](https://en.wikipedia.org/wiki/Order_book) up-to-date. See the [Watch Orderbook](/interaction/data/watch-orderbook) guide on how to set this up.
+
+:::
+
+## Get Fills
+
+Retrieve order fill records for a specific subaccount on the exchange. Fills are matched orders.
+
+:::code-group
+
+```python [Python]
+fills_response = indexer.account.get_subaccount_fills(address, 0) # [!code focus]
+```
+
+```typescript [TypeScript]
+const response = await indexer.account.getSubaccountFills(ADDRESS, 0);
+```
+
+```rust [Rust]
+let fills = indexer // [!code focus]
+    .accounts() // [!code focus]
+    .get_fills(&env.subaccount, None) // [!code focus]
+    .await?; // [!code focus]
+```
+
+:::
+
+See the [API reference](/indexer-client/http/accounts/get_fills) the complete method definition.
+
+## Price History
+
+Price history in the classic [candlestick](https://en.wikipedia.org/wiki/Candlestick_chart) can also be fetched. Data will be organized into a _open_, _high_, _low_, and _close_ (OHLC) prices for some _period_.
+
+:::code-group
+
+```python [Python]
+from dydx_v4_client.indexer.candles_resolution import CandlesResolution
+response = await indexer.markets.get_perpetual_market_candles( # [!code focus]
+    market="BTC-USD", resolution=CandlesResolution.ONE_MINUTE # [!code focus]
+) # [!code focus]
+print(response["candles"]) # [!code focus]
+```
+
+```typescript [TypeScript]
+const response = await indexer.markets.getPerpetualMarketCandles('BTC-USD', '1MIN'); // [!code focus]
+console.log(response.candles); // [!code focus]
+```
+
+```rust [Rust]
+use dydx::indexer::CandleResolution;
+let candles = indexer // [!code focus]
+    .markets() // [!code focus]
+    .get_candles(&"BTC-USD".into(), CandleResolution::M1, None) // [!code focus]
+    .await?; // [!code focus]
+println!("{candles:?}"); // [!code focus]
+```
+
+:::
+
+See the [API reference](/indexer-client/http/markets/get_candles) for the complete method definition.
+
+:::info[Sparklines]
+See also the [sparklines method](/indexer-client/http/markets/get_sparklines) for price history.
+:::
+
+## Get User Fee Tier
+
+The Get User Fee Tier function retrieves the perpetual fee tier associated with a specific wallet address, providing information on the user's current fee structure.
+
+:::code-group
+
+```python [Python]
+user_fee_tier = await node.get_user_fee_tier(ADDRESS)
+```
+
+```typescript [TypeScript]
+const userfeeTier = await node.get.getUserFeeTier(ADDRESS);
+```
+
+```rust [Rust]
+let user_fee_tier = node.get_user_fee_tier(address.clone()).await?;
+```
+
+:::
+
+See the [API reference](/node-client/public/get_user_fee_tier) for the complete method definition.
+
+## Get Rewards Params
+
+The Get Rewards Params function retrieves the parameters for the rewards system, providing insight into the set configurations for earning and distributing rewards.
+
+:::code-group
+
+```python [Python]
+rewards_params = await node.get_rewards_params()
+```
+
+```typescript [TypeScript]
+const rewardsParams = await node.get.getRewardsParams();
+```
+
+```rust [Rust]
+let reward_params = node.get_rewards_params().await?;
+```
+
+:::
+
+See the [API reference](/node-client/public/get_rewards_params) for the complete method definition.
+
+## Trading Rewards
+
+Retrieve historical block trading rewards for the specified address.
+
+:::code-group
+
+```python [Python]
+response = await indexer.account.get_historical_block_trading_rewards(test_address, limit)
+```
+
+```typescript [TypeScript]
+const response = await indexer.account.getHistoricalBlockTradingRewards(ADDRESS, limit);
+```
+
+```rust [Rust]
+indexer
+    .accounts()
+    .get_rewards(&env.address, None)
+    .await?;
+```
+
+:::
+
+See the [API reference](/indexer-client/http/accounts/get_rewards) for the complete method definition.
+
+## Get Latest Block Height
+
+Retrieve the most recent block's height. This can serve to see if the blockchain node you are connected to is in sync.
+
+:::code-group
+
+```python [Python]
+height = await node.latest_block_height()
+```
+
+```typescript [TypeScript]
+const height = await node.get.latestBlockHeight();
+```
+
+```rust [Rust]
+let height = node.get_latest_block_height().await?;
+```
+
+:::
+
+See the [API reference](/node-client/public/get_latest_block_height) for the complete method definition.

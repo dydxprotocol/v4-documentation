@@ -44,7 +44,7 @@ export default defineConfig({
                     link: '/interaction/asset-management',
                 },
                 {
-                    text: 'Data',
+                    text: 'Trading Data',
                     link: '/interaction/data',
                     collapsed: true,
                     items: [

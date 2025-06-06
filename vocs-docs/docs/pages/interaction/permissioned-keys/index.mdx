@@ -22,12 +22,12 @@ To create this authenticator, we use two sub-authenticators: `signatureVerificat
 We compose everything together using the composable authenticator `AllOf`, stating that some **trader**'s transaction is only allowed if it complies with all the authenticators.
 
 The **trader** also needs to send the **owner** the its public key, associated with its address.
-This can be done by encoding the public key (e.g., hex string) and sending it through other channels. The **owner** then decodes it, serving it as input below.
+This can be done by encoding the public key (e.g., hex string) and sending it. The **owner** then decodes it, serving it as input below.
 
 :::code-group
 
 ```python [Python]
-# trader_key = ...
+# trader_key = trader_wallet.public_key.key
 auth = Authenticator.compose(
     # All sub-authenticators must be valid.
     AuthenticatorType.AllOf,
@@ -41,7 +41,7 @@ auth = Authenticator.compose(
 ```
 
 ```typescript [TypeScript]
-// const traderKey = ...;
+// const traderKey = traderWallet.pubKey!.value;
 const auth = [
   // The allowed account.
   {
@@ -60,7 +60,7 @@ const encodedData = new TextEncoder().encode(jsonString);;
 ```
 
 ```rust [Rust]
-// let trader_key = ...;
+// let trader_key = trader_account.public_key().to_bytes();
 // All sub-authenticators must be valid.
 let authenticator = Authenticator::AllOf(vec![
     // The allowed account.
@@ -79,20 +79,11 @@ Now we need to push the authenticator to the network.
 :::code-group
 
 ```python [Python]
-node = await NodeClient.connect(TESTNET.node)
-wallet = await Wallet.from_mnemonic(
-    node,
-    mnemonic=DYDX_TEST_MNEMONIC,
-    address=TEST_ADDRESS,
-)
 # Add the authenticator. [!code focus]
 response = await node.add_authenticator(wallet, auth) # [!code focus]
 ```
 
 ```typescript [TypeScript]
-const client = await CompositeClient.connect(network);
-const wallet = await LocalWallet.fromMnemonic(DYDX_TEST_MNEMONIC, BECH32_PREFIX);
-const subaccount = new SubaccountInfo(wallet, 0);
 try {
     // Add the authenticator. [!code focus]
     await client.addAuthenticator(subaccount, AuthenticatorType.ALL_OF, encodedData); // [!code focus]
@@ -102,9 +93,6 @@ try {
 ```
 
 ```rust [Rust]
-let mut client = NodeClient::connect(config.node).await?;
-let wallet = Wallet::from_mnemonic(TEST_MNEMONIC)?;
-let account = wallet.account(index, &mut client).await?;
 // Add the authenticator. [!code focus]
 client // [!code focus]
     .authenticators() // [!code focus]
@@ -197,7 +185,7 @@ In this example, the **trader** can use the authenticator to issue orders on the
 :::code-group
 
 ```python [Python]
-id = ...; # authenticator ID # [!code focus]
+id = ... # authenticator ID # [!code focus]
 # Create the order ID, using the owner address # [!code focus]
 order_id = market.order_id( # [!code focus]
     OWNER_ADDRESS, # address # [!code focus]

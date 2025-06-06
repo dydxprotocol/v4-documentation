@@ -1,107 +1,51 @@
-# Rate-Limits
+# Rate Limits
 
-All rate-limits are subject to change.
+All rate limits are subject to change. The latest limits can be queried via the `https://<REST_NODE_ENDPOINT>/dydxprotocol/clob/block_rate` endpoint.
 
-Please make use of the WebSockets API if you need real-time data.
+Note that rate limits are applied per account. That is, subaccounts under the same account share the same rate limit.
 
-## Rate Limit - API
+Here is an example response:
 
-Limits are enforced by IP Address for public endpoints, and by both IP Address and Account for private endpoints.
+```
+{
+    "block_rate_limit_config": {
+        "max_short_term_orders_per_n_blocks": [],
+        "max_stateful_orders_per_n_blocks": [
+            {
+                "num_blocks": 1,
+                "limit": 2
+            },
+            {
+                "num_blocks": 100,
+                "limit": 20
+            }
+        ],
+        "max_short_term_order_cancellations_per_n_blocks": [],
+        "max_short_term_orders_and_cancels_per_n_blocks": [
+            {
+                "num_blocks": 5,
+                "limit": 2000
+            }
+        ]
+    }
+}
+```
 
-Each request consumes 1 point towards the rate limit. [`POST v3/orders`](#place-order-rate-limits) consumes variable points based on the order. Points refresh at the end of each time window. Please take note of the `RateLimit-Remaining` header to track points usage.
+## Active Fields
 
-### Response Headers
+`max_stateful_orders_per_n_blocks`: How many stateful order **place** attempts (successful and failed) are allowed for an account per N blocks. Note that the rate limits are applied in an AND fashion such that an order placement must pass all rate limit configurations.
 
-Field                                   | Description
-----------------------------------------| -----------
-`RateLimit-Remaining`                   | Points remaining in the time window.
-`RateLimit-Reset`                       | Timestamp that the time window ends, in Epoch milliseconds.
-`Retry-After`                           | Milliseconds until the next time window. Header included only when the limit has been reached.
-`RateLimit-Limit`                       | The maximum amount of points allowed per time window.
+`max_short_term_orders_and_cancels_per_n_blocks`: How many short term order **place and cancel** attempts (successful and failed) are allowed for an account per N blocks. Note that the rate limits are applied in an AND fashion such that an order placement must pass all rate limit configurations.
 
-Request                                 | Limit
-----------------------------------------| -----------
-`GET v3/*`                              | 175 requests per 10 seconds.
-`PUT v3/emails/send-verification-email` | 2 requests for 10 minutes.
-`DELETE v3/orders`                      | See `Cancel-Order Rate Limits`
-`POST v3/orders`                        | See `Place-Order Rate-Limits`
-`POST v3/testnet/tokens`                | 5 requests per 24 hours.
-`GET v3/active-orders`                  | See `Active-Order Rate-Limits`
-`DELETE v3/active-orders`               | See `Active-Order Rate-Limits`
-`All other requests`                    | 10 requests per minute.
+## Deprecated Fields
 
-## Rate Limit - Websocket
+These fields are not used at this time.
 
-Limits are enforced per `connectionId`.
+`max_short_term_order_cancellations_per_n_blocks`
+`max_short_term_orders_per_n_blocks`
 
-<aside class="warning">
-If your connection exceeds the request limit, we will terminate the connection, and you will need to reconnect to the websocket. Additionally, sending too many invalid messages will also result in your websocket being disconnected.
-</aside>
+## Examples
 
-Request                                 | Limit
-----------------------------------------| -----------
-`subscribe v3_accounts, v3_markets`     | 2 requests per 1 second.
-`subscribe v3_orderbook, v3_trades`     | 2 requests for 1 second per market.
-`ping`                                  | 5 requests per 1 second.
+Examples assume the values in the provided example response.
 
-## Cancel-Order Rate Limits
-
-Canceling orders is limited per asset-pair and is intended to be higher than the limit on placing orders.
-
-`DELETE v3/orders` requests are limited to `3` requests per `10` seconds per asset-pair.
-
-`DELETE v3/orders/:id` requests are limited to `250` requests per `10` seconds per asset-pair.
-
-## Place-Order Rate-Limits
-
-Order rate limits are limited to `maxPoints` spent (per asset-pair) in a fixed window of `windowSec` seconds.
-
-We want to give priority to those who are making the largest orders and who are contributing the most liquidity to the exchange.
-Therefore, placing larger orders is subject to higher limits (i.e. larger orders carry a lower point cost).
-The point cost is based on the `orderNotional` which is equal to the `size * price` of the order.
-
-Limit-order point consumption is equal to:
-
-<pre class="center-column">
-orderConsumption = clamp(
-  ceil(targetNotional / orderNotional),
-  minOrderConsumption,
-  maxOrderConsumption
-)
-</pre>
-
-The `minOrderConsumption` is different for each order type, and can be one of `minLimitConsumption`, `minMarketConsumption`, or `minTriggerableConsumption`. Limit orders that are Fill-or-Kill or Immediate-or-Cancel are considered to be market orders for the purposes of rate limiting.
-
-The values of the above variables as of March 15th, 2022 are listed below, but the most up-to-date values can be found in the [v3/config endpoint](#get-global-configuration-variables).
-
-Variable         | Value
----------------- | -------
-`maxPoints`      | `1,750`
-`windowSec`      | `10`
-`targetNotional` | `40,000`
-`minLimitConsumption` | `4`
-`minMarketConsumption` | `20`
-`minTriggerableConsumption` | `100`
-`maxOrderConsumption` | `100`
-
-## Active-Order Rate-Limits
-
-Querying active orders is limited per endpoint and per asset and is intended to be higher than the respective DELETE and GET endpoints these new endpoints replace.
-
-### DELETE Active-Orders Rate Limits
-
-`DELETE v3/active-orders/*`
-
-- 425 points allotted per 10 seconds per market.
-- 1 point consumed if order id included.
-- 25 points consumed if order side included.
-- 50 points consumed otherwise.
-
-### GET Active-Orders Rate Limits
-
-`GET v3/active-orders/*`
-
-- 175 points allotted per 10 seconds per market.
-- 1 point consumed if order id included.
-- 3 points consumed if order side included.
-- 5 points consumed otherwise.
+* 2 long-term orders can be placed for each of the first 10 blocks and then a new long-term order would be rate limited on the 11th block since the limit of 20 long-term orders over the past 100 blocks would apply.

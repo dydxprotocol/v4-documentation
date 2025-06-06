@@ -16,7 +16,7 @@ To set up a full node, you can either:
 Save the script with an `.sh` extension in your `$HOME` directory. Edit the script, replacing default values in fields such `VERSION` and `CHAIN-ID` with your own. Run the script with the following commands:
 
 :::note
-To find the current version of the [dYdX Foundation](https://www.dydx.foundation/) mainnet, see the recommended protocol version on [mintscan.io](https://www.mintscan.io/dydx/parameters). To find network constants such as chain IDs, see the [Network Configuration](/advanced/network-constants) section of the documentation.
+To find the current version of the [dYdX Foundation](https://www.dydx.foundation/) mainnet, see the recommended protocol version on [mintscan.io](https://www.mintscan.io/dydx/parameters). To find network constants such as chain IDs, see the [Network Configuration](/nodes/network-constants) section of the documentation.
 :::
 
 ```bash
@@ -105,7 +105,7 @@ dydxprotocold init --chain-id=dydx-mainnet-1 my-node
 ```
 
 :::note
-See the [Network Configuration](/advanced/network-constants) section of the documentation for chain IDs and other network constants.
+See the [Network Configuration](/nodes/network-constants) section of the documentation for chain IDs and other network constants.
 :::
 
 When you initialize your node, `dydxprotocold` returns your default node configuration in JSON.
@@ -114,7 +114,7 @@ When you initialize your node, `dydxprotocold` returns your default node configu
 A seed node acts as an address book and helps your node join the network. To update `config.toml` with a list of seed nodes, run the following command:
 
 :::note
-Check the [Resources](/advanced/resources#seed-nodes) page for an up-to-date list of seed nodes for the network to which you want to connect.
+Check the [Resources](/nodes/resources#seed-nodes) page for an up-to-date list of seed nodes for the network to which you want to connect.
 :::
 
 ```bash
@@ -171,7 +171,7 @@ To download and extract the snapshot contents to the default dydxprotocol home d
 cd $HOME/.dydxprotocol
 ```
 
-Next, find a provider for your use case on the [Snapshot Service](/advanced/resources#snapshot-service) page. Use the provider's instructions to download the snapshot into your `$HOME/.dydxprotocol` directory.
+Next, find a provider for your use case on the [Snapshot Service](/nodes/resources#snapshot-service) page. Use the provider's instructions to download the snapshot into your `$HOME/.dydxprotocol` directory.
 
 > For example, if you are connecting to `dydx-mainnet-1`, you may use the provider [Polkachu](https://polkachu.com/tendermint_snapshots/dydx). In most cases, you can run `wget <snapshot-web-address>`.
 
@@ -260,4 +260,4 @@ When your full node's latest block is the same as the network's latest block, yo
 ::::
 
 ## Next Steps
-When your full node is up to date with the network, you can use it to read live data and configure additional settings. Learn more on the [Optimizing Your Full Node](/advanced/running-node/optimize) and [Full Node Streaming](/advanced/full-node-streaming) pages.
+When your full node is up to date with the network, you can use it to read live data and configure additional settings. Learn more on the [Optimizing Your Full Node](/nodes/running-node/optimize) and [Full Node Streaming](/nodes/full-node-streaming) pages.

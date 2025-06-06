@@ -52,17 +52,10 @@ Use the __mnemonic__ to create a Wallet instance capable of signing transactions
 
 ```python [Python]
 from dydx_v4_client.key_pair import KeyPair
-from dydx_v4_client.node.client import NodeClient
 from dydx_v4_client.wallet import Wallet
-
-# Define the dYdX node endpoint.
-endpoint = "..."
 
 # Define your address.
 address = Wallet(KeyPair.from_mnemonic(mnemonic), 0, 0).address()
-
-# Create a `NodeClient` instance which connects to the dYdX network.
-node = await NodeClient.connect(endpoint)
 
 # Create a Wallet with updated parameters required for trading
 wallet = await Wallet.from_mnemonic(node, mnemonic, address)
@@ -80,6 +73,10 @@ use dydx::node::Wallet;
 let wallet = Wallet::from_mnemonic(&mnemonic)?;
 ```
 
+:::
+
+:::note
+Please check the list of [available endpoints here](/interaction/endpoints#endpoints).
 :::
 
 ## Instantiate a Subaccount
@@ -105,17 +102,8 @@ const subaccount = new SubaccountInfo(wallet, 0);
 ```
 
 ```rust [Rust]
-use dydx::config::ClientConfig;
-use dydx::node::NodeClient;
-
-// Read the configuration file containing parameters such as the node endpoints.
-let config = ClientConfig::from_file("config.toml").await?;
-
-// Create a `NodeClient` instance which connects to the dYdX network.
-let client = NodeClient::connect(config.node).await?;
-
 // Create an `Account` instance for the account index 0. This `Account` has updated parameters required for trading.
-let mut account = wallet.account(0, &mut placer.client).await?;
+let account = wallet.account(0, &mut node).await?;
 
 // Create a `Subaccount` instance for the subaccount index 0.
 let subaccount = account.subaccount(0)?;

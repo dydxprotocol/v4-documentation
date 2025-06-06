@@ -1,61 +1,111 @@
 # Trading
 
-Enabling trading is the main goal for the dYdX API libraries.
-
-::::steps
-
-## Get market price
-
-Trading is done on a certain market (or ticker) type. The most important trading parameter is the current price. To fetch all available markets and associated prices,
-
-:::code-group
-
-```python [Python]
-node_client = await NodeClient.connect(TESTNET.node)
-prices = await node_client.get_prices() # [!code focus]
-```
-
-```typescript [TypeScript]
-const client = await ValidatorClient.connect(Network.testnet().validatorConfig);
-const prices = await client.get.getAllPrices(); // [!code focus]
-```
-
-```rust [Rust]
-let mut client = NodeClient::connect(config.node).await?;
-let prices = client.get_prices(None).await?; // [!code focus]
-```
-
-:::
-
-To fetch a specific market price, for example for `ETH-USD`, which has the ID `1`,
-
-:::code-group
-
-```python [Python]
-node_client = await NodeClient.connect(TESTNET.node)
-price = await node_client.get_price(1) # [!code focus]
-```
-
-```typescript [TypeScript]
-const client = await ValidatorClient.connect(Network.testnet().validatorConfig);
-const marketPrice = await client.validatorClient.get.getPrice(1); // [!code focus]
-```
-
-```rust [Rust]
-let mut client = NodeClient::connect(config.node).await?;
-let prices = client.get_prices(None).await?; // [!code focus]
-```
-
-:::
+Interacting with the dYdX perpetual markets and managing your positions is done by placing orders. Enter `LONG` positions by placing buy orders and `SHORT` positions by placing sell orders.
 
 ## Place an order
 
-To place an [order](../../concepts/trading/orders), you need wallet and order information. Please check the [Wallet setup](/interaction/wallet-setup) guide to check how to set up a wallet.
+To place an [order](/concepts/trading/orders), you'll need your wallet ready to sign transactions. Please check the [Wallet Setup](/interaction/wallet-setup) guide to check how to set up a wallet.
+In this guide we'll be creating a short-term buy order for the ETH-USD market.
+
+::::steps
+
+### Get market parameters
+
+To create an order for a specific market (identified by its ticker, or _CLOB pair ID_), we should first fetch the market parameters that allows us to do data conversions associated with that specific market. Other parameters such as the current price can also be fetched this way.
+
+:::code-group
+
+```python [Python]
+MARKET_ID = 1 # ETH-USD identifier
+# Fetch market parameters.
+market = Market(
+    (await indexer.markets.get_perpetual_markets(MARKET_ID))["markets"][MARKET_ID]
+)
+# Current price.
+print(market["oraclePrice"])
+```
+
+```typescript [TypeScript]
+const ETH_USD: string = 'ETH-USD';
+// Fetch market parameters.
+const market = await indexer.markets.getPerpetualMarkets(ETH_USD).markets[ETH_USD];
+// Current price.
+console.log(market.oraclePrice);
+```
+
+```rust [Rust]
+let ETH_USD_TICKER = "ETH-USD";
+// Fetch market parameters.
+let market = indexer
+    .markets()
+    .get_perpetual_market(&ETH_USD_TICKER.into())
+    .await?;
+// Current price.
+println!("ETH-USD current price: {:?}", market.oracle_price);
+```
+:::
 
 ### Creating an order
 
-In dYdX, orders can be either short-term or long-term, see a comparison [here](/concepts/trading/orders).
 
+#### Identifying the order
+
+Every order created has an unique identifier, referred to as the __order ID__. It can be calculated locally and is composed of,
+- **Subaccount ID**: The account address plus the integer identifying the subaccount;
+- **Client ID**: A 32-bit integer chosen by the user to identify the order. Two orders can't have the same client ID;
+- **Order flags**: An integer identifying if the order is short-term (`0`), long-term (`64`), or conditional (`32`);
+- **CLOB Pair ID**: The ID of the underlying market/perpetual.
+
+:::code-group
+
+```python [Python]
+order_id = market.order_id(
+    ADDRESS, # address
+    0, # subaccount number
+    random.randint(0, 100000000), # chosen client ID, can be random
+    OrderFlags.SHORT_TERM # short-term order
+)
+```
+
+```typescript [TypeScript]
+import { OrderId, SubaccountId } from '@dydxprotocol/v4-client-js';
+
+const subaccountId: SubaccountId = {
+  owner: ADDRESS,
+  number: 0,
+};
+
+const orderId: OrderId = {
+  subaccountId,
+  randomInt(100000000), // chosen client ID, can be random
+  0, // order flags (0 = short term)
+  1, // CLOB pair ID (ETH-USD)
+};
+```
+
+```rust [Rust]
+use dydx::indexer::ClientId;
+use dydx_proto::dydxprotocol::{
+    clob::OrderId,
+    subaccounts::SubaccountId
+};
+
+// The order ID is also returned on `OrderBuilder::build()`
+let order_id = OrderId {
+    subaccount_id: Some(SubaccountId {
+        owner: account.address().to_string(),
+        number: 0,
+    }),
+    ClientId::random().0, // chosen client ID, can be random
+    order_flags: 0_u32, // short-term
+    clob_pair_id: 1_u32, // ETH-USD
+};
+```
+:::
+
+#### Building the order
+
+In dYdX, orders can be either short-term or long-term, see a comparison [here](/concepts/trading/orders).
 A wide range of order types and parameters are provided to allow for different types of trading strategies.
 
 - [**Type**](/types/order_type): Market, Limit, and Stop, and Take Profit orders are supported;
@@ -70,67 +120,67 @@ A wide range of order types and parameters are provided to allow for different t
   - **Short-term**: Short term orders have a maximum validity of current block height + `ShortBlockWindow`. Currently, `ShortBlockWindow` is 20 blocks, or about 30 seconds;
   - **Long-term**: Stateful orders have a maximum validity of current block time + `StatefulOrderTimeWindow`. Currently, `StatefulOrderTimeWindow` this value is 95 days.
 
-### Order ID
-
-Every order created has an unique identifier, referred to as the order ID. It can be calculated locally and is composed of,
-- **Subaccount ID**: The account address plus the integer identifying the subaccount;
-- **Client ID**: A 32-bit integer chosen by the user to identify the order. Two orders can't have the same client ID;
-- **Order flags**: An integer identifying if the order is short-term (`0`), long-term (`64`), or conditional (`32`);
-- **CLOB Pair ID**: The ID of the underlying market/perpetual.
-
-### Broadcasting an order
-
-Here, we provide an example of how to create and broadcast a short-term limit sell order for ETH-USD.
-
 :::code-group
 
 ```python [Python]
-node = await NodeClient.connect(TESTNET.node)
-indexer = IndexerClient(TESTNET.rest_indexer)
-
-MARKET_ID = 1 # ETH-USD
-
-# Fetch the ETH-USD market parameters
-market = Market(
-    (await indexer.markets.get_perpetual_markets(MARKET_ID))["markets"][MARKET_ID]
-)
-# Create the order ID
-order_id = market.order_id(
-    TEST_ADDRESS, # address
-    0, # subaccount number
-    random.randint(0, 100000000), # client ID, can be random
-    OrderFlags.SHORT_TERM # short-term order
-)
-# Order valid for the next 10 blocks
+# Order valid for the next 10 blocks.
 good_til_block = await node.latest_block_height() + 10
-# Create the order
+# Create the order.
 order = market.order(
     order_id,
     OrderType.LIMIT,
-    Order.Side.SIDE_SELL,
+    Order.Side.SIDE_BUY,
     size=0.01, # ETH
-    price=40000, # USDC
+    price=1000, # USDC
     time_in_force=Order.TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
     reduce_only=False,
     good_til_block=good_til_block, # valid until this (future) block
 )
-place = await node.place_order(wallet, order) # Broadcast the order
 ```
 
 ```typescript [TypeScript]
-const client = await CompositeClient.connect(network);
-const wallet = await LocalWallet.fromMnemonic(DYDX_TEST_MNEMONIC, BECH32_PREFIX);
-const subaccount = new SubaccountInfo(wallet, 0);
+// If using the Composite client, the order ID and order are builtinternally,
+// when broadcasting the order.
+```
 
+```rust [Rust]
+// Get current block number.
+let current_block_height = client.get_latest_block_height().await?;
+let size = BigDecimal::from_str("0.01")?; // 0.01 ETH
+// Create the order. The order ID is also returned
+let (_id, order) = OrderBuilder::new(market, subaccount)
+    .market(OrderSide::Buy, size)
+    .reduce_only(false)
+    .price(1000) // USDC
+    .time_in_force(TimeInForce::Unspecified)
+    .until(current_block_height.ahead(10))
+    .short_term() // or .long_term() for long term order
+    .build(123456)?; // client ID
+```
+
+:::
+
+### Broadcasting an order
+
+With the order now built, we can push it to the dYdX network.
+
+:::code-group
+
+```python [Python]
+# Broadcast the order.
+place = await node.place_order(wallet, order)
+```
+
+```typescript [TypeScript]
 const goodTilBlock = await client.validatorClient.get.latestBlockHeight() + 10; // order valid until this block
 const clientId = randomInt(100000000); // a random client ID
 
-// Create and broadcast the order
+// Create and broadcast the order.
 const tx = await client.placeShortTermOrder(
     subaccount,
     'ETH-USD',
-    OrderSide.SELL,
-    40000, // USDC
+    OrderSide.BUY,
+    1000, // USDC
     0.01, // ETH
     clientId,
     goodTilBlock,
@@ -140,70 +190,43 @@ const tx = await client.placeShortTermOrder(
 ```
 
 ```rust [Rust]
-let client = NodeClient::connect(config.node).await?;
-let indexer = IndexerClient::new(config.indexer);
-let wallet = Wallet::from_mnemonic(TEST_MNEMONIC)?;
-let mut account = wallet.account(0, &mut placer.client).await?;
-let subaccount = account.subaccount(0)?;
-
-// Get ETH-USD market parameters
-let market = indexer
-    .markets()
-    .get_perpetual_market(&"ETH-USD".into())
-    .await?;
-// Get current block number
-let current_block_height = client.get_latest_block_height().await?;
-let size = BigDecimal::from_str("0.01")?; // 0.01 ETH
-// Create the order. The order ID is also returned
-let (_id, order) = OrderBuilder::new(market, subaccount)
-    .market(OrderSide::Sell, size)
-    .reduce_only(false)
-    .price(40000) // USDC
-    .time_in_force(TimeInForce::Unspecified)
-    .until(current_block_height.ahead(10))
-    .short_term() // or .long_term() for long term order
-    .build(123456)?; // client ID
-// Broadcast the order
-let tx_hash = placer.client.place_order(&mut account, order).await?;
+// Broadcast the order.
+let tx_hash = node.place_order(&mut account, order).await?;
 ```
 
 :::
 
+::::
+
 ## Cancel an order
 
-An unfilled order can be cancelled. The order ID is required to cancel an order.
+An unfilled order can be cancelled. The __order ID__ is required to cancel an order.
 
 :::code-group
 
 ```python [Python]
-tx = client.cancel_order(
-    subaccount, # subaccount ID
-    client_id,
-    "ETH-USD", # market
-    ORDER_FLAGS_SHORT_TERM,
-    good_til_time_in_seconds=0,  # short-term orders use block number
-    good_til_block=good_til_block,  # should be the same or greater than order to cancel
+cancel_tx = await node.cancel_order(
+    wallet, order_id, good_til_block
 )
 ```
 
 ```typescript [TypeScript]
+// The order ID is calculated internally.
 const tx = await client.cancelOrder(
-    subaccount, // subaccount ID
-    clientId,
-    OrderFlags.SHORT_TERM,
-    'ETH-USD', // market
-    goodTilBlock,
-    0, // good-until-time not used in short-term orders
+  subaccount, // subaccount ID
+  clientId,
+  OrderFlags.SHORT_TERM,
+  'ETH-USD', // market
+  goodTilBlock,
+  0, // good-until-time not used in short-term orders
 );
 ```
 
 ```rust [Rust]
-let cancel_tx_hash = placer
-    .client
+let cancel_tx_hash = node
     .cancel_order(&mut account, order_id, good_until)
     .await?;
 ```
 
 :::
 
-::::

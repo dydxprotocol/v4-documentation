@@ -11,7 +11,7 @@ For specific feeds, see the following [subsections](#feeds).
 
 ### Subscribe
 
-Use the following schema to subscribe to a feed.
+Use the following schema to subscribe to a channel.
 
 #### JSON Schema
 
@@ -41,11 +41,11 @@ Use the following schema to subscribe to a feed.
 | `connection_id`     | string             | String identifying the subscription.                                  |
 | `message_id`        | int                | Message sequence number sent on the subscription.                     |
 | `id`                | string             | Selector for channel-specific data.                                   |
-| `contents`          | value              | Feed-specific initial data.                                           |
+| `contents`          | value              | Channel-specific initial data.                                        |
 
 ### Unsubscribe
 
-Use the following schema to unsubscribe from a feed.
+Use the following schema to unsubscribe from a channel.
 Similar scheme to the `subscribe` schema, however with the `unsubscribe` type, and without the `batched` field.
 
 #### JSON Schema
@@ -89,9 +89,9 @@ After subscription, the incoming messages will be serialized using the following
 | `id`                | string             | Selector for channel-specific data. Only used in some channels.       |
 | `message_id`        | int                | Message sequence number sent on the subscription.                     |
 | `version`           | string             | Protocol identifier.                                                  |
-| `contents`          | value              | Feed-specific message data.                                            |
+| `contents`          | value              | Channel-specific message data.                                        |
 
-## Feeds
+## Channels
 
 The available clients API is presented below.
 For each, the subscription and unsubscription functions are shown. Internally, these functions send messages serialized in the [subscribe](#json-schema) and [unsubscribe](#json-schema-1) JSON schemas above.

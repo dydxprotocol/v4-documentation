@@ -3,9 +3,12 @@
 dYdX provides two networks for trading: a __mainnet__, and a __testnet__:
 - __mainnet__: The core network where real financial transactions occur;
 - __testnet__: A separate, risk-free, network. Served mainly for the purposes of testing and experimenting before transitioning to the __mainnet__.
-It is advisable that for the purposes of learning and trying out the dYdX ecosystem that the __testnet__ is used and preferred over the __mainnet__.
 
-For the purposes of this guide, we'll assume that the __testnet__ is being used. Nevertheless, the API is exactly the same for both the __mainnet__ and the __testnet__, so any code working in the __testnet__ should work in the __mainnet__.
+For the purposes of this guide, we'll assume that the __mainnet__ is being used. Nevertheless, the API is exactly the same for both the __mainnet__ and the __testnet__, so any code working in the __mainnet__ should work in the __testnet__. Choosing between the __mainnet__ and the __testnet__ is simply a matter of changing the used endpoints.
+
+:::note
+It is advisable that for the purposes of learning and trying out the dYdX ecosystem that the __testnet__ is used and preferred over the __mainnet__.
+:::
 
 ## Available clients
 
@@ -13,27 +16,22 @@ Interacting with the dYdX network API is made through several sets of methods gr
 
 ### Node client
 
-The Node client (also known as the Validator client) is the main client for interacting with the dYdX network. It provides the [Node API](/node-client/index) allowing the user to do operations that require authentication (e.g., issue trading orders) through the [Private API](/node-client/private/index), or query data through the [Public API](/node-client/public/index).
+The Node client (also known as the Validator client) is the main client for interacting with the dYdX network. It provides the [Node API](/node-client/index) allowing the user to do operations that require authentication (e.g., issue trading orders) through the [Private API](/node-client/private/index). 
 
-You'll need an endpoint to setup the Node client. Grab an RPC/gRPC endpoint from [here](#testnet).
+You'll need an endpoint to setup the Node client. Grab an RPC/gRPC endpoint from [here](#node). Additionally for the Python client, you'all also need a HTTP and WebSockets endpoints.
 
 :::code-group
 
 ```python [Python]
-from dydx_v4_client.network import TESTNET
+from dydx_v4_client.network import make_mainnet
 from dydx_v4_client.node.client import NodeClient
-# from dydx_v4_client.network import make_testnet, make_mainnet
 
-# Using a pre-configured endpoint. # [!code focus]
-config = TESTNET.node # [!code focus]
-# Or configuring your endpoints:
-# ```python
-# config = make_testnet(
-#    node_url="your-custom-grpc-node.com"
-#    rest_indexer="https://your-custom-rest-indexer.com",
-#    websocket_indexer="wss://your-custom-websocket-indexer.com",
-# ).node
-# ```
+config = make_mainnet( # [!code focus]
+   node_url="your-chosen-grpc-node.com" # [!code focus]
+   rest_indexer="https://your-chosen-rest-indexer.com", # [!code focus]
+   websocket_indexer="wss://your-chosen-websocket-indexer.com", # [!code focus]
+).node # [!code focus]
+# Call make_testnet() to use the testnet instead. # [!code focus]
 
 # Connect to the network. # [!code focus]
 node = await NodeClient.connect(config) # [!code focus]
@@ -43,10 +41,11 @@ node = await NodeClient.connect(config) # [!code focus]
 import { ValidatorClient, Network } from '@dydxprotocol/v4-client-js';
 
 // Using a pre-configured endpoint. // [!code focus]
-const config = Network.testnet().validatorConfig; // [!code focus]
+const config = Network.mainnet().validatorConfig; // [!code focus]
+// Or use `Network.testnet()` for the testnet. [!code focus]
 // You can modify the endpoint doing `config.restEndpoint = "...";`
 // Connect to the network. // [!code focus]
-const client = await ValidatorClient.connect(config); // [!code focus]
+const node = await ValidatorClient.connect(config); // [!code focus]
 ```
 
 ```rust [Rust]
@@ -55,39 +54,34 @@ use dydx::{config::ClientConfig, node::NodeClient};
 // The configuration file should have the endpoint. Use a gRPC endpoint. // [!code focus]
 let config = ClientConfig::from_file("config.toml").await?; // [!code focus]
 // Connect to the network. // [!code focus]
-let client = NodeClient::connect(config.node).await?; // [!code focus]
+let node = NodeClient::connect(config.node).await?; // [!code focus]
 ```
 
 :::
 
+While the Node client can also query data through the [Public API](/node-client/public/index), the Indexer client should be preferred.
 
 ### Indexer client
 
 The Indexer is a high-availability system designed to provide structured data and offload computational burden from the core full nodes. The Indexer client provides methods from the [Indexer API](/indexer-client/index). It serves both as a spontaneuous source of data retrieval through its REST endpoint, or a continuous feed of trading data through its WebSockets endpoint.
 
-The Indexer client is further divided into two sub-clients associated with the two different protocols. 
-You'll need two endpoints to setup each Indexer sub-client. Grab these from [here](#testnet-1).
+Given that the Indexer client can use these two different protocols, you'll need two endpoints to setup it up. Grab these from [here](#indexer).
 
 :::code-group
 
 ```python [Python]
-from dydx_v4_client.network import TESTNET
+from dydx_v4_client.network import make_mainnet
 from dydx_v4_client.indexer.rest.indexer_client import IndexerClient
 from dydx_v4_client.indexer.socket.websocket import IndexerSocket
 
-# Using a pre-configured endpoint. # [!code focus]
-network = TESTNET # [!code focus]
-# Or configuring your endpoints:
-# ```python
-# config = make_testnet(
-#    node_url="your-custom-grpc-node.com"
-#    rest_indexer="https://your-custom-rest-indexer.com",
-#    websocket_indexer="wss://your-custom-websocket-indexer.com",
-# ).node
-# ```
+config = make_mainnet( # [!code focus]
+   node_url="your-custom-grpc-node.com" # [!code focus]
+   rest_indexer="https://your-custom-rest-indexer.com", # [!code focus]
+   websocket_indexer="wss://your-custom-websocket-indexer.com", # [!code focus]
+).node # [!code focus]
 
 # Instantiate the HTTP sub-client. # [!code focus]
-indexer = IndexerClient(network.rest_indexer) # [!code focus]
+indexer = IndexerClient(config.rest_indexer) # [!code focus]
 # Instatiate the WebSockets sub-client, connecting to the network. # [!code focus]
 socket = await IndexerSocket(network.websocket_indexer).connect() # [!code focus]
 ```
@@ -97,12 +91,12 @@ import { IndexerClient, Network, SocketClient } from '@dydxprotocol/v4-client-js
 
 const apiTimeout = 1000;
 // Using a pre-configured endpoint. // [!code focus]
-const config = Network.testnet().indexerConfig; // [!code focus]
+const config = Network.mainnet().indexerConfig; // [!code focus]
 // You can modify the HTTP endpoint doing `config.restEndpoint = "...";` [!code focus]
 // You can modify the WebSockets endpoint doing `config.websocketEndpoint = "...";` [!code focus]
 
 // Instantiate the HTTP client. // [!code focus]
-const client = new IndexerClient(config, apiTimeout); // [!code focus]
+const indexer = new IndexerClient(config, apiTimeout); // [!code focus]
 // Instantiate the WebSockets client, connecting to the network. // [!code focus]
 const socket = new SocketClient( // [!code focus]
   config.indexerConfig, // [!code focus]
@@ -135,7 +129,7 @@ The Composite client groups commonly used methods into a single structure. It is
 ```typescript [TypeScript]
 import { CompositeClient, Network } from '@dydxprotocol/v4-client-js';
 
-const network = Network.testnet();
+const network = Network.mainnet();
 const client = await CompositeClient.connect(network); // [!code focus]
 ```
 

@@ -1,6 +1,6 @@
-### Get Withdrawal Info
+### Get Owner Shares in MegaVault
 
-Query the withdrawal information for a specified number of shares.
+Query the shares associated with an [`Address`].
 
 #### Method Declaration
 
@@ -11,16 +11,14 @@ Query the withdrawal information for a specified number of shares.
 ```
 
 ```typescript [TypeScript]
-async getMegavaultWithdrawalInfo(
-    sharesToWithdraw: bigint,
-): Promise<VaultModule.QueryMegavaultWithdrawalInfoResponse>
+export async function getMegavaultOwnerShares(payload: string): Promise<string>
 ```
 
 ```rust [Rust]
-pub async fn get_withdrawal_info(
+pub async fn get_owner_shares(
     &mut self,
-    shares: &BigInt,
-) -> Result<QueryMegavaultWithdrawalInfoResponse, Error>
+    address: &Address,
+) -> Result<QueryMegavaultOwnerSharesResponse, Error>
 ```
 
 ```url [API]
@@ -35,13 +33,14 @@ pub async fn get_withdrawal_info(
 
 | Parameter           | Location | Type               | Description                                                           |
 | ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
-| `shares`            | query    | BigInt             | The wallet address that owns the subaccount.                          |
+| `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
 
 #### Response
 
 | Status | Meaning     | Schema                                 |
 | ------ | ----------- | -------------------------------------- |
-| `200`  | [OK]        | [QueryMegavaultWithdrawalInfoResponse] |
+| `200`  | [OK]        | [QueryMegavaultOwnerSharesResponse]    |
 
+[Address]: /types/address
 [OK]: /types/ok
-[QueryMegavaultWithdrawalInfoResponse]: /types/query_megavault_withdrawal_info_response
+[QueryMegavaultOwnerSharesResponse]: /types/megavault_owner_shares_response
