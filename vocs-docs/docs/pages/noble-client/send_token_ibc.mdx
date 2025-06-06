@@ -1,0 +1,43 @@
+### Send Token Ibc
+
+Transfer a token asset between Cosmos blockchain networks.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+```
+
+```rust [Rust]
+pub async fn send_token_ibc(
+    &mut self,
+    account: &mut Account,
+    sender: Address,
+    recipient: Address,
+    token: impl Tokenized,
+    source_channel: String,
+) -> Result<TxHash, Error>
+```
+
+```typescript [TypeScript]
+async IBCTransfer(message: MsgTransferEncodeObject): Promise<DeliverTxResponse>
+
+async send(
+    messages: EncodeObject[],
+    gasPrice: GasPrice = GasPrice.fromString('0.1uusdc'),
+    memo?: string,
+): Promise<DeliverTxResponse>
+```
+
+:::
+
+#### Parameters
+
+
+#### Response
+
+Examples: [Rust]
+
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/noble_transfer.rs#L89
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/noble_example.ts#L85

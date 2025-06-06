@@ -1,0 +1,66 @@
+### Broadcast Transaction
+
+The `Broadcast Transaction` method is used to send a transaction to the network for processing.
+
+The key parameters include the transaction itself and the mode of broadcasting, which is optional and defaults to synchronous broadcasting mode.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def broadcast(self, transaction: Tx, mode=BroadcastMode.BROADCAST_MODE_SYNC)
+```
+
+```typescript [TypeScript]
+async broadcastTransaction(
+    tx: Uint8Array,
+    mode: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+
+broadcastTransactionAsync(tx: Uint8Array): Promise<BroadcastTxAsyncResponse>
+
+async broadcastTransactionSync(tx: Uint8Array): Promise<BroadcastTxSyncResponse>
+
+async broadcastTransactionCommit(tx: Uint8Array): Promise<IndexedTx>
+```
+
+```rust [Rust]
+pub async fn broadcast_transaction(
+    &mut self,
+    tx_raw: Raw,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter     | Location  | Type              | Required  | Description                                                           |
+| ------------- | --------- | ----------------- | --------- | --------------------------------------------------------------------- |
+| `transaction` | query     | [Tx]              | true      | The transaction to broadcast.                        |
+| `mode`        | query     | [BroadcastMode]   | false     | The broadcast mode. Defaults to BroadcastMode.BROADCAST_MODE_SYNC.    |
+
+:::
+
+#### Response
+
+| Status | Meaning     | Schema   |
+| ------ | ----------- | -------- |
+| `200`  | [OK]        | [TxHash] |
+
+Examples: [Rust]
+
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/withdraw_other.rs#L71
+
+
+[Tx]: /types/tx
+[BroadcastMode]: /types/broadcast_mode
+[OK]: /types/ok
+[TxHash]: /types/tx_hash

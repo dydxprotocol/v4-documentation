@@ -1,0 +1,93 @@
+# Quick Start with Rust
+
+This guide will walk you through the steps to set up and start using the dYdX API Rust library.
+
+::::steps
+
+## Install Rust and Cargo
+
+Choose and install [Rust](https://www.rust-lang.org/tools/install) and [Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) for your system.
+
+## Clone the dydx client repo
+
+```bash
+git clone https://github.com/dydxprotocol/v4-clients.git
+```
+
+## Run an example
+
+Go to the Rust client library.
+
+```bash
+cd v4-clients/v4-client-rs
+```
+
+Now, we can run an example file. Let's run `accounts_endpoint` example.
+
+```bash
+cargo run --example account_endpoint
+```
+
+::::
+
+**Now, you can play around with all the available examples. Happy trading!**
+
+
+:::tip[Rust Crate]
+The Rust client is also available through the crates.io [crate](https://crates.io/crates/dydx) `dydx`.
+:::details[Installation]
+```bash [Terminal]
+cargo add dydx
+```
+
+Or add it manually to `Cargo.toml`.
+
+```toml [Cargo.toml]
+[dependencies]
+dydx = "0.2.0"  # Replace with the latest version // [!code ++]
+```
+:::
+
+:::note[Configuration File]
+
+The Rust client uses a TOML configuration file to configure several required parameters.
+
+:::details[Examples]
+::::code-group
+
+```toml [mainnet.toml]
+[node]
+endpoint = "https://dydx-ops-grpc.kingnodes.com:443"
+chain_id = "dydx-mainnet-1"
+fee_denom = "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5"
+
+[indexer]
+http.endpoint = "https://indexer.dydx.trade"
+ws.endpoint = "wss://indexer.dydx.trade/v4/ws"
+
+[noble] # optional
+endpoint = "http://noble-grpc.polkachu.com:21590"
+chain_id = "noble-1"
+fee_denom = "uusdc"
+```
+
+```toml [testnet.toml]
+[node]
+endpoint = "https://test-dydx-grpc.kingnodes.com"
+chain_id = "dydx-testnet-4"
+fee_denom = "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5"
+
+[indexer]
+http.endpoint = "https://indexer.v4testnet.dydx.exchange"
+ws.endpoint = "wss://indexer.v4testnet.dydx.exchange/v4/ws"
+
+[noble] # optional
+endpoint = "http://noble-testnet-grpc.polkachu.com:21590"
+chain_id = "grand-1"
+fee_denom = "uusdc"
+
+[faucet] # optional
+endpoint = "https://faucet.v4testnet.dydx.exchange"
+```
+
+:::

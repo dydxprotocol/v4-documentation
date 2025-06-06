@@ -1,0 +1,43 @@
+### Query Transaction
+
+Query the network for a transaction.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+
+```
+
+```rust [Rust]
+pub async fn query_transaction(&mut self, tx_hash: &TxHash) -> Result<Tx, Error>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Description         |
+| ------------------- | -------- | ------------------ | ------------------- |
+| `tx_hash`           | query    | [TxHash]           | Transaction Hash    |
+
+#### Response
+
+| Status | Meaning     | Schema |
+| ------ | ----------- | ------ |
+| `200`  | [OK]        | [Tx]   |
+
+[TxHash]: /types/tx_hash
+[OK]: /types/ok
+[Tx]: /types/tx

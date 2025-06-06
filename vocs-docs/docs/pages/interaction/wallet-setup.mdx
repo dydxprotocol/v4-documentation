@@ -1,0 +1,117 @@
+# Wallet Setup
+
+To manage your accounts, issue orders, and perform other operations that are required to be signed, a Wallet is required. To instantiate a Wallet, you must first have your associated __mnemonic__.
+
+:::details[Unification Plan]
+- The Python client requires the use of an address to setup the Wallet. However, the address can only be fetched using a Wallet. The address is derived from the mnemonic (address < public key < private key < mnemonic).
+- Wallet, accounts, subaccounts are all handled differently among the clients. Probably the Rust client handles this best, giving the user more control:
+    1. There is a `Wallet`;
+    2. The `Wallet` is used to derive an `Account` by index (each `Account` is associated with a keypair);
+    3. An `Account` is used to derive a `Subaccount` by index. A `Subaccount` is employed to create orders.  
+:::
+
+::::steps
+
+## Getting the mnemonic
+
+A Wallet is setup using your secret __mnemonic__ phrase. A __mnemonic__ is a set of 24 words to back up and access your account.
+
+You can fetch your __mnemonic__ from the [dYdX Frontend](https://dydx.trade). After logging in, follow the instructions in "Export secret phrase", accessed by clicking your address in the upper right corner.
+
+For the purpose of this guide, lets copy and store the __mnemonic__ in a `mnemonic.txt` file. 
+
+:::warning
+Handle your __mnemonic__ in a secure manner. __Do not share__ it with other parties. Do not commit your __mnemonic__ to a public VCS like GitHub. Access to your __mnemonic__ provides access to your account and funds. 
+:::
+
+## Read the mnemonic
+
+Lets start coding. Load the mnemonic into a string variable. This assumes the mnemonic is stored in a text file.
+
+:::code-group
+
+```python [Python]
+mnemonic = open('mnemonic.txt').read().strip()
+```
+
+```typescript [TypeScript]
+const mnemonic = require('fs').readFileSync('mnemonic.txt', 'utf8').trim();
+```
+
+```rust [Rust]
+let mnemonic = std::fs::read_to_string("mnemonic.txt").unwrap().trim().to_string();
+```
+
+:::
+
+## Create the Wallet
+
+Use the __mnemonic__ to create a Wallet instance capable of signing transactions.
+
+:::code-group
+
+```python [Python]
+from dydx_v4_client.key_pair import KeyPair
+from dydx_v4_client.wallet import Wallet
+
+# Define your address.
+address = Wallet(KeyPair.from_mnemonic(mnemonic), 0, 0).address()
+
+# Create a Wallet with updated parameters required for trading
+wallet = await Wallet.from_mnemonic(node, mnemonic, address)
+```
+
+```typescript [TypeScript]
+import { BECH32_PREFIX, LocalWallet } from '@dydxprotocol/v4-client-js';
+
+const wallet = await LocalWallet.fromMnemonic(mnemonic, BECH32_PREFIX);
+```
+
+```rust [Rust]
+use dydx::node::Wallet;
+
+let wallet = Wallet::from_mnemonic(&mnemonic)?;
+```
+
+:::
+
+:::note
+Please check the list of [available endpoints here](/interaction/endpoints#endpoints).
+:::
+
+## Instantiate a Subaccount
+
+:::note
+This step is not required in the Python client.
+:::
+
+When issuing orders, the relevant Subaccount must be chosen to place the order under. A Subaccount is associated with an Account, and is meant to provide trade isolation against your other Subaccounts and enhance funds management.
+See more about [Accounts and Subaccounts](/concepts/trading/accounts).
+
+:::code-group
+
+```python [Python]
+# Not required. The `wallet` instance created above already contains the necessary information.
+# The Subaccount to be used is defined using an integer when creating an order.
+```
+
+```typescript [TypeScript]
+import { SubaccountInfo } from '@dydxprotocol/v4-client-js';
+
+const subaccount = new SubaccountInfo(wallet, 0);
+```
+
+```rust [Rust]
+// Create an `Account` instance for the account index 0. This `Account` has updated parameters required for trading.
+let account = wallet.account(0, &mut node).await?;
+
+// Create a `Subaccount` instance for the subaccount index 0.
+let subaccount = account.subaccount(0)?;
+```
+
+:::
+
+:::info
+By default, both Python and TypeScript client Wallets will derive and use the Account indexed at 0.
+:::
+

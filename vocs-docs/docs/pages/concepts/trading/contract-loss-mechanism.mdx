@@ -1,0 +1,35 @@
+# Contract Loss Mechanisms
+
+During periods of high volatility in the markets underlying the perpetual contracts, the value of some accounts may drop below zero before they can be liquidated.
+
+The insurance fund is the first backstop to maintain the solvency of the system when an account has a negative balance. The account will be liquidated, and the insurance fund will take on the loss.
+
+In the event that the insurance fund is depleted, positions with the most profit and leverage may be used to offset negative-balance accounts, in order to maintain the stability of the system.
+
+## Oracle Prices
+
+The `Oracle Price` for each trading pair is used for the following:
+
+* Ensuring that each account is well-collateralized after each trade
+* Determining when an account should be liquidated
+
+## Calculation
+
+Oracle prices are equal to the median of the reported prices of 15 independent Chainlink nodes.
+
+## Node Providers
+
+* Chainlayer
+* Inotel
+* LinkForest
+* SimplyVC
+* DexTrac
+* Fiews
+* dMakers
+* linkPool
+* SDL
+* Ztake
+* stakFacils
+* infStones
+* 01node
+* Syncnode

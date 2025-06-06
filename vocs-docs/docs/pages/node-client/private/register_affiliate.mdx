@@ -1,0 +1,48 @@
+### Register Affiliate
+
+Register affiliate.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+```
+
+```rust [Rust]
+```
+
+```typescript [TypeScript]
+async registerAffiliate(
+    subaccount: SubaccountInfo,
+    affiliate: string,
+    broadcastMode?: BroadcastMode,
+    gasAdjustment: number = 2,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```uri
+```
+:::
+
+#### Parameters
+
+| Parameter         | Location  | Type              | Mandatory | Description               |
+| ----------------- | --------- | ----------------- | --------- | ------------------------- |
+| `subaccount`      | query     | [SubaccountInfo]  | true      | Subaccount information    |
+| `affiliate`       | query     | string            | true      | Affiliate information     |
+| `broadcastMode`   | query     | [BroadcastMode]   | false     | Mode of broadcast         |
+| `gasAdjustment`   | query     | int               | false     | Gas adjustment value      |
+
+#### Response
+
+| Status    | Meaning   | Schema                                                                |
+| --------- | --------- | --------------------------------------------------------------------- |
+| `200`     | [OK]      | [BroadcastTxAsyncResponse] | [BroadcastTxSyncResponse] | [IndexedTx]  |
+
+[SubaccountInfo]: /types/subaccount_info
+[BroadcastMode]: /types/broadcast_mode
+[OK]: /types/ok
+[BroadcastTxAsyncResponse]: /types/cosmos
+[BroadcastTxSyncResponse]: /types/cosmos
+[IndexedTx]: /types/cosmos

@@ -1,0 +1,41 @@
+### Get Affiliate Info
+
+Get affiliate info by address.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+```
+
+```rust [Rust]
+```
+
+```typescript [TypeScript]
+async getAffiliateInfo(address: string): Promise<AffiliateModule.AffiliateInfoResponse>
+```
+
+```uri
+/dydxprotocol.affiliates.Query/AffiliateInfo
+```
+:::
+
+#### Parameters
+
+| Parameter | Location  | Type      | Mandatory | Description                   |
+| --------- | --------- | --------- | --------- | ----------------------------- |
+| address   | Query     | string    | true      | Address to get affiliate info |
+
+#### Response
+
+| Status    | Meaning   | Schema                                    |
+| --------- | --------- | ----------------------------------------- |
+| `200`     | [OK]      | [AffiliateModule.AffiliateInfoResponse]   |
+
+Examples: [API]
+
+[API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/affiliates/affiliate_info/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art
+
+[OK]: /types/ok
+[AffiliateModule.AffiliateInfoResponse]: /types/cosmos

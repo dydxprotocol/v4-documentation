@@ -1,0 +1,67 @@
+import { Button } from 'vocs/components'
+
+### Get Trades
+
+Retrieves trades for a specific perpetual market.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_perpetual_market_trades(
+    self,
+    market: str,
+    starting_before_or_at_height: Optional[int] = None,
+    limit: Optional[int] = None,
+) -> dict
+```
+
+```typescript [TypeScript]
+async getPerpetualMarketTrades(
+    market: string,
+    startingBeforeOrAtHeight?: number | null,
+    startingBeforeOrAt?: string | null,
+    limit?: number | null,
+    page?: number | null,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_trades(
+    &self,
+    ticker: &Ticker,
+    opts: Option<GetTradesOpts>,
+) -> Result<Vec<TradeResponseObject>, Error>
+```
+
+```url [API]
+/v4/trades/perpetualMarket/{market}
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                         | Location  | Type      | Required  | Description                                       |
+| --------------------------------- | --------- | --------- | --------- | ------------------------------------------------- |
+| `market`                          | path      | [Ticker]  | true      | The market ticker.                                |
+| `limit`                           | query     | [u32]     | false     | The maximum number of trades to retrieve.         |
+| `startingBeforeOrAtHeight`        | query     | [Height]  | false     | The block height to start retrieving trades from. |
+
+#### Response
+
+| Status | Meaning     | Schema                  | Description      |
+| ------ | ----------- | ----------------------- | ---------------- |
+| `200`  | [OK]        | [TradeResponseObject] ⛁ | The trades data. |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/trades/perpetualMarket/BTC-USD">API Example</Button>
+
+[Ticker]: /types/ticker
+[u32]: /types/u32
+[Height]: /types/height
+[TradeResponseObject]: /types/trade_response_object
+[OK]: /types/ok

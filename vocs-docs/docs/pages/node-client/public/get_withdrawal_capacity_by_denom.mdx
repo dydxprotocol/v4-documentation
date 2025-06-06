@@ -1,0 +1,44 @@
+### Get Withdrawal Capacity By Denom
+
+Get withdrawal capacity by denom.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+```
+
+```rust [Rust]
+```
+
+```typescript [TypeScript]
+async getWithdrawalCapacityByDenom(
+    denom: string,
+): Promise<RateLimitModule.QueryCapacityByDenomResponse>
+```
+
+```uri
+/dydxprotocol.ratelimit.Query/CapacityByDenom
+```
+:::
+
+#### Parameters
+
+| Parameter | Location  | Type      | Mandatory | Description           |
+| --------- | --------- | --------- | --------- | --------------------- |
+| denom     | Query     | string    | true      | Denomination value    |
+
+#### Response
+
+| Status    | Meaning   | Schema                                            |
+| --------- | --------- | ------------------------------------------------- |
+| `200`     | [OK]      | [RateLimitModule.QueryCapacityByDenomResponse]    |
+
+
+Examples: [API]
+
+[API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/v4/ratelimit/capacity_by_denom?denom=adv4tnt
+
+[OK]: /types/ok
+[RateLimitModule.QueryCapacityByDenomResponse]: /types/cosmos

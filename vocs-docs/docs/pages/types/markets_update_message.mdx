@@ -1,0 +1,15 @@
+import Opt from '../../components/Opt';
+import Array from '../../components/Array';
+
+# MarketsUpdateMessage
+
+Update message received on the `v4_markets` channel.
+
+`trading`: Map[[`Ticker`], [`TradingPerpetualMarket`]] <Opt/>
+
+`oraclePrices`: Map[[`Ticker`], [`OraclePriceMarket`]] <Opt/>
+
+
+[`Ticker`]: /types/ticker
+[`TradingPerpetualMarket`]: /types/trading_perpetual_market
+[`OraclePriceMarket`]: /types/oracle_price_market

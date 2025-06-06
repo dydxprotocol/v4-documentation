@@ -1,0 +1,51 @@
+import BatchedArray from '../../../components/BatchedArray';
+
+### Block Height
+
+Data feed of current block height. Data contains the last block height and time.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+# Coming soon.
+```
+
+```typescript [TypeScript]
+// Coming soon.
+```
+
+```rust [Rust]
+// struct `Feeds`
+pub async fn block_height(
+    &mut self,
+    batched: bool,
+) -> Result<Feed<BlockHeightMessage>, FeedError>
+// The stream is unsubscribed when the `Feed` object is dropped
+```
+
+```url [Channel]
+v4_block_height
+```
+
+:::
+
+:::details[Unification Plan]
+- Add feed to Python, TS clients.
+:::
+
+#### Schema
+
+The field `id` is not employed in the subscribe/unsubscribe schemas.
+
+The field `contents` is serialized using the following schemas.
+
+##### Messages
+
+| Initial | Update     |
+| ------ | ----------- |
+| [`BlockHeightInitialMessage`] | [`BlockHeightUpdateMessage`] <BatchedArray/> |
+
+[`BlockHeightInitialMessage`]: /types/block_height_initial_message
+[`BlockHeightUpdateMessage`]: /types/block_height_update_message
