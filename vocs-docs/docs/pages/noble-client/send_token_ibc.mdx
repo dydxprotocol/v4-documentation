@@ -30,14 +30,37 @@ async send(
 ): Promise<DeliverTxResponse>
 ```
 
+```url [API]
+/ibc.applications.transfer.v1.Msg/Transfer
+```
+
+:::
+
+:::details[Unification Plan]
+- Generalize to all IBC/blockchains.
+- Missing in Python.
+- Missing in TS: user required to produce the low-level message and then `post.send()` it.
 :::
 
 #### Parameters
 
+| Parameter         | Location  | Type          | Mandatory | Description                       |
+| ----------------- | --------- | ------------- | --------- | --------------------------------- |
+| `account`         | query     | [Account]     | true      | The account.                      |
+| `sender`          | query     | [Address]     | true      | Address of the sender.            |
+| `recipient`       | query     | [Address]     | true      | Address of the recipient.         |
+| `token`           | query     | int           | true      | Token type and amount to transfer.|
+| `source_channel`  | query     | String        | true      | Source IBC relay channel.         |           
+
+
 
 #### Response
 
-Examples: [Rust]
+| Status | Meaning     | Schema     |
+| ------ | ----------- | ---------- |
+| `200`  | [OK]        | [TxHash]   |
 
-[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/noble_transfer.rs#L89
-[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/noble_example.ts#L85
+[OK]: /types/ok
+[Account]: /types/account
+[Address]: /types/address
+[Tokenized]: /types/tokenized

@@ -11,7 +11,9 @@ Query the shares associated with an [`Address`].
 ```
 
 ```typescript [TypeScript]
-export async function getMegavaultOwnerShares(payload: string): Promise<string>
+async getMegavaultOwnerShares(
+    address: string,
+): Promise<VaultModule.QueryMegavaultOwnerSharesResponse>
 ```
 
 ```rust [Rust]

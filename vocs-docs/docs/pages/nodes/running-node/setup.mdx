@@ -2,11 +2,13 @@
 Installing and running a full node allows you to read orderbook and onchain data from a network, as well as place, confirm and cancel orders directly on that network.
 
 ## Prerequisites
-To run a full node, the system that hosts the node must meet the following minimum requirements:
-- Linux (Ubuntu Server 22.04.3 or later recommended)
-- 8-core CPU (ARM or x86_64 architecture)
-- 64 GB RAM
-- 500 GB SSD NVMe Storage
+The minimum recommended specs for running a node is the following:
+
+- 16-core, x86_64 architecture processor
+- 64 GiB RAM
+- 500 GiB of locally attached SSD storage
+
+For example, an AWS instance like the `r6id.4xlarge`, or equivalent.
 
 ## Choose a Method
 To set up a full node, you can either:
@@ -120,7 +122,7 @@ Check the [Resources](/nodes/resources#seed-nodes) page for an up-to-date list o
 ```bash
 # Example for DYDX token holders on mainnet
 SEED_NODES=("ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@seeds.polkachu.com:23856", 
-"65b740ee326c9260c30af1f044e9cda63c73f7c1@seeds.kingnodes.net:23856", 
+"df1f145848d253800d4e4216e8793158688912f1@seeds.kingnodes.com:23856", 
 "d8e106274b24ec64ce724a611def6a3637226745@dydx-mainnet-seed.bwarelabs.com:36656",
 "20e1000e88125698264454a884812746c2eb4807@seeds.lavenderfive.com:23856",
 "c2c2fcb5e6e4755e06b83b499aff93e97282f8e8@tenderseed.ccvalidators.com:26401",

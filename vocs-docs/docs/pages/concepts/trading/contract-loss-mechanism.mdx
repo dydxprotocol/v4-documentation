@@ -1,35 +1,46 @@
 # Contract Loss Mechanisms
 
-During periods of high volatility in the markets underlying the perpetual contracts, the value of some accounts may drop below zero before they can be liquidated.
+During periods of high volatility in the markets underlying the perpetual contracts, the value of some accounts may drop below zero before they can be liquidated. In these cases, the protocol’s deleveraging system kicks in.
+ 
+## Liquidation and Deleveraging
 
-The insurance fund is the first backstop to maintain the solvency of the system when an account has a negative balance. The account will be liquidated, and the insurance fund will take on the loss.
+When an account is undercollateralized, the protocol automatically liquidates its positions until the account is sufficiently collateralized or the positions are closed.
+If an account’s value turns negative, deleveraging occurs immediately against randomly chosen offsetting positions, which may reduce the expected profits of offsetting accounts.
+ 
+### Example
+1. A deposits $100 and goes long 500 ABC contracts at $1.
+2. B deposits $100 and goes short 500 ABC contracts at $1.
+3. The price jumps from $1 to $2:
+  a. A expects a profit of ($2 - $1) * 500 = $500.
+  b. B’s equity becomes negative: $100 - ($2 - $1) * -500 = $-400.
+  c. B’s bankruptcy price is $1.2, so A’s position is closed at $1.2, resulting in a $100 profit for A and a $100 loss for B, leaving B’s account value at $0.
 
-In the event that the insurance fund is depleted, positions with the most profit and leverage may be used to offset negative-balance accounts, in order to maintain the stability of the system.
+Deleveraging usually occurs after an account is eligible for liquidation, followed by further adverse price movement. If a large price shift occurs in one oracle update, an account may go directly from collateralized to negative and be immediately deleveraged.
+ 
+## Insurance Fund
 
-## Oracle Prices
+The insurance fund covers insufficient collateral by adjusting liquidation order prices (up to a max spread from the oracle) to improve their chances of filling. See Liquidations on dYdX Chain for details.
+ 
+### Example
+1. A deposits $100 and goes long 500 ABC contracts at $1 with a maintenance margin fraction (MMF) of 3%.
+  a. A’s maintenance margin requirement (MMR) = 3% * $1 * 500 = $15.
+2. ABC’s price drops to $0.801:
+  a. A’s pnl = (0.801 - 1.000) * 500 = -$99.5.
+  b. A’s equity is now $0.50, below the MMR.
+3. The protocol liquidates A’s position at $0.77:
+  a. Note: by default, the maximum spread at which the liquidation order may be placed from the oracle price is 1.5 * MMF = 4.5%.
+  b. A’s pnl at $0.77 would be (0.77 - 1.0) * 500 = -$115, more than A’s $100 equity.
+  c. The insurance fund contributes $15 to “aggress” the limit price, enabling a fill at $0.77.
+  d. The liquidation order is matched against the order book just like any other order; if sufficient bid liquidity exists, the fill price may be better than the limit price.
 
-The `Oracle Price` for each trading pair is used for the following:
+Note that once an account balance turns negative, deleveraging occurs immediately without using the insurance fund. 
+ 
+## FAQ
 
-* Ensuring that each account is well-collateralized after each trade
-* Determining when an account should be liquidated
+> When does auto-deleveraging occurs? 
 
-## Calculation
+Deleveraging usually occurs after an account is eligible for liquidation, followed by further adverse price movement. If a large price shift occurs in one oracle update, an account may go directly from collateralized to negative and be immediately deleveraged.
+ 
+> Do isolated markets have their own insurance fund?
 
-Oracle prices are equal to the median of the reported prices of 15 independent Chainlink nodes.
-
-## Node Providers
-
-* Chainlayer
-* Inotel
-* LinkForest
-* SimplyVC
-* DexTrac
-* Fiews
-* dMakers
-* linkPool
-* SDL
-* Ztake
-* stakFacils
-* infStones
-* 01node
-* Syncnode
+Isolated markets are markets that have segregated pools of collateral and their own insurance fund. Each isolated market, then, has its own individual risk properties.

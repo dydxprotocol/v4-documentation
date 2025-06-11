@@ -68,8 +68,8 @@ pub async fn get_fills(
 | `ticker`                      | query    | [Ticker]           | false      | The market symbol to filter fills by (e.g., "BTC-USD"). If not provided, fills for all markets will be returned. |
 | `tickerType`                  | query    | [MarketType]       | false      | The type of market to filter by.                                                                                 |
 | `limit`                       | query    | [u32]              | false      | Maximum number of asset positions to return in the response.                                                     |
-| `createdBeforeOrAtHeight`     | query    | [Height]           | false      | Restricts results to positions created at or before a specific blockchain height.                                |
-| `createdBeforeOrAt`           | query    | [DateTime]         | false      | Restricts results to positions created at or before a specific timestamp (ISO 8601 format).                      |
+| `createdBeforeOrAtHeight`     | query    | [Height]           | false      | Filters results to positions created at or before a specific blockchain height.                                |
+| `createdBeforeOrAt`           | query    | [DateTime]         | false      | Filters results to positions created at or before a specific timestamp (ISO 8601 format).                      |
 | `page`                        | query    | [u32]              | false      | The page number for paginated results.                                                                           |
 
 #### Response
@@ -88,7 +88,7 @@ Examples: [Guide - Get Fills]
 
 [Address]: /types/address
 [SubaccountNumber]: /types/subaccount_number
-[OK]: https://datatracker.ietf.org/doc/html/rfc7231#section-6.3.1
+[OK]: /types/ok
 [Ticker]: /types/ticker
 [MarketType]: /types/market_type
 [u32]: /types/u32

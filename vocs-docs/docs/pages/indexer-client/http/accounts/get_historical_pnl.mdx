@@ -58,10 +58,10 @@ pub async fn get_historical_pnl(
 | `address`                     | query    | [Address]          | true       | The wallet address that owns the account.                                                    |
 | `subaccount_number`           | query    | [SubaccountNumber] | true       | The identifier for the specific subaccount within the wallet address.                        |
 | `limit`                       | query    | [u32]              | false      | Maximum number of asset positions to return in the response.                                 |
-| `createdBeforeOrAtHeight`     | query    | [Height]           | false      | Restricts results to positions created at or before a specific blockchain height.            |
-| `createdBeforeOrAt`           | query    | [DateTime in UTC]  | false      | Restricts results to positions created at or before a specific timestamp (ISO 8601 format).  |
-| `createdOnOrAfterHeight`      | query    | [Height]           | false      | Restricts results to positions created on or after a specific blockchain height.             |
-| `createdOnOrAfter`            | query    | [DateTime in UTC]  | false      | Restricts results to positions created on or after a specific timestamp (ISO 8601 format).   |
+| `createdBeforeOrAtHeight`     | query    | [Height]           | false      | Filters results to positions created at or before a specific blockchain height.            |
+| `createdBeforeOrAt`           | query    | [DateTime in UTC]  | false      | Filters results to positions created at or before a specific timestamp (ISO 8601 format).  |
+| `createdOnOrAfterHeight`      | query    | [Height]           | false      | Filters results to positions created on or after a specific blockchain height.             |
+| `createdOnOrAfter`            | query    | [DateTime in UTC]  | false      | Filters results to positions created on or after a specific timestamp (ISO 8601 format).   |
 | `page`                        | query    | [u32]              | false      | The page number for paginated results.                                                       |
 
 #### Response

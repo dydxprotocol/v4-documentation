@@ -4,7 +4,7 @@ Staking rewards are designed to reward `Validators` and `Stakers` (=Delegators).
 
 The protocol uses the [CosmosSDK’s x/distribution module](https://docs.cosmos.network/main/build/modules/distribution) to allocate the accrued trading and gas fees to `Validators` and `Stakers`.
 
-![Staking Rewards](https://raw.githubusercontent.com/dydxprotocol/v4-documentation/refs/heads/main/artifacts/staking_rewards.png)
+![Staking Rewards](/staking_rewards.png)
 
 All trading fees (`USDC`) and gas fees (`USDC` and `NATIVE_TOKEN`) collected by the protocol are accrued and distributed within a block. Specifically — for each block, the fees generated are collected in `fee_collector` module account and then sent to the `distribution` module account in the following block. Then, the `community_tax` and `validator_commission` are subtracted from the collected pool and the resulting amount will be distributed to `Validators` and `Stakers` in accordance with their staked token amount.
 
