@@ -201,6 +201,10 @@ export default defineConfig({
                                     link: '/concepts/trading/accounts',
                                 },
                                 {
+                                    text: 'Isolated Positions',
+                                    link: '/concepts/trading/isolated-positions',
+                                },
+                                {
                                     text: 'Permissioned Keys',
                                     link: '/concepts/trading/authenticators',
                                 },

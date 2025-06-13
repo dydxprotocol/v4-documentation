@@ -1,21 +1,26 @@
 # SubaccountResponseObject
 
+`assetPositions`: [AssetPositionsMap]
+
 `address`: [Address]
 
-`subaccount_number`: [SubaccountNumber]
+`subaccountNumber`: [SubaccountNumber]
 
 `equity`: [BigDecimal]
 
-`free_collateral`: [BigDecimal]
+`freeCollateral`: [BigDecimal]
 
-`margin_enabled`: bool
+`latestProcessedBlockHeight`: [Height]
 
-`asset_positions`: [AssetPositionsMap]
+`marginEnabled`: bool
 
-`open_perpetual_positions`: [PerpetualPositionsMap]
+`openPerpetualPositions`: [PerpetualPositionsMap]
+
+`updatedAtHeight`: [Height]
 
 [Address]: /types/address
 [SubaccountNumber]: /types/subaccount_number
 [BigDecimal]: /types/big_decimal
 [AssetPositionsMap]: /types/asset_positions_map
 [PerpetualPositionsMap]: /types/perpetual_positions_map
+[Height]: /types/height

@@ -47,19 +47,19 @@ pub async fn deposit(
 
 #### Parameters
 
-| Parameter              | Location | Type           | Required | Description                                                  |
-| ---------------------- | -------- | -------------- | -------- | ------------------------------------------------------------ |
-| `wallet`               | query    | [Wallet]       | true     | The wallet to use for signing the transaction.               |
-| `sender`               | query    | string         | true     | The sender address.                                          |
-| `recipient_subaccount` | query    | [SubaccountId] | true     | The recipient subaccount ID.                                 |
-| `asset_id`             | query    | int            | true     | The asset ID.                                                |
-| `quantums`             | query    | int            | true     | The amount of quantums to deposit. [See more about quantums] |
+| Parameter                 | Location  | Type              | Required  | Description                                                       |
+| ------------------------- | --------- | ----------------- | --------- | ----------------------------------------------------------------- |
+| `wallet`                  | query     | [Wallet]          | true      | The wallet to use for signing the transaction.                    |
+| `sender`                  | query     | string            | true      | The sender address.                                               |
+| `recipient_subaccount`    | query     | [SubaccountId]    | true      | The recipient subaccount ID.                                      |
+| `asset_id`                | query     | [AssetId]         | true      | The asset ID.                                                     |
+| `quantums`                | query     | int               | true      | The amount of quantums to deposit. [See more about quantums]      |
 
 #### Response
 
-| Status | Meaning       | Schema   |
+| Status | Meaning       | Schema   | Description                           |              
 | ------ | ------------- | -------- | ------------------------------------- |
-| `200`  | [OK]          | [TxHash] |
+| `200`  | [OK]          | [TxHash] |                                       |
 | `400`  | [Bad Request] |          | The request was malformed or invalid. |
 | `404`  | [Not Found]   |          | The subaccount was not found.         |
 
@@ -70,3 +70,4 @@ pub async fn deposit(
 [See more about quantums]: ../../concepts/trading/quantums#quantums
 [Bad Request]: /types/bad-request
 [Not Found]: /types/not-found
+[AssetId]: /types/asset_id_node
