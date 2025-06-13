@@ -1,0 +1,61 @@
+### Withdraw from MegaVault
+
+Withdraw funds (USDC) from the subaccount to the address.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+export async function withdrawFromMegavault(
+  subaccountNumber: number,
+  shares: number,
+  minAmount: number
+): Promise<string>;
+```
+
+```rust [Rust]
+pub async fn withdraw(
+    &mut self,
+    account: &mut Account,
+    subaccount: Subaccount,
+    min_amount: impl Into<Usdc>,
+    shares: Option<&BigInt>,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter    | Location | Type             | Description                |
+| ------------ | -------- | ---------------- | -------------------------- |
+| `account`    | query    | [Account]        | Owner's account            |
+| `subaccount` | query    | [SubaccountInfo] | Subaccount information     |
+| `min_amount` | query    | int              | Minimum amount to withdraw |
+| `shares`     | query    | BigInt           | Number of shares           |
+
+#### Response
+
+| Status | Meaning       | Schema   | Description                           |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] | The transaction hash.                 |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The subaccount was not found.         |
+
+[Account]: /types/account
+[SubaccountInfo]: /types/subaccount_info
+[TxHash]: /types/tx_hash
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

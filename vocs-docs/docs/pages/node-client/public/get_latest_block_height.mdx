@@ -1,0 +1,39 @@
+### Get Latest Block Height
+
+Retrieves the most recent block height from a blockchain network.
+Internally it uses the [`Get Latest Block`](#get-latest-block) API call.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def latest_block_height(self) -> int
+```
+
+```typescript [TypeScript]
+async latestBlockHeight(): Promise<number>
+```
+
+```rust [Rust]
+pub async fn get_latest_block_height(&mut self) -> Result<Height, Error>
+```
+
+:::
+
+#### Parameters
+
+#### Response
+
+| Status | Meaning       | Schema   | Description                           |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [Height] | The latest block height.              |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+
+Examples: [Python] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L44
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L56
+[OK]: /types/ok
+[Height]: /types/height
+[Bad Request]: /types/bad-request

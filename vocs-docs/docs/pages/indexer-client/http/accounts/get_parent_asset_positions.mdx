@@ -1,0 +1,57 @@
+import { Button } from 'vocs/components'
+
+### Get Parent Asset Positions
+
+Query for asset positions (size, buy/sell etc) for a parent subaccount.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+
+```
+
+```rust [Rust]
+pub async fn get_parent_asset_positions(
+    &self,
+    subaccount: &ParentSubaccount,
+) -> Result<Vec<AssetPositionResponseObject>, Error>
+```
+
+```url [API]
+/v4/assetPositions/parentSubaccountNumber
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                     | Location  | Type               | Required | Description                                                           |
+| ------------------------------| --------- | ------------------ | -------- | --------------------------------------------------------------------- |
+| `address`                     | query     | [Address]          | true     | The wallet address that owns the account.                             |
+| `parentSubaccountNumber`      | query     | [SubaccountNumber] | true     | The parent subaccount number of this wallet                           |
+
+#### Response
+
+| Status | Meaning       | Schema                          | Description                           |
+| ------ | ------------- | ------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [AssetPositionResponseObject] ⛁ | The asset positions data.             |
+| `400`  | [Bad Request] |                                 | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                                 | The parent subaccount was not found.  |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/assetPositions/parentSubaccountNumber?address=dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art&parentSubaccountNumber=0">API Example</Button>
+
+[Address]: /types/address
+[SubaccountNumber]: /types/subaccount_number
+[AssetPositionResponseObject]: /types/asset_position_response_object
+[OK]: /types/ok
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

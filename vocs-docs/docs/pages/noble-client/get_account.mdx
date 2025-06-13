@@ -1,0 +1,33 @@
+### Get account
+
+Query for [an account](https://github.com/cosmos/cosmos-sdk/tree/main/x/auth#account-1) by it's address.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_account(self, address: str) -> BaseAccount
+```
+
+```rust [Rust]
+pub async fn get_account(&mut self, address: &Address) -> Result<BaseAccount, Error>
+```
+
+```typescript [TypeScript]
+```
+
+```url [API]
+```
+
+:::
+
+#### Parameters
+
+
+#### Response
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]:https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/basic_adder.py#L159
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/wallet.rs#L89

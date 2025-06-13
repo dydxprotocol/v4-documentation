@@ -1,0 +1,55 @@
+import BatchedArray from '../../../components/BatchedArray';
+
+### Markets
+
+Data feed of all dYdX markets. Data contains updates to all markets, including market parameters and oracle prices.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+# class `Markets`
+def subscribe(self, batched: bool = True) -> Self
+def unsubscribe(self)
+```
+
+```typescript [TypeScript]
+// class `IndexerSocket`
+subscribeToMarkets(): void
+unsubscribeFromMarkets(): void
+```
+
+```rust [Rust]
+// struct `Feeds`
+pub async fn markets(
+    &mut self,
+    batched: bool,
+) -> Result<Feed<MarketsMessage>, FeedError>
+// The stream is unsubscribed when the `Feed` object is dropped
+```
+
+```url [Channel]
+v4_markets
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Schema
+
+The field `id` is not employed in the subscribe/unsubscribe schemas.
+
+The field `contents` is serialized using the following schemas.
+
+##### Messages
+
+| Initial | Update     | 
+| ------ | ----------- | 
+| [`MarketsInitialMessage`] | [`MarketsUpdateMessage`] <BatchedArray/> |
+
+
+[`MarketsInitialMessage`]: /types/markets_initial_message
+[`MarketsUpdateMessage`]: /types/markets_update_message

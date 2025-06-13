@@ -1,0 +1,50 @@
+### Get All Gov Proposals
+
+Get all gov proposals.
+
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+```
+
+```rust [Rust]
+```
+
+```typescript [TypeScript]
+async getAllGovProposals(
+    proposalStatus: ProposalStatus = ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD,
+    voter: string = '',
+    depositor: string = '',
+): Promise<GovV1Module.QueryProposalsResponse> 
+```
+
+```url
+/cosmos.gov.v1.Query/Proposals
+```
+
+:::
+
+#### Parameters
+
+| Parameter         | Location  | Type              | Mandatory | Description                           |
+| ----------------- | --------- | ----------------- | --------- | ------------------------------------- |
+| proposalStatus    | Query     | [ProposalStatus]  | true      | Status of the proposal to filter by.  |
+| voter             | Query     | string            | false     | Voter to filter by                    |
+| depositor         | Query     | string            | false     | Depositor to filter by.               |
+
+#### Response
+
+| Status    | Meaning   | Schema                                |
+| --------- | --------- | ------------------------------------- |
+| `200`     | [OK]      | [GovV1Module.QueryProposalsResponse]  |
+
+Examples: [API]
+
+[API]: https://test-dydx-rest.kingnodes.com/cosmos/gov/v1/proposals?proposalStatus=0
+
+[ProposalStatus]: /types/cosmos
+[OK]: /types/ok
+[GovV1Module.QueryProposalsResponse]: /types/cosmos

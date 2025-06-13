@@ -1,0 +1,86 @@
+import { Button } from 'vocs/components';
+
+### List Positions
+
+Retrieves perpetual positions for a specific subaccount. Both open and closed/historical positions can be queried.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_subaccount_perpetual_positions(
+    self,
+    address: str,
+    subaccount_number: int,
+    status: Optional[PositionStatus] = None,
+    limit: Optional[int] = None,
+    created_before_or_at_height: Optional[int] = None,
+    created_before_or_at: Optional[str] = None,
+) -> Any
+```
+
+```typescript [TypeScript]
+async getSubaccountPerpetualPositions(
+    address: string,
+    subaccountNumber: number,
+    status?: PositionStatus | null,
+    limit?: number | null,
+    createdBeforeOrAtHeight?: number | null,
+    createdBeforeOrAt?: string | null,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn list_positions(
+    &self,
+    subaccount: &Subaccount,
+    opts: Option<ListPositionsOpts>,
+) -> Result<Vec<PerpetualPositionResponseObject>, Error>
+```
+
+```url [API]
+/v4/perpetualPositions
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                 | Location | Type                      | Required | Description                                                                                                                |
+| ------------------------- | -------- | ------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `address`                 | query    | [Address]                 | true     | The wallet address that owns the account.                                                                                  |
+| `subaccountNumber`        | query    | [SubaccountNumber]        | true     | The identifier for the specific subaccount within the wallet address.                                                      |
+| `status`                  | query    | [PerpetualPositionStatus] | false    | Filter to retrieve positions with a specific status. If not provided, all positions will be returned regardless of status. |
+| `limit`                   | query    | [u32]                     | false    | Maximum number of asset positions to return in the response.                                                               |
+| `createdBeforeOrAtHeight` | query    | [Height]                  | false    | Restricts results to positions created at or before a specific blockchain height.                                          |
+| `createdBeforeOrAt`       | query    | [DateTime]                | false    | Restricts results to positions created at or before a specific timestamp (ISO 8601 format).                                |
+
+#### Response
+
+| Status | Meaning       | Schema                              | Description                           |
+| ------ | ------------- | ----------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [PerpetualPositionResponseObject] ⛁ | The perpetual positions data.         |
+| `400`  | [Bad Request] |                                     | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                                     | The subaccount was not found.         |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/perpetualPositions?address=dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art&subaccountNumber=0">
+  API Example
+</Button>
+
+Examples: [Guide - List Positions]
+
+[Guide - List Positions]: ../../interaction/data#list-positions
+[Address]: /types/address
+[SubaccountNumber]: /types/subaccount_number
+[PerpetualPositionStatus]: /types/perpetual_position_status
+[OK]: /types/ok
+[PerpetualPositionResponseObject]: /types/perpetual_position_response_object
+[u32]: /types/u32
+[Height]: /types/height
+[DateTime]: /types/date_time
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

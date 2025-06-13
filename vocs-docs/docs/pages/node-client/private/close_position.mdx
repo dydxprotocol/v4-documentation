@@ -1,0 +1,67 @@
+### Close Position
+
+Close position for a given market.
+
+Opposite short-term market orders are used. If provided, the position is only reduced by a size of reduce_by. Note that at the moment dYdX doesn’t support spot trading.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+
+```
+
+```rust [Rust]
+pub async fn close_position(
+    &mut self,
+    account: &mut Account,
+    subaccount: Subaccount,
+    market_params: impl Into<OrderMarketParams>,
+    reduce_by: Option<BigDecimal>,
+    client_id: impl Into<ClientId>,
+) -> Result<Option<TxHash>, NodeError>
+```
+
+```url [API]
+
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter       | Location | Type                | Required | Description                                  |
+| --------------- | -------- | ------------------- | -------- | -------------------------------------------- |
+| `account`       | query    | [Account]           | true     | The wallet address that owns the subaccount. |
+| `subaccount`    | query    | [Subaccount]        | true     | Subaccount to close                          |
+| `market_params` | query    | [OrderMarketParams] | true     | Market parameters                            |
+| `reduced_by`    | query    | [BigDecimal]        | false    |                                              |
+| `client_id`     | query    | [ClientId]          | true     |                                              |
+
+#### Response
+
+| Status | Meaning       | Schema   |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The subaccount was not found.         |
+
+Examples: [Rust]
+
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/close_position.rs
+[Account]: /types/account
+[Subaccount]: /types/subaccount
+[OrderMarketParams]: /types/order_market_params
+[BigDecimal]: /types/big_decimal
+[ClientId]: /types/client_id
+[TxHash]: /types/tx_hash
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

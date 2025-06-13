@@ -1,0 +1,59 @@
+### Get Clob Pairs
+
+Obtain a comprehensive list of all available order book trading pairs.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_clob_pairs(self) -> QueryClobPairAllResponse
+```
+
+```typescript [TypeScript]
+async getAllClobPairs(): Promise<ClobModule.QueryClobPairAllResponse>
+```
+
+```rust [Rust]
+pub async fn get_clob_pairs(
+    &mut self,
+    pagination: Option<V4PageRequest>,
+) -> Result<Vec<ClobPair>, Error>
+```
+
+```url [API]
+/dydxprotocol.clob.Query/ClobPairAll
+```
+
+:::
+
+:::details[Unification Plan]
+
+- Python and TypeScript don't contain options
+  :::
+
+#### Parameters
+
+| Parameter    | Location | Type          | Required | Description               |
+| ------------ | -------- | ------------- | -------- | ------------------------- |
+| `pagination` | query    | [PageRequest] | false    | Parameters of pagination. |
+
+#### Response
+
+| Status | Meaning       | Schema       | Description                             |
+| ------ | ------------- | ------------ | --------------------------------------- |
+| `200`  | [OK]          | [ClobPair] ⛁ | The response containing all clob pairs. |
+| `400`  | [Bad Request] |              | The request was malformed or invalid.   |
+
+Examples: [Python] | [TypeScript] | [Rust] | [API]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L94
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L49
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L74
+[API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/clob/clob_pair
+[u8]: /types/u8
+[u64]: /types/u64
+[OK]: /types/ok
+[ClobPair]: /types/clob_pair
+[PageRequest]: /types/page_request
+[Bad Request]: /types/bad-request

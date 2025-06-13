@@ -1,0 +1,60 @@
+import { Button } from 'vocs/components';
+
+### Get Perpetual Market Orderbook
+
+Retrieves the orderbook for a specific perpetual market.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_perpetual_market_orderbook(
+    self,
+    market: str,
+) -> dict
+```
+
+```typescript [TypeScript]
+async getPerpetualMarketOrderbook(market: string): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_perpetual_market_orderbook(
+    &self,
+    ticker: &Ticker,
+) -> Result<OrderBookResponseObject, Error>
+```
+
+```url [API]
+/v4/orderbooks/perpetualMarket/{market}
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter | Location | Type     | Required | Description        |
+| --------- | -------- | -------- | -------- | ------------------ |
+| `market`  | path     | [Ticker] | true     | The market ticker. |
+
+#### Response
+
+| Status | Meaning       | Schema                      | Description                           |
+| ------ | ------------- | --------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [OrderBookResponseObject] ⛁ | The orderbook data.                   |
+| `400`  | [Bad Request] |                             | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                             | The market was not found.             |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/orderbooks/perpetualMarket/BTC-USD">
+  API Example
+</Button>
+
+[OK]: /types/ok
+[Ticker]: /types/ticker
+[OrderBookResponseObject]: /types/order_book_response_object
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

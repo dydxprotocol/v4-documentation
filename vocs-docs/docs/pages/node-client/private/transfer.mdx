@@ -1,0 +1,79 @@
+### Transfer
+
+Transfer funds (USDC) between subaccounts.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def transfer(
+    self,
+    wallet: Wallet,
+    sender_subaccount: SubaccountId,
+    recipient_subaccount: SubaccountId,
+    asset_id: int,
+    amount: int,
+)
+```
+
+```typescript [TypeScript]
+async transfer(
+  subaccount: SubaccountInfo,
+  recipientAddress: string,
+  recipientSubaccountNumber: number,
+  assetId: number,
+  amount: Long,
+  broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [Rust]
+pub async fn transfer(
+    &mut self,
+    account: &mut Account,
+    sender: Subaccount,
+    recipient: Subaccount,
+    amount: impl Into<Usdc>,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+/dydxprotocol.sending.Msg/CreateTransfer
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                 | Location  | Type              | Required  | Description                                       |
+| ------------------------- | --------- | ----------------- | --------- | ------------------------------------------------- |
+| `wallet`                  | query     | [Wallet]          | true      | The wallet to use for signing the transaction.    |
+| `sender_subaccount`       | query     | [SubaccountId]    | true      | The sender subaccount ID.                         |
+| `recipient_subaccount`    | query     | [SubaccountId]    | true      | The recipient subaccount ID.                      |
+| `asset_id`                | query     | [AssetId]         | true      | The asset ID.                                     |
+| `amount`                  | query     | int               | true      | The amount to transfer i USDC                     |
+
+#### Response
+
+| Status | Meaning       | Schema   | Description                           |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] | The transaction hash.                 |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The subaccount was not found.         |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-py-v2/examples/transfer_example_transfer.py
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/transfer_example_subaccount_transfer.ts
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/transfer.rs
+[Wallet]: /types/wallet
+[SubaccountId]: /types/subaccount
+[AssetId]: /types/asset_id_node
+[OK]: /types/ok
+[TxHash]: /types/tx_hash
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found
