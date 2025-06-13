@@ -46,12 +46,16 @@ pub async fn get_order(
 
 #### Response
 
-| Status | Meaning     | Schema                  | Description     |
-| ------ | ----------- | ----------------------- | --------------- |
-| `200`  | [OK]        | [OrderResponseObject] ⛁ | The order data. |
+| Status | Meaning       | Schema                  | Description                           |
+| ------ | ------------- | ----------------------- | ------------------------------------- |
+| `200`  | [OK]          | [OrderResponseObject] ⛁ | The order data.                       |
+| `400`  | [Bad Request] |                         | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                         | The order was not found.              |
 
 <Button href="https://indexer.v4testnet.dydx.exchange/v4/orders/66390c15-ebad-53f8-86ad-99b3dfedbc85">API Example</Button>
 
 [OK]: /types/ok
 [OrderId]: /types/order_id
 [OrderResponseObject]: /types/order_response_object
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

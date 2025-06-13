@@ -27,6 +27,7 @@ pub async fn remove(
 ```
 
 ```url [API]
+
 ```
 
 :::
@@ -36,17 +37,18 @@ pub async fn remove(
 
 #### Parameters
 
-| Parameter             | Location  | Type      | Required  | Description                                                                   |
-| --------------------- | --------- | --------- | --------- | ----------------------------------------------------------------------------- |
-| `wallet`              | query     | [Wallet]  | true      | The wallet to use for signing the transaction or authenticating the request.  |
-| `authenticator_id`    | query     | int       | true      | The authenticator identifier.                                                 |
+| Parameter          | Location | Type     | Required | Description                                                                  |
+| ------------------ | -------- | -------- | -------- | ---------------------------------------------------------------------------- |
+| `wallet`           | query    | [Wallet] | true     | The wallet to use for signing the transaction or authenticating the request. |
+| `authenticator_id` | query    | int      | true     | The authenticator identifier.                                                |
 
 #### Response
 
-| Status | Meaning     | Schema   |
-| ------ | ----------- | -------- |
-| `200`  | [OK]        | [TxHash] |
-
+| Status | Meaning       | Schema   | Description                           |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] | The transaction hash.                 |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The authenticator was not found.      |
 
 Examples: [Python] | [TypeScript] | [Rust] | [Guide - Remove an Authenticator]
 
@@ -54,6 +56,7 @@ Examples: [Python] | [TypeScript] | [Rust] | [Guide - Remove an Authenticator]
 [TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/permissioned_keys_example.ts#L50
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/authenticator.rs#L146
 [Guide - Remove an Authenticator]: ../../interaction/permissioned-keys/remove-the-authenticator
-
 [Wallet]: /types/wallet
 [TxHash]: /types/tx_hash
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

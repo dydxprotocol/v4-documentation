@@ -7,6 +7,7 @@ Transfer a token asset between Cosmos blockchain networks.
 :::code-group
 
 ```python [Python]
+
 ```
 
 ```rust [Rust]
@@ -37,30 +38,31 @@ async send(
 :::
 
 :::details[Unification Plan]
+
 - Generalize to all IBC/blockchains.
 - Missing in Python.
 - Missing in TS: user required to produce the low-level message and then `post.send()` it.
-:::
+  :::
 
 #### Parameters
 
-| Parameter         | Location  | Type          | Mandatory | Description                       |
-| ----------------- | --------- | ------------- | --------- | --------------------------------- |
-| `account`         | query     | [Account]     | true      | The account.                      |
-| `sender`          | query     | [Address]     | true      | Address of the sender.            |
-| `recipient`       | query     | [Address]     | true      | Address of the recipient.         |
-| `token`           | query     | int           | true      | Token type and amount to transfer.|
-| `source_channel`  | query     | String        | true      | Source IBC relay channel.         |           
-
-
+| Parameter        | Location | Type      | Mandatory | Description                        |
+| ---------------- | -------- | --------- | --------- | ---------------------------------- |
+| `account`        | query    | [Account] | true      | The account.                       |
+| `sender`         | query    | [Address] | true      | Address of the sender.             |
+| `recipient`      | query    | [Address] | true      | Address of the recipient.          |
+| `token`          | query    | int       | true      | Token type and amount to transfer. |
+| `source_channel` | query    | String    | true      | Source IBC relay channel.          |
 
 #### Response
 
-| Status | Meaning     | Schema     |
-| ------ | ----------- | ---------- |
-| `200`  | [OK]        | [TxHash]   |
+| Status | Meaning       | Schema   |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
 
 [OK]: /types/ok
 [Account]: /types/account
 [Address]: /types/address
 [Tokenized]: /types/tokenized
+[Bad Request]: /types/bad-request

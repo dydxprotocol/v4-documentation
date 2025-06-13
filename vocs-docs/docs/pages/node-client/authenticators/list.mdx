@@ -43,9 +43,10 @@ pub async fn list(
 
 #### Response
 
-| Status | Meaning     | Schema                          |
-| ------ | ----------- | ------------------------------- |
-| `200`  | [OK]        | [AccountAuthenticator] ⛁        |
+| Status | Meaning       | Schema                          | Description                           |
+| ------ | ------------- | ------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [AccountAuthenticator] ⛁        | The account authenticators.           |
+| `400`  | [Bad Request] |                                 | The request was malformed or invalid. |
 
 Examples: [Python] | [TypeScript] | [Rust] | [Guide - List Authenticators]
 
@@ -57,3 +58,4 @@ Examples: [Python] | [TypeScript] | [Rust] | [Guide - List Authenticators]
 [Address]: /types/address
 [OK]: /types/ok
 [AccountAuthenticator]: /types/account_authenticator
+[Bad Request]: /types/bad-request

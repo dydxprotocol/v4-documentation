@@ -22,6 +22,7 @@ pub async fn query_address(
 ```
 
 ```url [API]
+
 ```
 
 :::
@@ -31,12 +32,16 @@ pub async fn query_address(
 
 #### Parameters
 
-| Parameter           | Location | Type               | Description                                                           |
-| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
-| `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
+| Parameter | Location | Type      | Description                               |
+| --------- | -------- | --------- | ----------------------------------------- |
+| `address` | query    | [Address] | The wallet address that owns the account. |
 
 #### Response
 
-| Status | Meaning     | Schema                         |
-| ------ | ----------- | ------------------------------ |
-| `200`  | [OK]        | Pair of ([u64], [u64])         |
+| Status | Meaning       | Schema                 | Description                           |
+| ------ | ------------- | ---------------------- | ------------------------------------- |
+| `200`  | [OK]          | Pair of ([u64], [u64]) | The response containing the account.  |
+| `400`  | [Bad Request] |                        | The request was malformed or invalid. |
+
+[OK]: /types/ok
+[Bad Request]: /types/bad-request

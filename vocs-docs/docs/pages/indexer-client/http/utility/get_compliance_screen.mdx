@@ -1,4 +1,4 @@
-import { Button } from 'vocs/components'
+import { Button } from 'vocs/components';
 
 ### Get Compliance Screen
 
@@ -9,9 +9,11 @@ Screen an address to see if it is restricted.
 :::code-group
 
 ```python [Python]
+
 ```
 
 ```rust [Rust]
+
 ```
 
 ```typescript [TypeScript]
@@ -30,17 +32,20 @@ Implement Python and rust method
 
 #### Parameters
 
-| Parameter | Location  |  Type     | Required  | Description           |
-| --------- | --------- | --------- | --------- | --------------------- |
-| address   | Path      | string    | true      | evm or dydx address   |
+| Parameter | Location | Type   | Required | Description         |
+| --------- | -------- | ------ | -------- | ------------------- |
+| address   | Path     | string | true     | evm or dydx address |
 
 #### Response
 
-| Status | Meaning     | Schema                 | Description                                   |
-| ------ | ----------- | ---------------------- | --------------------------------------------- |
-| `200`  | [OK]        | [ComplianceV2Response] | whether the specified address is restricted   |
+| Status | Meaning       | Schema                 | Description                                 |
+| ------ | ------------- | ---------------------- | ------------------------------------------- |
+| `200`  | [OK]          | [ComplianceV2Response] | whether the specified address is restricted |
+| `400`  | [Bad Request] |                        | The request was malformed or invalid.       |
 
-<Button href="https://indexer.v4testnet.dydx.exchange/v4/compliance/screen/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art">API Example</Button>
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/compliance/screen/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art">
+  API Example
+</Button>
 
 [OK]: /types/ok
 [ComplianceV2Response]: /types/compliance_v2_response

@@ -32,6 +32,7 @@ pub async fn add(
 ```
 
 ```url [API]
+
 ```
 
 :::
@@ -41,24 +42,25 @@ pub async fn add(
 
 #### Parameters
 
-| Parameter         | Location  | Type              | Required  | Description                                                                   |
-| ----------------- | --------- | ----------------- | --------- | ----------------------------------------------------------------------------- |
-| `wallet`          | query     | [Wallet]          | true      | The wallet to use for signing the transaction or authenticating the request.  |
-| `authenticator`   | query     | [Authenticator]   | true      | The authenticator to be added.                                                |
+| Parameter       | Location | Type            | Required | Description                                                                  |
+| --------------- | -------- | --------------- | -------- | ---------------------------------------------------------------------------- |
+| `wallet`        | query    | [Wallet]        | true     | The wallet to use for signing the transaction or authenticating the request. |
+| `authenticator` | query    | [Authenticator] | true     | The authenticator to be added.                                               |
 
 #### Response
 
-| Status | Meaning     | Schema   |
-| ------ | ----------- | -------- |
-| `200`  | [OK]        | [TxHash] |
+| Status | Meaning       | Schema   | Description                           |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] | The transaction hash.                 |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
 
-Examples: [Python] | [TypeScript] | [Rust] | [Guide  - Add an Authenticator]
+Examples: [Python] | [TypeScript] | [Rust] | [Guide - Add an Authenticator]
 
 [Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/authenticator_management.py#L53
 [TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/permissioned_keys_example.ts#L58
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/authenticator.rs#L79
-[Guide  - Add an Authenticator]: ../../interaction/permissioned-key#add-the-authenticator
-
+[Guide - Add an Authenticator]: ../../interaction/permissioned-key#add-the-authenticator
 [Wallet]: /types/wallet
 [Authenticator]: /types/authenticator
 [TxHash]: /types/tx_hash
+[Bad Request]: /types/bad-request

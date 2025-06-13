@@ -32,22 +32,25 @@ pub async fn get_perpetual(
 
 #### Parameters
 
-| Parameter | Location | Type   |Required   |  Description  |
-| --------- | -------- | ------ | --------- | ------------- |
-| `id`      | query    | [u32]  |true       | Perpetual ID  |
+| Parameter | Location | Type  | Required | Description  |
+| --------- | -------- | ----- | -------- | ------------ |
+| `id`      | query    | [u32] | true     | Perpetual ID |
 
 #### Response
 
-| Status | Meaning     | Schema         |
-| ------ | ----------- | -------------  |
-| `200`  | [OK]        | [Perpetual]    |
+| Status | Meaning       | Schema      |
+| ------ | ------------- | ----------- | ------------------------------------- |
+| `200`  | [OK]          | [Perpetual] |
+| `400`  | [Bad Request] |             | The request was malformed or invalid. |
+| `404`  | [Not Found]   |             | The perpetual was not found.          |
 
 Examples: [Python] | [Rust] | [API]
 
 [Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L118
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L83
 [API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/perpetuals/perpetual/1
-
 [u32]: /types/u32
 [OK]: /types/ok
 [Perpetual]: /types/perpetual
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

@@ -43,31 +43,33 @@ pub async fn batch_cancel_orders(
 :::
 
 :::details[Unification Plan]
+
 - `TxOptions` is not available in Rust
-:::
+  :::
 
 #### Parameters
 
-| Parameter             | Location  | Type           | Required  | Description                                                           |
-| --------------------- | --------- | -------------- | --------- | --------------------------------------------------------------------- |
-| `wallet`              | query     | [Wallet]       | true      | The wallet to use for signing the transaction.                        |
-| `subaccount_id`       | query     | [SubaccountId] | true      | The subaccount ID for which to cancel orders.                         |
-| `short_term_cancels`  | query     | [OrderBatch] ⛁ | true      | List of OrderBatch objects containing the orders to cancel.           |
-| `good_til_block`      | query     | [Height]       | true      | The last block the short term order cancellations can be executed at. |
-| `tx_options`          | query     | [TxOptions]    | false     | Options for transaction to support authenticators.                    |
+| Parameter            | Location | Type           | Required | Description                                                           |
+| -------------------- | -------- | -------------- | -------- | --------------------------------------------------------------------- |
+| `wallet`             | query    | [Wallet]       | true     | The wallet to use for signing the transaction.                        |
+| `subaccount_id`      | query    | [SubaccountId] | true     | The subaccount ID for which to cancel orders.                         |
+| `short_term_cancels` | query    | [OrderBatch] ⛁ | true     | List of OrderBatch objects containing the orders to cancel.           |
+| `good_til_block`     | query    | [Height]       | true     | The last block the short term order cancellations can be executed at. |
+| `tx_options`         | query    | [TxOptions]    | false    | Options for transaction to support authenticators.                    |
 
 #### Response
 
-| Status | Meaning     | Schema   |
-| ------ | ----------- | -------- |
-| `200`  | [OK]        | [TxHash] |
+| Status | Meaning       | Schema   |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The subaccount was not found.         |
 
 Examples: [Python] | [TypeScript] | [Rust]
 
 [Python]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-py-v2/examples/batch_cancel_example.py
 [TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/batch_cancel_orders_example.ts
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/batch_cancel_orders.rs
-
 [Wallet]: /types/wallet
 [OK]: /types/ok
 [SubaccountId]: /types/subaccount_id
@@ -75,3 +77,5 @@ Examples: [Python] | [TypeScript] | [Rust]
 [TxOptions]: /types/tx_options
 [Height]: /types/height
 [String]: /types/string
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

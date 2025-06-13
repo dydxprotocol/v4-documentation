@@ -41,9 +41,11 @@ pub async fn get_parent_asset_positions(
 
 #### Response
 
-| Status | Meaning     | Schema                          |
-| ------ | ----------- | ------------------------------- |
-| `200`  | [OK]        | [AssetPositionResponseObject] ⛁ |
+| Status | Meaning       | Schema                          | Description                           |
+| ------ | ------------- | ------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [AssetPositionResponseObject] ⛁ | The asset positions data.             |
+| `400`  | [Bad Request] |                                 | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                                 | The parent subaccount was not found.  |
 
 <Button href="https://indexer.v4testnet.dydx.exchange/v4/assetPositions/parentSubaccountNumber?address=dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art&parentSubaccountNumber=0">API Example</Button>
 
@@ -51,3 +53,5 @@ pub async fn get_parent_asset_positions(
 [SubaccountNumber]: /types/subaccount_number
 [AssetPositionResponseObject]: /types/asset_position_response_object
 [OK]: /types/ok
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

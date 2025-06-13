@@ -49,9 +49,10 @@ pub async fn get_subaccounts(
 
 #### Response
 
-| Status | Meaning     | Schema                          | Description           |
-| ------ | ----------- | ------------------------------- | --------------------- |
-| `200`  | [OK]        | [AddressResponse]               | The subaccounts data. |
+| Status | Meaning       | Schema                          | Description                           |
+| ------ | ------------- | ------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [AddressResponse]               | The subaccounts data.                 |
+| `400`  | [Bad Request] |                                 | The request was malformed or invalid. |
 
 <Button href="https://indexer.v4testnet.dydx.exchange/v4/addresses/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art">API Example</Button>
 
@@ -59,3 +60,4 @@ pub async fn get_subaccounts(
 [OK]: /types/ok
 [AddressResponse]: /types/address_response
 [u32]: /types/u32
+[Bad Request]: /types/bad-request

@@ -30,6 +30,7 @@ pub async fn create_market_permissionless(
 ```
 
 ```url [API]
+
 ```
 
 :::
@@ -39,20 +40,24 @@ pub async fn create_market_permissionless(
 
 #### Parameters
 
-| Parameter         | Location  | Type              | Description                   |
-| ----------------- | --------- | ----------------- | ----------------------------- |
-| `account`         | query     | [Account]         | Account information           |
-| `ticker`          | query     | [Ticker]          | Ticker information            | 
-| `subaccount`      | query     | [SubaccountInfo]  | Subaccount information        |
+| Parameter    | Location | Type             | Description            |
+| ------------ | -------- | ---------------- | ---------------------- |
+| `account`    | query    | [Account]        | Account information    |
+| `ticker`     | query    | [Ticker]         | Ticker information     |
+| `subaccount` | query    | [SubaccountInfo] | Subaccount information |
 
 #### Response
 
-| Status | Meaning     | Schema     |
-| ------ | ----------- | ---------  |
-| `200`  | [OK]        | [TxHash]   |
+| Status | Meaning       | Schema   |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The subaccount was not found.         |
 
 [Account]: /types/account
 [Ticker]: /types/ticker
 [SubaccountInfo]: /types/subaccount_info
 [OK]: /types/ok
 [TxHash]: /types/tx_hash
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

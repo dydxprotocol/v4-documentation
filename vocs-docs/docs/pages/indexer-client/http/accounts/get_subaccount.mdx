@@ -48,9 +48,11 @@ pub async fn get_subaccount(
 
 #### Response
 
-| Status | Meaning     | Schema                          | Description          |
-| ------ | ----------- | ------------------------------- | -------------------- |
-| `200`  | [OK]        | [SubaccountResponseObject]      | The subaccount data. |
+| Status | Meaning       | Schema                          | Description                           |
+| ------ | ------------- | ------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [SubaccountResponseObject] ⛁    | The subaccount data.                  |
+| `400`  | [Bad Request] |                                 | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                                 | The subaccount was not found.         |
 
 <Button href="https://indexer.v4testnet.dydx.exchange/v4/addresses/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art/subaccountNumber/0">API Example</Button>
 
@@ -58,3 +60,5 @@ pub async fn get_subaccount(
 [SubaccountNumber]: /types/subaccount_number
 [OK]: /types/ok
 [SubaccountResponseObject]: /types/subaccount_response_object
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

@@ -65,8 +65,9 @@ pub async fn send_token(
 #### Response
 
 | Status | Meaning     | Schema   |
-| ------ | ----------- | -------- |
-| `200`  | [OK]        | [TxHash] |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
 
 Examples: [Rust]
 
@@ -77,3 +78,4 @@ Examples: [Rust]
 [String]: /types/string
 [i32]: /types/i32
 [OK]: /types/ok
+[Bad Request]: /types/bad-request

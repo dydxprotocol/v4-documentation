@@ -1,4 +1,4 @@
-import { Button } from 'vocs/components'
+import { Button } from 'vocs/components';
 
 ### Get Historical Funding
 
@@ -46,20 +46,24 @@ pub async fn get_historical_funding(
 
 #### Parameters
 
-| Parameter                         | Location  | Type          | Required  | Description                                                           |
-| --------------------------------- | --------- | ------------- | --------- | --------------------------------------------------------------------- |
-| `market`                          | path      | [Ticker]      | true      | The market ticker.                                                    |
-| `limit`                           | query     | [u32]         | false     | The maximum number of funding rates to retrieve.                      |
-| `effectiveBeforeOrAt`             | query     | [DateTime]    | false     | The timestamp to retrieve funding rates effective before or at.       |
-| `effectiveBeforeOrAtHeight`       | query     | [Height]      | false     | The block height to retrieve funding rates effective before or at.    |
+| Parameter                   | Location | Type       | Required | Description                                                        |
+| --------------------------- | -------- | ---------- | -------- | ------------------------------------------------------------------ |
+| `market`                    | path     | [Ticker]   | true     | The market ticker.                                                 |
+| `limit`                     | query    | [u32]      | false    | The maximum number of funding rates to retrieve.                   |
+| `effectiveBeforeOrAt`       | query    | [DateTime] | false    | The timestamp to retrieve funding rates effective before or at.    |
+| `effectiveBeforeOrAtHeight` | query    | [Height]   | false    | The block height to retrieve funding rates effective before or at. |
 
 #### Response
 
-| Status | Meaning     | Schema                              | Description                        |
-| ------ | ----------- | ----------------------------------- | ---------------------------------- |
-| `200`  | [OK]        | [HistoricalFundingResponseObject] ⛁ | The historical funding rates data. |
+| Status | Meaning       | Schema                              | Description                           |
+| ------ | ------------- | ----------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [HistoricalFundingResponseObject] ⛁ | The historical funding rates data.    |
+| `400`  | [Bad Request] |                                     | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                                     | The market was not found.             |
 
-<Button href="https://indexer.v4testnet.dydx.exchange/v4/historicalFunding/BTC-USD">API Example</Button>
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/historicalFunding/BTC-USD">
+  API Example
+</Button>
 
 [Ticker]: /types/ticker
 [OK]: /types/ok
@@ -67,3 +71,5 @@ pub async fn get_historical_funding(
 [Height]: /types/height
 [DateTime]: /types/date_time
 [HistoricalFundingResponseObject]: /types/historical_funding_response_object
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

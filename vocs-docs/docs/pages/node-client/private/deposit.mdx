@@ -57,13 +57,17 @@ pub async fn deposit(
 
 #### Response
 
-| Status | Meaning     | Schema   |
-| ------ | ----------- | -------- |
-| `200`  | [OK]        | [TxHash] |
+| Status | Meaning       | Schema   | Description                           |              
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] |                                       |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The subaccount was not found.         |
 
 [Wallet]: /types/wallet
 [SubaccountId]: /types/Subaccount_id
 [OK]: /types/ok
 [TxHash]: /types/tx_hash
-[AssetId]: /types/asset_id_node
 [See more about quantums]: ../../concepts/trading/quantums#quantums
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found
+[AssetId]: /types/asset_id_node

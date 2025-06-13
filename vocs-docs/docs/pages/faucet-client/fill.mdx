@@ -45,11 +45,11 @@ public async fill(
 
 #### Response
 
-| Status | Meaning     | Schema                         | Description                                   |
-| ------ | ----------- | ------------------------------ | --------------------------------------------- |
-| `200`  | [OK]        |                                | The response                                  |
-
-Examples: [Python] | [TypeScript]
+| Status | Meaning       | Schema                       | Description                                   |
+| ------ | ------------- | ---------------------------- | --------------------------------------------- |
+| `200`  | [OK]          |                              | The response                                  |
+| `400`  | [Bad Request] |                              | The request was malformed or invalid          |
+| `404`  | [Not Found]   |                              | The subaccount was not found.                 |
 
 [Python]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-py-v2/examples/faucet_endpoint.py
 [TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/faucet_endpoint.ts
@@ -58,3 +58,5 @@ Examples: [Python] | [TypeScript]
 [SubaccountNumber]: /types/subaccount_number
 [BigDecimal]: /types/big_decimal
 [OK]: /types/ok
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

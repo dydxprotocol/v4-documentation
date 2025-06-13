@@ -47,30 +47,33 @@ pub async fn place_order(
 ```
 
 ```url [API]
+
 ```
 
 :::
 
 :::details[Unification Plan]
+
 - Use a convenient `Wallet` and `Order` pair for all clients
 - TypeScript doesn't use authenticators
 - In Python we use them explicitly
 - Consider to do the same like in Rust (set it automatically)
-:::
+  :::
 
 #### Parameters
 
-| Parameter     | Location  | Type          | Required  | Description                                           |
-| ------------- | --------- | ------------- | --------- | ----------------------------------------------------- |
-| `wallet`      | query     | [Wallet]      | true      | The wallet to use for signing the transaction.        |
-| `order`       | query     | [Order]       | true      | The order to place.                                   |
-| `tx_options`  | query     | [TxOptions]   | false     | Options for transaction to support authenticators.    |
+| Parameter    | Location | Type        | Required | Description                                        |
+| ------------ | -------- | ----------- | -------- | -------------------------------------------------- |
+| `wallet`     | query    | [Wallet]    | true     | The wallet to use for signing the transaction.     |
+| `order`      | query    | [Order]     | true     | The order to place.                                |
+| `tx_options` | query    | [TxOptions] | false    | Options for transaction to support authenticators. |
 
 #### Response
 
-| Status | Meaning     | Schema   |
-| ------ | ----------- | -------- |
-| `200`  | [OK]        | [TxHash] |
+| Status | Meaning       | Schema   |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
 
 Examples: [Python] | [TypeScript] | [Rust] | [Guide - Place an order]
 
@@ -78,9 +81,9 @@ Examples: [Python] | [TypeScript] | [Rust] | [Guide - Place an order]
 [TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/short_term_order_composite_example.ts
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/place_order_short_term.rs
 [Guide - Place an order]: ../../interaction/trading#place-an-order
-
 [Wallet]: /types/wallet
 [OK]: /types/ok
 [Order]: /types/order
 [TxHash]: /types/tx_hash
 [TxOptions]: /types/tx_options
+[Bad Request]: /types/bad-request
