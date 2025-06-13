@@ -36,9 +36,10 @@ public async fillNative(address: string, headers?: {}): Promise<Response>
 
 #### Response
 
-| Status | Meaning     | Schema                         | Description                                   |
-| ------ | ----------- | ------------------------------ | --------------------------------------------- |
-| `200`  | [OK]        |                                | The response                                  |
+| Status | Meaning       | Schema                         | Description                                   |
+| ------ | ------------- | ------------------------------ | --------------------------------------------- |
+| `200`  | [OK]          |                                | The response                                  |
+| `400`  | [Bad Request] |                                | The request was malformed or invalid          |
 
 Examples: [Python]
 
@@ -46,5 +47,4 @@ Examples: [Python]
 
 [Address]: /types/address
 [OK]: /types/ok
-
-
+[Bad Request]: /types/bad-request

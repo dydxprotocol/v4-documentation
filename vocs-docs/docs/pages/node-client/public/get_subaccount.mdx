@@ -35,21 +35,24 @@ pub async fn get_subaccount(
 :::
 
 :::details[Unification Plan]
+
 - Rust uses `Subaccount` - a wrapper that combines `Address` with `SubaccountNumber`, it's safer to create the same type for Python and TypeScript
-:::
+  :::
 
 #### Parameters
 
-| Parameter           | Location | Type               | Required  | Description                                                             |
-| ------------------- | -------- | ------------------ | --------- | ----------------------------------------------------------------------- |
-| `owner`             | query    | [Address]          | true      | The wallet address that owns the account.                               |
-| `number`            | query    | [SubaccountNumber] | true      | The identifier for the specific subaccount withing the wallet address.  |
+| Parameter | Location | Type               | Required | Description                                                            |
+| --------- | -------- | ------------------ | -------- | ---------------------------------------------------------------------- |
+| `owner`   | query    | [Address]          | true     | The wallet address that owns the account.                              |
+| `number`  | query    | [SubaccountNumber] | true     | The identifier for the specific subaccount withing the wallet address. |
 
 #### Response
 
-| Status | Meaning | Schema           |
-| ------ | ------- | ---------------- |
-| `200`  | [OK]    | [SubaccountInfo] |
+| Status | Meaning       | Schema           | Description                             |
+| ------ | ------------- | ---------------- | --------------------------------------- |
+| `200`  | [OK]          | [SubaccountInfo] | The response containing the subaccount. |
+| `400`  | [Bad Request] |                  | The request was malformed or invalid.   |
+| `404`  | [Not Found]   |                  | The subaccount was not found.           |
 
 Examples: [Python] | [TypeScript] | [Rust] | [API] | [Guide - Get Subaccount]
 
@@ -58,8 +61,9 @@ Examples: [Python] | [TypeScript] | [Rust] | [API] | [Guide - Get Subaccount]
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L65
 [API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/subaccounts/subaccount/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art/0
 [Guide - Get Subaccount]: ../../interaction/asset-management#get-account-subaccount
-
 [Address]: /types/address
 [OK]: /types/ok
 [SubaccountNumber]: /types/subaccount_number
 [SubaccountInfo]: /types/subaccount_info
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

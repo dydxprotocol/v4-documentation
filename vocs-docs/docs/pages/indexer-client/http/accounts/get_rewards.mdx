@@ -53,9 +53,10 @@ pub async fn get_rewards(
 
 #### Response
 
-| Status | Meaning     | Schema                           | Description                                |
-| ------ | ----------- | -------------------------------- | ------------------------------------------ |
-| `200`  | [OK]        | [HistoricalBlockTradingReward] ⛁ | The historical block trading rewards data. |
+| Status | Meaning       | Schema                           | Description                                |
+| ------ | ------------- | -------------------------------- | ------------------------------------------ |
+| `200`  | [OK]          | [HistoricalBlockTradingReward] ⛁ | The historical block trading rewards data. |
+| `400`  | [Bad Request] |                                  | The request was malformed or invalid.      |
 
 <Button href="https://indexer.v4testnet.dydx.exchange/v4/historicalBlockTradingRewards/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art">API Example</Button>
 
@@ -65,3 +66,4 @@ pub async fn get_rewards(
 [HistoricalBlockTradingReward]: /types/get_historical_block_trading_reward
 [Height]: /types/height
 [DateTime in UTC]: /types/date_time
+[Bad Request]: /types/bad-request

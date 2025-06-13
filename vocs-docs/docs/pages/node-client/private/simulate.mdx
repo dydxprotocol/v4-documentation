@@ -27,33 +27,35 @@ pub async fn simulate(&mut self, tx_raw: &Raw) -> Result<GasInfo, NodeError>
 ```
 
 ```url [API]
+
 ```
 
 :::
 
 :::details[Unification Plan]
+
 - Some extra parameters in TypeScript? What to do with them?
-:::
+  :::
 
 #### Parameters
 
-| Parameter     | Location  | Type  | Required  | Description                   |
-| ------------- | --------- | ----- |---------- | ----------------------------- |
-| `transaction` | query     | [Tx]  | true      | The transaction to simulate.  |
-
+| Parameter     | Location | Type | Required | Description                  |
+| ------------- | -------- | ---- | -------- | ---------------------------- |
+| `transaction` | query    | [Tx] | true     | The transaction to simulate. |
 
 #### Response
 
-| Status | Meaning     | Schema     |
-| ------ | ----------- | ---------- |
-| `200`  | [OK]        | [GasInfo]  |
+| Status | Meaning       | Schema    |
+| ------ | ------------- | --------- | ------------------------------------- |
+| `200`  | [OK]          | [GasInfo] |
+| `400`  | [Bad Request] |           | The request was malformed or invalid. |
 
 Examples: [Python] | [TypeScript] | [Rust]
 
 [Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/transfer_example_withdraw_other.py#L20
 [TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/transfer_example_withdraw_other.ts#L37
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/withdraw_other.rs#L52
-
 [Tx]: /types/tx
 [GasInfo]: /types/gas_info
 [OK]: /types/ok
+[Bad Request]: /types/bad-request

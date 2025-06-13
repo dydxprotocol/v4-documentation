@@ -39,16 +39,16 @@ pub async fn get_delayed_complete_bridge_messages(
 
 #### Parameters
 
-| Parameter | Location | Type      | Required | Description                                  |
-| --------- | -------- | --------- | -------- | -------------------------------------------- |
-| `address` | query    | [Address] | true     | The wallet address that owns the account.    |
-
+| Parameter | Location | Type      | Required | Description                               |
+| --------- | -------- | --------- | -------- | ----------------------------------------- |
+| `address` | query    | [Address] | true     | The wallet address that owns the account. |
 
 #### Response
 
-| Status | Meaning | Schema                           |
-| ------ | ------- | -------------------------------- |
-| `200`  | [OK]    | [DelayedCompleteBridgeMessage] ⛁ |
+| Status | Meaning       | Schema                           |
+| ------ | ------------- | -------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [DelayedCompleteBridgeMessage] ⛁ |
+| `400`  | [Bad Request] |                                  | The request was malformed or invalid. |
 
 Examples: [Python] | [TypeScript] | [Rust] | [API]
 
@@ -56,7 +56,7 @@ Examples: [Python] | [TypeScript] | [Rust] | [API]
 [TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L139
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L104
 [API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/v4/bridge/delayed_complete_bridge_messages
-
 [Address]: /types/address
 [OK]: /types/ok
 [DelayedCompleteBridgeMessage]: /types/delayed_complete_bridge_messages
+[Bad Request]: /types/bad-request

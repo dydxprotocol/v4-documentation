@@ -35,9 +35,10 @@ pub async fn get_equity_tier_limit_config(
 
 #### Response
 
-| Status | Meaning     | Schema                         |
-| ------ | ----------- | ------------------------------ |
-| `200`  | [OK]        | [EquityTierLimitConfiguration] |
+| Status | Meaning       | Schema                         |
+| ------ | ------------- | ------------------------------ | ------------------------------------- |
+| `200`  | [OK]          | [EquityTierLimitConfiguration] |
+| `400`  | [Bad Request] |                                | The request was malformed or invalid. |
 
 Examples: [Python] | [TypeScript] | [Rust] | [API]
 
@@ -45,6 +46,6 @@ Examples: [Python] | [TypeScript] | [Rust] | [API]
 [TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L89
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L89
 [API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/clob/equity_tier
-
 [OK]: /types/ok
 [EquityTierLimitConfiguration]: /types/equity_tier_limit_configuration
+[Bad Request]: /types/bad-request

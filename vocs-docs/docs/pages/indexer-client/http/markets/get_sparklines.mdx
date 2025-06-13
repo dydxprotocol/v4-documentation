@@ -45,12 +45,14 @@ pub async fn get_sparklines(
 
 #### Response
 
-| Status | Meaning     | Schema                      | Description         |
-| ------ | ----------- | --------------------------- | ------------------- |
-| `200`  | [OK]        | [SparklineResponseObject] ⛁ | The sparkline data. |
+| Status | Meaning       | Schema                      | Description                           |
+| ------ | ------------- | --------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [SparklineResponseObject] ⛁ | The sparkline data.                   |
+| `400`  | [Bad Request] |                             | The request was malformed or invalid. |
 
 <Button href="https://indexer.v4testnet.dydx.exchange/v4/sparklines?timePeriod=ONE_DAY">API Example</Button>
 
 [OK]: /types/ok
 [SparklineTimePeriod]: /types/sparkline_time_period
 [SparklineResponseObject]: /types/sparkline_response_object
+[Bad Request]: /types/bad-request

@@ -49,27 +49,30 @@ pub async fn transfer(
 
 #### Parameters
 
-| Parameter                 | Location  | Type              | Required  | Description                                       |
-| ------------------------- | --------- | ----------------- | --------- | ------------------------------------------------- |
-| `wallet`                  | query     | [Wallet]          | true      | The wallet to use for signing the transaction.    |
-| `sender_subaccount`       | query     | [SubaccountId]    | true      | The sender subaccount ID.                         |
-| `recipient_subaccount`    | query     | [SubaccountId]    | true      | The recipient subaccount ID.                      |
-| `asset_id`                | query     | int               | true      | The asset ID.                                     |
-| `amount`                  | query     | int               | true      | The amount to transfer.                           |
+| Parameter              | Location | Type           | Required | Description                                    |
+| ---------------------- | -------- | -------------- | -------- | ---------------------------------------------- |
+| `wallet`               | query    | [Wallet]       | true     | The wallet to use for signing the transaction. |
+| `sender_subaccount`    | query    | [SubaccountId] | true     | The sender subaccount ID.                      |
+| `recipient_subaccount` | query    | [SubaccountId] | true     | The recipient subaccount ID.                   |
+| `asset_id`             | query    | int            | true     | The asset ID.                                  |
+| `amount`               | query    | int            | true     | The amount to transfer.                        |
 
 #### Response
 
-| Status | Meaning     | Schema   |
-| ------ | ----------- | -------- |
-| `200`  | [OK]        | [TxHash] |
+| Status | Meaning       | Schema   | Description                           |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] | The transaction hash.                 |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The subaccount was not found.         |
 
 Examples: [Python] | [TypeScript] | [Rust]
 
 [Python]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-py-v2/examples/transfer_example_transfer.py
 [TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/transfer_example_subaccount_transfer.ts
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/transfer.rs
-
 [Wallet]: /types/wallet
 [SubaccountId]: /types/subaccount_id
 [OK]: /types/ok
 [TxHash]: /types/tx_hash
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

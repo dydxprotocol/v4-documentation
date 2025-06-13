@@ -20,6 +20,7 @@ pub async fn get_latest_block(&mut self) -> Result<Block, Error>
 ```
 
 ```url [API]
+
 ```
 
 :::
@@ -28,9 +29,10 @@ pub async fn get_latest_block(&mut self) -> Result<Block, Error>
 
 #### Response
 
-| Status | Meaning     | Schema  |
-| ------ | ----------- | ------- |
-| `200`  | [OK]        | [Block] |
+| Status | Meaning       | Schema  | Description                           |
+| ------ | ------------- | ------- | ------------------------------------- |
+| `200`  | [OK]          | [Block] | The latest block.                     |
+| `400`  | [Bad Request] |         | The request was malformed or invalid. |
 
 Examples: [Python] | [Rust] | [API]| [Guide - Get Latest Block]
 
@@ -38,6 +40,6 @@ Examples: [Python] | [Rust] | [API]| [Guide - Get Latest Block]
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L53
 [API]: https://test-dydx-rest.kingnodes.com/cosmos/base/tendermint/v1beta1/blocks/latest
 [Guide - Get Latest Block]: ../../interaction/data#get-latest-block-height
-
 [OK]: /types/ok
 [Block]: /types/block
+[Bad Request]: /types/bad-request

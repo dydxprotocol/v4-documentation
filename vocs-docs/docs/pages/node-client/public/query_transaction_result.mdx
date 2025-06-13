@@ -22,6 +22,7 @@ pub async fn query_transaction_result(
 ```
 
 ```url [API]
+
 ```
 
 :::
@@ -31,17 +32,20 @@ pub async fn query_transaction_result(
 
 #### Parameters
 
-| Parameter           | Location | Type               | Description             |
-| ------------------- | -------- | ------------------ | ----------------------- |
-| `tx_hash`           | query    | [TxHash]           | Transaction Hash        |
-
+| Parameter | Location | Type     | Description      |
+| --------- | -------- | -------- | ---------------- |
+| `tx_hash` | query    | [TxHash] | Transaction Hash |
 
 #### Response
 
-| Status | Meaning     | Schema |
-| ------ | ----------- | ------ |
-| `200`  | [OK]        | [Tx]   |
+| Status | Meaning       | Schema |
+| ------ | ------------- | ------ | ------------------------------------- |
+| `200`  | [OK]          | [Tx]   |
+| `400`  | [Bad Request] |        | The request was malformed or invalid. |
+| `404`  | [Not Found]   |        | The transaction was not found.        |
 
 [TxHash]: /types/tx_hash
 [OK]: /types/ok
 [Tx]: /types/tx
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

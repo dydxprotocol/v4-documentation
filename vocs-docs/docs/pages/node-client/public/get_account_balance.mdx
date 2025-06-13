@@ -29,7 +29,6 @@ pub async fn get_account_balance(
 ) -> Result<Coin, Error>
 ```
 
-
 ```url [API]
 /cosmos.bank.v1beta1.Query/Balance
 ```
@@ -38,16 +37,17 @@ pub async fn get_account_balance(
 
 #### Parameters
 
-| Parameter | Location  | Type      | Required  | Description                                            |
-| --------- | --------- | --------- | --------- | ------------------------------------------------------ |
-| `address` | query     | [Address] | true      | The wallet address that owns the account.              |
-| `denom`   | query     | [Denom]   | true      | Denomination of the token associated with the request. |
+| Parameter | Location | Type      | Required | Description                                            |
+| --------- | -------- | --------- | -------- | ------------------------------------------------------ |
+| `address` | query    | [Address] | true     | The wallet address that owns the account.              |
+| `denom`   | query    | [Denom]   | true     | Denomination of the token associated with the request. |
 
 #### Response
 
-| Status | Meaning     | Schema     |
-| ------ | ----------- | ---------- |
-| `200`  | [OK]        | [Coin]     |
+| Status | Meaning       | Schema | Description                           |
+| ------ | ------------- | ------ | ------------------------------------- |
+| `200`  | [OK]          | [Coin] | The account balance.                  |
+| `400`  | [Bad Request] |        | The request was malformed or invalid. |
 
 Examples: [Python] | [Rust] | [API] | [Guide - Get Account Balance]
 
@@ -55,8 +55,8 @@ Examples: [Python] | [Rust] | [API] | [Guide - Get Account Balance]
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L38
 [API]: https://test-dydx-rest.kingnodes.com/cosmos/bank/v1beta1/balances/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art/by_denom?denom=adv4tnt
 [Guide - Get Account Balance]: ../../interaction/asset-management#get-account-balance
-
 [Address]: /types/address
 [Denom]: /types/denom
 [OK]: /types/ok
 [Coin]: /types/coin
+[Bad Request]: /types/bad-request

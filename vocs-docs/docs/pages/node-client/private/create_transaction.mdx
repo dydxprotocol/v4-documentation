@@ -30,6 +30,7 @@ pub async fn create_transaction(
 ```
 
 ```url [API]
+
 ```
 
 :::
@@ -39,19 +40,21 @@ pub async fn create_transaction(
 
 #### Parameters
 
-| Parameter           | Location | Type               | Mandatory   | Description                                           |
-| ------------------- | -------- | ------------------ | ----------- | ----------------------------------------------------- |
-| `account`           | query    | [Account]          | true        | Owner's account information                           |
-| `msg`               | query    | Any                | true        | Message during create transaction                     |
-| `auth`              | query    | [Address]          | false       |                                                       |
+| Parameter | Location | Type      | Mandatory | Description                       |
+| --------- | -------- | --------- | --------- | --------------------------------- |
+| `account` | query    | [Account] | true      | Owner's account information       |
+| `msg`     | query    | Any       | true      | Message during create transaction |
+| `auth`    | query    | [Address] | false     |                                   |
 
 #### Response
 
-| Status | Meaning     | Schema     |
-| ------ | ----------- | ---------- |
-| `200`  | [OK]        | [tx::Raw]  |
+| Status | Meaning       | Schema    |
+| ------ | ------------- | --------- | ------------------------------------- |
+| `200`  | [OK]          | [tx::Raw] |
+| `400`  | [Bad Request] |           | The request was malformed or invalid. |
 
 [Account]: /types/account
 [Address]: /types/address
 [OK]: /types/ok
 [tx::Raw]: /types/cosmos
+[Bad Request]: /types/bad-request

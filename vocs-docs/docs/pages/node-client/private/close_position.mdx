@@ -28,6 +28,7 @@ pub async fn close_position(
 ```
 
 ```url [API]
+
 ```
 
 :::
@@ -37,20 +38,21 @@ pub async fn close_position(
 
 #### Parameters
 
-| Parameter         | Location | Type                   | Required    | Description                                     |
-| ----------------- | -------- | ---------------------- | ----------- | ----------------------------------------------- |
-| `account`         | query    | [Account]              | true        | The wallet address that owns the subaccount.    |
-| `subaccount`      | query    | [Subaccount]           | true        | Subaccount to close                             |
-| `market_params`   | query    | [OrderMarketParams]    | true        | Market parameters                               |
-| `reduced_by`      | query    | [BigDecimal]           | false       |                                                 |
-| `client_id`       | query    | [ClientId]             | true        |                                                 |
-
+| Parameter       | Location | Type                | Required | Description                                  |
+| --------------- | -------- | ------------------- | -------- | -------------------------------------------- |
+| `account`       | query    | [Account]           | true     | The wallet address that owns the subaccount. |
+| `subaccount`    | query    | [Subaccount]        | true     | Subaccount to close                          |
+| `market_params` | query    | [OrderMarketParams] | true     | Market parameters                            |
+| `reduced_by`    | query    | [BigDecimal]        | false    |                                              |
+| `client_id`     | query    | [ClientId]          | true     |                                              |
 
 #### Response
 
-| Status | Meaning     | Schema                          |
-| ------ | ----------- | ------------------------------- |
-| `200`  | [OK]        | [TxHash]                        |
+| Status | Meaning       | Schema   |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The subaccount was not found.         |
 
 Examples: [Rust]
 
@@ -61,3 +63,5 @@ Examples: [Rust]
 [BigDecimal]: /types/big_decimal
 [ClientId]: /types/client_id
 [TxHash]: /types/tx_hash
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

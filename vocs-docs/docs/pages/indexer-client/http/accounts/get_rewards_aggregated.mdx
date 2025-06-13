@@ -59,9 +59,10 @@ pub async fn get_rewards_aggregated(
 
 #### Response
 
-| Status | Meaning     | Schema                                 | Description                                     |
-| ------ | ----------- | -------------------------------------- | ----------------------------------------------- |
-| `200`  | [OK]        | [HistoricalTradingRewardAggregation] ⛁ | The aggregated historical trading rewards data. |
+| Status | Meaning       | Schema                                 | Description                                     |
+| ------ | ------------- | -------------------------------------- | ----------------------------------------------- |
+| `200`  | [OK]          | [HistoricalTradingRewardAggregation] ⛁ | The aggregated historical trading rewards data. |
+| `400`  | [Bad Request] |                                        | The request was malformed or invalid.           |
 
 <Button href="https://indexer.v4testnet.dydx.exchange/v4/historicalTradingRewardAggregations/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art?period=DAILY">API Example</Button>
 
@@ -72,3 +73,4 @@ pub async fn get_rewards_aggregated(
 [Height]: /types/height
 [TradingRewardAggregationPeriod]: /types/trading_reward_aggregation_period
 [HistoricalTradingRewardAggregation]: /types/historical_trading_reward_aggregation
+[Bad Request]: /types/bad-request

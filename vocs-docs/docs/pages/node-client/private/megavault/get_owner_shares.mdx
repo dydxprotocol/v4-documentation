@@ -24,6 +24,7 @@ pub async fn get_owner_shares(
 ```
 
 ```url [API]
+
 ```
 
 :::
@@ -33,16 +34,18 @@ pub async fn get_owner_shares(
 
 #### Parameters
 
-| Parameter           | Location | Type               | Description                                                           |
-| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
-| `address`           | query    | [Address]          | The wallet address that owns the subaccount.                          |
+| Parameter | Location | Type      | Description                                  |
+| --------- | -------- | --------- | -------------------------------------------- |
+| `address` | query    | [Address] | The wallet address that owns the subaccount. |
 
 #### Response
 
-| Status | Meaning     | Schema                                 |
-| ------ | ----------- | -------------------------------------- |
-| `200`  | [OK]        | [QueryMegavaultOwnerSharesResponse]    |
+| Status | Meaning       | Schema                              |
+| ------ | ------------- | ----------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [QueryMegavaultOwnerSharesResponse] |
+| `400`  | [Bad Request] |                                     | The request was malformed or invalid. |
 
 [Address]: /types/address
 [OK]: /types/ok
 [QueryMegavaultOwnerSharesResponse]: /types/megavault_owner_shares_response
+[Bad Request]: /types/bad-request

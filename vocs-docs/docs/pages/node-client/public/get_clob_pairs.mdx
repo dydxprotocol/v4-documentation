@@ -28,20 +28,22 @@ pub async fn get_clob_pairs(
 :::
 
 :::details[Unification Plan]
+
 - Python and TypeScript don't contain options
-:::
+  :::
 
 #### Parameters
 
-| Parameter     | Location  | Type          | Required | Description               |
-| ------------- | --------- | ------------- | -------- | ------------------------- |
-| `pagination`  | query     | [PageRequest] | false    | Parameters of pagination. |
+| Parameter    | Location | Type          | Required | Description               |
+| ------------ | -------- | ------------- | -------- | ------------------------- |
+| `pagination` | query    | [PageRequest] | false    | Parameters of pagination. |
 
 #### Response
 
-| Status | Meaning | Schema       |
-| ------ | ------- | ------------ |
-| `200`  | [OK]    | [ClobPair] ⛁ |
+| Status | Meaning       | Schema       | Description                             |
+| ------ | ------------- | ------------ | --------------------------------------- |
+| `200`  | [OK]          | [ClobPair] ⛁ | The response containing all clob pairs. |
+| `400`  | [Bad Request] |              | The request was malformed or invalid.   |
 
 Examples: [Python] | [TypeScript] | [Rust] | [API]
 
@@ -49,9 +51,9 @@ Examples: [Python] | [TypeScript] | [Rust] | [API]
 [TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L49
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L74
 [API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/clob/clob_pair
-
 [u8]: /types/u8
 [u64]: /types/u64
 [OK]: /types/ok
 [ClobPair]: /types/clob_pair
 [PageRequest]: /types/page_request
+[Bad Request]: /types/bad-request

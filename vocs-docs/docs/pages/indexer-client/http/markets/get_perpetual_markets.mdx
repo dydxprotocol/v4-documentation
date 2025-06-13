@@ -1,4 +1,4 @@
-import { Button } from 'vocs/components'
+import { Button } from 'vocs/components';
 
 ### Get Perpetual Markets
 
@@ -35,16 +35,18 @@ pub async fn list_perpetual_markets(
 
 #### Parameters
 
-| Parameter                     | Location | Type                      | Required   | Description                                                                        |
-| ----------------------------- | -------- | ------------------------- | ---------- | ---------------------------------------------------------------------------------- |
-| `market`                      | query    | [Ticker]                  | false      | The specific market ticker to retrieve. If not provided, all markets are returned. |
-| `limit`                       | query    | [u32]                     | false      | Maximum number of asset positions to return in the response.                       |
+| Parameter | Location | Type     | Required | Description                                                                        |
+| --------- | -------- | -------- | -------- | ---------------------------------------------------------------------------------- |
+| `market`  | query    | [Ticker] | false    | The specific market ticker to retrieve. If not provided, all markets are returned. |
+| `limit`   | query    | [u32]    | false    | Maximum number of asset positions to return in the response.                       |
 
 #### Response
 
-| Status | Meaning     | Schema                 |
-| ------ | ----------- | ---------------------- |
-| `200`  | [OK]        | [PerpetualMarketMap]   |
+| Status | Meaning       | Schema               | Description                           |
+| ------ | ------------- | -------------------- | ------------------------------------- |
+| `200`  | [OK]          | [PerpetualMarketMap] | The perpetual markets data.           |
+| `400`  | [Bad Request] |                      | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                      | The market was not found.             |
 
 <Button href="https://indexer.v4testnet.dydx.exchange/v4/perpetualMarkets">API Example</Button>
 
@@ -52,3 +54,5 @@ pub async fn list_perpetual_markets(
 [PerpetualMarketMap]: /types/perpetual_market_map
 [OK]: /types/ok
 [u32]: /types/u32
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

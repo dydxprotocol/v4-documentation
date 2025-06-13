@@ -14,8 +14,8 @@ Withdraw funds (USDC) from the subaccount to the address.
 export async function withdrawFromMegavault(
   subaccountNumber: number,
   shares: number,
-  minAmount: number,
-): Promise<string>
+  minAmount: number
+): Promise<string>;
 ```
 
 ```rust [Rust]
@@ -29,6 +29,7 @@ pub async fn withdraw(
 ```
 
 ```url [API]
+
 ```
 
 :::
@@ -38,19 +39,23 @@ pub async fn withdraw(
 
 #### Parameters
 
-| Parameter           | Location | Type               | Description                         |
-| ------------------- | -------- | ------------------ | ----------------------------------- |
-| `account`           | query    | [Account]          | Owner's account                     |
-| `subaccount`        | query    | [SubaccountInfo]   | Subaccount information              |
-| `min_amount`        | query    | int                | Minimum amount to withdraw          |
-| `shares`            | query    | BigInt             | Number of shares                    |
+| Parameter    | Location | Type             | Description                |
+| ------------ | -------- | ---------------- | -------------------------- |
+| `account`    | query    | [Account]        | Owner's account            |
+| `subaccount` | query    | [SubaccountInfo] | Subaccount information     |
+| `min_amount` | query    | int              | Minimum amount to withdraw |
+| `shares`     | query    | BigInt           | Number of shares           |
 
 #### Response
 
-| Status | Meaning     | Schema     |
-| ------ | ----------- | ---------- |
-| `200`  | [OK]        | [TxHash]   |
+| Status | Meaning       | Schema   | Description                           |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] | The transaction hash.                 |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The subaccount was not found.         |
 
 [Account]: /types/account
 [SubaccountInfo]: /types/subaccount_info
 [TxHash]: /types/tx_hash
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

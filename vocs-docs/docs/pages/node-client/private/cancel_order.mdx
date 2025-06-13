@@ -60,8 +60,10 @@ pub async fn cancel_order(
 #### Response
 
 | Status | Meaning     | Schema   |
-| ------ | ----------- | -------- |
-| `200`  | [OK]        | [TxHash] |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] | The transaction hash.                 |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The order was not found.              |
 
 Examples: [Rust] | [Guide - Cancel an order]
 
@@ -74,3 +76,5 @@ Examples: [Rust] | [Guide - Cancel an order]
 [i32]: /types/i32
 [TxOptions]: /types/tx_options
 [TxHash]: /types/tx_options
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

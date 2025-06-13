@@ -1,4 +1,4 @@
-import { Button } from 'vocs/components'
+import { Button } from 'vocs/components';
 
 ### Get Trades
 
@@ -46,19 +46,23 @@ pub async fn get_trades(
 
 #### Parameters
 
-| Parameter                         | Location  | Type      | Required  | Description                                       |
-| --------------------------------- | --------- | --------- | --------- | ------------------------------------------------- |
-| `market`                          | path      | [Ticker]  | true      | The market ticker.                                |
-| `limit`                           | query     | [u32]     | false     | The maximum number of trades to retrieve.         |
-| `startingBeforeOrAtHeight`        | query     | [Height]  | false     | The block height to start retrieving trades from. |
+| Parameter                  | Location | Type     | Required | Description                                       |
+| -------------------------- | -------- | -------- | -------- | ------------------------------------------------- |
+| `market`                   | path     | [Ticker] | true     | The market ticker.                                |
+| `limit`                    | query    | [u32]    | false    | The maximum number of trades to retrieve.         |
+| `startingBeforeOrAtHeight` | query    | [Height] | false    | The block height to start retrieving trades from. |
 
 #### Response
 
-| Status | Meaning     | Schema                  | Description      |
-| ------ | ----------- | ----------------------- | ---------------- |
-| `200`  | [OK]        | [TradeResponseObject] ⛁ | The trades data. |
+| Status | Meaning       | Schema                  | Description                           |
+| ------ | ------------- | ----------------------- | ------------------------------------- |
+| `200`  | [OK]          | [TradeResponseObject] ⛁ | The trades data.                      |
+| `400`  | [Bad Request] |                         | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                         | The market was not found.             |
 
-<Button href="https://indexer.v4testnet.dydx.exchange/v4/trades/perpetualMarket/BTC-USD">API Example</Button>
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/trades/perpetualMarket/BTC-USD">
+  API Example
+</Button>
 
 [Ticker]: /types/ticker
 [u32]: /types/u32

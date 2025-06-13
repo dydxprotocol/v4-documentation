@@ -24,6 +24,7 @@ pub async fn get_withdrawal_info(
 ```
 
 ```url [API]
+
 ```
 
 :::
@@ -33,15 +34,17 @@ pub async fn get_withdrawal_info(
 
 #### Parameters
 
-| Parameter           | Location | Type               | Description                                                           |
-| ------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
-| `shares`            | query    | BigInt             | The wallet address that owns the subaccount.                          |
+| Parameter | Location | Type   | Description                                  |
+| --------- | -------- | ------ | -------------------------------------------- |
+| `shares`  | query    | BigInt | The wallet address that owns the subaccount. |
 
 #### Response
 
-| Status | Meaning     | Schema                                 |
-| ------ | ----------- | -------------------------------------- |
-| `200`  | [OK]        | [QueryMegavaultWithdrawalInfoResponse] |
+| Status | Meaning       | Schema                                 |
+| ------ | ------------- | -------------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [QueryMegavaultWithdrawalInfoResponse] |
+| `400`  | [Bad Request] |                                        | The request was malformed or invalid. |
 
 [OK]: /types/ok
 [QueryMegavaultWithdrawalInfoResponse]: /types/query_megavault_withdrawal_info_response
+[Bad Request]: /types/bad-request

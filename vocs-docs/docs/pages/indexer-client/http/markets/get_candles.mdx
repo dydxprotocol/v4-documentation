@@ -1,4 +1,4 @@
-import { Button } from 'vocs/components'
+import { Button } from 'vocs/components';
 
 ### Get Candles
 
@@ -49,21 +49,24 @@ pub async fn get_candles(
 
 #### Parameters
 
-| Parameter     | Location  | Type                  | Required  | Description                                               |
-| ------------- | --------- | --------------------- | --------- | --------------------------------------------------------- |
-| `market`      | path      | [Ticker]              | true      | The market ticker.                                        |
-| `resolution`  | query     | [CandleResolution]    | true      | The candle resolution (e.g., "1DAY", "1HOUR", "1MIN").    |
-| `limit`       | query     | [u32]                 | false     | The maximum number of candles to retrieve.                |
-| `fromIso`     | query     | [DateTime]            | false     | The start timestamp in ISO format.                        |
-| `toIso`       | query     | [DateTime]            | false     | The end timestamp in ISO format.                          |
+| Parameter    | Location | Type               | Required | Description                                            |
+| ------------ | -------- | ------------------ | -------- | ------------------------------------------------------ |
+| `market`     | path     | [Ticker]           | true     | The market ticker.                                     |
+| `resolution` | query    | [CandleResolution] | true     | The candle resolution (e.g., "1DAY", "1HOUR", "1MIN"). |
+| `limit`      | query    | [u32]              | false    | The maximum number of candles to retrieve.             |
+| `fromIso`    | query    | [DateTime]         | false    | The start timestamp in ISO format.                     |
+| `toIso`      | query    | [DateTime]         | false    | The end timestamp in ISO format.                       |
 
 #### Response
 
-| Status | Meaning     | Schema                   | Description      |
-| ------ | ----------- | ------------------------ | ---------------- |
-| `200`  | [OK]        | [CandleResponseObject] ⛁ | The candle data. |
+| Status | Meaning       | Schema                   | Description                           |
+| ------ | ------------- | ------------------------ | ------------------------------------- |
+| `200`  | [OK]          | [CandleResponseObject] ⛁ | The candle data.                      |
+| `400`  | [Bad Request] |                          | The request was malformed or invalid. |
 
-<Button href="https://indexer.v4testnet.dydx.exchange/v4/candles/perpetualMarkets/BTC-USD?resolution=1DAY">API Example</Button>
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/candles/perpetualMarkets/BTC-USD?resolution=1DAY">
+  API Example
+</Button>
 
 [OK]: /types/ok
 [u32]: /types/u32
@@ -71,3 +74,4 @@ pub async fn get_candles(
 [CandleResolution]: /types/candle_resolution
 [DateTime]: /types/date_time
 [CandleResponseObject]: /types/candle_response_object
+[Bad Request]: /types/bad-request
