@@ -54,8 +54,8 @@ pub async fn transfer(
 | `wallet`                  | query     | [Wallet]          | true      | The wallet to use for signing the transaction.    |
 | `sender_subaccount`       | query     | [SubaccountId]    | true      | The sender subaccount ID.                         |
 | `recipient_subaccount`    | query     | [SubaccountId]    | true      | The recipient subaccount ID.                      |
-| `asset_id`                | query     | int               | true      | The asset ID.                                     |
-| `amount`                  | query     | int               | true      | The amount to transfer.                           |
+| `asset_id`                | query     | [AssetId]         | true      | The asset ID.                                     |
+| `amount`                  | query     | int               | true      | The amount to transfer i USDC                     |
 
 #### Response
 
@@ -70,6 +70,7 @@ Examples: [Python] | [TypeScript] | [Rust]
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/transfer.rs
 
 [Wallet]: /types/wallet
-[SubaccountId]: /types/subaccount_id
+[SubaccountId]: /types/subaccount
+[AssetId]: /types/asset_id_node
 [OK]: /types/ok
 [TxHash]: /types/tx_hash

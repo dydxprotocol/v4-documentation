@@ -2,11 +2,11 @@
 
 `ticker`: [Ticker]
 
-`trades`: u64
+`trades`: [u64]
 
-`started_at`: [DateTime in UTC]
+`startedAt`: [DateTime in UTC]
 
-`base_quantity_volume`: [Quantity]
+`baseTokenVolume`: [Quantity]
 
 `open`: [Price]
 
@@ -18,9 +18,13 @@
 
 `resolution`: [CandleResolution]
 
-`usd_volume`: [Quantity]
+`usdVolume`: [Quantity]
 
-`started_open_interest`: [BigDecimal]
+`startingOpenInterest`: [BigDecimal]
+
+`orderBookMidPriceOpen`: [BigDecimal]
+
+`orderBookMidPriceClose`: [BigDecimal]
 
 [Ticker]: /types/ticker
 [DateTime in UTC]: /types/date_time
@@ -28,3 +32,4 @@
 [Price]: /types/price
 [CandleResolution]: /types/candle_resolution
 [BigDecimal]: /types/big_decimal
+[u64]: /types/u64

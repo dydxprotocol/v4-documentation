@@ -52,7 +52,7 @@ pub async fn deposit(
 | `wallet`                  | query     | [Wallet]          | true      | The wallet to use for signing the transaction.                    |
 | `sender`                  | query     | string            | true      | The sender address.                                               |
 | `recipient_subaccount`    | query     | [SubaccountId]    | true      | The recipient subaccount ID.                                      |
-| `asset_id`                | query     | int               | true      | The asset ID.                                                     |
+| `asset_id`                | query     | [AssetId]         | true      | The asset ID.                                                     |
 | `quantums`                | query     | int               | true      | The amount of quantums to deposit. [See more about quantums]      |
 
 #### Response
@@ -65,4 +65,5 @@ pub async fn deposit(
 [SubaccountId]: /types/Subaccount_id
 [OK]: /types/ok
 [TxHash]: /types/tx_hash
+[AssetId]: /types/asset_id_node
 [See more about quantums]: ../../concepts/trading/quantums#quantums

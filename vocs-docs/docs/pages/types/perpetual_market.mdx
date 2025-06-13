@@ -1,46 +1,48 @@
 # PerpetualMarket
 
-`atomic_resolution`: i32
+`atomicResolution`: i32
 
-`base_open_interest`: [BigDecimal]
+`baseOpenInterest`: [BigDecimal]
 
-`clob_pair_id`: [ClobPairId]
+`clobPairId`: [ClobPairId]
 
-`initial_margin_fraction`: [BigDecimal]
+`defaultFundingRate1H`: [BigDecimal]
 
-`maintenance_margin_fraction`: [BigDecimal]
+`initialMarginFraction`: [BigDecimal]
 
-`market_type`: [PerpetualMarketType]
+`maintenanceMarginFraction`: [BigDecimal]
 
-`next_funding_rate`: [BigDecimal]
+`marketType`: [PerpetualMarketType]
 
-`open_interest`: [BigDecimal]
+`nextFundingRate`: [BigDecimal]
 
-`open_interest_lower_cap`: [BigDecimal]
+`openInterest`: [BigDecimal]
 
-`open_interest_upper_cap`: [BigDecimal]
+`openInterestLowerCap`: [BigDecimal]
 
-`oracle_price`: [Price]
+`openInterestUpperCap`: [BigDecimal]
 
-`price_change_24h`: [BigDecimal]
+`oraclePrice`: [Price]
 
-`quantum_conversion_exponent`: i32
+`priceChange24H`: [BigDecimal]
+
+`quantumConversionExponent`: i32
 
 `status`: [PerpetualMarketStatus]
 
-`step_base_quantums`: u64
+`stepBaseQuantums`: u64
 
-`step_size`: [BigDecimal]
+`stepSize`: [BigDecimal]
 
-`subticks_per_tick`: u32
+`subticksPerTick`: u32
 
-`tick_size`: [BigDecimal]
+`tickSize`: [BigDecimal]
 
 `tikcer`: [Ticker]
 
-`trades_24h`: u64
+`trades24H`: u64
 
-`volume_24`: [Quantity]
+`volume24H`: [Quantity]
 
 [BigDecimal]: /types/big_decimal
 [ClobPairId]: /types/clob_pair_id

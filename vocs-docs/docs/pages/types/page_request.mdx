@@ -1,7 +1,7 @@
 # PageRequest
 
-| Parameter     | Location  | Type          | Required  | Description                                                                                                                                                                                                               |
-| ------------- | --------- | ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Parameter     | Location  | Type  | Required  | Description                                                                                                                                                                                                                       |
+| ------------- | --------- | ----- | -------   | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `key`         | query     | [u8]  | false     | key is a value returned in PageResponse.next_key to begin querying the next page most efficiently. Only one of offset or key should be set.                                                                                       |
 | `offset`      | query     | [u64] | false     | offset is a numeric offset that can be used when key is unavailable. It is less efficient than using key. Only one of offset or key should be set.                                                                                |
 | `limit`       | query     | [u64] | false     | limit is the total number of results to be returned in the result page. If left empty it will default to a value to be set by each app.                                                                                           |
