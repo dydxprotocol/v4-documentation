@@ -59,9 +59,9 @@ pub async fn batch_cancel_orders(
 
 #### Response
 
-| Status | Meaning       | Schema   |
+| Status | Meaning       | Schema   |                                       |
 | ------ | ------------- | -------- | ------------------------------------- |
-| `200`  | [OK]          | [TxHash] |
+| `200`  | [OK]          | [TxHash] |                                       |
 | `400`  | [Bad Request] |          | The request was malformed or invalid. |
 | `404`  | [Not Found]   |          | The subaccount was not found.         |
 
@@ -79,3 +79,4 @@ Examples: [Python] | [TypeScript] | [Rust]
 [String]: /types/string
 [Bad Request]: /types/bad-request
 [Not Found]: /types/not-found
+[TxHash]: /types/tx_hash
