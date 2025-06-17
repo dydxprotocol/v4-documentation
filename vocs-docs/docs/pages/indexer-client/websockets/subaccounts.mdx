@@ -1,0 +1,58 @@
+import BatchedArray from '../../../components/BatchedArray';
+
+### Subaccounts
+
+Data feed of a subaccount. Data contains updates to the subaccount such as position, orders and fills updates.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+# class `Subaccounts`
+def subscribe(self, address: str, subaccount_number: int) -> Self
+def unsubscribe(self, address: str, subaccount_number: int)
+```
+
+```typescript [TypeScript]
+// class `IndexerSocket`
+subscribeToSubaccount(address: string, subaccountNumber: number): void
+unsubscribeFromSubaccount(address: string, subaccountNumber: number): void
+```
+
+```rust [Rust]
+// struct `Feeds`
+pub async fn subaccounts(
+    &mut self,
+    subaccount: Subaccount,
+    batched: bool,
+) -> Result<Feed<SubaccountsMessage>, FeedError>
+// The stream is unsubscribed when the `Feed` object is dropped
+```
+
+```url [Channel]
+v4_subaccounts
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Schema
+
+The field `id` is a string containing the subaccount ID (address and subaccount number). It is formattted as `{address}/{subaccount-number}`.
+
+The field `contents` is serialized using the following schemas.
+
+##### Messages
+
+| Initial | Update     | 
+| ------ | ----------- | 
+| [`SubaccountsInitialMessage`] | [`SubaccountsUpdateMessage`] <BatchedArray/> |
+
+[address]: /types/address
+[subaccount-number]: /types/subaccount_number
+
+[`SubaccountsInitialMessage`]: /types/subaccounts_initial_message
+[`SubaccountsUpdateMessage`]: /types/subaccounts_update_message

@@ -1,0 +1,51 @@
+### Get Owner Shares in MegaVault
+
+Query the shares associated with an [`Address`].
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+async getMegavaultOwnerShares(
+    address: string,
+): Promise<VaultModule.QueryMegavaultOwnerSharesResponse>
+```
+
+```rust [Rust]
+pub async fn get_owner_shares(
+    &mut self,
+    address: &Address,
+) -> Result<QueryMegavaultOwnerSharesResponse, Error>
+```
+
+```url [API]
+
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter | Location | Type      | Description                                  |
+| --------- | -------- | --------- | -------------------------------------------- |
+| `address` | query    | [Address] | The wallet address that owns the subaccount. |
+
+#### Response
+
+| Status | Meaning       | Schema                              |                                       |
+| ------ | ------------- | ----------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [QueryMegavaultOwnerSharesResponse] |                                       |
+| `400`  | [Bad Request] |                                     | The request was malformed or invalid. |
+
+[Address]: /types/address
+[OK]: /types/ok
+[QueryMegavaultOwnerSharesResponse]: /types/megavault_owner_shares_response
+[Bad Request]: /types/bad-request

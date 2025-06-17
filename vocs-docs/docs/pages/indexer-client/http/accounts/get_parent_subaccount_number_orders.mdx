@@ -1,0 +1,41 @@
+### Get Parent Subaccount Number Orders
+
+TODO
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+```
+
+```typescript [TypeScript]
+async getParentSubaccountNumberOrders(
+  address: string,
+  parentSubaccountNumber: number,
+  ticker?: string | null,
+  side?: OrderSide | null,
+  status?: OrderStatus | null,
+  type?: OrderType | null,
+  limit?: number | null,
+  goodTilBlockBeforeOrAt?: number | null,
+  goodTilBlockTimeBeforeOrAt?: string | null,
+  returnLatestOrders?: boolean | null,
+): Promise<Data>
+```
+
+```rust [Rust]
+```
+
+```url [API]
+/v4/orders/parentSubaccountNumber
+```
+
+:::
+
+:::details[Unification Plan]
+- Implement method in python client
+- Implement method in rust client
+:::
+
+#### Parameters

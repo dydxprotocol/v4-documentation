@@ -1,0 +1,51 @@
+### GetDelegationTotalRewards
+
+Get all unbonding delegations from a delegator.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```rust [Rust]
+
+```
+
+```typescript [TypeScript]
+async getDelegationTotalRewards(
+    delegatorAddress: string,
+  ): Promise<DistributionModule.QueryDelegationTotalRewardsResponse>
+```
+
+```url
+/cosmos.distribution.v1beta1.Query/DelegationTotalRewards
+```
+
+:::
+
+:::unification-plan
+Implement Python and Rust method
+:::
+
+#### Parameters
+
+| Parameter        | Location | Type   | Mandatory | Description              |
+| ---------------- | -------- | ------ | --------- | ------------------------ |
+| delegatorAddress | Query    | string | true      | Address of the delegator |
+
+#### Response
+
+| Status | Meaning       | Schema                                                   | Description                                 |
+| ------ | ------------- | -------------------------------------------------------- | ------------------------------------------- |
+| `200`  | [OK]          | [DistributionModule.QueryDelegationTotalRewardsResponse] | All unbonding delegations from a delegator. |
+| `400`  | [Bad Request] |                                                          | The request was malformed or invalid.       |
+
+Examples: [API]
+
+[API]: https://test-dydx-rest.kingnodes.com/cosmos/distribution/v1beta1/delegators/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art/rewards
+[OK]: /types/ok
+[DistributionModule.QueryDelegationTotalRewardsResponse]: /types/cosmos
+[Bad Request]: /types/bad-request

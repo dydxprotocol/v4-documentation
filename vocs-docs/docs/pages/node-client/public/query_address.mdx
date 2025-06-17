@@ -1,0 +1,48 @@
+### Query Address
+
+Fetch account’s number and sequence number from the network.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+
+```
+
+```rust [Rust]
+pub async fn query_address(
+    &mut self,
+    address: &Address,
+) -> Result<(u64, u64), Error>
+```
+
+```url [API]
+
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter | Location | Type      | Description                               |
+| --------- | -------- | --------- | ----------------------------------------- |
+| `address` | query    | [Address] | The wallet address that owns the account. |
+
+#### Response
+
+| Status | Meaning       | Schema                 | Description                           |
+| ------ | ------------- | ---------------------- | ------------------------------------- |
+| `200`  | [OK]          | Pair of ([u64], [u64]) | The response containing the account.  |
+| `400`  | [Bad Request] |                        | The request was malformed or invalid. |
+
+[Address]: /types/address
+[OK]: /types/ok
+[Bad Request]: /types/bad-request

@@ -1,0 +1,56 @@
+### Get Account
+
+Retrieves an account using its unique wallet address, returning detailed account information encapsulated in the `BaseAccount` structure. See the [definition](https://github.com/cosmos/cosmos-sdk/tree/main/x/auth#account-1).
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_account(self, address: str) -> BaseAccount
+```
+
+```typescript [TypeScript]
+async getAccount(address: string): Promise<Account>
+```
+
+```rust [Rust]
+pub async fn get_account(
+    &mut self,
+    address: &Address,
+) -> Result<BaseAccount, Error>
+```
+
+```url [API]
+/cosmos.auth.v1beta1.Query/BaseAccount
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter | Location | Type      | Required | Description                               |
+| --------- | -------- | --------- | -------- | ----------------------------------------- |
+| `address` | query    | [Address] | true     | The wallet address that owns the account. |
+
+#### Response
+
+| Status | Meaning       | Schema        | Description                           |
+| ------ | ------------- | ------------- | ------------------------------------- |
+| `200`  | [OK]          | [BaseAccount] | The account information.              |
+| `400`  | [Bad Request] |               | The request was malformed or invalid. |
+
+Examples: [Python] | [TypeScript] | [Rust] | [API] | [Guide - Get Account]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L12
+[typescript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L9
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L32
+[API]: https://test-dydx-rest.kingnodes.com/cosmos/auth/v1beta1/accounts/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art
+[Guide - Get Account]: ../../interaction/asset-management#get-account
+[Address]: /types/address
+[OK]: /types/ok
+[BaseAccount]: /types/base_account
+[Bad Request]: /types/bad-request

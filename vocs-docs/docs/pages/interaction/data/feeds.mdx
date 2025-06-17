@@ -1,0 +1,173 @@
+# WebSockets
+
+The Indexer can provide realtime data through its WebSockets endpoint.
+
+Below an example is provided of how to establish a connection and watch realtime **trades** updates. See the full API specification [here](/indexer-client/websockets) for other data feeds.
+
+::::steps
+
+## Connect
+
+To get realtime updates, we first need to establish a connection with the WebSockets endpoint.
+
+:::code-group
+
+```python [Python]
+# The message handler, triggered when a message is received.
+def handler(ws: IndexerSocket, message: dict):
+    print(message)
+```
+
+```typescript [TypeScript]
+// The message handler, triggered when a message is received.
+function handler(message) {
+  console.log(message);
+}
+// Create a socket.
+const mySocket = new SocketClient(
+  Network.testnet().indexerConfig,
+  // On-connection callback
+  () => { console.log('socket opened'); },
+  // On-disconnection callback
+  () => { console.log('socket closed'); },
+  // Message handler
+  (message) => { handler(message); },
+  // WebSockets event handler
+  (event) => { console.error('Encountered error:', event.message); },
+);
+// Establish the connection.
+mySocket.connect();
+```
+
+```rust [Rust]
+// Establish the connection.
+// An internal loop is spawned which handles the connection state.
+let mut indexer = IndexerClient::new(config.indexer);
+```
+
+:::
+
+
+Upon a successful connection you will receive an initial connection message.
+This message maybe abstracted away, depending on the client.
+
+:::details[Connection response]
+```tsx
+{
+  "type": "connected",
+  "connection_id": "004a1efa-21bb-4b19-a2e9-a8ffadd6dc53",
+  "message_id": 0
+}
+```
+:::
+
+## Subscribe
+
+After a connection is established, you may subscribe to several feeds, containing different types of data.
+WebSockets include information on __markets__, __trades__, __orders__, __candles__, and __subaccounts__.
+
+:::code-group
+
+```python [Python]
+# Modify the `handler()` function.
+# Subscribe only after a succesful connection.
+def handler(ws: IndexerSocket, message: dict):
+  if message["type"] == "connected":
+    # Subscribe.
+    ws.trades.subscribe(ETH_USD)
+  print(message)
+```
+
+```typescript [TypeScript]
+// Modify the `handler()` function.
+// Subscribe only after a succesful connection.
+function handler(message) {
+  console.log(message);
+  if (typeof message.data === 'string') {
+    const jsonString = message.data as string;
+    try {
+      const data = JSON.parse(jsonString);
+      if (data.type === IncomingMessageTypes.CONNECTED) {
+        // Subscribe.
+        mySocket.subscribeToTrades('ETH-USD');
+      }
+      console.log(data);
+    } catch (e) {
+      console.error('Error parsing JSON message:', e);
+    }
+  }
+}
+```
+
+```rust [Rust]
+// Subscribe.
+let trades_feed = indexer.feed().trades(&"ETH-USD", false).await?;
+```
+:::
+
+## Handling the data
+
+After subscription, you will start receiving the update messages.
+Here, the update messages contain the finalized trades (matched orders) for the `ETH-USD` ticker.
+
+For each received message, the `handler()` function will be called on it. Modify it to implement your desired logic.
+
+:::details[Handling in Rust]
+In Rust, callbacks are not used. Intead, the handle returned on subscription must be polled.
+
+```rust [Rust]
+// Continuous loop running until the feed is stopped.
+while let Some(msg) = trades_feed.recv().await {
+    println!("New trades update: {msg:?}");
+}
+```
+:::
+
+## Unsubscribe
+
+When the data feed is not needed anymore, you may stop it and unsubscribe from it.
+
+:::code-group
+
+```python [Python]
+ws.trades.unsubscribe(ETH_USD)
+```
+
+```typescript [TypeScript]
+mySocket.unsubscribeFromTrades('ETH-USD');
+```
+
+```rust [Rust]
+// To unsubscribe, drop the feed handle (here `trades_feed`).
+```
+
+:::
+::::
+
+## Details
+
+### Rate Limiting
+
+The default rate limiting config for WebSockets is:
+- 2 subscriptions per (connection + channel + channel ID) per second.
+- 2 invalid messages per connection per second.
+
+### Maintaining a Connection
+
+Every 30 seconds, the WebSockets API will send a [heartbeat `ping` control frame](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#pings_and_pongs_the_heartbeat_of_websockets) to the connected client.
+If a `pong` event is not received within 10 seconds back, the websocket API will disconnect.
+
+### CLI example
+
+You can use a command-line WebSockets client such as [`interactive-websocket-cli`](https://www.npmjs.com/package/interactive-websocket-cli) to connect and subscribe to channels.
+
+Example (with `interactive-websocket-cli`):
+
+```tsx
+# For the deployment by DYDX token holders (mainnet), use
+# wscli connect wss://indexer.dydx.trade/v4/ws
+wscli connect wss://indexer.v4testnet.dydx.exchange/v4/ws
+<output from ws-cli>
+<type 's' to send> { "type": "subscribe", "channel": "v4_trades", "id": "BTC-USD" }
+```
+

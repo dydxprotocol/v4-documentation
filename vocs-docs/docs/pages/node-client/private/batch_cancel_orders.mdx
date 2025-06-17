@@ -1,0 +1,82 @@
+### Batch Cancel Orders
+
+Cancel a batch of short-terms orders.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def batch_cancel_orders(
+    self,
+    wallet: Wallet,
+    subaccount_id: SubaccountId,
+    short_term_cancels: List[OrderBatch],
+    good_til_block: int,
+    tx_options: Optional[TxOptions] = None,
+)
+```
+
+```typescript [TypeScript]
+async batchCancelShortTermOrdersWithMarketId(
+  subaccount: SubaccountInfo,
+  shortTermOrders: OrderBatchWithMarketId[],
+  goodTilBlock: number,
+  broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [Rust]
+pub async fn batch_cancel_orders(
+    &mut self,
+    account: &mut Account,
+    subaccount: Subaccount,
+    short_term_cancels: Vec<OrderBatch>,
+    until_block: Height,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+/dydxprotocol.clob.Msg/BatchCancel
+```
+
+:::
+
+:::details[Unification Plan]
+
+- `TxOptions` is not available in Rust
+  :::
+
+#### Parameters
+
+| Parameter            | Location | Type           | Required | Description                                                           |
+| -------------------- | -------- | -------------- | -------- | --------------------------------------------------------------------- |
+| `wallet`             | query    | [Wallet]       | true     | The wallet to use for signing the transaction.                        |
+| `subaccount_id`      | query    | [SubaccountId] | true     | The subaccount ID for which to cancel orders.                         |
+| `short_term_cancels` | query    | [OrderBatch] ⛁ | true     | List of OrderBatch objects containing the orders to cancel.           |
+| `good_til_block`     | query    | [Height]       | true     | The last block the short term order cancellations can be executed at. |
+| `tx_options`         | query    | [TxOptions]    | false    | Options for transaction to support authenticators.                    |
+
+#### Response
+
+| Status | Meaning       | Schema   |                                       |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] |                                       |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The subaccount was not found.         |
+
+Examples: [Python] | [TypeScript] | [Rust]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-py-v2/examples/batch_cancel_example.py
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-js/examples/batch_cancel_orders_example.ts
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/batch_cancel_orders.rs
+[Wallet]: /types/wallet
+[OK]: /types/ok
+[SubaccountId]: /types/subaccount_id
+[OrderBatch]: /types/order_batch
+[TxOptions]: /types/tx_options
+[Height]: /types/height
+[String]: /types/string
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found
+[TxHash]: /types/tx_hash

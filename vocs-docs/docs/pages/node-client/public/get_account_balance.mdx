@@ -1,0 +1,62 @@
+### Get Account Balance
+
+Retrieves the balance of a specified account address for a particular denomination/token. See the [definition](https://github.com/cosmos/cosmos-sdk/tree/main/x/bank#balance).
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_account_balance(
+    self,
+    address: str,
+    denom: str,
+) -> bank_query.QueryBalanceResponse
+```
+
+```typescript [TypeScript]
+async getAccountBalance(
+    address: string,
+    denom: string,
+): Promise<Coin | undefined>
+```
+
+```rust [Rust]
+pub async fn get_account_balance(
+    &mut self,
+    address: &Address,
+    denom: &Denom,
+) -> Result<Coin, Error>
+```
+
+```url [API]
+/cosmos.bank.v1beta1.Query/Balance
+```
+
+:::
+
+#### Parameters
+
+| Parameter | Location | Type      | Required | Description                                            |
+| --------- | -------- | --------- | -------- | ------------------------------------------------------ |
+| `address` | query    | [Address] | true     | The wallet address that owns the account.              |
+| `denom`   | query    | [Denom]   | true     | Denomination of the token associated with the request. |
+
+#### Response
+
+| Status | Meaning       | Schema | Description                           |
+| ------ | ------------- | ------ | ------------------------------------- |
+| `200`  | [OK]          | [Coin] | The account balance.                  |
+| `400`  | [Bad Request] |        | The request was malformed or invalid. |
+
+Examples: [Python] | [Rust] | [API] | [Guide - Get Account Balance]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L28
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L38
+[API]: https://test-dydx-rest.kingnodes.com/cosmos/bank/v1beta1/balances/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art/by_denom?denom=adv4tnt
+[Guide - Get Account Balance]: ../../interaction/asset-management#get-account-balance
+[Address]: /types/address
+[Denom]: /types/denom
+[OK]: /types/ok
+[Coin]: /types/coin
+[Bad Request]: /types/bad-request

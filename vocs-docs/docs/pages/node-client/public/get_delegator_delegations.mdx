@@ -1,0 +1,66 @@
+### Get Delegator Delegations
+
+Retrieves all delegations associated with a specific delegator address. See the [definition](https://github.com/cosmos/cosmos-sdk/tree/main/x/staking#delegatordelegations).
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_delegator_delegations(
+    self, delegator_addr: str
+) -> staking_query.QueryDelegatorDelegationsResponse
+```
+
+```typescript [TypeScript]
+async getDelegatorDelegations(
+    delegatorAddr: string,
+): Promise<StakingModule.QueryDelegatorDelegationsResponse>
+```
+
+```rust [Rust]
+pub async fn get_delegator_delegations(
+    &mut self,
+    delegator_address: Address,
+    pagination: Option<CosmosPageRequest>,
+) -> Result<Vec<DelegationResponse>, Error>
+```
+
+```url [API]
+/cosmos.staking.v1beta1.Query/DelegatorDelegations
+```
+
+:::
+
+:::details[Unification Plan]
+
+- Python and TypeScript don't contain options
+- Options in protocol are not optional
+- Two types of options (v4 and cosmos, are the same, please use cosmos)
+  :::
+
+#### Parameters
+
+| Parameter        | Location | Type          | Required | Description                               |
+| ---------------- | -------- | ------------- | -------- | ----------------------------------------- |
+| `delegator_addr` | query    | [Address]     | true     | The wallet address that owns the account. |
+| `pagination`     | query    | [PageRequest] | false    | Parameters of pagination.                 |
+
+#### Response
+
+| Status | Meaning       | Schema                 |                                       |
+| ------ | ------------- | ---------------------- | ------------------------------------- |
+| `200`  | [OK]          | [DelegationResponse] ⛁ |                                       |
+| `400`  | [Bad Request] |                        | The request was malformed or invalid. |
+
+Examples: [Python] | [TypeScript] | [Rust] | [API]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L142
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L105
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L92
+[API]: https://test-dydx-rest.kingnodes.com/cosmos/staking/v1beta1/delegations/dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art
+[Address]: /types/address
+[OK]: /types/ok
+[PageRequest]: /types/page_request
+[DelegationResponse]: /types/delegation_response
+[Bad Request]: /types/bad-request

@@ -1,0 +1,60 @@
+### Create Transaction
+
+Create a transaction.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+async signTransaction(
+    messages: EncodeObject[],
+    transactionOptions: TransactionOptions,
+    fee?: StdFee,
+    memo: string = '',
+    publicKey?: Secp256k1Pubkey,
+): Promise<Uint8Array>
+```
+
+```rust [Rust]
+pub async fn create_transaction(
+    &mut self,
+    account: &mut Account,
+    msg: impl ToAny,
+    auth: Option<&Address>,
+) -> Result<tx::Raw, NodeError>
+```
+
+```url [API]
+
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter | Location | Type      | Mandatory | Description                       |
+| --------- | -------- | --------- | --------- | --------------------------------- |
+| `account` | query    | [Account] | true      | Owner's account information       |
+| `msg`     | query    | Any       | true      | Message during create transaction |
+| `auth`    | query    | [Address] | false     |                                   |
+
+#### Response
+
+| Status | Meaning       | Schema    |                                       |
+| ------ | ------------- | --------- | ------------------------------------- |
+| `200`  | [OK]          | [tx::Raw] |                                       |
+| `400`  | [Bad Request] |           | The request was malformed or invalid. |
+
+[Account]: /types/account
+[Address]: /types/address
+[OK]: /types/ok
+[tx::Raw]: /types/cosmos
+[Bad Request]: /types/bad-request

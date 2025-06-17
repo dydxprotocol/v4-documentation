@@ -1,0 +1,63 @@
+### Create Market Permissionless
+
+Create a market permissionless.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+async createMarketPermissionless(
+    subaccount: SubaccountInfo,
+    ticker: string,
+    broadcastMode?: BroadcastMode,
+    gasAdjustment?: number,
+    memo?: string,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [Rust]
+pub async fn create_market_permissionless(
+    &mut self,
+    account: &mut Account,
+    ticker: &Ticker,
+    subaccount: &Subaccount,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter    | Location | Type             | Description            |
+| ------------ | -------- | ---------------- | ---------------------- |
+| `account`    | query    | [Account]        | Account information    |
+| `ticker`     | query    | [Ticker]         | Ticker information     |
+| `subaccount` | query    | [SubaccountInfo] | Subaccount information |
+
+#### Response
+
+| Status | Meaning       | Schema   |                                       |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] |                                       |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+| `404`  | [Not Found]   |          | The subaccount was not found.         |
+
+[Account]: /types/account
+[Ticker]: /types/ticker
+[SubaccountInfo]: /types/subaccount_info
+[OK]: /types/ok
+[TxHash]: /types/tx_hash
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

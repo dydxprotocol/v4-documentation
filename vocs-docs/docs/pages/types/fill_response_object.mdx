@@ -1,0 +1,49 @@
+# FillResponseObject
+
+Represents the details of a trade fill, including size, price, market information, and metadata related to the order and subaccount.
+
+`id`: [FillId]
+
+`side`: [OrderSide]
+
+`size`: [BigDecimal]
+
+`fee`: [BigDecimal]
+
+`fill_type`: [FillType]
+
+`liquidity`: [Liquidity]
+
+`market`: [Ticker]
+
+`market_type`: [MarketType]
+
+`price`: [Price]
+
+`subaccount_number`: [SubaccountNumber]
+
+`created_at_height`: [Height]
+
+`created_at`: [DateTime]
+
+`client_metadata`: [ClientMetadata]
+
+`order_id`: [OrderId]
+
+:::details[Unification Plan]
+- Check the fields are really `market` and `market_type` (I guess yes since deserializer is strict)
+:::
+
+[FillId]: /types/fill_id
+[OrderSide]: /types/order_side
+[BigDecimal]: /types/big_decimal
+[FillType]: /types/fill_type
+[Liquidity]: /types/liquidity
+[Ticker]: /types/ticker
+[MarketType]: /types/market_type
+[Price]: /types/price
+[SubaccountNumber]: /types/subaccount_number
+[Height]: /types/height
+[DateTime]: /types/date_time
+[ClientMetadata]: /types/client_metadata
+[OrderId]: /types/order_id

@@ -1,0 +1,55 @@
+import { Button } from 'vocs/components';
+
+### Get Vaults Historical Pnl
+
+Vaults historical PnL.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+async getVaultsHistoricalPnl(resolution?: PnlTickInterval | null): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_vaults_historical_pnl(
+    &self,
+    resolution: PnlTickInterval,
+) -> Result<Vec<VaultHistoricalPnl>, Error>
+```
+
+```url [API]
+/v4/vault/v1/vaults/historicalPnl
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter    | Location | Type              | Required | Description          |
+| ------------ | -------- | ----------------- | -------- | -------------------- |
+| `resolution` | query    | [PnlTickInterval] | true     | PnL tick resolution. |
+
+#### Response
+
+| Status | Meaning       | Schema                 | Description                           |
+| ------ | ------------- | ---------------------- | ------------------------------------- |
+| `200`  | [OK]          | [VaultHistoricalPnl] ⛁ | The vault historical PnL data.        |
+| `400`  | [Bad Request] |                        | The request was malformed or invalid. |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/vault/v1/megavault/historicalPnl?resolution=day">
+  API Example
+</Button>
+
+[PnlTickInterval]: /types/pnl_tick_interval
+[OK]: /types/ok
+[VaultHistoricalPnl]: /types/vault_historical_pnl
+[Bad Request]: /types/bad-request

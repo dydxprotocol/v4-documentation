@@ -1,0 +1,58 @@
+### Get User Fee Tier
+
+Retrieves the perpetual fee tier associated with a specific wallet address, providing information on the user's current fee structure.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_user_fee_tier(
+    self, address: str
+) -> fee_tier_query.QueryUserFeeTierResponse
+```
+
+```typescript [TypeScript]
+async getUserFeeTier(address: string): Promise<FeeTierModule.QueryUserFeeTierResponse>
+```
+
+```rust [Rust]
+pub async fn get_user_fee_tier(
+    &mut self,
+    address: Address,
+) -> Result<PerpetualFeeTier, Error>
+```
+
+```url [API]
+/dydxprotocol.feetiers.Query/UserFeeTier
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter | Location | Type      | Required | Description                               |
+| --------- | -------- | --------- | -------- | ----------------------------------------- |
+| `user`    | query    | [Address] | true     | The wallet address that owns the account. |
+
+#### Response
+
+| Status | Meaning       | Schema             | Description                                |
+| ------ | ------------- | ------------------ | ------------------------------------------ |
+| `200`  | [OK]          | [PerpetualFeeTier] | The response containing the user fee tier. |
+| `400`  | [Bad Request] |                    | The request was malformed or invalid.      |
+
+Examples: [Python] | [TypeScript] | [Rust] | [API]| [Guide - Get User Fee Tier]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L176
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L73
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L113
+[API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/v4/feetiers/user_fee_tier?user=dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art
+[Guide - Get User Fee Tier]: ../../interaction/data#get-user-fee-tier
+[Address]: /types/address
+[OK]: /types/ok
+[PerpetualFeeTier]: /types/perpetual_fee_tier
+[Bad Request]: /types/bad-request

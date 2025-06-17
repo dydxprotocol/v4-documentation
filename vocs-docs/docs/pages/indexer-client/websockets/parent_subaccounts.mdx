@@ -1,0 +1,54 @@
+import BatchedArray from '../../../components/BatchedArray';
+
+### Parent Subaccounts
+
+Data feed of a parent subaccount. This channel returns similar data to the [subaccount channel](/indexer-client/websockets/subaccounts).
+
+A parent subaccount is a subaccount numbered between 0 and 127. Used for isolated position management by the dYdX frontend (web).
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+# Coming soon.
+```
+
+```typescript [TypeScript]
+// Coming soon.
+```
+
+```rust [Rust]
+// struct `Feeds`
+pub async fn parent_subaccounts(
+    &mut self,
+    subaccount: ParentSubaccount,
+    batched: bool,
+) -> Result<Feed<ParentSubaccountsMessage>, FeedError>
+// The stream is unsubscribed when the `Feed` object is dropped
+```
+
+```url [Channel]
+v4_parent_subaccounts
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Schema
+
+The field `id` is a string containing the subaccount ID (address and subaccount number). It is formattted as `{address}/{subaccount-number}`.
+
+The field `contents` is serialized using the following schemas.
+
+##### Messages
+
+| Initial | Update     |
+| ------ | ----------- | 
+| [`ParentSubaccountsInitialMessage`] | [`ParentSubaccountsUpdateMessage`] <BatchedArray/> |
+
+
+[`ParentSubaccountsInitialMessage`]: /types/parent_subaccounts_initial_message
+[`ParentSubaccountsUpdateMessage`]: /types/parent_subaccounts_update_message

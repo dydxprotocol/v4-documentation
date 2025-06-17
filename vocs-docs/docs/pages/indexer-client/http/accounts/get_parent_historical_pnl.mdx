@@ -1,0 +1,75 @@
+import { Button } from 'vocs/components'
+
+### Get Parent Historical Pnl
+
+Query for profit and loss report for the specified time/block range of a parent subaccount.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+async getParentSubaccountNumberHistoricalPNLs(
+    address: string,
+    parentSubaccountNumber: number,
+    createdBeforeOrAtHeight?: number | null,
+    createdBeforeOrAt?: string | null,
+    createdOnOrAfterHeight?: number | null,
+    createdOnOrAfter?: string | null,
+    limit?: number | null,
+    page?: number | null,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_parent_historical_pnl(
+    &self,
+    subaccount: &ParentSubaccount,
+    opts: Option<GetHistoricalPnlOpts>,
+) -> Result<Vec<PnlTicksResponseObject>, Error>
+```
+
+```url [API]
+/v4/historical-pnl/parentSubaccountNumber
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                     | Location  | Type                  | Required  | Description                                                                                   |
+| ----------------------------- | --------- | --------------------- | --------- | --------------------------------------------------------------------------------------------- |
+| `address`                     | query     | [Address]             | true      | The wallet address that owns the parent subaccount.                                           |
+| `parentSubaccountNumber`      | query     | [SubaccountNumber]    | true      | The identifier for the specific subaccount within the wallet address.                         |
+| `limit`                       | query     | [u32]                 | false     | Maximum number of asset positions to return in the response.                                  |
+| `createdBeforeOrAtHeight`     | query     | [Height]              | false     | Restricts results to positions created at or before a specific blockchain height.             |
+| `createdBeforeOrAt`           | query     | [DateTime in UTC]     | false     | Restricts results to positions created at or before a specific timestamp (ISO 8601 format).   |
+| `createdOnOrAfterHeight`      | query     | [Height]              | false     | Restricts results to positions created on or after a specific blockchain height.              |
+| `createdOnOrAfter`            | query     | [DateTime in UTC]     | false     | Restricts results to positions created on or after a specific timestamp (ISO 8601 format).    |
+
+#### Response
+
+| Status | Meaning       | Schema                         | Description                           |
+| ------ | ------------- | ------------------------------ | ------------------------------------- |
+| `200`  | [OK]          | [PnlTicksResponseObject] ⛁     | The historical PnLs data.             |
+| `400`  | [Bad Request] |                                | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                                | The parent subaccount was not found.  |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/historical-pnl/parentSubaccountNumber?address=dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art&parentSubaccountNumber=0">API Example</Button>
+
+[Address]: /types/address
+[SubaccountNumber]: /types/subaccount_number
+[u32]: /types/u32
+[Height]: /types/height
+[DateTime in UTC]: /types/date_time
+[PnlTicksResponseObject]: /types/pnl_ticks_response_object
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found
+[OK]: /types/ok

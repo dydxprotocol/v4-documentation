@@ -1,0 +1,65 @@
+import { Button } from 'vocs/components';
+
+### List Parent Positions
+
+List all positions of a parent subaccount.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+
+```
+
+```typescript [TypeScript]
+
+```
+
+```rust [Rust]
+pub async fn list_parent_positions(
+    &self,
+    subaccount: &ParentSubaccount,
+    opts: Option<ListPositionsOpts>,
+) -> Result<Vec<PerpetualPositionResponseObject>, Error>
+```
+
+```url [API]
+/v4/perpetualPositions/parentSubaccountNumber
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                | Location | Type               | Required | Description                                                  |
+| ------------------------ | -------- | ------------------ | -------- | ------------------------------------------------------------ |
+| `address`                | query    | [Address]          | true     | The wallet address that owns the account.                    |
+| `parentSubaccountNumber` | query    | [SubaccountNumber] | true     | Subaccount number of the parent subaccount.                  |
+| `limit`                  | query    | [u32]              | false    | Maximum number of asset positions to return in the response. |
+
+#### Response
+
+| Status | Meaning       | Schema                              | Description                           |
+| ------ | ------------- | ----------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [PerpetualPositionResponseObject] ⛁ | The perpetual positions data.         |
+| `400`  | [Bad Request] |                                     | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                                     | The subaccount was not found.         |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/perpetualPositions/parentSubaccountNumber?address=dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art&parentSubaccountNumber=0">
+  API Example
+</Button>
+
+[Address]: /types/address
+[SubaccountNumber]: /types/subaccount_number
+[OK]: /types/ok
+[PerpetualPositionResponseObject]: /types/perpetual_position_response_object
+[Address]: /types/address
+[u32]: /types/u32
+[OK]: /types/ok
+[PerpetualPositionResponseObject]: /types/perpetual_position_response_object
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

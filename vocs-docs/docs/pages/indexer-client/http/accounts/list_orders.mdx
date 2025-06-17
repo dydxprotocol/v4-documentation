@@ -1,0 +1,102 @@
+import { Button } from 'vocs/components'
+
+### List Orders
+
+Retrieves orders for a specific subaccount, with various filtering options to narrow down the results based on order characteristics.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_subaccount_orders(
+    self,
+    address: str,
+    subaccount_number: int,
+    ticker: Optional[str] = None,
+    ticker_type: TickerType = TickerType.PERPETUAL,
+    side: Optional[OrderSide] = None,
+    status: Optional[OrderStatus] = None,
+    type: Optional[OrderType] = None,
+    limit: Optional[int] = None,
+    good_til_block_before_or_at: Optional[int] = None,
+    good_til_block_time_before_or_at: Optional[str] = None,
+    return_latest_orders: Optional[bool] = None,
+) -> Any
+```
+
+```typescript [TypeScript]
+async getSubaccountOrders(
+    address: string,
+    subaccountNumber: number,
+    ticker?: string | null,
+    tickerType: TickerType = TickerType.PERPETUAL,
+    side?: OrderSide | null,
+    status?: OrderStatus | null,
+    type?: OrderType | null,
+    limit?: number | null,
+    goodTilBlockBeforeOrAt?: number | null,
+    goodTilBlockTimeBeforeOrAt?: string | null,
+    returnLatestOrders?: boolean | null,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn list_orders(
+    &self,
+    subaccount: &Subaccount,
+    opts: Option<ListOrdersOpts>,
+) -> Result<ListOrdersResponse, Error>
+```
+
+```url [API]
+/v4/orders
+```
+
+:::
+
+:::details[Unification Plan]
+:::
+
+#### Parameters
+
+| Parameter                             | Location | Type               | Required  | Description                                                           |
+| ------------------------------------- | -------- | ------------------ | --------- | --------------------------------------------------------------------- |
+| `address`                             | query    | [Address]          | true      | The wallet address that owns the account.                             |
+| `subaccountNumber`                    | query    | [SubaccountNumber] | true      | The identifier for the specific subaccount within the wallet address. |
+| `limit`                               | query    | [u32]              | false     | Maximum number of asset positions to return in the response.          |
+| `ticker`                              | query    | [Ticker]           | false     | The ticker filter.                                                    |
+| `side`                                | query    | [OrderSide]        | false     | The order side filter.                                                |
+| `status`                              | query    | [OrderStatus]      | false     | The order status filter.                                              |
+| `type`                                | query    | [OrderType]        | false     | The order type filter.                                                |
+| `goodTilBlockBeforeOrAt`              | query    | [Height]           | false     | The block number filter for orders good until before or at.           |
+| `goodTilBlockTimeBeforeOrAt`          | query    | [DateTime in UTC]  | false     | The timestamp filter for orders good until before or at.              |
+| `returnLatestOrders`                  | query    | bool               | false     | Whether to return only the latest orders.                             |
+
+#### Response
+
+| Status | Meaning       | Schema               | Description                           |
+| ------ | ------------- | -------------------- | ------------------------------------- |
+| `200`  | [OK]          | [ListOrdersResponse] | The orders data.                      |
+| `400`  | [Bad Request] |                      | The request was malformed or invalid. |
+| `404`  | [Not Found]   |                      | The subaccount was not found.         |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/orders?address=dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art&subaccountNumber=0">API Example</Button>
+
+Examples: [Guide - List Orders]
+
+[Guide - List Orders]: ../../interaction/data#list-orders
+
+[Address]: /types/address
+[SubaccountNumber]: /types/subaccount_number
+[u32]: /types/u32
+[Ticker]: /types/ticker
+[OrderSide]: /types/order_side
+[OrderStatus]: /types/order_status
+[OrderType]: /types/order_type
+[Height]: /types/height
+[DateTime in UTC]: /types/date_time
+[ListOrdersResponse]: /types/list_orders_response
+[OK]: /types/ok
+[Bad Request]: /types/bad-request
+[Not Found]: /types/not-found

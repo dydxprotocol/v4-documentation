@@ -1,0 +1,48 @@
+### Get Rewards Params
+
+Retrieves the parameters for the rewards system, providing insight into the set configurations for earning and distributing rewards.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_rewards_params(self) -> rewards_query.QueryParamsResponse
+```
+
+```typescript [TypeScript]
+async getRewardsParams(): Promise<RewardsModule.QueryParamsResponse>
+```
+
+```rust [Rust]
+pub async fn get_rewards_params(&mut self) -> Result<Params, Error>
+```
+
+```url [API]
+/dydxprotocol.rewards.Query/Params
+```
+
+:::
+
+:::details[Unification Plan]
+
+- Rename `Params` to `RewardsParams` in Rust
+  :::
+
+#### Parameters
+
+#### Response
+
+| Status | Meaning | Schema          |
+| ------ | ------- | --------------- |
+| `200`  | [OK]    | [RewardsParams] |
+
+Examples: [Python] | [TypeScript] | [Rust] | [API] | [Guide - Get Rewards Params]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-py-v2/examples/validator_get_example.py#L184
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L97
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L116
+[API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/v4/rewards/params
+[Guide - Get Rewards Params]: ../../interaction/data#get-rewards-params
+[OK]: /types/ok
+[RewardsParams]: /types/rewards_params

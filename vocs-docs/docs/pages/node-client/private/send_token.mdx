@@ -1,0 +1,81 @@
+### Send Token
+
+Transfer a specified token from one account/address to another.
+
+It requires details such as the wallet for signing the transaction, sender and recipient addresses, and the quantum amount or denomination of the token.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def send_token(
+    self,
+    wallet: Wallet,
+    sender: str,
+    recipient: str,
+    quantums: int,
+    denomination: str,
+)
+```
+
+```typescript [TypeScript]
+async sendToken(
+    subaccount: SubaccountInfo,
+    recipient: string,
+    coinDenom: string,
+    quantums: string,
+    zeroFee: boolean = true,
+    broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [Rust]
+pub async fn send_token(
+    &mut self,
+    account: &mut Account,
+    sender: Address,
+    recipient: Address,
+    token: impl Tokenized,
+) -> Result<TxHash, NodeError>
+```
+
+```url [API]
+```
+
+:::
+
+:::details[Unification Plan]
+- All the types are different, revision is needed
+- Standard types like strings are used
+- Broadcast mode?
+- Zero fee?
+:::
+
+#### Parameters
+
+| Parameter         | Location  | Type      | Required  | Description                                       |
+| ----------------- | --------- | --------- | --------- | ------------------------------------------------- |
+| `wallet`          | query     | [Wallet]  | true      | The wallet to use for signing the transaction.    |
+| `sender`          | query     | [String]  | true      | The sender address.                               |
+| `recipient`       | query     | [String]  | true      | The recipient address.                            |
+| `quantums`        | query     | [i32]     | true      | The amount of quantums to send.                   |
+| `denomination`    | query     | [i32]     | true      | The denomination of the token.                    |
+
+#### Response
+
+| Status | Meaning       | Schema   |                                       |
+| ------ | ------------- | -------- | ------------------------------------- |
+| `200`  | [OK]          | [TxHash] |                                       |
+| `400`  | [Bad Request] |          | The request was malformed or invalid. |
+
+Examples: [Rust]
+
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/main/v4-client-rs/client/examples/send_token.rs
+
+[Wallet]: /types/wallet
+[TxHash]: /types/tx_hash
+[String]: /types/string
+[i32]: /types/i32
+[OK]: /types/ok
+[Bad Request]: /types/bad-request
