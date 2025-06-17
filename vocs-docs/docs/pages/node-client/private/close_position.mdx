@@ -48,9 +48,9 @@ pub async fn close_position(
 
 #### Response
 
-| Status | Meaning       | Schema   |
+| Status | Meaning       | Schema   |                                       |
 | ------ | ------------- | -------- | ------------------------------------- |
-| `200`  | [OK]          | [TxHash] |
+| `200`  | [OK]          | [TxHash] |                                       |
 | `400`  | [Bad Request] |          | The request was malformed or invalid. |
 | `404`  | [Not Found]   |          | The subaccount was not found.         |
 
@@ -65,3 +65,4 @@ Examples: [Rust]
 [TxHash]: /types/tx_hash
 [Bad Request]: /types/bad-request
 [Not Found]: /types/not-found
+[OK]: /types/ok

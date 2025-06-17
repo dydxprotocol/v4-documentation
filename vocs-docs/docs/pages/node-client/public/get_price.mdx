@@ -35,9 +35,9 @@ pub async fn get_price(&mut self, market_id: u32) -> Result<MarketPrice, Error>
 
 #### Response
 
-| Status | Meaning       | Schema        |
+| Status | Meaning       | Schema        |                                       |
 | ------ | ------------- | ------------- | ------------------------------------- |
-| `200`  | [OK]          | [MarketPrice] |
+| `200`  | [OK]          | [MarketPrice] |                                       |
 | `400`  | [Bad Request] |               | The request was malformed or invalid. |
 | `404`  | [Not Found]   |               | The market was not found.             |
 
