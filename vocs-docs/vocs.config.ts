@@ -361,7 +361,7 @@ export default defineConfig({
       React.createElement('script', {
         key: 'kapa-widget',
         src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
-        'data-website-id': 'c82800f5-e43e-4afe-86c5-dc5ba554a339',
+        'data-website-id': '7353f8eb-1333-44ce-8ea3-d5767430e3fc',
         'data-project-name': 'dYdX',
         'data-project-color': '#212131',
         'data-project-logo': 'https://dydx.exchange/icon.svg',
@@ -372,7 +372,7 @@ export default defineConfig({
       // Google Analytics
       React.createElement('script', {
         key: 'gtag-script',
-        src: 'https://www.googletagmanager.com/gtag/js?id=G-BM5F5DVTBF',
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-DLVT1X3ZWX',
         async: true
       }),
       
@@ -383,7 +383,7 @@ export default defineConfig({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-BM5F5DVTBF');
+            gtag('config', 'G-DLVT1X3ZWX');
           `
         }
       })
