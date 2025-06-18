@@ -1,4 +1,5 @@
 import { defineConfig } from 'vocs'
+import React from 'react'
 
 export default defineConfig({
     title: 'dYdX Documentation',
@@ -354,4 +355,38 @@ export default defineConfig({
             ],
         },
     ],
+    head: () => {
+    return React.createElement('div', {}, [
+      // Kapa AI Widget
+      React.createElement('script', {
+        key: 'kapa-widget',
+        src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
+        'data-website-id': 'c82800f5-e43e-4afe-86c5-dc5ba554a339',
+        'data-project-name': 'dYdX',
+        'data-project-color': '#212131',
+        'data-project-logo': 'https://dydx.exchange/icon.svg',
+        'data-user-analytics-fingerprint-enabled': 'true',
+        defer: true
+      }),
+      
+      // Google Analytics
+      React.createElement('script', {
+        key: 'gtag-script',
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-BM5F5DVTBF',
+        async: true
+      }),
+      
+      React.createElement('script', {
+        key: 'gtag-config',
+        dangerouslySetInnerHTML: {
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-BM5F5DVTBF');
+          `
+        }
+      })
+    ])
+  }
 })
