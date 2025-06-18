@@ -372,7 +372,7 @@ export default defineConfig({
       // Google Analytics
       React.createElement('script', {
         key: 'gtag-script',
-        src: 'https://www.googletagmanager.com/gtag/js?id=G-DLVT1X3ZWX',
+        src: 'https://www.googletagmanager.com/gtag/js?id=GT-WR4LPXW6',
         async: true
       }),
       
@@ -383,7 +383,7 @@ export default defineConfig({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-DLVT1X3ZWX');
+            gtag('config', 'GT-WR4LPXW6');
           `
         }
       })
