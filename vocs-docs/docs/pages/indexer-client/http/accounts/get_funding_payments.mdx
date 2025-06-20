@@ -1,0 +1,88 @@
+import { Button } from 'vocs/components'
+
+### Get Funding Payments
+
+Retrieves funding payment history for a specific subaccount.
+Funding payments are periodic settlements that occur between long and short positions based on the funding rate.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_funding_payments(
+    self,
+    address: str,
+    subaccount_number: int,
+    limit: Optional[int] = None,
+    ticker: Optional[str] = None,
+    after_or_at: Optional[str] = None,
+    page: Optional[int] = None,
+) -> Any
+```
+
+```typescript [TypeScript]
+async getFundingPayments(
+    address: string,
+    subaccountNumber: number,
+    limit?: number | null,
+    ticker?: string | null,
+    afterOrAt?: string | null,
+    page?: number | null,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_funding_payments(
+    &self,
+    subaccount: &Subaccount,
+    opts: Option<GetFundingPaymentsOpts>,
+) -> Result<Vec<FundingPaymentResponseObject>, Error>
+```
+
+```bash [cURL]
+curl -X GET "https://indexer.v4testnet.dydx.exchange/v4/fundingPayments?address=dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art&subaccountNumber=0" \
+  -H "Accept: application/json"
+```
+
+```url [API]
+/v4/fundingPayments
+```
+
+:::
+
+:::details[Unification Plan]
+- Rename all methods to `get_funding_payments` - shorter is better.
+- Add a `Subaccount` pair to Python and JavaScript, since it's always a pair
+- `page` optional parameter is missing in Python
+- `page` optional parameter is missing in Rust
+:::
+
+#### Parameters
+
+| Parameter           | Location | Type               | Required   | Description                                                                                                      |
+| ------------------- | -------- | ------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------- |
+| `address`           | query    | [Address]          | true       | The wallet address that owns the account.                                                                        |
+| `subaccountNumber`  | query    | [SubaccountNumber] | true       | The identifier for the specific subaccount within the wallet address.                                            |
+| `limit`             | query    | [u32]              | false      | Maximum number of funding payments to return in the response.                                                    |
+| `ticker`            | query    | [Ticker]           | false      | The market symbol to filter funding payments by (e.g., "BTC-USD"). If not provided, payments for all markets will be returned. |
+| `afterOrAt`         | query    | [DateTime]         | false      | Filters results to funding payments created at or after a specific timestamp (ISO 8601 format).                |
+| `page`              | query    | [u32]              | false      | The page number for paginated results.                                                                           |
+
+#### Response
+
+A promise that resolves to funding payment data containing details such as payment amount, funding rate, position size, market ticker, and timestamp information.
+
+| Status   | Meaning     | Schema                           | Description                    |
+| -------- | ----------- | -------------------------------- | ------------------------------ |
+| `200`    | [OK]        | [FundingPaymentsResponseObject] ⛁ | The funding payments data.     |
+
+<Button href="https://indexer.v4testnet.dydx.exchange/v4/fundingPayments?address=dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art&subaccountNumber=0">API Example</Button>
+
+[Address]: /types/address
+[SubaccountNumber]: /types/subaccount_number
+[OK]: /types/ok
+[u32]: /types/u32
+[Ticker]: /types/ticker
+[DateTime]: /types/date_time
+[FundingPaymentsResponseObject]: /types/funding_payments_response_object
