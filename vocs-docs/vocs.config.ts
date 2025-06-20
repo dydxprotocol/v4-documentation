@@ -387,6 +387,55 @@ export default defineConfig({
           `
         }
       })
-    ])
+    ]),
+       // OG meta tags
+    React.createElement('meta', {
+      key: 'og-title',
+      property: 'og:title',
+      content: 'dYdX Documentation'
+    }),
+    React.createElement('meta', {
+      key: 'og-description',
+      property: 'og:description',
+      content: 'Explore the official dYdX v4 documentation for developers and validators.'
+    }),
+    React.createElement('meta', {
+      key: 'og-image',
+      property: 'og:image',
+      content: 'https://dydx.exchange/icon.svg'
+    }),
+    React.createElement('meta', {
+      key: 'og-url',
+      property: 'og:url',
+      content: 'https://docs.dydx.xyz'
+    }),
+    React.createElement('meta', {
+      key: 'og-type',
+      property: 'og:type',
+      content: 'website'
+    }),
+
+    // Twitter Card Meta Tags
+    React.createElement('meta', {
+      key: 'twitter-card',
+      name: 'twitter:card',
+      content: 'summary_large_image'
+    }),
+    React.createElement('meta', {
+      key: 'twitter-title',
+      name: 'twitter:title',
+      content: 'dYdX Documentation'
+    }),
+    React.createElement('meta', {
+      key: 'twitter-description',
+      name: 'twitter:description',
+      content: 'Explore the dYdX documentation for traders'
+    }),
+    React.createElement('meta', {
+      key: 'twitter-image',
+      name: 'twitter:image',
+      content: 'https://dydx.exchange/icon.svg' 
+    })
+
   }
 })
