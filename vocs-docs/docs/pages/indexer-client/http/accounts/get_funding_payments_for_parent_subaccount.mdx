@@ -10,47 +10,37 @@ This endpoint aggregates funding payments across all child subaccounts of a give
 :::code-group
 
 ```python [Python]
-import requests
-headers = {
-  'Accept': 'application/json'
-}
+async def get_funding_payments_for_parent_subaccount(
+    self,
+    address: str,
+    parent_subaccount_number: int,
+    limit: Optional[int] = None,
+    after_or_at: Optional[str] = None,
+    page: Optional[int] = None,
+) -> Any
+```
 
-# For the deployment by DYDX token holders, use
-# baseURL = 'https://indexer.dydx.trade/v4'
-baseURL = 'https://indexer.v4testnet.dydx.exchange/v4'
+```typescript [TypeScript]
+async getFundingPaymentsForParentSubaccount(
+    address: string,
+    parentSubaccountNumber: number,
+    limit?: number | null,
+    afterOrAt?: string | null,
+    page?: number | null,
+): Promise<Data>
+```
 
-r = requests.get(f'{baseURL}/fundingPayments/parentSubaccount', params={
-  'address': 'string',  'parentSubaccountNumber': '0.1'
-}, headers = headers)
-
-print(r.json())
+```rust [Rust]
+pub async fn get_funding_payments_for_parent_subaccount(
+    &self,
+    parent_subaccount: &ParentSubaccount,
+    opts: Option<GetFundingPaymentsForParentSubaccountOpts>,
+) -> Result<Vec<FundingPaymentResponseObject>, Error>
 ```
 
 ```bash [cURL]
 curl -X GET "https://indexer.v4testnet.dydx.exchange/v4/fundingPayments/parentSubaccount?address=dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art&parentSubaccountNumber=0" \
   -H "Accept: application/json"
-```
-
-```javascript [JavaScript]
-const headers = {
-  'Accept':'application/json'
-};
-
-// For the deployment by DYDX token holders, use
-// const baseURL = 'https://indexer.dydx.trade/v4';
-const baseURL = 'https://indexer.v4testnet.dydx.exchange/v4';
-
-fetch(`${baseURL}/fundingPayments/parentSubaccount?address=string&parentSubaccountNumber=0.1`,
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
 ```
 
 ```url [API]

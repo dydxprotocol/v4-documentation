@@ -10,40 +10,34 @@ Funding payments are periodic settlements that occur between long and short posi
 :::code-group
 
 ```python [Python]
-import requests
-headers = {
-  'Accept': 'application/json'
-}
-
-# For the deployment by DYDX token holders, use
-# baseURL = 'https://indexer.dydx.trade/v4'
-baseURL = 'https://indexer.v4testnet.dydx.exchange/v4'
-
-r = requests.get(f'{baseURL}/fundingPayments', params={
-  'address': 'string',  'subaccountNumber': '0.1'
-}, headers = headers)
-
-print(r.json())
+async def get_funding_payments(
+    self,
+    address: str,
+    subaccount_number: int,
+    limit: Optional[int] = None,
+    ticker: Optional[str] = None,
+    after_or_at: Optional[str] = None,
+    page: Optional[int] = None,
+) -> Any
 ```
 
 ```typescript [TypeScript]
-const headers = {
-  'Accept': 'application/json'
-};
+async getFundingPayments(
+    address: string,
+    subaccountNumber: number,
+    limit?: number | null,
+    ticker?: string | null,
+    afterOrAt?: string | null,
+    page?: number | null,
+): Promise<Data>
+```
 
-// For the deployment by DYDX token holders, use
-// const baseURL = 'https://indexer.dydx.trade/v4';
-const baseURL = 'https://indexer.v4testnet.dydx.exchange/v4';
-
-fetch(`${baseURL}/fundingPayments?address=dydx14zzueazeh0hj67cghhf9jypslcf9sh2n5k6art&subaccountNumber=0`, {
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
+```rust [Rust]
+pub async fn get_funding_payments(
+    &self,
+    subaccount: &Subaccount,
+    opts: Option<GetFundingPaymentsOpts>,
+) -> Result<Vec<FundingPaymentResponseObject>, Error>
 ```
 
 ```bash [cURL]
