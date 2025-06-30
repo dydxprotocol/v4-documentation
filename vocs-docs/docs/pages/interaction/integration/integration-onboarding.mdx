@@ -1,0 +1,63 @@
+# Onboarding
+
+The client application onboards the user by asking the user to sign a message using an existing wallet address. The v4-client-js library provides a [function](https://github.com/dydxprotocol/v4-clients/blob/a2c7adcc64b33fefaf56ffb6fc1d2bb8b174601e/v4-client-js/src/lib/onboarding.ts#L43) that deterministically generates the dYdX chain address and keys from the signed message.
+Once the keys are generated, the client application can use them to sign transactions on the dYdX chain on the user’s behalf, enabling secure and seamless interaction with the platform.
+
+
+## Deposits and Withdrawals
+
+**Deposits** are in three steps.  First, the client calls Skip’s API to construct the transaction that routes the fund from the source chain to Noble.  Users would need to sign and send this transaction from their wallet.  The client then polls the balance at the user's Noble address, and when the fund arrives, it would sign (using the user’s dYdX key pair) and send it over to the dYdX chain (see [here](https://github.com/dydxprotocol/v4-web/blob/71bd9c7f85512fe1893fd656968011cf75b106e6/src/bonsai/lifecycles/nobleBalanceSweepLifecycle.ts#L119)).  Lastly, after the fund arrives at dYdX,  the client moves the fund from the user's main account to the [subaccount](/node-client/private#transfer) for trading.
+
+**Withdrawal** is a reverse process of deposit.  First, the fund needs to be moved from the user's subaccount to the main account.  Then, a withdrawal transaction is constructed to send the fund to the destination chain/address.   The withdrawal transaction contains two child transactions: 1) sending from dYdX chain to Noble chain, and 2) Noble to destination chain (obtained from the Skip route API).  See [here](https://github.com/dydxprotocol/v4-web/blob/71bd9c7f85512fe1893fd656968011cf75b106e6/src/hooks/useSubaccount.tsx#L156).  
+
+Users must deposit Noble USDC as collateral into the dYdX chain to begin trading. The dYdX chain uses USDC.  To construct the route for deposits and withdrawals, we recommend using Skip Go, either through the [Typescript client](https://docs.skip.build/go/client/getting-started) or by calling the [APIs](https://docs.skip.build/go/general/getting-started) directly. There are endpoints to get the supported [chains](https://docs.skip.build/go/api-reference/prod/info/get-v2infochains) and [tokens](https://docs.skip.build/go/api-reference/prod/fungible/get-v2fungibleassets). To initiate a deposit or withdrawal, first call the [route](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute) endpoint to fetch the route. 
+
+Sample route fetch request for deposit looks like this:
+
+```bash
+curl 'https://api.skip.build/v2/fungible/route' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'content-type: application/json' \
+  --data-raw '{"source_asset_denom":"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48","source_asset_chain_id":"1","dest_asset_denom":"ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5","dest_asset_chain_id":"dydx-mainnet-1","cumulative_affiliate_fee_bps":"0","allow_unsafe":true,"smart_relay":true,"smart_swap_options":{"split_routes":false,"evm_swaps":true},"amount_in":"10000000"}'
+  ```
+
+Here `ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5` is the USDC denom of the dYdX Chain. 
+
+Set the [bridges](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute#body-bridges) option to include `“CCTP”`, `“GO_FAST”`, `“IBC”`, and `“AXELAR”`.  
+You can also set the [go_fast](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute#body-go-fast) to `true` for selected chains/and tokens (see [here](https://docs.skip.build/go/advanced-transfer/go-fast)), which would return a route that can be completed within 10 seconds.
+
+The route endpoint will return the estimated time and fees for the transfer that can be shown to the user.
+
+After user accepts the route, call the [msgs](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungiblemsgs) endpoint and passing the operations returned from the `route` response payload to fetch the transaction data:
+
+```bash
+curl 'https://api.skip.build/v2/fungible/msgs' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'content-type: application/json' \
+  --data-raw '{"source_asset_denom":"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48","source_asset_chain_id":"1","dest_asset_denom":"ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5","dest_asset_chain_id":"dydx-mainnet-1","amount_in":"10000000","amount_out":"9980000","address_list":["0x0765CA6d3DC4fa6d6638781BA8414A1f5eFbfAd8","dydx1k93udthd0vtzjk465f846qzea3fzq7axnmfqyz"],"operations":[{"tx_index":0,"amount_in":"10000000","amount_out":"9980000","cctp_transfer":{"from_chain_id":"1","to_chain_id":"noble-1","burn_token":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","bridge_id":"CCTP","denom_in":"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48","denom_out":"uusdc","smart_relay":true,"smart_relay_fee_quote":{"fee_amount":"20000","relayer_address":"noble1dyw0geqa2cy0ppdjcxfpzusjpwmq85r5a35hqe","expiration":"2025-03-14T00:52:56Z","fee_payment_address":"0xBC8552339dA68EB65C8b88B414B5854E0E366cFc","fee_denom":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"}}},{"tx_index":0,"amount_in":"9980000","amount_out":"9980000","transfer":{"port":"transfer","channel":"channel-33","from_chain_id":"noble-1","to_chain_id":"dydx-mainnet-1","pfm_enabled":true,"supports_memo":true,"denom_in":"uusdc","denom_out":"ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5","bridge_id":"IBC","dest_denom":"ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5","chain_id":"noble-1","smart_relay":false}}],"estimated_amount_out":"9980000","slippage_tolerance_percent":"1"}'
+  ```
+
+Here, `dydx1k93udthd0vtzjk465f846qzea3fzq7axnmfqyz` is the user's dYdX chain address obtained from the Onboarding step.  
+
+To obtain the relay address for Noble, Osmosis and Neutron, do conversion from the dYdX address as follows
+
+
+```bash
+     dydx_address="dydx1kgjgvl3xer7rwskp6tlynmjrd2juas6nqxn8yg"  
+     noble_address=bech32.bech32_encode("noble", bech32.bech32_decode(dydx_address)[1])
+     osmosis_address=bech32.bech32_encode("osmo", bech32.bech32_decode(dydx_address)[1]
+     neutron_address=bech32.bech32_encode("neutron", bech32.bech32_decode(dydx_address)[1])
+```
+
+
+The `route` and `msgs` calls can be combined into one call to [msgs_direct](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungiblemsgs_direct).  
+
+To submit the transaction, the transaction payload data from the `msgs` or `msgs_direct` should be submitted via the user wallet.
+
+### Supported Tokens & Chains for Go Fast
+- Go Fast supports `any EVM` asset on the supported source chains that can be swapped to USDC.
+- Any asset on the `Cosmos side` that can be swapped from USDC is also supported.
+- This includes `instant deposit` support for assets like ETH on Ethereum, which can be instantly converted to USDC on dYdX.
+- If a chain has `instant finality` and `IBC compatibility`, transfers can be near-instant, making it functionally similar to Instant Deposit.
+- `Chains not supported by CCTP` will not have Instant Deposit functionality but can still use IBC for transfers.
+- For an exhaustive list of supported tokens, reference the [Skip Go documentation](https://docs.skip.build/go/advanced-transfer/go-fast).

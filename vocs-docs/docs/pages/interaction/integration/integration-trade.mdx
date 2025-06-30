@@ -1,0 +1,147 @@
+# Placing a Trade
+
+## Market Order (Simple Trade)
+
+Market trade lets users execute an order based on the current state of the orderbook.
+
+
+![marketorder](/marketorder.png)
+
+(a) Trade size in USD.
+
+(b) Trade size in native token.  This value should be dynamically updated based on the trade size in USD and the current state of the order book.
+Order Fulfillment Process (See [link](https://github.com/dydxprotocol/v4-abacus/blob/f3802563c06422eb5a3de0b1e48719fb279fab71/src/commonMain/kotlin/exchange.dydx.abacus/calculator/V2/TradeInput/TradeInputMarketOrderCalculator.kt#L379) for an implementation):
+
+1. Iterate through the order book from the top (best price first).
+2. Attempt to fill the order by consuming liquidity until the requested USDC size is met.
+3. Sum up the native token size from the orders used in the process.
+
+The toggle button to the right would toggle the input between (a) and (b).
+
+(c) Maximum amount that can be entered into (a).  The maximum order amount is constrained by:
+1. The maximum leverage of the selected token market.
+2. The user’s remaining free collateral.
+
+This is similar to previous calculations, but with an additional consideration for current pending orders.
+
+### Adjustments for Existing Positions
+- If the proposed order modifies an existing position in the same token market, the displayed buying power must be adjusted accordingly:
+- If the new order is in the same direction (LONG on top of LONG, SHORT on top of SHORT): The buying power remains unchanged.
+- If the new order is in the opposite direction (LONG on top of SHORT, SHORT on top of LONG): The buying power increases since closing the existing position frees up collateral.
+
+Example Calculation:
+- Current buying power: $500
+- Existing position: LONG ETH-USD, worth $100
+
+
+| New Order Type                | Adjusted Buying Power    | 
+| ----------------------------- | ------------------------ | 
+| LONG ETH-USD                  | $500 (unchanged)         | 
+| SHORT ETH-USD                 | $700 (increased by $200) | 
+
+
+This adjustment ensures that users see the correct available buying power based on their current open positions and pending orders.
+
+(d) `Account level risk`.  Same as here, except taking into account the current pending order.
+
+(e) `Fees`.  Each user belongs to a fee tier depending on the volume of trades that have executed.  The actual fee is the USD size of the trade multiplied by the fee rate associated with the fee tier.  To get the [current fee tier](/node-client/public/get_user_fee_tier) of the user, call validator’s RPC UserFeeTier endpoint (see [example](https://github.com/dydxprotocol/v4-clients/blob/9e77056451944c15c4625854da96de5e023e429d/v4-client-js/src/clients/modules/get.ts#L99)).
+
+### Market Order Submission
+
+To submit a market order, the client can use the [placeOrder](/node-client/private#place-order) function of the  v4-client-js library with the following parameters:
+
+- type=”MARKET”
+- timeInForce = “IOC”
+- price = value from (a) / value from (b) * (1+slippage_threhold), where slippage_threhold = 0.05
+- clientId = [some unique random id]
+
+The validator will return an error if the input is invalid, meaning client-side validation is not strictly necessary.  However, it is recommended that the client application validates user input before submitting an order to enhance the user experience by preventing unnecessary errors and reducing failed transactions [sample validation logic](https://github.com/dydxprotocol/v4-abacus/blob/f3802563c06422eb5a3de0b1e48719fb279fab71/src/commonMain/kotlin/exchange.dydx.abacus/validator/TradeInputValidator.kt#L26).
+Pending orders will be returned from the websocket `v4_parent_subaccounts` channel  [sample response].  Each [order](/types/order) in the list will contain a `clientId` field, which the client can match against the trade submission payload’s clientId.  Once the order is executed, the `openPerpetualPositions` field from the websocket `v4_parent_subaccount` channel will have the position added or updated.
+
+### Closing a Position
+
+To close an existing position, submit a market order using the [placeOrder](/node-client/private#place-order) function of the `v4-client-js` library with the position size as the “size” field. Make the “side” to be the opposite of the position side, and reduceOnly to “true”.
+
+Once the order is executed, the openPerpetualPositions field from the websocket `v4_parent_subaccount` channel will have the existing position removed.
+
+### Pro Trade (Limit, Take Profit, Stop Loss, etc)
+
+[TO-DO]
+
+## Trigger Orders
+
+Users can add take profit and stop loss triggers to existing positions.  
+
+
+![triggerorder](/triggerorder.png)
+
+
+To find existing trigger orders associated with the current position, examine the `“orders”` list returned from the websocket `v4_parent_subaccounts` channel  [sample response]:
+
+```bash
+   "orders": [
+     {
+       "id": "ff6d83c1-a2e7-5fa9-9362-3fbc4771aec3",
+       "subaccountId": "4adcda50-be50-596e-b3b0-d70cd3ca193d",
+       "clientId": "1741547162",
+       "clobPairId": "0",
+       "side": "SELL",
+       "size": "0.001",
+       "totalFilled": "0",
+       "price": "97510",
+       "type": "TAKE_PROFIT",
+       "status": "UNTRIGGERED",
+       "timeInForce": "IOC",
+       "reduceOnly": true,
+       "orderFlags": "32",
+       "goodTilBlockTime": "2025-06-09T17:00:16.000Z",
+       "createdAtHeight": "34142063",
+       "clientMetadata": "1",
+       "triggerPrice": "102643",
+       "updatedAt": "2025-03-11T17:00:16.521Z",
+       "updatedAtHeight": "34142063",
+       "postOnly": false,
+       "ticker": "BTC-USD",
+       "subaccountNumber": 0
+     }
+   ],
+```
+
+- `ticker` field: Must match the `market ID` of the` open position`.
+- `side` field: Should be the `opposite` of the `open position` side:
+    - If the open position is `LONG`, the order side should be `SELL`.
+    - If the open position is `SHORT`, the order side should be `BUY`.
+- status field: Must be set to `UNTRIGGERED`.
+- type field: Can be either `TAKE_PROFIT` or `STOP_MARKET`.
+
+
+Existing trigger order associated with the current position should be displayed as follows:
+
+
+(a) The price field of the `TAKE_PROFIT` order
+
+(b) The gain percent is calculated from the `entry_price` field of the open position and (a).  For example, if `entry_price` is $100, and (a) is $110, the gain percentage is 10%. 
+
+(c) Same as (a) except for a `STOP_MARKET` order
+
+(d) Same as (b) except for a `STOP_MARKET` order
+
+The client can modify a trigger order state by performing two operations:
+1. `Add` a new trigger order
+2. `Cancel` an existing order
+
+
+### Updating the Price of an Existing Trigger Order
+If the user updates the price of an existing trigger order, the client must first cancel the existing order before adding the new one.
+This ensures that only the latest order remains active and prevents conflicting trigger conditions.
+To submit a trigger order, the client can use the [placeOrder](/node-client/private#place-order) function of the v4-client-js library with the following parameters:
+
+- type=”TAKE_PROFIT_MARKET”, or “STOP_MARKET”
+- triggerPrice = Trigger price entered by the user
+- price = triggerPrice * (1+slippage_threhold), where slippage_threhold = [0.05, 0.1]
+- execution = “IOC”
+- timeInForce = null
+- reduceOnly = “true”
+- clientId = [some unique random id]
+
+To cancel an existing trigger order, the client can call the [cancelOrder](/node-client/private#cancel-order) function of the `v4-client-js` library.
