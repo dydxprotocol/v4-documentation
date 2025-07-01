@@ -8,19 +8,19 @@ Query for the parent subaccount, its child subaccounts, equity, collateral and m
 
 :::code-group
 
-```rust [Rust]
-pub async fn get_parent_subaccount(
-    &self,
-    subaccount: &ParentSubaccount,
-) -> Result<ParentSubaccountResponseObject, Error>
-```
-
 ```python [Python]
 
 ```
 
 ```typescript [TypeScript]
 async getParentSubaccount(address: string, parentSubaccountNumber: number): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_parent_subaccount(
+    &self,
+    subaccount: &ParentSubaccount,
+) -> Result<ParentSubaccountResponseObject, Error>
 ```
 
 ```url [API]
