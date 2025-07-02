@@ -1,18 +1,20 @@
-# Data sources overview
+# Data sources
 
 
 The client application would need the obtain the data from the following sources:
 
+## Data sources
+
 ::::steps
-## [Indexer](/indexer-client)
+### [Indexer](/indexer-client)
 
 The Indexer aggregates blockchain data to provide a Web2 interface for client applications. Clients access updated market data, order books, and user account information through REST and WebSocket endpoints. All data from the Indexer is read-only.
 
-## [Node Client](/node-client)
+### [Node Client](/node-client)
 
 The client application submits transactions to the blockchain through the validator and also reads data from it. It uses v4-client-js functions to streamline read and write operations.
 
-## Metadata Service
+### Metadata Service
 
 Static market data, including market icons, names, and various URLs, can be retrieved from this REST service. There are two endpoints (use POST instead of GET):
 

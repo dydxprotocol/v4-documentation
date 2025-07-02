@@ -1,16 +1,57 @@
 # Onboarding
 
+## dYdX address
 The client application onboards the user by asking the user to sign a message using an existing wallet address. The v4-client-js library provides a [function](https://github.com/dydxprotocol/v4-clients/blob/a2c7adcc64b33fefaf56ffb6fc1d2bb8b174601e/v4-client-js/src/lib/onboarding.ts#L43) that deterministically generates the dYdX chain address and keys from the signed message.
 Once the keys are generated, the client application can use them to sign transactions on the dYdX chain on the user’s behalf, enabling secure and seamless interaction with the platform.
 
 
 ## Deposits and Withdrawals
 
-**Deposits** are in three steps.  First, the client calls Skip’s API to construct the transaction that routes the fund from the source chain to Noble.  Users would need to sign and send this transaction from their wallet.  The client then polls the balance at the user's Noble address, and when the fund arrives, it would sign (using the user’s dYdX key pair) and send it over to the dYdX chain (see [here](https://github.com/dydxprotocol/v4-web/blob/71bd9c7f85512fe1893fd656968011cf75b106e6/src/bonsai/lifecycles/nobleBalanceSweepLifecycle.ts#L119)).  Lastly, after the fund arrives at dYdX,  the client moves the fund from the user's main account to the [subaccount](/node-client/private#transfer) for trading.
+### Deposits 
+Deposits are in three steps. 
 
-**Withdrawal** is a reverse process of deposit.  First, the fund needs to be moved from the user's subaccount to the main account.  Then, a withdrawal transaction is constructed to send the fund to the destination chain/address.   The withdrawal transaction contains two child transactions: 1) sending from dYdX chain to Noble chain, and 2) Noble to destination chain (obtained from the Skip route API).  See [here](https://github.com/dydxprotocol/v4-web/blob/71bd9c7f85512fe1893fd656968011cf75b106e6/src/hooks/useSubaccount.tsx#L156).  
+::::steps
 
-Users must deposit Noble USDC as collateral into the dYdX chain to begin trading. The dYdX chain uses USDC.  To construct the route for deposits and withdrawals, we recommend using Skip Go, either through the [Typescript client](https://docs.skip.build/go/client/getting-started) or by calling the [APIs](https://docs.skip.build/go/general/getting-started) directly. There are endpoints to get the supported [chains](https://docs.skip.build/go/api-reference/prod/info/get-v2infochains) and [tokens](https://docs.skip.build/go/api-reference/prod/fungible/get-v2fungibleassets). To initiate a deposit or withdrawal, first call the [route](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute) endpoint to fetch the route. 
+### Deposit Tx
+
+First, the client calls Skip’s API to construct the transaction that routes the fund from the source chain to Noble. Users would need to sign and send this transaction from their wallet. 
+
+### Noble poll
+The client then polls the balance at the user's Noble address, and when the fund arrives, it would sign (using the user’s dYdX key pair) and send it over to the dYdX chain (see [here](https://github.com/dydxprotocol/v4-web/blob/71bd9c7f85512fe1893fd656968011cf75b106e6/src/bonsai/lifecycles/nobleBalanceSweepLifecycle.ts#L119)). 
+
+### Transfer Subaccount
+Lastly, after the fund arrives at dYdX,  the client moves the fund from the user's main account to the [subaccount](/node-client/private#transfer) for trading.
+
+::::
+
+### Withdrawals
+The withdrawal is the reverse process of deposit. 
+
+::::steps
+
+### Transfer Main Account
+First, the fund needs to be moved from the user's subaccount to the main account.  
+
+### Withdrawal Tx
+Then, a withdrawal transaction is constructed to send the fund to the destination chain/address. 
+The withdrawal transaction contains two child transactions: 
+1. sending from dYdX chain to Noble chain,
+2. Noble to destination chain (obtained from the Skip route API).
+See [here](https://github.com/dydxprotocol/v4-web/blob/71bd9c7f85512fe1893fd656968011cf75b106e6/src/hooks/useSubaccount.tsx#L156). 
+
+::::
+
+
+## Skip Go API 
+
+Users must deposit Noble USDC as collateral into the dYdX chain to begin trading. The dYdX chain uses USDC.  To construct the route for deposits and withdrawals, we recommend using Skip Go, either through the [Typescript client](https://docs.skip.build/go/client/getting-started) or by calling the [APIs](https://docs.skip.build/go/general/getting-started) directly. 
+There are endpoints to get the supported [chains](https://docs.skip.build/go/api-reference/prod/info/get-v2infochains) and [tokens](https://docs.skip.build/go/api-reference/prod/fungible/get-v2fungibleassets). 
+To initiate a deposit or withdrawal, 
+
+
+::::steps
+### Call endpoint
+first call the [route](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute) endpoint to fetch the route. 
 
 Sample route fetch request for deposit looks like this:
 
@@ -23,11 +64,13 @@ curl 'https://api.skip.build/v2/fungible/route' \
 
 Here `ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5` is the USDC denom of the dYdX Chain. 
 
+### Set Bridge option
 Set the [bridges](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute#body-bridges) option to include `“CCTP”`, `“GO_FAST”`, `“IBC”`, and `“AXELAR”`.  
 You can also set the [go_fast](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute#body-go-fast) to `true` for selected chains/and tokens (see [here](https://docs.skip.build/go/advanced-transfer/go-fast)), which would return a route that can be completed within 10 seconds.
 
 The route endpoint will return the estimated time and fees for the transfer that can be shown to the user.
 
+### Msgs endpoint
 After user accepts the route, call the [msgs](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungiblemsgs) endpoint and passing the operations returned from the `route` response payload to fetch the transaction data:
 
 ```bash
@@ -49,12 +92,14 @@ To obtain the relay address for Noble, Osmosis and Neutron, do conversion from t
      neutron_address=bech32.bech32_encode("neutron", bech32.bech32_decode(dydx_address)[1])
 ```
 
-
+### Submit TX
 The `route` and `msgs` calls can be combined into one call to [msgs_direct](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungiblemsgs_direct).  
 
 To submit the transaction, the transaction payload data from the `msgs` or `msgs_direct` should be submitted via the user wallet.
 
-### Supported Tokens & Chains for Go Fast
+::::
+
+### Go Fast Supported Tokens & Chains 
 - Go Fast supports `any EVM` asset on the supported source chains that can be swapped to USDC.
 - Any asset on the `Cosmos side` that can be swapped from USDC is also supported.
 - This includes `instant deposit` support for assets like ETH on Ethereum, which can be instantly converted to USDC on dYdX.

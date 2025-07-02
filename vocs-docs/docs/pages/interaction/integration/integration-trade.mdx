@@ -7,9 +7,9 @@ Market trade lets users execute an order based on the current state of the order
 
 ![marketorder](/marketorder.png)
 
-(a) Trade size in USD.
+(a) `Trade size in USD`.
 
-(b) Trade size in native token.  This value should be dynamically updated based on the trade size in USD and the current state of the order book.
+(b) `Trade size in native token`.  This value should be dynamically updated based on the trade size in USD and the current state of the order book.
 Order Fulfillment Process (See [link](https://github.com/dydxprotocol/v4-abacus/blob/f3802563c06422eb5a3de0b1e48719fb279fab71/src/commonMain/kotlin/exchange.dydx.abacus/calculator/V2/TradeInput/TradeInputMarketOrderCalculator.kt#L379) for an implementation):
 
 1. Iterate through the order book from the top (best price first).
@@ -18,7 +18,8 @@ Order Fulfillment Process (See [link](https://github.com/dydxprotocol/v4-abacus/
 
 The toggle button to the right would toggle the input between (a) and (b).
 
-(c) Maximum amount that can be entered into (a).  The maximum order amount is constrained by:
+(c) `Maximum amount` that can be entered into (a). 
+The maximum order amount is constrained by:
 1. The maximum leverage of the selected token market.
 2. The user’s remaining free collateral.
 
@@ -55,8 +56,11 @@ To submit a market order, the client can use the [placeOrder](/node-client/priva
 - price = value from (a) / value from (b) * (1+slippage_threhold), where slippage_threhold = 0.05
 - clientId = [some unique random id]
 
-The validator will return an error if the input is invalid, meaning client-side validation is not strictly necessary.  However, it is recommended that the client application validates user input before submitting an order to enhance the user experience by preventing unnecessary errors and reducing failed transactions [sample validation logic](https://github.com/dydxprotocol/v4-abacus/blob/f3802563c06422eb5a3de0b1e48719fb279fab71/src/commonMain/kotlin/exchange.dydx.abacus/validator/TradeInputValidator.kt#L26).
-Pending orders will be returned from the websocket `v4_parent_subaccounts` channel  [sample response].  Each [order](/types/order) in the list will contain a `clientId` field, which the client can match against the trade submission payload’s clientId.  Once the order is executed, the `openPerpetualPositions` field from the websocket `v4_parent_subaccount` channel will have the position added or updated.
+The validator will return an error if the input is invalid, meaning client-side validation is not strictly necessary. However, it is recommended that the client application validates user input before submitting an order to enhance the user experience by preventing unnecessary errors and reducing failed transactions [sample validation logic](https://github.com/dydxprotocol/v4-abacus/blob/f3802563c06422eb5a3de0b1e48719fb279fab71/src/commonMain/kotlin/exchange.dydx.abacus/validator/TradeInputValidator.kt#L26).
+
+Pending orders will be returned from the websocket `v4_parent_subaccounts` channel  [sample response].  Each [order](/types/order) in the list will contain a `clientId` field, which the client can match against the trade submission payload’s clientId. 
+
+Once the order is executed, the `openPerpetualPositions` field from the websocket `v4_parent_subaccount` channel will have the position added or updated.
 
 ### Closing a Position
 
@@ -76,7 +80,8 @@ Users can add take profit and stop loss triggers to existing positions.
 ![triggerorder](/triggerorder.png)
 
 
-To find existing trigger orders associated with the current position, examine the `“orders”` list returned from the websocket `v4_parent_subaccounts` channel  [sample response]:
+To find existing trigger orders associated with the current position, examine the `“orders”` list returned from the websocket `v4_parent_subaccounts` channel. 
+A sample response:
 
 ```bash
    "orders": [

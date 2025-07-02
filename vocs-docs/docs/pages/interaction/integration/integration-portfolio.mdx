@@ -1,4 +1,4 @@
-# User Portfolio
+`# User Portfolio
 
 After onboarding to dYdX and depositing funds, the app displays the portfolio view. Once the user places a trade, the app updates to show open positions.
 
@@ -9,17 +9,20 @@ After onboarding to dYdX and depositing funds, the app displays the portfolio vi
 
 ![portfolio2](/portfolio2.png)
 
-(a) Account equity.  Indexer data from the websocket `v4_parent_subaccounts` channel. [response](/types/parent_subaccounts_update_message). 
+
+(a) `Account equity`: 
+Indexer data from the websocket `v4_parent_subaccounts` channel. [response](/types/parent_subaccounts_update_message). 
 This is equity of subaccount 0 (e.g., the sum of all child subaccount equities).
 
-(b) Account PNL of the selected time range (e.g., it’s “7 days” on the screenshot).  
+(b) `Account PnL`: 
+`Account PNL` of the selected time range (e.g., it’s “7 days” on the screenshot). 
 Indexer data [GetHistoricalPnlForParentSubaccount](/indexer-client/http#get-parent-historical-pnl). Sample curl request:
 
 ```bash
 curl --location 'https://indexer.v4testnet.dydx.exchange/v4/historical-pnl/parentSubaccountNumber?address=dydx1k93udthd0vtzjk465f846qzea3fzq7axnmfqyz&parentSubaccountNumber=0'
  ```
-
-(c) The endpoint returns the PNL ticks of the given time range.  The value is the difference between the last and first tick.
+(c) `max buying power`:
+The endpoint returns the PNL ticks of the given time range.  The value is the difference between the last and first tick.
 
 Account level buying power.  The Indexer provides data via the WebSocket `v4_parent_subaccounts` channel. [response](/types/parent_subaccounts_update_message).  
 
@@ -29,7 +32,7 @@ The `max buying power` is calculated as follows:
 
 This represents the user's maximum buying power if all remaining free collateral is applied to the market with the highest leverage.
 
-(d) This is calculated by multiplying the `freeCollateral` of `subaccount 0` by the `maximum leverage` across all markets (50x). 
+This is calculated by multiplying the `freeCollateral` of `subaccount 0` by the `maximum leverage` across all markets (50x). 
 This value represents the `maximum buying power` if the user applies all remaining free collateral to the market with the highest leverage.
 
 Note that each market has a configured maximum leverage factor ranging from 1x to 50x. The leverage factor is derived from the `initialMarginFraction` field in the market info received from the WebSocket [v4-markets](/indexer-client/websockets#markets) channel.
@@ -38,7 +41,8 @@ Note that each market has a configured maximum leverage factor ranging from 1x t
 max leverage = 1 / initialMarginFraction
 ```
 
-(e) Account level risk.  The account-level risk is derived from Indexer data via the WebSocket [v4_parent_subaccounts] channel.  [sample response][response](/types/parent_subaccounts_update_message).  
+(d) `Account level risk`
+The account-level risk is derived from Indexer data via the WebSocket [v4_parent_subaccounts] channel.  [sample response][response](/types/parent_subaccounts_update_message).  
 This metric represents the `percentage of the user's total collateral` that has been allocated to support open positions (also referred to as `margin`).
 
 To compute `total collateral`, follow these steps:
@@ -54,23 +58,24 @@ position collateral = (current value of the position) * leverage = (position siz
 
 The resulting `total collateral` is then used to determine the `margin percentage`, reflecting the level of risk associated with the account’s open positions.
 
-(f) `Historical PNL`.  Indexer data [GetHistoricalPnlForParentSubaccount](/indexer-client/http#get-parent-historical-pnl).  The chart shows the PNL tickets of the selected time range.
 
-(g) `Position size, and position side`   Indexer data from the websocket  `v4_parent_subaccounts` channel.  [sample response]([response](/types/parent_subaccounts_update_message)).  Subaccount -> ChildSubaccounts -> openPerpetualPositions -> size/side.
+(e) `Historical PNL`.  Indexer data [GetHistoricalPnlForParentSubaccount](/indexer-client/http#get-parent-historical-pnl).  The chart shows the PNL tickets of the selected time range.
 
-(h) `Current oracle price`.  From market data off the Websocket [v4-markets](/indexer-client/websockets#markets) channel.
+(f) `Position size, and position side`   Indexer data from the websocket  `v4_parent_subaccounts` channel.  [sample response]([response](/types/parent_subaccounts_update_message)).  Subaccount -> ChildSubaccounts -> openPerpetualPositions -> size/side.
 
-(i) `Perp 24h price change percentage`:  From market data off the Websocket [v4-markets](/indexer-client/websockets#markets) channel, priceChange24H field of childSubaccount.
+(g) `Current oracle price`.  From market data off the Websocket [v4-markets](/indexer-client/websockets#markets) channel.
 
-(j) `Position USDC size`.  Position size * oracle price
+(i (img 1)) `Perp 24h price change percentage`:  From market data off the Websocket [v4-markets](/indexer-client/websockets#markets) channel, priceChange24H field of childSubaccount.
 
-(k) `Position PNL`. (Position size * oracle price) - (Position size * entry_price)
+(i (img 2)) `Position USDC size`.  Position size * oracle price
 
-(l) `Current funding rate`.  netFunding, of childSubaccount.
+(j) `Position PNL`. (Position size * oracle price) - (Position size * entry_price)
 
-(m) `Entry price`.  entryPrice, of childSubaccount
+(k) `Current funding rate`.  netFunding, of childSubaccount.
 
-(n) `Liquidation price`.  When the market price moves across this estimated price, the user's position would be liquidated. See [margining requirements](/concepts/trading/margin)
+(l) `Entry price`.  entryPrice, of childSubaccount
+
+(m) `Liquidation price`.  When the market price moves across this estimated price, the user's position would be liquidated. See [margining requirements](/concepts/trading/margin)
 
 
 ## History

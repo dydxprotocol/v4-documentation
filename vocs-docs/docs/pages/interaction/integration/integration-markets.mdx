@@ -99,10 +99,11 @@ See [here](https://academy.youngplatform.com/en/trading/order-book/) for depth.
 
 When the `WebSocket channel` sends an update, the client `must update the order book` in memory using the order price as the key.
 
-1. Add/Update/Delete Entries
+::::steps
+#### Add/Update/Delete Entries
 - `Add or update` an entry if the backend sends an order with a non-zero size.
 - `Remove` an entry if the backend sends an order with `zero size` (indicating the order was canceled or taken).
 
-2. Remove Crossed Entries
+#### Remove Crossed Entries
 - After updating the order book, the client should `remove any crossed entries` when the lowest ask price > highest bid price.
 - This ensures that only valid bid-ask pairs remain in the order book.
