@@ -1,0 +1,42 @@
+# Compliance
+
+## Terms of Service
+Per the [terms of service](https://dydx.exchange/v4-terms) of the open-source software, the following categories of persons are currently prohibited from using dYdX Software:
+- Persons or entities who reside in, are located in, are incorporated in, have a registered office in, or are operated or controlled from the United States or Canada;  
+- Persons or entities who reside in, are citizens of, are located in, are incorporated in, have a registered office in, or are operated or controlled from Iran, Cuba, North Korea, Syria, Myanmar (Burma), the regions of Crimea, Donetsk or Luhansk, or any other country or region that is the subject of comprehensive country-wide or region-wide economic sanctions by the United States; 
+- Persons or entities subject to any economic or trade sanctions administered or enforced by any governmental authority or otherwise designated on any list of prohibited or restricted parties (including the list maintained by the Office of Foreign Assets Control of the U.S. Department of the Treasury);
+- Any other persons or entities whose use of dYdX Software is contrary to any applicable law.  
+
+Third parties integrating with the dYdX open-source software are expected to comply with these terms. The client application should block the user from certain countries (see the [list of countries](https://github.com/dydxprotocol/v4-web/blob/633d38dfb837cd80bf2e3e007ecdcaeee2acc658/src/constants/geo.ts#L246) currently blocked). 
+
+## Geo-Blocking Implementation
+
+::::steps
+
+### /v4/geo
+Third parties are expected to implement geo-blocking themselves but can rely on location information provided by the indexer’s `/v4/geo` endpoint: 
+
+```bash
+curl https://api.dydx.exchange/v4/geo
+
+{"geo":{"country":"JP","region":"Tokyo","regionCode":"13","city":"Tokyo","timezone":"Asia/Tokyo","ll":[35.6164,139.7425],"metro":null,"blocked":false}
+```
+
+The client should call the indexer’s`/v4/compliance/geoblock` endpoint
+(or `/v4/compliance/geoblock-keplr`, if the user’s connected wallet is Keplr) 
+upon app launching and when the user connects to a new wallet.  
+
+This will update the user's compliance status based on the requesting IP.  To authenticate the user, sign a message with the user's private key, and send the signed message as part of the payload. See [sample](https://github.com/dydxprotocol/v4-web/blob/main/src/bonsai/rest/compliance.ts#L158) implementation.
+
+### `/v4/screen`
+The client can query the compliant status of the user by calling the indexer’s `/v4/screen` endpoint:
+
+```bash
+curl https://indexer.v4testnet.dydx.exchange/v4/compliance/screen/dydx14y0wd820uzr5rd6xu85q5475rg5sk03fsuke3m
+
+{"status":"COMPLIANT","reason":null,"updatedAt":"2024-10-24T20:26:15.714Z"}
+```
+
+For further information or questions, we can set up a meeting with dYdX’s Legal to discuss specific implementations.
+
+

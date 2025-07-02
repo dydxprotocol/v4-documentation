@@ -1,0 +1,109 @@
+# Market data
+
+## Market data
+
+The client application typically displays a list of tradable and launchable markets as follows:
+
+![markets1](/markets1.png)
+
+![markets2](/markets2.png)
+
+The market list can be obtained from the Indexer in two ways:
+1. REST API: Call `GET` [/perpetualMarkets](/indexer-client/http#get-perpetual-markets).
+2. WebSocket Subscription: Subscribe to the [v4-markets](/indexer-client/websockets#markets) channel (preferred, as it provides real-time updates).
+
+Additionally, the client should call `metadata-service/v1/info` to retrieve static market data, such as market icons and other metadata.
+
+### Market Data Display Fields
+
+(a)`Market Icon`: Extracted from the logo field in the `metadata-service/v1/info` response.
+
+(b) `Market Name`: Derived from the name field in `metadata-service/v1/info` or directly from the market token name in the Indexer data.
+
+(c) `Oracle Price`: Provided by the Indexer.
+
+(d) `Perp 24h Price Change (%)`: Available in the Indexer’s `priceChange24H` field.
+
+(e) `Perp Trade Volume`: Extracted from the Indexer’s `volume24H` field.
+
+(f) `Spot Market Cap`: Found in the `market_cap` field of the `metadata-service/v1/prices` response.
+
+(g) `User’s Buying Power`: Determined by applying collateral to the market (explained in the user-specific data section).
+
+(h) `Perp Open Interest`: Retrieved from the Indexer’s `openInterest` field.
+
+(i)` Perp Funding Rate`: Available in the Indexer’s `nextFundingRate` field.
+
+(j) `Market Descriptions`: Sourced from the `v4-localization` repository, using the token ID as the key.
+
+(k) `Market Info Links`: Obtained from the url field in `metadata-service/v1/info`.
+
+## Candles
+
+The candles data come from the websocket `v4-candles` channel.   To subscribe the channel, supply the following parameters:
+
+```bash
+{
+“id”: “ETH-USD/1HOUR”
+“batch”: “true
+}
+```
+
+Supply the id field with the market ID and the [candle resolution](/types/candle_resolution).  Parse [CandleResponse](/types/candle_response_object) to get the list of the candle values.
+
+![candles](/candles.png)
+
+(a) Candlestick.  Use the `high`, `low`, `open` and `close` field from each data point.  See [here](https://www.investopedia.com/trading/candlestick-charting-what-is-it/) for candles.
+
+(b) Volume.  Use the `usdVolume` field.
+
+(c) Current [candle resolution](/types/candle_resolution). 
+
+
+## Orderbook
+
+The orderbook data come from the websocket [v4_orderbook](/indexer-client/websockets#orders) channel, which gives a list of asks and bids:
+
+```bash
+"bids": [    
+  {       
+ "price": "28194",       
+ "size": "4.764826096"     
+  },
+  ...
+],
+"asks": [    
+  {       
+ "price": "28294",       
+ "size": "5.764826096"     
+  },
+  ...
+],
+```
+
+### Order Book Displaying Fields
+
+![orderbook](/orderbook.png)
+
+(a) Size of the order
+
+(b) Price of the order
+
+
+### Order Book Color
+- `Darker green bar`: Represents the size of an `individual order`.
+- `Light green bar`: Represents the `depth at this price`, calculated as the `sum of all order sizes` that would have been taken before this order is crossed. 
+See [here](https://academy.youngplatform.com/en/trading/order-book/) for depth.
+
+### Handling WebSocket Updates
+
+When the `WebSocket channel` sends an update, the client `must update the order book` in memory using the order price as the key.
+
+::::steps
+#### Add/Update/Delete Entries
+- `Add or update` an entry if the backend sends an order with a non-zero size.
+- `Remove` an entry if the backend sends an order with `zero size` (indicating the order was canceled or taken).
+
+#### Remove Crossed Entries
+- After updating the order book, the client should `remove any crossed entries` when the lowest ask price > highest bid price.
+- This ensures that only valid bid-ask pairs remain in the order book.
