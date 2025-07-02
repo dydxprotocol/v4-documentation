@@ -1,4 +1,4 @@
-`# User Portfolio
+# User Portfolio
 
 After onboarding to dYdX and depositing funds, the app displays the portfolio view. Once the user places a trade, the app updates to show open positions.
 
@@ -22,24 +22,28 @@ Indexer data [GetHistoricalPnlForParentSubaccount](/indexer-client/http#get-pare
 curl --location 'https://indexer.v4testnet.dydx.exchange/v4/historical-pnl/parentSubaccountNumber?address=dydx1k93udthd0vtzjk465f846qzea3fzq7axnmfqyz&parentSubaccountNumber=0'
  ```
 (c) `max buying power`:
-The endpoint returns the PNL ticks of the given time range.  The value is the difference between the last and first tick.
+The endpoint returns the PNL ticks of the given time range. The value is the difference between the last and first tick.
+
 
 Account level buying power.  The Indexer provides data via the WebSocket `v4_parent_subaccounts` channel. [response](/types/parent_subaccounts_update_message).  
 
-The `max buying power` is calculated as follows:
+::::steps
+
+#### Calculate max leverage 
+Each market has a configured maximum leverage factor ranging from 1x to 50x. The leverage factor is derived from the `initialMarginFraction` field in the market info received from the WebSocket [v4-markets](/indexer-client/websockets#markets) channel.
+
+```bash
+max leverage = 1 / initialMarginFraction
+```
+
+#### Max Buying power
+The `max buying power` is then calculated as follows:
 - Take the `freeCollateral` of `subaccount 0`
 - Multiply it by the `maximum leverage` across all markets (50x)
 
 This represents the user's maximum buying power if all remaining free collateral is applied to the market with the highest leverage.
 
-This is calculated by multiplying the `freeCollateral` of `subaccount 0` by the `maximum leverage` across all markets (50x). 
-This value represents the `maximum buying power` if the user applies all remaining free collateral to the market with the highest leverage.
-
-Note that each market has a configured maximum leverage factor ranging from 1x to 50x. The leverage factor is derived from the `initialMarginFraction` field in the market info received from the WebSocket [v4-markets](/indexer-client/websockets#markets) channel.
-
-```bash
-max leverage = 1 / initialMarginFraction
-```
+::::
 
 (d) `Account level risk`
 The account-level risk is derived from Indexer data via the WebSocket [v4_parent_subaccounts] channel.  [sample response][response](/types/parent_subaccounts_update_message).  
@@ -47,16 +51,24 @@ This metric represents the `percentage of the user's total collateral` that has 
 
 To compute `total collateral`, follow these steps:
 
-1. Calculate the collateral for each open position:
+::::steps 
+
+#### Collateral per position
+Calculate the collateral for each open position:
 
 ```bash
 position collateral = (current value of the position) * leverage = (position size * current oracle price) * leverage
 ```
 
-2. Sum up the collaterals for all open positions.
-3. Add the USDC asset position of subaccount 0, which represents the remaining USDC balance that hasn’t been used as collateral for open positions.
+#### Sum collateral
+Sum up the collaterals for all open positions.
+
+#### Total collateral
+Add the USDC asset position of subaccount 0, which represents the remaining USDC balance that hasn’t been used as collateral for open positions.
 
 The resulting `total collateral` is then used to determine the `margin percentage`, reflecting the level of risk associated with the account’s open positions.
+
+::::
 
 
 (e) `Historical PNL`.  Indexer data [GetHistoricalPnlForParentSubaccount](/indexer-client/http#get-parent-historical-pnl).  The chart shows the PNL tickets of the selected time range.
