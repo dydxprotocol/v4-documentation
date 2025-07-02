@@ -69,6 +69,40 @@ export default defineConfig({
                     text: 'Deposits and Withdrawals',
                     link: '/interaction/deposits-and-withdrawals',
                 },
+                                {
+                    text: 'Application Integration',
+                    collapsed: true,
+                    items: [
+                        {
+                            text: 'Overview',
+                            link: '/interaction/integration/integration',
+                        },
+                        {
+                            text: 'Data Sources',
+                            link: '/interaction/integration/integration-data',
+                        },
+                        {
+                            text: 'Compliance',
+                            link: '/interaction/integration/integration-compliance',
+                        },
+                                                {
+                            text: 'Onboarding',
+                            link: '/interaction/integration/integration-onboarding',
+                        },
+                        {
+                            text: 'Markets',
+                            link: '/interaction/integration/integration-markets',
+                        },
+                                                {
+                            text: 'User portfolio',
+                            link: '/interaction/integration/integration-portfolio',
+                        },
+                                                {
+                            text: 'Placing a trade',
+                            link: '/interaction/integration/integration-trade',
+                        }
+                    ]
+                },
             ],
         },
         {
