@@ -100,7 +100,12 @@ export default defineConfig({
                                                 {
                             text: 'Placing a trade',
                             link: '/interaction/integration/integration-trade',
-                        }
+                        },
+                                                {
+                            text: 'Builder codes',
+                            link: '/interaction/integration/integration-builder-codes',
+                        },
+                        
                     ]
                 },
             ],

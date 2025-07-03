@@ -1,0 +1,50 @@
+# Builder Codes
+
+Builder codes enables external parties to submit orders to dYdX and collect fees (per-order) for building and routing an order to the exchange.
+The address and fee, in parts per million, needs to be configured via the `BuilderCodeParameters` in the order message itself. The fee will be paid out when the given order is filled.
+
+Builder fees and addresses can be queried via the indexer using the `/orders` and `/fills` endpoints as usual. `/orders` contains details on the fee rate and builder address. `/fills` also contains the builder address as well as details on the amount charged per-fill.
+
+
+## Changes To The Order Message
+
+::::steps
+
+## BuilderCodeParameters
+`BuilderCodeParameters` is an addition to the order message which will specify:
+    - `partner address` - where fees will be routed
+    - `fee (in ppm)` that will be charged on order matching
+
+```go
+message Order {
+  // The unique ID of this order. Meant to be unique across all orders.
+  OrderId order_id = 1 [ (gogoproto.nullable) = false ];
+	
+	...
+	
+	// builder_code is the metadata for the partner or builder of an order.
+  BuilderCodeParameters builder_code_params = 12;
+}
+
+// BuilderCodeParameters represents the metadata for the 
+// partner or builder of an order. This allows them to 
+// specify a fee for providing there service
+// which will be paid out in the event of an order fill.
+message BuilderCodeParameters {
+  // The address of the builder to which the fee will be paid.
+  string builder_address = 1;
+
+  // The fee enforced on the order in ppm.
+  uint32 fee_ppm = 2;
+}
+```
+
+:::note
+`BuilderCodeParameters` is an optional field
+:::
+
+## Order Validation Checks
+    - Ensure the `builder address` is valid
+    - Ensure the `feePPM` is in the range `(0, 10,000]`
+
+::::
