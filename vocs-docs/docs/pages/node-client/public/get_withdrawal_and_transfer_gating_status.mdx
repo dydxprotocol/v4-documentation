@@ -10,6 +10,10 @@ Get withdrawal and transfer gating status.
 ```
 
 ```rust [Rust]
+pub async fn withdrawal_and_transfers_blocked_info(
+    &mut self,
+    perpetual_id: u32,
+) -> Result<QueryGetWithdrawalAndTransfersBlockedInfoResponse, Error>
 ```
 
 ```typescript [TypeScript]

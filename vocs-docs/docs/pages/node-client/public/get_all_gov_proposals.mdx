@@ -11,6 +11,13 @@ Get all gov proposals.
 ```
 
 ```rust [Rust]
+pub async fn proposals(
+    &mut self,
+    status: ProposalStatus,
+    voter: Address,
+    depositor: Address,
+    pagination: Option<PageRequest>,
+) -> Result<Vec<Proposal>, Error>
 ```
 
 ```typescript [TypeScript]

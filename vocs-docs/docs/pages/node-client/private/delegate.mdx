@@ -9,8 +9,6 @@ Delegate tokens from a delegator to a validator.
 ```python [Python]
 ```
 
-```rust [Rust]
-```
 
 ```typescript [TypeScript]
 async delegate(
@@ -20,6 +18,16 @@ async delegate(
     amount: string,
     broadcastMode?: BroadcastMode,
 ): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [Rust]
+pub async fn delegate(
+    &mut self,
+    account: &mut Account,
+    delegator: Address,
+    validator: Address,
+    token: impl Tokenized,
+) -> Result<TxHash, NodeError>
 ```
 
 ```uri

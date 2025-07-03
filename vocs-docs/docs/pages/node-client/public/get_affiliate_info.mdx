@@ -10,6 +10,10 @@ Get affiliate info by address.
 ```
 
 ```rust [Rust]
+pub async fn get_affiliate_info(
+    &mut self,
+    address: &Address,
+) -> Result<AffiliateInfoResponse, Error>
 ```
 
 ```typescript [TypeScript]

@@ -24,7 +24,11 @@ async getParentSubaccountNumberFills(
 ```
 
 ```rust [Rust]
-TODO: Not available
+pub async fn get_parent_fills(
+    &self,
+    subaccount: &ParentSubaccount,
+    opts: Option<GetFillsOpts>,
+) -> Result<Vec<FillResponseObject>, Error>
 ```
 
 ```url [API]
