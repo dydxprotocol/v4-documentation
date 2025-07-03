@@ -394,87 +394,86 @@ export default defineConfig({
             ],
         },
     ],
-    head: () => {
-    return React.createElement('div', {}, [
+    head: () => (
+        React.createElement(React.Fragment, null, 
       // Kapa AI Widget
-      React.createElement('script', {
-        key: 'kapa-widget',
-        src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
-        'data-website-id': '7353f8eb-1333-44ce-8ea3-d5767430e3fc',
-        'data-project-name': 'dYdX',
-        'data-project-color': '#212131',
-        'data-project-logo': 'https://dydx.exchange/icon.svg',
-        'data-user-analytics-fingerprint-enabled': 'true',
-        defer: true
-      }),
-      
-      // Google Analytics
-      React.createElement('script', {
-        key: 'gtag-script',
-        src: 'https://www.googletagmanager.com/gtag/js?id=GT-WR4LPXW6',
-        async: true
-      }),
-      
-      React.createElement('script', {
-        key: 'gtag-config',
-        dangerouslySetInnerHTML: {
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'GT-WR4LPXW6');
-          `
-        }
-      })
-    ]),
-       // OG meta tags
-    React.createElement('meta', {
-      key: 'og-title',
-      property: 'og:title',
-      content: 'dYdX Documentation'
-    }),
-    React.createElement('meta', {
-      key: 'og-description',
-      property: 'og:description',
-      content: 'Explore the official dYdX v4 documentation for developers and validators.'
-    }),
-    React.createElement('meta', {
-      key: 'og-image',
-      property: 'og:image',
-      content: 'https://dydx.exchange/icon.svg'
-    }),
-    React.createElement('meta', {
-      key: 'og-url',
-      property: 'og:url',
-      content: 'https://docs.dydx.xyz'
-    }),
-    React.createElement('meta', {
-      key: 'og-type',
-      property: 'og:type',
-      content: 'website'
-    }),
+        React.createElement('script', {
+            key: 'kapa-widget',
+            src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
+            'data-website-id': '7353f8eb-1333-44ce-8ea3-d5767430e3fc',
+            'data-project-name': 'dYdX',
+            'data-project-color': '#212131',
+            'data-project-logo': 'https://dydx.exchange/icon.svg',
+            'data-user-analytics-fingerprint-enabled': 'true',
+            defer: true
+        }),
+        
+        // Google Analytics
+        React.createElement('script', {
+            key: 'gtag-script',
+            src: 'https://www.googletagmanager.com/gtag/js?id=GT-WR4LPXW6',
+            async: true
+        }),
+        
+        React.createElement('script', {
+            key: 'gtag-config',
+            dangerouslySetInnerHTML: {
+            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'GT-WR4LPXW6');
+            `
+            }
+        }),
+        // OG meta tags
+            React.createElement('meta', {
+            key: 'og-title',
+            property: 'og:title',
+            content: 'dYdX Documentation'
+            }),
+            React.createElement('meta', {
+            key: 'og-description',
+            property: 'og:description',
+            content: 'Explore the official dYdX v4 documentation for developers and validators.'
+            }),
+            React.createElement('meta', {
+            key: 'og-image',
+            property: 'og:image',
+            content: 'https://dydx.exchange/icon.png'
+            }),
+            React.createElement('meta', {
+            key: 'og-url',
+            property: 'og:url',
+            content: 'https://docs.dydx.xyz'
+            }),
+            React.createElement('meta', {
+            key: 'og-type',
+            property: 'og:type',
+            content: 'website'
+            }),
 
-    // Twitter Card Meta Tags
-    React.createElement('meta', {
-      key: 'twitter-card',
-      name: 'twitter:card',
-      content: 'summary_large_image'
-    }),
-    React.createElement('meta', {
-      key: 'twitter-title',
-      name: 'twitter:title',
-      content: 'dYdX Documentation'
-    }),
-    React.createElement('meta', {
-      key: 'twitter-description',
-      name: 'twitter:description',
-      content: 'Explore the dYdX documentation for traders'
-    }),
-    React.createElement('meta', {
-      key: 'twitter-image',
-      name: 'twitter:image',
-      content: 'https://dydx.exchange/icon.svg' 
-    })
-
-  }
+            // Twitter Card Meta Tags
+            React.createElement('meta', {
+            key: 'twitter-card',
+            name: 'twitter:card',
+            content: 'summary_large_image'
+            }),
+            React.createElement('meta', {
+            key: 'twitter-title',
+            name: 'twitter:title',
+            content: 'dYdX Documentation'
+            }),
+            React.createElement('meta', {
+            key: 'twitter-description',
+            name: 'twitter:description',
+            content: 'Explore the dYdX documentation for traders'
+            }),
+            React.createElement('meta', {
+            key: 'twitter-image',
+            name: 'twitter:image',
+            content: 'https://dydx.exchange/icon.png' 
+            })
+        )
+    )
 })
