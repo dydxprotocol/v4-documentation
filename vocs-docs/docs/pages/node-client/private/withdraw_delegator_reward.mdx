@@ -10,6 +10,12 @@ Withdraw delegator reward.
 ```
 
 ```rust [Rust]
+pub async fn withdraw_delegate_reward(
+    &mut self,
+    account: &mut Account,
+    delegator: Address,
+    validator: Address,
+) -> Result<TxHash, NodeError>
 ```
 
 ```typescript [TypeScript]

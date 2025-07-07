@@ -22,7 +22,11 @@ async getParentSubaccountNumberTransfers(
 ```
 
 ```rust [Rust]
-TODO: Not available
+pub async fn get_parent_transfers(
+    &self,
+    subaccount: &ParentSubaccount,
+    opts: Option<GetTransfersOpts>,
+) -> Result<Vec<TransferResponseObject>, Error>
 ```
 
 ```url [API]

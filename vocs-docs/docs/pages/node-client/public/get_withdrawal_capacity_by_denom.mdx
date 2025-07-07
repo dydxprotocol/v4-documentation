@@ -10,6 +10,7 @@ Get withdrawal capacity by denom.
 ```
 
 ```rust [Rust]
+pub async fn capacity_by_denom(&mut self, denom: Denom) -> Result<Vec<LimiterCapacity>, Error>
 ```
 
 ```typescript [TypeScript]

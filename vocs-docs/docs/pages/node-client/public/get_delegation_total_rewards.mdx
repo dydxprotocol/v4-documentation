@@ -11,7 +11,10 @@ Get all unbonding delegations from a delegator.
 ```
 
 ```rust [Rust]
-
+pub async fn delegation_total_rewards(
+    &mut self,
+    delegator_address: Address,
+) -> Result<QueryDelegationTotalRewardsResponse, Error>
 ```
 
 ```typescript [TypeScript]

@@ -9,9 +9,6 @@ Register affiliate.
 ```python [Python]
 ```
 
-```rust [Rust]
-```
-
 ```typescript [TypeScript]
 async registerAffiliate(
     subaccount: SubaccountInfo,
@@ -19,6 +16,15 @@ async registerAffiliate(
     broadcastMode?: BroadcastMode,
     gasAdjustment: number = 2,
 ): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [Rust]
+pub async fn register_affiliate(
+    &mut self,
+    account: &mut Account,
+    referee: Address,
+    affiliate: Address,
+) -> Result<TxHash, NodeError>
 ```
 
 ```uri
