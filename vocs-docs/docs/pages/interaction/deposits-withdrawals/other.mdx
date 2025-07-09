@@ -1,0 +1,62 @@
+
+# Other deposit methods
+
+## Deposit with Coinbase
+
+**Coinbase deposits** involve an **automatic Noble Wallet to dYdX IBC transfer** without needing a third-party bridge.
+
+### Process Flow (Deposit)
+
+1. **On dYdX, select "Coinbase" to display the Noble address associated with the trader's dYdX address.**
+   - The trader can then scan the QR code on Coinbase using the Coinbase QR code scanner, or copy and paste the Noble address into the destination address on the Coinbase withdrawal modal. Traders should make sure the Noble address is correct when depositing from Coinbase.
+2. **Open Coinbase app** and navigate to the USDC asset page
+3. **Select "Send"** and choose "Coinbase Pay" as the destination
+4. **Enter your Noble address wallet address** (starts with "noble1...")
+5. **Enter the amount** you wish to transfer
+6. **Confirm the transaction** in Coinbase
+7. **Wait for confirmation** (typically 1-3 minutes)
+   - _Note: This process relies on Coinbase's infrastructure and Noble's IBC integration_
+   - _Coinbase handles the initial funds transfer to Noble's USDC hub_
+8. **Funds will automatically route** through Noble to dYdX via IBC
+   - _This automatic routing uses the IBC relayer network_
+   - _No swaps occur in this process as USDC moves directly between compatible chains_
+
+### Example Deposit
+Coinbase → dYdX
+
+```json
+{
+    "operations": [
+        {
+            "transfer": {
+                "from_chain_id": "noble-1",
+                "to_chain_id": "dydx-mainnet-1",
+                "denom_in": "uusdc",
+                "denom_out": "ibc/USDC",
+                "bridge_id": "IBC"
+            }
+        }
+    ]
+}
+```
+
+## Direct IBC Transfer
+
+For users familiar with the Cosmos ecosystem, direct IBC transfers provide a straightforward method to deposit funds.
+
+Supported Cosmos Chains: Osmosis, Cosmos Hub, Kujira, Noble, Injective and other IBC-enabled chains
+
+### Process Flow (Deposit)
+
+1. **Open your Cosmos wallet** (Keplr, Leap, etc.)
+2. **Navigate to the IBC Transfer section**
+3. **Select dYdX Chain as the destination**
+4. **Enter your dYdX wallet address**
+5. **Enter the amount** you wish to transfer
+6. **Confirm the transaction**
+7. **IBC relayer network processes the transfer:**
+   - _IBC relayers run by validators and third-party services handle the cross-chain message delivery_
+   - _No centralized entity controls this process; it's based on the Cosmos IBC protocol_
+   - _If transferring a non-native token, ensure it's an IBC-supported asset on both chains_
+8. **Wait for confirmation** (typically 15-30 seconds)
+   - _Faster than bridging solutions as it doesn't require multi-chain consensus_
