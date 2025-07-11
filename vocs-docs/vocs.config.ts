@@ -65,11 +65,37 @@ export default defineConfig({
                     text: 'Permissioned Keys',
                     link: '/interaction/permissioned-keys',
                 },
-                {
-                    text: 'Deposits and Withdrawals',
-                    link: '/interaction/deposits-and-withdrawals',
+{
+                    text: 'Deposits & Withdrawals',
+                    collapsed: true,
+                    items: [
+                        {
+                            text: 'Overview',
+                            link: '/interaction/deposits-withdrawals/overview',
+                        },
+                        {
+                            text: 'Skip Go Fast',
+                            link: '/interaction/deposits-withdrawals/skipgofast',
+                        },
+                        {
+                            text: 'Skip Go regular',
+                            link: '/interaction/deposits-withdrawals/skipgo',
+                        },
+                        {
+                            text: 'Other Deposits',
+                            link: '/interaction/deposits-withdrawals/other',
+                        },                
+                        {
+                            text: 'Withdrawals',
+                            link: '/interaction/deposits-withdrawals/withdrawal',
+                        },
+                        {
+                            text: 'Troubleshooting',
+                            link: '/interaction/deposits-withdrawals/troubleshooting',
+                        },
+                    ]
                 },
-                                {
+                {
                     text: 'Application Integration',
                     collapsed: true,
                     items: [

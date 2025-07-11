@@ -1,0 +1,130 @@
+
+# Skip Go Fast (`Instant Deposit`)
+
+Skip Go Fast is a **decentralized bridging protocol**, developed by **Skip**, that enables **rapid and secure cross-chain transactions** across major blockchain ecosystems such as Ethereum, Cosmos, and Solana. Go Fast accelerates cross-chain actions by up to 25 times, **reducing onboarding times from 10+ minutes to seconds**. Learn more [here](https://docs.skip.build/go/advanced-transfer/go-fast#go-fast).
+
+## Supported Chains & Assets
+
+- **Chains:** Ethereum Mainnet, Arbitrum, Avalanche, Base, Optimism, Polygon
+- **Assets:** USDC, ETH, POL
+
+## Min & Max Transfer Sizes
+
+| Source Chain     | Min Transfer (USD) | Max Transfer (USD) |
+| ---------------- | ------------------ | ------------------ |
+| Ethereum Mainnet | 50                 | 25,000             |
+| Arbitrum         | 1                  | 25,000             |
+| Base             | 1                  | 25,000             |
+| Optimism         | 1                  | 25,000             |
+| Polygon          | 1                  | 25,000             |
+
+For the latest Minimum & Maximum Transfer Sizes, checkout the Skip API [documents](https://docs.skip.build/go/advanced-transfer/go-fast#what-are-the-minimum-and-maximum-transfer-sizes-for-go-fast%3F). 
+
+:::info
+If starting with an asset that is not USDC, Skip Go will swap the asset to USDC on the source chain, and the post-swap amount is used to determine if it falls within the min/max transfer size limits.
+:::
+
+## Fees
+
+:::info
+- As of 24/6 Ethereum deposits > $100 route via skip go fast by default and are free of fees.
+- As of 8/7 EVM L2 deposits > $20 route via skip go fast by default and are free of fees.
+All other routes go via skip regular
+:::
+
+All Skip Go Fast `10 bps` on the transfer size \+ source chain fee:
+
+
+
+| Source Chain     | Fee (USD)                          |
+| ---------------- | ---------------------------------- |
+| Ethereum Mainnet | \~$2.5 (depends on gas fees)       |
+| Arbitrum         | \~$0.01-$0.1 (depends on gas fees) |
+| Base             | \~$0.01-$0.1 (depends on gas fees) |
+| Optimism         | \~$0.01-$0.1 (depends on gas fees) |
+| Polygon          | \~$0.01-$0.1 (depends on gas fees) |
+
+For the latest source chain fees, checkout the Skip API [documents](https://docs.skip.build/go/advanced-transfer/go-fast#what-is-the-fee-model-for-go-fast%3F). 
+
+## Process Flow (Deposit)
+
+1. **Connect your wallet** to the dYdX interface and navigate to the "Deposit" section
+2. **Enter the amount** you wish to transfer (ensure it meets minimum requirements)
+3. **Choose the source chain and asset** you wish to deposit
+4. **Review the transaction details** including estimated fees and finality time
+5. **Confirm and sign** the transaction from your wallet
+6. **Skip Go Fast protocol's solvers** monitor for confirmation of fund arrival at Noble
+   - This process relies on Skip's decentralized solver network
+   - If your source token is not USDC, an automatic swap occurs via integrated DEXs
+7. Once confirmed, funds are automatically sent to dYdX Chain via IBC transfer
+   - This step uses IBC relayers to complete the cross-chain transfer
+8. Final step Funds are moved from the main account to the subaccount for trading
+   - This internal transfer is handled by dYdX Chain’s infrastructure
+
+
+## How Skip Go Fast Works
+
+Skip Go Fast uses a solver-based approach to achieve near-instant finality:
+
+:::steps
+#### **User Intent Submission**
+   - When you initiate a transfer, you call the `submitOrder` function on the protocol contract
+   - This broadcasts your intent to transfer assets across chains
+   - Your intent specifies the assets, destination address, and any additional message payload
+#### **Solver Network**
+   - Permissionless participants called "solvers" watch for these intents
+   - Solvers evaluate whether they can fulfill your intent based on:
+     - Their available liquidity on the destination chain
+     - Potential reward for fulfilling the intent
+   - When a solver agrees to fulfill your intent, they use their own capital to front the assets
+#### **Instant Fulfillment**
+   - The solver calls the `fillOrder` function on the destination chain
+   - This transfers the specified assets and processes any additional actions
+   - From your perspective, the assets appear on the destination chain almost instantly
+#### **Settlement Process**
+   - After fulfilling your transfer, the solver initiates settlement to recover their fronted assets
+   - The protocol verifies the solver's actions via a cross-chain messaging system
+   - Once confirmed, the solver receives their assets back plus any earned fees
+   - This settlement happens in the background and doesn't affect your user experience.
+::::
+
+
+## Example deposit
+ Base → dYdX via Skip Go Fast
+
+```json
+{
+    "operations": [
+        {
+            "evm_swap": {
+                "from_chain_id": "8453",
+                "denom_in": "base-native",
+                "denom_out": "USDC",
+                "amount_in": "10511954965182950",
+                "amount_out": "21430265",
+                "swap_venues": [
+                    {"name": "base-uniswap"}
+                ]
+            }
+        },
+        {
+            "cctp_transfer": {
+                "from_chain_id": "8453",
+                "to_chain_id": "noble-1",
+                "denom_in": "USDC",
+                "denom_out": "uusdc",
+                "bridge_id": "CCTP"
+            }
+        },
+        {
+            "transfer": {
+                "from_chain_id": "noble-1",
+                "to_chain_id": "dydx-mainnet-1",
+                "denom_in": "uusdc",
+                "denom_out": "ibc/USDC",
+                "bridge_id": "IBC"
+            }
+        }
+    ]
+}
+```
