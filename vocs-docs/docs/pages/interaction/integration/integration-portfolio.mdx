@@ -46,8 +46,8 @@ This represents the user's maximum buying power if all remaining free collateral
 ::::
 
 (d) `Account level risk`
-The account-level risk is derived from Indexer data via the WebSocket [v4_parent_subaccounts] channel.  [sample response][response](/types/parent_subaccounts_update_message).  
 This metric represents the `percentage of the user's total collateral` that has been allocated to support open positions (also referred to as `margin`).
+The account-level risk is derived from Indexer data via the WebSocket `v4_parent_subaccounts` channel. [sample response](/types/parent_subaccounts_update_message).  
 
 To compute `total collateral`, follow these steps:
 
