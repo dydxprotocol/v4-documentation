@@ -8,6 +8,17 @@ Get all gov proposals.
 :::code-group
 
 ```python [Python]
+async def get_all_gov_proposals(
+    self,
+    proposal_status: Optional[str] = None,
+    voter: Optional[str] = None,
+    depositor: Optional[str] = None,
+    key: Optional[bytes] = None,
+    offset: Optional[int] = None,
+    limit: Optional[int] = None,
+    count_total: Optional[bool] = False,
+    reverse: Optional[bool] = False,
+) -> gov_query.QueryProposalsResponse
 ```
 
 ```rust [Rust]

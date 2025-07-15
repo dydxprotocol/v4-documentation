@@ -182,6 +182,10 @@ Moving assets is not restricted to using the Noble client directly. Please see t
 :::code-group
 
 ```python [Python]
+from dydx_v4_client.indexer.rest.noble_client import NobleClient
+
+client = NobleClient("https://rpc.testnet.noble.strange.love") # [!code focus]
+await client.connect(MNEMONIC) # [!code focus]
 ```
 
 ```typescript [TypeScript]
