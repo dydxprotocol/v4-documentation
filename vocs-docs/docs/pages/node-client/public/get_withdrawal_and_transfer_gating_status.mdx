@@ -7,6 +7,9 @@ Get withdrawal and transfer gating status.
 :::code-group
 
 ```python [Python]
+async def get_withdrawal_and_transfer_gating_status(
+    self, perpetual_id: int
+) -> subaccount_query.QueryGetWithdrawalAndTransfersBlockedInfoResponse
 ```
 
 ```rust [Rust]

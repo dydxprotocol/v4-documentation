@@ -7,7 +7,16 @@ TODO
 :::code-group
 
 ```python [Python]
-TODO: Not available
+async def get_parent_fills(
+    self,
+    address: str,
+    subaccount_number: int,
+    limit: Optional[int] = None,
+    market: Optional[str] = None,
+    market_type: Optional[TickerType] = None,
+    created_before_or_at_height: Optional[int] = None,
+    created_before_or_at: Optional[str] = None,
+) -> Any
 ```
 
 ```typescript [TypeScript]

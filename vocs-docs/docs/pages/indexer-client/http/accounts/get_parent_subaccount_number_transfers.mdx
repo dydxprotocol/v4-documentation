@@ -7,7 +7,14 @@ TODO
 :::code-group
 
 ```python [Python]
-TODO: Not available
+async def get_parent_transfers(
+    self,
+    address: str,
+    subaccount_number: int,
+    limit: Optional[int] = None,
+    created_before_or_at_height: Optional[int] = None,
+    created_before_or_at: Optional[str] = None,
+) -> Any
 ```
 
 ```typescript [TypeScript]

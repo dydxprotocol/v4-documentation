@@ -7,7 +7,9 @@ Get all unbonding delegations from a delegator.
 :::code-group
 
 ```python [Python]
-
+async def get_delegation_total_rewards(
+      self, address: str
+  ) -> distribution_query.QueryDelegationTotalRewardsResponse
 ```
 
 ```rust [Rust]

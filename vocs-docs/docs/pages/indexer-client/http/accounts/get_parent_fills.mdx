@@ -9,7 +9,16 @@ Query for fills (i.e. filled orders data) for a parent subaccount.
 :::code-group
 
 ```python [Python]
-
+async def get_parent_fills(
+    self,
+    address: str,
+    subaccount_number: int,
+    limit: Optional[int] = None,
+    market: Optional[str] = None,
+    market_type: Optional[TickerType] = None,
+    created_before_or_at_height: Optional[int] = None,
+    created_before_or_at: Optional[str] = None,
+) -> Any:
 ```
 
 ```typescript [TypeScript]

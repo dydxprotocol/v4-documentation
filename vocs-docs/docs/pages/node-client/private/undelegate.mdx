@@ -7,6 +7,14 @@ Undelegate coins from a delegator to a validator.
 :::code-group
 
 ```python [Python]
+async def undelegate(
+    self,
+    wallet: Wallet,
+    delegator: str,
+    validator: str,
+    quamtums: int,
+    denomination: str,
+)
 ```
 
 ```typescript [TypeScript]

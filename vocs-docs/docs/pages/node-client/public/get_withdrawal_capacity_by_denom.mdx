@@ -7,6 +7,9 @@ Get withdrawal capacity by denom.
 :::code-group
 
 ```python [Python]
+async def get_withdrawal_capacity_by_denom(
+    self, denom: str
+) -> rate_query.QueryCapacityByDenomResponse
 ```
 
 ```rust [Rust]
