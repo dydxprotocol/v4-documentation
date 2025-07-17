@@ -548,17 +548,6 @@ export default defineConfig({
             content: 'https://dydx.exchange/icon.svg' 
             }),
 
-        // Additional SEO meta tags
-        React.createElement('meta', {
-            key: 'description',
-            name: 'description',
-            content: 'Official dYdX documentation for developers and API traders. Learn about API trading, APIs and clients on dYdX'
-        }),
-        React.createElement('meta', {
-            key: 'keywords',
-            name: 'keywords',
-            content: 'dYdX, documentation, trading, API trading, API, DEX, perps, perpetuals'
-            }),
         )
     )
 })
