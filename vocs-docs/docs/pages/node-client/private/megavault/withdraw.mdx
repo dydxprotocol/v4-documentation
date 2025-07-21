@@ -7,7 +7,14 @@ Withdraw funds (USDC) from the subaccount to the address.
 :::code-group
 
 ```python [Python]
-
+async def withdraw(
+    self,
+    wallet: Wallet,
+    address: str,
+    subaccount_number: int,
+    min_amount: Decimal,
+    shares: Optional[int],
+) -> Any
 ```
 
 ```typescript [TypeScript]
@@ -39,12 +46,12 @@ pub async fn withdraw(
 
 #### Parameters
 
-| Parameter    | Location | Type             | Description                |
-| ------------ | -------- | ---------------- | -------------------------- |
-| `account`    | query    | [Account]        | Owner's account            |
-| `subaccount` | query    | [SubaccountInfo] | Subaccount information     |
-| `min_amount` | query    | int              | Minimum amount to withdraw |
-| `shares`     | query    | BigInt           | Number of shares           |
+| Parameter    | Location | Type             | Description                        |
+| ------------ | -------- | ---------------- | ---------------------------------- |
+| `account`    | query    | [Account]        | Owner's account                    |
+| `subaccount` | query    | [SubaccountInfo] | Subaccount information             |
+| `min_amount` | query    | Decimal          | Minimum amount to withdraw i usdc  |
+| `shares`     | query    | BigInt           | Number of shares                   |
 
 #### Response
 
