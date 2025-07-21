@@ -1,27 +1,61 @@
+import Opt from '../../components/Opt';
+
 # Order
 
-`order_id`: [OrderId]
+Order represents a single order belonging to a `Subaccount` for a particular `ClobPair`.
 
-`side`: [i32]
+`order_id`: [OrderId] <Opt/>
+- The unique ID of this order
+- Meant to be unique across all orders
 
-`quantums`: [i32]
+`side`: [OrderSide]
+- The direction of the order (buy or sell)
+
+`quantums`: [u64]
+- The size of this order in base quantums
+- Must be a multiple of `ClobPair.StepBaseQuantums` (where `ClobPair.Id = orderId.ClobPairId`)
 
 `subticks`: [u64]
+- The price level that this order will be placed at on the orderbook, in subticks
+- Must be a multiple of `ClobPair.SubticksPerTick` (where `ClobPair.Id = orderId.ClobPairId`)
 
 `time_in_force`: [i32]
+- The time in force of this order
 
 `reduce_only`: bool
+- Enforces that the order can only reduce the size of an existing position
+- If a ReduceOnly order would change the side of the existing position, its size is reduced to that of the remaining size of the position
+- If existing orders on the book with ReduceOnly would already close the position, the least aggressive (out-of-the-money) ReduceOnly orders are resized and canceled first
 
 `client_metadata`: [u32]
+- Set of bit flags set arbitrarily by clients and ignored by the protocol
+- Used by indexer to infer information about a placed order
 
 `condition_type`: [i32]
+- The type of condition for this order
 
 `conditional_order_trigger_subticks`: [u64]
+- The price at which this order will be triggered, in subticks
+- If condition_type is CONDITION_TYPE_UNSPECIFIED, this value must be 0
+- If this value is nonzero, condition_type cannot be CONDITION_TYPE_UNSPECIFIED
+- Must be a multiple of ClobPair.SubticksPerTick (where `ClobPair.Id = orderId.ClobPairId`)
 
-`good_til_oneof`: [GoodTilOneof]
+`twap_parameters`: [TwapParameters] <Opt/>
+- Configuration for a TWAP order
+- Must be set for TWAP orders
+- Ignored for all other order types
+
+`builder_code_parameters`: [BuilderCodeParameters] <Opt/>
+- Metadata for the partner or builder of an order specifying the fees charged
+
+`good_til_oneof`: [GoodTilOneof] <Opt/>
+- Information about when the order expires
 
 [OrderId]: /types/order_id
+[OrderSide]: /types/order_side
 [i32]: /types/i32
 [u32]: /types/u32
 [u64]: /types/u64
 [GoodTilOneof]: /types/good_til_oneof
+[TwapParameters]: /types/twap_parameters
+[BuilderCodeParameters]: /types/builder_code_parameters
