@@ -7,7 +7,9 @@ Query the shares associated with an [`Address`].
 :::code-group
 
 ```python [Python]
-
+async def get_owner_shares(
+    self, address: str
+) -> vault_query.QueryMegavaultOwnerSharesResponse
 ```
 
 ```typescript [TypeScript]

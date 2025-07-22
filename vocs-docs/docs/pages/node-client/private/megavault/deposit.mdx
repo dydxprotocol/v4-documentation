@@ -7,7 +7,9 @@ Deposit USDC into MegaVault
 :::code-group
 
 ```python [Python]
-
+async def deposit(
+    self, wallet: Wallet, address: str, subaccount_number: int, amount: Decimal
+) -> Any
 ```
 
 ```typescript [TypeScript]
@@ -42,7 +44,7 @@ pub async fn deposit(
 | ------------ | -------- | ---------------- | --------------------------- |
 | `account`    | query    | [Account]        | Owner's account information |
 | `subaccount` | query    | [SubaccountInfo] | Subaccount information      |
-| `amount`     | query    | int              | Amount to deposit           |
+| `amount`     | query    | Decimal          | Amount in usdc to deposit   |
 
 #### Response
 
