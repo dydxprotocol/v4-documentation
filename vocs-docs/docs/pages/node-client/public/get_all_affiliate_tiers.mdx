@@ -7,7 +7,9 @@ Get all affiliate tiers.
 :::code-group
 
 ```python [Python]
-
+async def get_all_affiliate_tiers(
+    self,
+) -> affiliate_query.AllAffiliateTiersResponse
 ```
 
 ```rust [Rust]
@@ -36,5 +38,5 @@ Examples: [API]
 
 [API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/affiliates/all_affiliate_tiers
 
-[OK]: /type/ok
+[OK]: /types/ok
 [AffiliateModule.AllAffiliateTiersResponse]: /types/cosmos

@@ -57,8 +57,8 @@ pub async fn send_token(
 | Parameter         | Location  | Type      | Required  | Description                                       |
 | ----------------- | --------- | --------- | --------- | ------------------------------------------------- |
 | `wallet`          | query     | [Wallet]  | true      | The wallet to use for signing the transaction.    |
-| `sender`          | query     | [String]  | true      | The sender address.                               |
-| `recipient`       | query     | [String]  | true      | The recipient address.                            |
+| `sender`          | query     | String    | true      | The sender address.                               |
+| `recipient`       | query     | String    | true      | The recipient address.                            |
 | `quantums`        | query     | [i32]     | true      | The amount of quantums to send.                   |
 | `denomination`    | query     | [i32]     | true      | The denomination of the token.                    |
 
@@ -75,7 +75,6 @@ Examples: [Rust]
 
 [Wallet]: /types/wallet
 [TxHash]: /types/tx_hash
-[String]: /types/string
 [i32]: /types/i32
 [OK]: /types/ok
 [Bad Request]: /types/bad-request

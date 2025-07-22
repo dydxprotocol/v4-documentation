@@ -9,7 +9,16 @@ Query for profit and loss report for the specified time/block range of a parent 
 :::code-group
 
 ```python [Python]
-
+async def get_parent_historical_pnls(
+    self,
+    address: str,
+    subaccount_number: int,
+    limit: Optional[int] = None,
+    created_before_or_at_height: Optional[int] = None,
+    created_before_or_at: Optional[str] = None,
+    created_on_or_after_height: Optional[int] = None,
+    created_on_or_after: Optional[str] = None,
+) -> Any:
 ```
 
 ```typescript [TypeScript]

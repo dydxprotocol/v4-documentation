@@ -9,7 +9,15 @@ Query for asset positions (size, buy/sell etc) for a parent subaccount.
 :::code-group
 
 ```python [Python]
-
+async def get_parent_subaccount_asset_positions(
+    self,
+    address: str,
+    subaccount_number: int,
+    status: Optional[PositionStatus] = None,
+    limit: Optional[int] = None,
+    created_before_or_at_height: Optional[int] = None,
+    created_before_or_at: Optional[str] = None,
+) -> Any:
 ```
 
 ```typescript [TypeScript]

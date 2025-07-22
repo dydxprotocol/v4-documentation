@@ -10,6 +10,9 @@ const withNextra = require('nextra')({
 module.exports = withNextra({
   async redirects() {
     return [
+      // Landing page redirect
+      { source: '/', destination: 'https://docs.dydx.xyz', permanent: true },
+
       // Original top-level
       { source: '/security', destination: '/other-security', permanent: true },
       { source: '/terms_of_use_and_privacy_policy.md', destination: '/other-terms_of_use_and_privacy_policy.md', permanent: true },

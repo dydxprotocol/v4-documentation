@@ -46,8 +46,9 @@ This represents the user's maximum buying power if all remaining free collateral
 ::::
 
 (d) `Account level risk`
-The account-level risk is derived from Indexer data via the WebSocket [v4_parent_subaccounts] channel.  [sample response][response](/types/parent_subaccounts_update_message).  
+The account-level risk is derived from Indexer data via the WebSocket `v4_parent_subaccounts` channel.  [sample response](/types/parent_subaccounts_update_message).  
 This metric represents the `percentage of the user's total collateral` that has been allocated to support open positions (also referred to as `margin`).
+The account-level risk is derived from Indexer data via the WebSocket `v4_parent_subaccounts` channel. [sample response](/types/parent_subaccounts_update_message).  
 
 To compute `total collateral`, follow these steps:
 
@@ -73,7 +74,7 @@ The resulting `total collateral` is then used to determine the `margin percentag
 
 (e) `Historical PNL`.  Indexer data [GetHistoricalPnlForParentSubaccount](/indexer-client/http#get-parent-historical-pnl).  The chart shows the PNL tickets of the selected time range.
 
-(f) `Position size, and position side`   Indexer data from the websocket  `v4_parent_subaccounts` channel.  [sample response]([response](/types/parent_subaccounts_update_message)).  Subaccount -> ChildSubaccounts -> openPerpetualPositions -> size/side.
+(f) `Position size, and position side`   Indexer data from the websocket  `v4_parent_subaccounts` channel.  [sample response](/types/parent_subaccounts_update_message).  Subaccount -> ChildSubaccounts -> openPerpetualPositions -> size/side.
 
 (g) `Current oracle price`.  From market data off the Websocket [v4-markets](/indexer-client/websockets#markets) channel.
 

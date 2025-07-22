@@ -7,7 +7,15 @@ Fetch information regarding a transfer between two subaccounts.
 :::code-group
 
 ```python [Python]
-
+async def get_transfer_between(
+    self,
+    source_address: str,
+    source_subaccount_number: int,
+    recipient_address: str,
+    recipient_subaccount_number: int,
+    created_before_or_at_height: Optional[int] = None,
+    created_before_or_at: Optional[str] = None,
+) -> Any
 ```
 
 ```typescript [TypeScript]

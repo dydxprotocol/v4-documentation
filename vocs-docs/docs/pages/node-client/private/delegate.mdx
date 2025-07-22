@@ -7,6 +7,14 @@ Delegate tokens from a delegator to a validator.
 :::code-group
 
 ```python [Python]
+async def delegate(
+    self,
+    wallet: Wallet,
+    delegator: str,
+    validator: str,
+    quamtums: int,
+    denomination: str,
+)
 ```
 
 
@@ -42,7 +50,7 @@ pub async fn delegate(
 | subaccount    | query     | [SubaccountInfo]  | true      | Subaccount number     |
 | delegator     | query     | string            | true      | Delegator information |
 | validator     | query     | string            | true      | validator information |
-| amount        | string    | string            | true      | Amount to delegate    |
+| amount        | query     | string            | true      | Amount to delegate    |
 | broadcastMode | query     | [BroadcastMode]   | false     | Mode of broadcast     |
 
 #### Response

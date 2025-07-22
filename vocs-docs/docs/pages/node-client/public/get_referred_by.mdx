@@ -7,6 +7,7 @@ Get referred by.
 :::code-group
 
 ```python [Python]
+async def get_referred_by(self, address: str) -> affiliate_query.ReferredByResponse
 ```
 
 ```rust [Rust]
@@ -27,7 +28,7 @@ async getReferredBy(address: string): Promise<AffiliateModule.ReferredByResponse
 
 | Parameter | Location  | Type      | Mandatory | Description                   |
 | --------- | --------- | --------- | --------- | ----------------------------- |
-| address   | Query     | string    | true      | Address to get referred by    |
+| `address` | Query     | [Address] | true      | Address to get referred by    |
 
 #### Response
 
@@ -41,3 +42,4 @@ Examples: [API]
 
 [OK]: /types/ok
 [AffiliateModule.ReferredByResponse]: /types/cosmos
+[Address]: /types/address

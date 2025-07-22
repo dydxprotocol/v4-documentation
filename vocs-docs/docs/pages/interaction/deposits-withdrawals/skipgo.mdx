@@ -1,0 +1,72 @@
+# Skip Go (`regular deposit`)
+
+Skip Go API is a **universal interoperability platform**, allowing **seamless swaps and transfers** across multiple blockchain ecosystems via **bridges such as CCTP and Axelar**.
+
+## Supported Chains & Assets
+
+- **Chains:** Ethereum Mainnet, Arbitrum, Avalanche, Base, Optimism, Polygon, Solana, and Cosmos chains
+- **Assets:** USDC, ETH, POL
+
+## Min & Max Transfer Sizes
+
+| Source Chain     | Min Transfer (USD) | Max Transfer (USD) |
+| ---------------- | ------------------ | ------------------ |
+| Ethereum Mainnet | \~$0.05            | \~$1,000,000       |
+| Other EVM Chains | \~$0.05            | \~$1,000,000       |
+| Solana           | \~$0.05            | \~$1,000,000       |
+| Cosmos Chains    | \~$0.05            | \~$1,000,000       |
+
+## Fees  
+Source chain gas fees \+ Deposits \~$0.02 Withdrawals: \~$0.1-$7
+
+| Source Chain     | Fee (USD)                               |
+| ---------------- | --------------------------------------- |
+| Ethereum Mainnet | Deposits \~$0.02 Withdrawals: \~$0.1-$7 |
+| Other EVM Chains | Deposits \~$0.02 Withdrawals: \~$0.1-$7 |
+| Solana           | Deposits \~$0.02 Withdrawals: \~$0.1-$7 |
+| Cosmos Chains    | Deposits \~$0.02 Withdrawals: \~$0.1-$7 |
+
+## Process Flow (Deposit)
+
+1. **Connect your wallet** to the dYdX interface and navigate to the "Deposit" section
+2. **Enter the amount** you wish to transfer (First time 1.25 USDC will be kept in wallet for gas fees)
+3. **Choose source chain and asset** you wish to deposit
+4. **Review the transaction details** including estimated fees and finality time
+5. **Confirm and sign** the transaction from your wallet
+6. **Third-party protocol interactions begin:**
+   - If your source token is not USDC, an automatic swap occurs via integrated DEXs
+   - Funds are sent to bridge contracts (CCTP, Axelar, etc.) based on optimal route
+   - These bridges rely on external validators and relayers to verify cross-chain transactions
+7. **Wait for confirmation** across all involved networks (may take 10-20 minutes)
+   - Multiple relayer networks and validators must reach consensus
+   - Each bridge and network has its own finality period
+8. **Once confirmed**, funds are available in your dYdX account
+   - Relayers monitor and trigger the final IBC transfer to dYdX Chain
+
+## Example Deposit
+Ethereum → dYdX via Skip Go
+
+```json
+{
+    "operations": [
+        {
+            "cctp_transfer": {
+                "from_chain_id": "1",
+                "to_chain_id": "noble-1",
+                "denom_in": "USDC",
+                "denom_out": "uusdc",
+                "bridge_id": "CCTP"
+            }
+        },
+        {
+            "transfer": {
+                "from_chain_id": "noble-1",
+                "to_chain_id": "dydx-mainnet-1",
+                "denom_in": "uusdc",
+                "denom_out": "ibc/USDC",
+                "bridge_id": "IBC"
+            }
+        }
+    ]
+}
+```

@@ -3,6 +3,8 @@ import React from 'react'
 
 export default defineConfig({
     title: 'dYdX Documentation',
+    iconUrl: 'https://dydx.exchange/icon.svg',
+    logoUrl: 'https://dydx.exchange/icon.svg',
     basePath: '/',
     sidebar: [
         {
@@ -66,10 +68,36 @@ export default defineConfig({
                     link: '/interaction/permissioned-keys',
                 },
                 {
-                    text: 'Deposits and Withdrawals',
-                    link: '/interaction/deposits-and-withdrawals',
+                    text: 'Deposits & Withdrawals',
+                    collapsed: true,
+                    items: [
+                        {
+                            text: 'Overview',
+                            link: '/interaction/deposits-withdrawals/overview',
+                        },
+                        {
+                            text: 'Skip Go Fast',
+                            link: '/interaction/deposits-withdrawals/skipgofast',
+                        },
+                        {
+                            text: 'Skip Go regular',
+                            link: '/interaction/deposits-withdrawals/skipgo',
+                        },
+                        {
+                            text: 'Other Deposits',
+                            link: '/interaction/deposits-withdrawals/other',
+                        },                
+                        {
+                            text: 'Withdrawals',
+                            link: '/interaction/deposits-withdrawals/withdrawal',
+                        },
+                        {
+                            text: 'Troubleshooting',
+                            link: '/interaction/deposits-withdrawals/troubleshooting',
+                        },
+                    ]
                 },
-                                {
+                {
                     text: 'Application Integration',
                     collapsed: true,
                     items: [
@@ -396,6 +424,18 @@ export default defineConfig({
     ],
     head: () => (
         React.createElement(React.Fragment, null, 
+        // Favicon links
+        React.createElement('link', {
+            key: 'favicon',
+            rel: 'icon',
+            type: 'image/svg+xml',
+            href: 'https://dydx.exchange/icon.svg'
+        }),
+        React.createElement('link', {
+            key: 'apple-touch-icon',
+            rel: 'apple-touch-icon',
+            href: 'https://dydx.exchange/icon.svg'
+        }),
       // Kapa AI Widget
         React.createElement('script', {
             key: 'kapa-widget',
@@ -426,54 +466,87 @@ export default defineConfig({
             `
             }
         }),
+
+        React.createElement('script', {
+            key: 'structured-data',
+            type: 'application/ld+json',
+            dangerouslySetInnerHTML: {
+                __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "name": "dYdX Documentation",
+                    "url": "https://docs.dydx.xyz",
+                    "description": "Official dYdX v4 documentation for developers and validators",
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "dYdX",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "https://dydx.exchange/icon.svg"
+                        }
+                    }
+                })
+            }
+        }),
+
         // OG meta tags
-            React.createElement('meta', {
+        React.createElement('meta', {
             key: 'og-title',
             property: 'og:title',
             content: 'dYdX Documentation'
             }),
-            React.createElement('meta', {
+        React.createElement('meta', {
             key: 'og-description',
             property: 'og:description',
-            content: 'Explore the official dYdX v4 documentation for developers and validators.'
+            content: 'Explore the official dYdX documentation for developers and traders.'
             }),
-            React.createElement('meta', {
+        React.createElement('meta', {
             key: 'og-image',
             property: 'og:image',
-            content: 'https://dydx.exchange/icon.png'
+            content: 'https://dydx.exchange/icon.svg'
             }),
-            React.createElement('meta', {
+        React.createElement('meta', {
+            key: 'og-image-width',
+            property: 'og:image:width',
+            content: '181'
+            }),
+        React.createElement('meta', {
+            key: 'og-image-height', 
+            property: 'og:image:height',
+            content: '181'
+            }),
+        React.createElement('meta', {
             key: 'og-url',
             property: 'og:url',
             content: 'https://docs.dydx.xyz'
             }),
-            React.createElement('meta', {
+        React.createElement('meta', {
             key: 'og-type',
             property: 'og:type',
             content: 'website'
             }),
 
-            // Twitter Card Meta Tags
-            React.createElement('meta', {
+        // Twitter Card Meta Tags
+        React.createElement('meta', {
             key: 'twitter-card',
             name: 'twitter:card',
             content: 'summary_large_image'
             }),
-            React.createElement('meta', {
+        React.createElement('meta', {
             key: 'twitter-title',
             name: 'twitter:title',
             content: 'dYdX Documentation'
             }),
-            React.createElement('meta', {
+        React.createElement('meta', {
             key: 'twitter-description',
             name: 'twitter:description',
             content: 'Explore the dYdX documentation for traders'
             }),
-            React.createElement('meta', {
+        React.createElement('meta', {
             key: 'twitter-image',
             name: 'twitter:image',
-            content: 'https://dydx.exchange/icon.png' 
-            })
+            content: 'https://dydx.exchange/icon.svg' 
+            }),
         )
     )
 })

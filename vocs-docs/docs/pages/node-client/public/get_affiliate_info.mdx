@@ -7,6 +7,9 @@ Get affiliate info by address.
 :::code-group
 
 ```python [Python]
+async def get_affiliate_info(
+    self, address: str
+) -> affiliate_query.AffiliateInfoResponse
 ```
 
 ```rust [Rust]
@@ -29,7 +32,7 @@ async getAffiliateInfo(address: string): Promise<AffiliateModule.AffiliateInfoRe
 
 | Parameter | Location  | Type      | Mandatory | Description                   |
 | --------- | --------- | --------- | --------- | ----------------------------- |
-| address   | Query     | string    | true      | Address to get affiliate info |
+| `address` | Query     | [Address] | true      | Address to get affiliate info |
 
 #### Response
 
@@ -43,3 +46,4 @@ Examples: [API]
 
 [OK]: /types/ok
 [AffiliateModule.AffiliateInfoResponse]: /types/cosmos
+[Address]: /types/address

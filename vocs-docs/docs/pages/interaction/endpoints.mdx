@@ -176,12 +176,16 @@ let faucet = FaucetClient::new( // [!code focus]
 To move assets in and out of the dYdX network, the Noble network is commonly employed.
 
 :::tip[Alternatives]
-Moving assets is not restricted to using the Noble client directly. Please see the [Deposits and Withdrawals](/interaction/deposits-and-withdrawals) page.
+Moving assets is not restricted to using the Noble client directly. Please see the [Deposits and Withdrawals](/interaction/deposits-withdrawals/overview) page.
 :::
 
 :::code-group
 
 ```python [Python]
+from dydx_v4_client.indexer.rest.noble_client import NobleClient
+
+client = NobleClient("https://rpc.testnet.noble.strange.love") # [!code focus]
+await client.connect(MNEMONIC) # [!code focus]
 ```
 
 ```typescript [TypeScript]

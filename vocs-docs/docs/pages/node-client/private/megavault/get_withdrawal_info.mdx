@@ -7,7 +7,9 @@ Query the withdrawal information for a specified number of shares.
 :::code-group
 
 ```python [Python]
-
+async def get_withdrawal_info(
+    self, shares: int
+) -> vault_query.QueryMegavaultWithdrawalInfoResponse
 ```
 
 ```typescript [TypeScript]
@@ -36,7 +38,7 @@ pub async fn get_withdrawal_info(
 
 | Parameter | Location | Type   | Description                                  |
 | --------- | -------- | ------ | -------------------------------------------- |
-| `shares`  | query    | BigInt | The wallet address that owns the subaccount. |
+| `shares`  | query    | BigInt | Number of shares                             |
 
 #### Response
 
