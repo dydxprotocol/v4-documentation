@@ -75,9 +75,9 @@ from dydx_v4_client.indexer.rest.indexer_client import IndexerClient
 from dydx_v4_client.indexer.socket.websocket import IndexerSocket
 
 config = make_mainnet( # [!code focus]
-   node_url="your-custom-grpc-node.com" # [!code focus]
+   node_url="your-custom-grpc-node.com", # [!code focus]
    rest_indexer="https://your-custom-rest-indexer.com", # [!code focus]
-   websocket_indexer="wss://your-custom-websocket-indexer.com", # [!code focus]
+   websocket_indexer="wss://your-custom-websocket-indexer.com" # [!code focus]
 ).node # [!code focus]
 
 # Instantiate the HTTP sub-client. # [!code focus]
