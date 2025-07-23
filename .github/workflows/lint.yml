@@ -1,0 +1,29 @@
+name: Lint Vocs Docs
+
+on:
+  push:
+    paths:
+      - 'vocs-docs/**'
+  pull_request:
+    paths:
+      - 'vocs-docs/**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vocs-docs
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run linter
+        run: pnpm lint
