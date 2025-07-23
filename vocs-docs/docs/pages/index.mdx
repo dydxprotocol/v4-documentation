@@ -1,24 +1,54 @@
+import { LinkButton, LinkButtonGroup } from '../components/LinkButton'
+
 # dYdX Integration Documentation
 
 This documentation is crafted specifically for **developers** who want to build trading applications, bots, analytics tools, or integrate dYdX into their own platforms.
 
 You'll find everything you need—from **REST & WebSocket API references** to **integration guides**. Whether you're creating a high-frequency trading bot or building a DeFi dashboard, this doc will help you get up and running quickly and securely.
 
-### Pick a scenario
-
+## Pick a scenario
 Depending on your use case, you can quickly jump to the sections that will help you start integrating right away.
 
-- __Build a Trading Bot__:
+### **Build a Trading Bot**  
 Use the libraries to automate trading: fetch market data, place and manage orders.
 
-- __Stream Real-Time Updates__:
+<LinkButtonGroup>
+  <LinkButton href="/interaction/client/quick-start-py">Quick Start Python</LinkButton>
+  <LinkButton href="/interaction/client/quick-start-ts">Quick Start TypeScript</LinkButton>
+  <LinkButton href="/interaction/client/quick-start-rs">Quick Start Rust</LinkButton>
+  <LinkButton href="/interaction/endpoints">Connecting to dYdX</LinkButton>
+  <LinkButton href="/interaction/wallet-setup">Wallet Setup</LinkButton>
+  <LinkButton href="/interaction/trading">Trading Guide</LinkButton>
+</LinkButtonGroup>
+
+### **Stream Real-Time Updates**
 Receive live market and account data using WebSocket connections.
 
-- __Test Your Strategy__:
-Connect to the testnet to safely experiment with your trading logic.
+<LinkButtonGroup>
+  <LinkButton href="/interaction/data/feeds">WebSocket Data Feeds</LinkButton>
+  <LinkButton href="/indexer-client/websockets">WebSocket API Reference</LinkButton>
+  <LinkButton href="/interaction/data/watch-orderbook">Watch Orderbook</LinkButton>
+  <LinkButton href="/nodes/full-node-streaming">Full Node Streaming</LinkButton>
+</LinkButtonGroup>
 
-- __Integrate into Your App__:
+### **Integrate into Your App**
 Display market, order, and position data directly in your application.
 
-- __Access Private Account Data__:
-Use private API methods to get account info, balances, and positions.
+<LinkButtonGroup>
+  <LinkButton href="/integration/integration-guide">Integration Guide</LinkButton>
+  <LinkButton href="/indexer-client/http">Indexer HTTP API</LinkButton>
+  <LinkButton href="/interaction/data/market">Market Data Guide</LinkButton>
+  <LinkButton href="/interaction/data/accounts">Account Data Guide</LinkButton>
+  <LinkButton href="/indexer-client/http/markets/get_perpetual_markets">Get Perpetual Markets</LinkButton>
+</LinkButtonGroup>
+
+### **Access Account Data**
+Use the Indexer API to query account info, balances, and positions. For actions requiring authentication, use private Node API methods.
+
+<LinkButtonGroup>
+  <LinkButton href="/indexer-client/http/accounts">Indexer Accounts API</LinkButton>
+  <LinkButton href="/node-client/private">Private Node API</LinkButton>
+  <LinkButton href="/interaction/data/accounts">Account Management</LinkButton>
+  <LinkButton href="/concepts/trading/accounts">Accounts and Subaccounts</LinkButton>
+  <LinkButton href="/interaction/permissioned-keys">Permissioned Keys</LinkButton>
+</LinkButtonGroup>
