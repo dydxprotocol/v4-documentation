@@ -1,8 +1,13 @@
+import Opt from '../../components/Opt';
+
 # ComplianceV2Response
 
 `status`: [ComplianceStatus]
-`reason`: [ComplianceReason]
-`updatedAt`: string
+
+`reason`: [ComplianceReason] <Opt/>
+
+`updatedAt`: [DateTime] <Opt/>
 
 [ComplianceStatus]: /types/compliance_status
 [ComplianceReason]: /types/compliance_reason
+[DateTime]: /types/date_time
