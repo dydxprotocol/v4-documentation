@@ -1,3 +1,5 @@
+import Opt from '../../components/Opt';
+
 # FillResponseObject
 
 Represents the details of a trade fill, including size, price, market information, and metadata related to the order and subaccount.
@@ -6,13 +8,9 @@ Represents the details of a trade fill, including size, price, market informatio
 
 `side`: [OrderSide]
 
-`size`: [BigDecimal]
-
-`fee`: [BigDecimal]
-
-`fill_type`: [FillType]
-
 `liquidity`: [Liquidity]
+
+`type`: [FillType]
 
 `market`: [Ticker]
 
@@ -20,19 +18,25 @@ Represents the details of a trade fill, including size, price, market informatio
 
 `price`: [Price]
 
-`subaccount_number`: [SubaccountNumber]
+`size`: [BigDecimal]
 
-`created_at_height`: [Height]
+`fee`: [BigDecimal]
+
+`affiliate_rev_share`: [BigDecimal]
 
 `created_at`: [DateTime]
 
-`client_metadata`: [ClientMetadata]
+`created_at_height`: [Height]
 
-`order_id`: [OrderId]
+`order_id`: [OrderId] <Opt/>
 
-:::details[Unification Plan]
-- Check the fields are really `market` and `market_type` (I guess yes since deserializer is strict)
-:::
+`client_metadata`: [ClientMetadata] <Opt/>
+
+`subaccount_number`: [SubaccountNumber]
+
+`builder_fee`: [BigDecimal] <Opt/>
+
+`builder_address`: [Address] <Opt/>
 
 [FillId]: /types/fill_id
 [OrderSide]: /types/order_side
@@ -47,3 +51,4 @@ Represents the details of a trade fill, including size, price, market informatio
 [DateTime]: /types/date_time
 [ClientMetadata]: /types/client_metadata
 [OrderId]: /types/order_id
+[Address]: /types/address
