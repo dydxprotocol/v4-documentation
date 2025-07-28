@@ -41,9 +41,11 @@ Order represents a single order belonging to a `Subaccount` for a particular `Cl
 - Must be a multiple of ClobPair.SubticksPerTick (where `ClobPair.Id = orderId.ClobPairId`)
 
 `twap_parameters`: [TwapParameters] <Opt/>
+> **Note:** This field will be introduced in a future version of the API (v9.0).
 - Configuration for a TWAP order
 - Must be set for TWAP orders
 - Ignored for all other order types
+
 
 `builder_code_parameters`: [BuilderCodeParameters] <Opt/>
 - Metadata for the partner or builder of an order specifying the fees charged

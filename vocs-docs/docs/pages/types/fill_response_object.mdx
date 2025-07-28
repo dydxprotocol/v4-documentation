@@ -4,6 +4,7 @@ import Opt from '../../components/Opt';
 
 Represents the details of a trade fill, including size, price, market information, and metadata related to the order and subaccount.
 
+
 `id`: [FillId]
 
 `side`: [OrderSide]
@@ -35,6 +36,8 @@ Represents the details of a trade fill, including size, price, market informatio
 `subaccount_number`: [SubaccountNumber]
 
 `builder_fee`: [BigDecimal] <Opt/>
+
+> **Note:** Builder fee fields will be introduced in a future version of the API (v9.0).
 
 `builder_address`: [Address] <Opt/>
 
