@@ -1,0 +1,17 @@
+# TwapParameters
+
+`duration`: [`u32`]
+- Duration of the TWAP order execution in seconds
+- Must be between 300 (5 minutes) and 86,400 (24 hours)
+
+`interval`: [`u32`]
+- Interval in seconds for each suborder execution
+- Must be a whole number and a factor of the duration
+- Must be between 30 seconds and 3,600 (1 hour)
+
+`price_tolerance`: [`u32`]
+- Price tolerance in parts per million (ppm) for each suborder
+- Applied to the oracle price when each suborder is triggered
+- Must be between 0 and 1,000,000
+
+[`u32`]: /types/u32

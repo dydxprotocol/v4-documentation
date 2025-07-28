@@ -1,6 +1,8 @@
+import Opt from '../../components/Opt';
+
 # PerpetualMarket
 
-`atomicResolution`: i32
+`atomicResolution`: [i32]
 
 `baseOpenInterest`: [BigDecimal]
 
@@ -18,32 +20,38 @@
 
 `openInterest`: [BigDecimal]
 
-`openInterestLowerCap`: [BigDecimal]
+`openInterestLowerCap`: [BigDecimal] <Opt/>
 
-`openInterestUpperCap`: [BigDecimal]
+`openInterestUpperCap`: [BigDecimal] <Opt/>
 
-`oraclePrice`: [Price]
+`oraclePrice`: [Price] <Opt/>
 
 `priceChange24H`: [BigDecimal]
 
-`quantumConversionExponent`: i32
+`quantumConversionExponent`: [i32]
 
 `status`: [PerpetualMarketStatus]
 
-`stepBaseQuantums`: u64
+`stepBaseQuantums`: [u64]
 
 `stepSize`: [BigDecimal]
 
-`subticksPerTick`: u32
+`subticksPerTick`: [u32]
 
 `tickSize`: [BigDecimal]
 
-`tikcer`: [Ticker]
+`ticker`: [Ticker]
 
-`trades24H`: u64
+`trades24H`: [u64]
 
 `volume24H`: [Quantity]
 
+`defaultFundingRate1H`: [BigDecimal] <Opt/>
+
+[i32]: /types/i32
+[u64]: /types/u64
+[u32]: /types/u32
+[Ticker]: /types/ticker
 [BigDecimal]: /types/big_decimal
 [ClobPairId]: /types/clob_pair_id
 [PerpetualMarketType]: /types/perpetual_market_type
