@@ -13,7 +13,7 @@ async def get_delegation_total_rewards(
 ```
 
 ```rust [Rust]
-pub async fn delegation_total_rewards(
+pub async fn get_delegation_total_rewards(
     &mut self,
     delegator_address: Address,
 ) -> Result<QueryDelegationTotalRewardsResponse, Error>
