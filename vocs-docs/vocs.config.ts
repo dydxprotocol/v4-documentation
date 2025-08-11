@@ -61,6 +61,10 @@ export default defineConfig({
                             text: 'Watch Orderbook',
                             link: '/interaction/data/watch-orderbook',
                         },
+                        {
+                            text: 'Governance Functionalities',
+                            link: '/interaction/data/governance'
+                        }
                     ],
                 },
                 {
