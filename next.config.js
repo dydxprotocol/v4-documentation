@@ -12,7 +12,7 @@ module.exports = withNextra({
     return [
       // Landing page redirect
       { source: '/', destination: 'https://docs.dydx.xyz', permanent: true },
-
+  
       // Original top-level
       { source: '/security', destination: '/other-security', permanent: true },
       { source: '/terms_of_use_and_privacy_policy.md', destination: '/other-terms_of_use_and_privacy_policy.md', permanent: true },
@@ -62,6 +62,34 @@ module.exports = withNextra({
       // Validators
       { source: '/validators/:slug*', destination: '/infrastructure_providers-validators/:slug*', permanent: true },
       { source: '/validators/upgrades/:slug*', destination: '/infrastructure_providers-validators/upgrades/:slug*', permanent: true },
+
+      // to new document pages
+      { source: '/api_integration-indexer/indexer_api', destination: 'https://docs.dydx.xyz/indexer-client/http', permanent: true },
+      { source: '/users-rewards/overview', destination: 'https://docs.dydx.xyz/concepts/trading/rewards', permanent: true },
+      { source: '/introduction-getting_started', destination: 'https://docs.dydx.xyz/interaction/client/quick-start-py', permanent: true },
+      { source: '/introduction-trading_fees', destination: 'https://docs.dydx.xyz/concepts/trading/rewards#fees', permanent: true },
+      { source: '/api_integration-trading/order_types', destination: 'https://docs.dydx.xyz/concepts/trading/orders', permanent: true },
+      { source: '/concepts-architecture/architectural_overview', destination: 'https://docs.dydx.xyz/concepts/architecture/overview', permanent: true },
+      { source: '/user-guides/how_to_troubleshoot_withdrawals_and_deposits', destination: 'https://docs.dydx.xyz/interaction/deposits-withdrawals/overview', permanent: true },
+      { source: '/api_integration-repositories', destination: 'https://docs.dydx.xyz/repositories#open-source-repositories', permanent: true },
+      { source: '/infrastructure_providers-validators/set_up_full_node', destination: 'https://docs.dydx.xyz/nodes/running-node/setup', permanent: true },
+      { source: '/concepts-trading/margin', destination: 'https://docs.dydx.xyz/concepts/trading/margin', permanent: true },
+      { source: '/users-rewards/staking_rewards', destination: 'https://docs.dydx.xyz/concepts/trading/rewards/staking-rewards', permanent: true },
+      { source: '/other-security', destination: 'https://docs.dydx.xyz/policies/security', permanent: true },
+      { source: '/api_integration-guides/how_to_interpret_block_data_for_trades', destination: 'https://docs.dydx.xyz/concepts/trading/quantums', permanent: true },
+      { source: '/api_integration-guides/how_to_permissioned_keys', destination: 'https://docs.dydx.xyz/concepts/trading/authenticators', permanent: true },
+      { source: '/api_integration-indexer/indexer_websocket', destination: 'https://docs.dydx.xyz/indexer-client/websockets', permanent: true },
+      { source: '/infrastructure_providers-network/resources', destination: 'https://docs.dydx.xyz/nodes/resources', permanent: true },
+      { source: '/concepts-trading/rewards_fees_and_parameters', destination: 'https://docs.dydx.xyz/concepts/trading/rewards/trading-rewards', permanent: true },
+      { source: '/infrastructure_providers-validators/running_a_validator', destination: 'https://docs.dydx.xyz/nodes/running-node/running-a-validator', permanent: true },
+      { source: '/infrastructure_providers-validators/required_node_configs', destination: 'https://docs.dydx.xyz/nodes/running-node/required-node-configs', permanent: true },
+      { source: '/api_integration-guides/how_to_isolated', destination: 'https://docs.dydx.xyz/concepts/trading/isolated-positions', permanent: true },
+      { source: '/api_integration-trading/rate_limits', destination: 'https://docs.dydx.xyz/concepts/trading/rate-limits', permanent: true },
+      { source: '/infrastructure_providers-validators/full_node_streaming', destination: 'https://docs.dydx.xyz/nodes/full-node-streaming', permanent: true },
+      { source: '/users-rewards/trading_rewards', destination: 'https://docs.dydx.xyz/concepts/trading/rewards/trading-rewards', permanent: true },
+      { source: '/other-terms_of_use_and_privacy_policy', destination: 'https://docs.dydx.xyz/policies/terms', permanent: true },
+      { source: '/api_integration-guides/how_to_transfer_tokens_between_accounts', destination: 'https://docs.dydx.xyz/concepts/trading/accounts#subaccounts', permanent: true },
+      { source: '/api_integration-clients/composite_client', destination: 'https://docs.dydx.xyz/interaction/endpoints#composite-client-typescript-only', permanent: true }
     ]
   },
 })
