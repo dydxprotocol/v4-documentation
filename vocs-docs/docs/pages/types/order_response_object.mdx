@@ -1,4 +1,7 @@
+import Opt from '../../components/Opt';
+
 # OrderResponseObject
+
 
 `client_id`: [ClientId]
 
@@ -16,11 +19,11 @@
 
 `order_flags`: [OrderFlags]
 
-`post_only`: bool
+`post_only`: `bool`
 
 `price`: [Price]
 
-`reduce_only`: bool
+`reduce_only`: `bool`
 
 `side`: [OrderSide]
 
@@ -38,11 +41,19 @@
 
 `total_filled`: [BigDecimal]
 
-`order_type`: [OrderType]
+`type`: [OrderType]
 
-`updated_at`: [DateTime in UTC]
+`updated_at`: [DateTime in UTC] <Opt/>
 
-`updated_at_height`: [Height]
+`updated_at_height`: [Height] <Opt/>
+
+`trigger_price`: [Price] <Opt/>
+
+`builder_fee`: [BigDecimal] <Opt/>
+
+> **Note:** Builder fee fields will be introduced in a future version of the API (v9.0).
+
+`fee_ppm`: [BigDecimal] <Opt/>
 
 [ClientId]: /types/client_id
 [ClientMetadata]: /types/client_metadata
