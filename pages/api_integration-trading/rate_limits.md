@@ -48,4 +48,4 @@ These fields are not used at this time.
 
 Examples assume the values in the provided example response.
 
-* 2 long-term orders can be placed for each of the first 10 blocks and then a new long-term order would be rate limited on the 11th block since the limit of 20 long-term orders over the past 100 blocks would apply.
+- 2 long-term orders can be placed for each of the first 10 blocks and then a new long-term order would be rate limited on the 11th block since the limit of 20 long-term orders over the past 100 blocks would apply.
