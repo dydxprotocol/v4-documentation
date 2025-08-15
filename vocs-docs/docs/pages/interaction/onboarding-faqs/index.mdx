@@ -23,8 +23,8 @@
 <summary>3. What are the benefits of running a full node as a market maker?</summary>
 
 - Running a full node will eliminate the latency between placing an order and when the actual order is gossiped throughout the network. Without your own node, your order will need to first be relayed to the nearest geographic node, which will then propagate it throughout the network for you. With your own node, your order will directly be gossiped.
-- Additionally, running a full node allows you to use [full node streaming](../nodes/full-node-streaming), a feature that aims to provide real-time, accurate orderbook updates and fills.
-- Instructions on setting up a full node can be found [here](../nodes/running-node/setup).
+- Additionally, running a full node allows you to use [full node streaming](/nodes/full-node-streaming), a feature that aims to provide real-time, accurate orderbook updates and fills.
+- Instructions on setting up a full node can be found [here](/nodes/running-node/setup).
 
 </details>
 
@@ -38,7 +38,7 @@
 <details>
 <summary>5. What is an indexer?</summary>
 
-- The indexer is a read-only service that consumes real-time data from dYdX Chain to a database for visibility to users. The indexer consumes data from dYdX Chain via a connection to a full node. The full node contains a copy of the blockchain and an in-memory order book. When the full node updates its copy of the blockchain and in-memory order book due to processing transactions, it will also stream these updates to the indexer. The indexer keeps the data in its database synced with the full-node using these updates. This data is made available to users querying through HTTPS REST APIs and streaming via websockets. More info can be found [here](../indexer-client).
+- The indexer is a read-only service that consumes real-time data from dYdX Chain to a database for visibility to users. The indexer consumes data from dYdX Chain via a connection to a full node. The full node contains a copy of the blockchain and an in-memory order book. When the full node updates its copy of the blockchain and in-memory order book due to processing transactions, it will also stream these updates to the indexer. The indexer keeps the data in its database synced with the full-node using these updates. This data is made available to users querying through HTTPS REST APIs and streaming via websockets. More info can be found [here](/indexer-client).
 
 </details>
 
@@ -94,7 +94,7 @@
 
 - Please use the latest dYdX Chain [typescript client](https://www.npmjs.com/package/@dydxprotocol/v4-client-js) to place orders.
 - Please refer to the [order.proto](https://github.com/dydxprotocol/v4-chain/blob/4eb219b1b726df9ba17c9939e8bb9296f5e98bb3/proto/dydxprotocol/clob/order.proto) for parameter and field definitions.
-- For more advanced order placements, please refer to one of the [validator clients](../interaction/trading).
+- For more advanced order placements, please refer to one of the [validator clients](/interaction/trading).
 
 </details>
 
@@ -115,7 +115,7 @@
 - The block height is the only reliable way to know if a short-term order is canceled with finality.
 - However, the indexer **does** send a websocket notification when a short-term order cancel is received by the indexer's full node.
 - In most cases, this "best effort" cancel means the order is cancelled. However, some small fraction of these cancels are not successful.
-- See [Limit Order Book and Matching](../concepts/trading/limit-orderbook) for more information.
+- See [Limit Order Book and Matching](/concepts/trading/limit-orderbook) for more information.
 
 </details>
 
@@ -136,7 +136,7 @@
   - This is why the status “BEST_EFFORT_OPENED” or “BEST_EFFORT_CANCELED” since the Indexer only knows that a full-node received the order / cancel, and it’s not guaranteed to be true across the whole network.
 - For the orderbook updates, these are sent when the full-node the Indexer is listening to receives orders / cancels and not just when the block is finalized.
   - For example, when the full-node receives a short term order it will be approximate how much is filled and how much would go on the orderbook. This is what the Indexer uses to stream orderbook updates. However, there is no guarantee that the orderbook looks the same in other nodes in the network.
-- Note that you can now stream the orderbook directly through your full node for the orderbook. Read more about that [here](../nodes/full-node-streaming).
+- Note that you can now stream the orderbook directly through your full node for the orderbook. Read more about that [here](/nodes/full-node-streaming).
 
 </details>
 
@@ -347,13 +347,13 @@
 <details>
 <summary>1. How will trading rewards work on dYdX Chain?</summary>
 
-- Trading rewards are not controlled by dYdX. dYdX recommends that trading rewards could be calculated primarily based on total taker fees paid, along with a few other variables. The full proposed formula can be found [here](../concepts/trading/rewards). These rewards could be distributed on a block by block basis (1-2 seconds).
+- Trading rewards are not controlled by dYdX. dYdX recommends that trading rewards could be calculated primarily based on total taker fees paid, along with a few other variables. The full proposed formula can be found [here](/concepts/trading/rewards). These rewards could be distributed on a block by block basis (1-2 seconds).
 
 </details>
 
 <details>
 <summary>2. Do liquidity provider rewards exist on v4 (dYdX Chain)?</summary>
 
-- Liquidity provider rewards in v4 are not controlled by dYdX. dYdX recommends that liquidity provider rewards should cease to exist in v4. Makers could be rewarded with a maker rebate ranging from 0.5bps to 1.1bps, based on their nominal volume and volume share. The full proposed fee schedule can be found [here](../concepts/trading/rewards).
+- Liquidity provider rewards in v4 are not controlled by dYdX. dYdX recommends that liquidity provider rewards should cease to exist in v4. Makers could be rewarded with a maker rebate ranging from 0.5bps to 1.1bps, based on their nominal volume and volume share. The full proposed fee schedule can be found [here](/concepts/trading/rewards).
 
 </details>
