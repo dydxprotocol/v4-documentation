@@ -1,6 +1,6 @@
 ### Get Price
 
-Retrieve the current market price for a specified market, identified by its CLOB pair ID.
+Retrieve the current market price for a specified market, identified by its market ID.
 
 #### Method Declaration
 
@@ -31,7 +31,7 @@ pub async fn get_price(&mut self, market_id: u32) -> Result<MarketPrice, Error>
 
 | Parameter | Location | Type  | Required | Description           |
 | --------- | -------- | ----- | -------- | --------------------- |
-| `id`      | query    | [u32] | true     | Market (Clob pair) ID |
+| `id`      | query    | [u32] | true     | Market ID |
 
 #### Response
 
