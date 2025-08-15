@@ -37,4 +37,4 @@ API endpoints exist to get data for a parent subaccount and all it's child subac
 
 > Currently all data for an account viewable on the frontend can be fetched by using the parent subaccount APIs to fetch data for parent subaccount number 0.
 
-See the [Indexer API](../../indexer-client/http/accounts/get_parent_subaccount) page for more details of the parent subaccount APIs.
+See the [Indexer API](/indexer-client/http#get-parent-subaccount) page for more details of the parent subaccount APIs.
