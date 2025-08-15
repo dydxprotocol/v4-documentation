@@ -8,12 +8,12 @@
    - Verify transaction succeeded on source blockchain explorer
    - Check Noble explorer for IBC transfer confirmation
    - Ensure you've connected the correct wallet to dYdX interface; this is important for the autosweeping to happen from noble to dYdX chain and to sweep into your dYdX subaccount
-   - Check [Range Tracker Tool](https://usdc.range.org/usdc) to see if relayers have picked up your transaction
+   - Check [skip explorer](https://explorer.skip.build/) or [Range Tracker Tool](https://usdc.range.org/usdc) to see if relayers have picked up your transaction
    - Wait at least 30 minutes for all confirmations to complete
 #### **Transaction stuck or pending**
    - For EVM chains, check if gas price was too low
    - Verify if transaction was rejected on source chain
-   - For Skip bridges, check status on [Range](https://usdc.range.org/usdc) to see if relayers have picked up your transaction
+   - For Skip bridges, check status on [skip explorer](https://explorer.skip.build/) or [Range](https://usdc.range.org/usdc) to see if relayers have picked up your transaction
    - Check if relayer networks are experiencing delays or outages
    - Verify all involved third-party services are operational
 #### **Insufficient funds error**
@@ -36,14 +36,15 @@ For detailed troubleshooting guides specific to each bridge, please refer to:
 
 ::::steps
 #### **Skip Transaction Troubleshooting**
-   - [Skip Documentation Portal](https://docs.skip.money)
-   - Input _tx_hash_ and source chain _chain_id_ into [Skip API](https://docs.skip.build/go/api-reference/prod/transaction/get-v2txstatus?playground=open)
+   - [Skip Documentation Portal](https://docs.skip.build/go/general/transaction-support)
+   - Input _tx_hash_ and source chain _chain_id_ into [Skip API](https://explorer.skip.build/)
 #### **CCTP Troubleshooting Guide**
-   - [dYdX CCTP Documentation](https://dydx.exchange/blog/cctp)
+   - [skip explorer](https://explorer.skip.build/)
    - [Circle CCTP Status Page](https://status.circle.com)
    - [USDC Tracker Tool](https://usdc.range.org/usdc)
    - [dYdX Chain Explorer](https://www.mintscan.io/dydx)
    - [Noble Chain Explorer](https://www.mintscan.io/noble)
+   - [dYdX CCTP Documentation](https://dydx.exchange/blog/cctp)
    - **Source Chain Explorer**: Etherscan, Arbiscan, etc.
 #### **IBC Transfer Issues**
    - [Mintscan IBC Explorer](https://www.mintscan.io/ibc)
@@ -60,7 +61,7 @@ If you encounter persistent bridging issues, follow these steps:
 ::::steps
 #### **Identify where your funds are currently located**
    - Use block explorers for each relevant chain (source, Noble, dYdX)
-   - For Skip transactions, check the `transfer_asset_release` field in the API response
+   - For Skip transactions, check the `transfer_asset_release` field in the [API response](https://docs.skip.build/go/api-reference/prod/transaction/get-v2txstatus)
 #### **Try manual recovery methods if needed**
    - For IBC: Use Keplr or Leap wallet to manually complete pending transfers
    - For CCTP: Follow the manual process described in the CCTP section
