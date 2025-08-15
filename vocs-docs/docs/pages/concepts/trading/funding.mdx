@@ -36,8 +36,9 @@ In addition to the premium component, each market has a fixed interest rate comp
 Funding Rate = (Premium Component / 8) + Interest Rate Component
 ```
  
-As part of the default settings of the v4 open source software, the interest rate component for all markets is 0% . The funding rate is simply the one-hour premium for markets with no interest rate component.
- 
+As part of the default settings of the v4 open source software, the interest rate component for cross markets is 0% . The funding rate is simply the one-hour premium for markets with no interest rate component.
+As part of [governance vote 220](https://dydx.forum/t/drc-update-default-funding-rate-for-isolated-markets/3417) the default interest rate component for isolated markets is 0.125 bps per hour or 1 bps per 8 hours.
+
 ## What role do block proposers play in funding rates on dYdX?
 
 As part of the default settings of the v4 open source software, there are two distinct epochs established with the Epochs module. Every block proposer proposes a `FundingPremiumVote` during each block. At the end of a `funding-sample` epoch, the state machine deterministically computes a funding sample from all the `FundingPremiumVote`s in this epoch (1 minute).
@@ -83,4 +84,4 @@ We charge funding rates every hour on our platform. The funding rate is calculat
  
 > Where can I find the details of how much I paid for the funding rate and view my payment history?
 
-Funding Rate Payment History feature is currently under development and will be available soon. Stay tuned for updates!
+Funding rate payments are reflected in the "Funding" section of your account history on the dYdX frontend. You can also view your funding rate payment history through the [Get Funding History](/indexer-client/http#get-funding-payments) API method.
