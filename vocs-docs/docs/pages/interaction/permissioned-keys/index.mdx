@@ -96,7 +96,7 @@ try {
 // Add the authenticator. [!code focus]
 client // [!code focus]
     .authenticators() // [!code focus]
-    .add(&account, account.address.clone(), authenticator) // [!code focus]
+    .add_authenticator(&account, account.address.clone(), authenticator) // [!code focus]
     .await?; // [!code focus]
 ```
 
@@ -129,7 +129,7 @@ const id = authenticators.accountAuthenticators[lastElement].id;
 // List authenticators.
 let id = client
     .authenticators()
-    .list(account.address().clone())
+    .get_authenticators(account.address().clone())
     .await?
     .last() // Grab the last authenticator ID.
     .unwrap()
@@ -158,7 +158,7 @@ await client.removeAuthenticator(subaccount, id);
 // Remove the authenticator.
 client
     .authenticators()
-    .remove(&mut account, account.address.clone(), id)
+    .remove_authenticator(&mut account, account.address.clone(), id)
     .await?;
 ```
 
@@ -237,7 +237,7 @@ let owner_account = // [!code focus]
 // Register the public account. // [!code focus]
 account // [!code focus]
     .authenticators_mut() // [!code focus]
-    .add(external_account, id); // [!code focus]
+    .add_authenticator(external_account, id); // [!code focus]
 
 // Create an order for the owner subaccount. // [!code focus]
 let owner_subaccount = Subaccount { // [!code focus]

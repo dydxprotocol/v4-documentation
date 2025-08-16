@@ -29,7 +29,7 @@ async def list_parent_orders(
 ```
 
 ```rust [Rust]
-pub async fn list_parent_positions(
+pub async fn get_parent_subaccount_perpetual_positions(
     &self,
     subaccount: &ParentSubaccount,
     opts: Option<ListPositionsOpts>,

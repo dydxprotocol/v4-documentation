@@ -20,7 +20,7 @@ async getAuthenticators(
 ```
 
 ```rust [Rust]
-pub async fn list(
+pub async fn get_authenticators(
     &mut self,
     address: Address,
 ) -> Result<Vec<AccountAuthenticator>, Error>
