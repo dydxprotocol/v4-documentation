@@ -92,6 +92,10 @@ See the [API reference](/indexer-client/http/markets/get_perpetual_markets) for 
 
 Retrieve orders for a specific subaccount, with various filtering options to narrow down the results based on order characteristics.
 
+:::info
+It is recommended to set specific clientID's when placing different orders, which will be useful to retrieve back a specific order on the `v4/orders` endpoint
+:::
+
 :::code-group
 
 ```python [Python]

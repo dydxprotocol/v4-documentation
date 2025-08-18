@@ -56,6 +56,10 @@ Every order created has an unique identifier, referred to as the __order ID__. I
 - **Order flags**: An integer identifying if the order is short-term (`0`), long-term (`64`), or conditional (`32`);
 - **CLOB Pair ID**: The ID of the underlying market/perpetual.
 
+:::info
+It is recommended to set specific clientID's when placing different orders, which will be useful to retrieve back a specific order on the `v4/orders` endpoint
+:::
+
 :::code-group
 
 ```python [Python]

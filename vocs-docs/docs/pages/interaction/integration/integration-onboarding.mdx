@@ -1,9 +1,47 @@
 # Onboarding
 
 ## dYdX address
-The client application onboards the user by asking the user to sign a message using an existing wallet address. The v4-client-js library provides a [function](https://github.com/dydxprotocol/v4-clients/blob/a2c7adcc64b33fefaf56ffb6fc1d2bb8b174601e/v4-client-js/src/lib/onboarding.ts#L43) that deterministically generates the dYdX chain address and keys from the signed message.
+The client application onboards the user by asking the user to sign a message using an existing wallet address. The v4-client-js library provides a [function](https://github.com/dydxprotocol/v4-clients/blob/a2c7adcc64b33fefaf56ffb6fc1d2bb8b174601e/v4-client-js/src/lib/onboarding.ts#L43) that deterministically generates the dYdX chain address (see [accounts](/concepts/trading/accounts#main-account)) and keys from the signed message.
 Once the keys are generated, the client application can use them to sign transactions on the dYdX chain on the user’s behalf, enabling secure and seamless interaction with the platform.
 
+The payload doesn't matter to generate a dYdX address, but if you want to deterministically generate a dYdX address that matches what the dYdX Frontend generates, it is best to have the same payload message   
+```json
+
+"message": {
+    "action": "dYdX Chain Onboarding"
+  }
+
+```
+
+The payload typically looks like this:
+
+:::details
+```ts
+const ethersWallet = new ethers.Wallet('<wallet>');
+const provider = new JsonRpcProvider('https://ethereum.publicnode.com', 1);
+const signer = ethersWallet.connect(provider);
+
+const signature = await signer.signTypedData(
+  {
+    name: 'dYdX Chain',
+    chainId: 1,
+  },
+  {
+    dYdX: [{ name: 'action', type: 'string' }],
+  },
+  {
+    action: 'dYdX Chain Onboarding',
+  },  
+);
+
+const { mnemonic, privateKey, publicKey } = deriveHDKeyFromEthereumSignature(signature);
+```
+:::
+
+### Subaccounts
+Each main account has 128,001 [subaccounts](/concepts/trading/accounts#subaccounts)
+Subaccounts 0 to 127 are parent subaccounts. Parent subaccounts can have multiple positions opened and all positions are cross-margined.
+Subaccounts 128 to 128,000 are child subaccounts and are isolated margin. Child subaccounts will only ever have up to 1 position open.
 
 ## Deposits and Withdrawals
 
