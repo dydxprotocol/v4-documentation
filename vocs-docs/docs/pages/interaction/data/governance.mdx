@@ -74,7 +74,7 @@ Note that this functionality does not include creating / removing an exchange-so
 
 Liquidity Tiers group markets of similar risk into standardized risk parameters. Liquidity tiers specify the margin requirements needed for each market and should be determined based on the depth of the relative market’s spot book as well as the token’s market capitalization. 
 
-Current Liquidity Tiers include: 
+[Current Liquidity](https://dydx-ops-rest.kingnodes.com/dydxprotocol/perpetuals/liquidity_tiers) Tiers include:
 
 | ID | Name | initial margin fraction | maintenance fraction (what fraction MMF is of IMF) | impact notional |  maintenance margin fraction (as is) | impact notional (as is) | Lower Cap (USDC Millions) | Upper Cap (USDC Millions) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -85,6 +85,7 @@ Current Liquidity Tiers include:
 | 4 | Isolated | 0.05 | 0.6 | 125 USDC / IM | 0.03 | 2_500 USDC | 0.5 | 1 |
 | 5 | Mid-Cap | 0.05 | 0.6 | 250 USDC / IM | 0.03 | 5_000 USDC | 40 | 100 |
 | 6 | FX | 0.01 | 0.5 | 25 USDC / IM | 0.0005 | 2_500 USDC | 0.5 | 1 |
+| 7 | IML 5x | 0.2 | 0.5 | 25 USDC / IM | 0.1 | 125 USDC | 0.5 | 1 |
 
 - Each market has a `Lower Cap` and `Upper Cap` denominated in USDC.
 - Each market already has a `Base IMF`.
