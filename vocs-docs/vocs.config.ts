@@ -133,7 +133,10 @@ export default defineConfig({
                             text: 'Builder codes',
                             link: '/interaction/integration/integration-builder-codes',
                         },
-                        
+                        {
+                            text: 'Revnue Share',
+                            link: '/interaction/integration/integration-revshare',
+                        },
                     ]
                 },
             ],
