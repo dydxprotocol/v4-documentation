@@ -1,0 +1,116 @@
+# Revenue Share
+
+rder Router Rev Share enables third-party order routers to direct orders to dYdX and earn a portion of the trading fees (maker and taker). The revenue share, specified in parts per million (ppm), must be voted in via Governance and set in the `order_router_address` field in the order message itself.
+
+The revenue will be distributed based on filled orders that were routed through the participating order router.
+
+Order router details and revenue share percentages can be monitored through the indexer using the `/orders` and `/fills` endpoints. The `/orders` endpoint provides information on the order router address, while the `/fills` endpoint shows the order router address and the specific revenue amount distributed per fill.
+
+To participate in the Order Router Rev Share program, users need to propose and have a passing vote for their order router address & revenue split.
+
+- The maximum revenue share allowed is `800,000` ppm (80% of trading fees).
+- Affiliate revenue takes priority in the distribution hierarchy.
+- If there is an active affiliate split that has not reached its maximum within a 30-day rolling window, no revenue will be shared with the order router
+
+## Implementation Details
+
+::::steps
+
+## Voting in via Governance
+
+To participate in the Order Router Rev Share program, you need to create and submit a governance proposal. Below is an example of what the governance message structure looks like:
+```json
+message Order {
+"messages": [
+	{
+		"@type": "/dydxprotocol.revshare.MsgSetOrderRouterRevShare",
+		"authority": authority,
+		"order_router_rev_share": {
+			"address": {{your address}},
+			"sharePpm": {{your requested ppm}},
+		}
+	}
+]
+}
+```
+The key components of this message are:
+
+- `address` - The address of the order router that will receive the revenue share. This is also the id you place in your order message
+- `sharePpm` - The revenue share percentage in parts per million (ppm). This should be between `[0, 800,000)` ppm
+
+After submitting the proposal, it must go through the standard governance voting process and receive a passing vote before the order router address and revenue share percentage are activated in the system.
+
+## Updating Revenue Share (Optional)
+
+The process for updating an existing order router's revenue share is the same as setting up a new one. You will need to submit a governance proposal with the updated parameters.
+
+To update the revenue share percentage for an existing order router, create a governance message with the same structure:
+
+```json
+"messages": [
+	{
+		"@type": "/dydxprotocol.revshare.MsgSetOrderRouterRevShare",
+		"authority": authority,
+		"order_router_rev_share": {
+			"address": {{your existing address}},
+			"sharePpm": {{your new requested ppm}},
+		}
+	}
+]
+```
+
+The proposal must go through the standard governance voting process and receive a passing vote before the updated revenue share percentage takes effect.
+
+Note that:
+
+- The updated sharePpm must still be within the allowable range of `[0, 800,000)` ppm
+- You must use the exact same address that was previously approved
+- The update will completely replace the previous configuration once approved
+
+## Deleting an Order Router Rev Share (Optional)
+
+To delete an order router's revenue share configuration, you simply need to set the revenue share percentage to 0. This process follows the same governance workflow as setting up or updating a revenue share.
+
+Submit a governance proposal with the following message structure:
+```json
+"messages": [
+	{
+		"@type": "/dydxprotocol.revshare.MsgSetOrderRouterRevShare",
+		"authority": authority,
+		"order_router_rev_share": {
+			"address": {{your existing address}},
+			"sharePpm": 0,
+		}
+	}
+]
+```
+
+Key points to note:
+
+- Setting `sharePpm` to 0 effectively disables the revenue share for that order router
+- The address must match the previously approved order router address
+- The proposal must still pass through the standard governance voting process
+- Once approved, the order router will no longer receive any revenue share
+
+After the proposal passes, any orders that include this order router address will no longer generate revenue share for the router.
+
+## Changes to the Order Message
+The `order_router_address` field is set when an order is placed
+
+- `order_router_address` - the ID of the order router and where fees will be sent to
+
+```go
+message Order {
+  // The unique ID of this order. Meant to be unique across all orders.
+  OrderId order_id = 1 [ (gogoproto.nullable) = false ];
+  ...
+  // order_router_address is the metadata for the frontend order router.
+  string order_router_address = 13;
+}
+```
+
+## Order Validation Checks
+
+- Ensure the `order_router_address` field is valid and already voted in via governance
+
+::::

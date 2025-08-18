@@ -27,9 +27,17 @@ parent subaccount 1 has child subaccounts 129, 257,...
 parent_subaccount_number = child_subaccount_number % 128
 ```
 
-> Note that currently only parent subaccount 0 is exposed via the frontend and so isolated positions will be held in subaccounts number 128, 256, ...
+:::note
+Note that currently only parent subaccount 0 is exposed via the frontend and so isolated positions will be held in subaccounts number 128, 256, ...
+:::
 
-> Note that the above "types" of subaccounts are not enforced at a protocol level, and only on the frontend. Any subaccount can hold any number of positions in cross-marginable markets which all will cross-margined at the protocol level.
+:::note
+Note that the above "types" of subaccounts are not enforced at a protocol level, and only on the frontend. Any subaccount can hold any number of positions in cross-marginable markets which all will cross-margined at the protocol level.
+:::
+
+:::note
+When you are using the dYdX frontend, any margin transferred to an empty child subaccount that isn’t used for placing a trade will get sent back to the cross subaccount after some time.
+:::
 
 ## Getting data for parent subaccount
 
