@@ -135,10 +135,6 @@ export default defineConfig({
                         },
                         
                     ]
-                },
-                {
-                    text: "Onboarding FAQs",
-                    link: '/interaction/onboarding-faqs'
                 }
             ],
         },
@@ -321,6 +317,10 @@ export default defineConfig({
                         },
                     ],
                 },
+                {
+                    text: "Onboarding FAQs",
+                    link: '/concepts/onboarding-faqs'
+                }
             ],
         },
         {
