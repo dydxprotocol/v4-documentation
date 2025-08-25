@@ -16,7 +16,7 @@
 - `export DAEMON_NAME=dydxprotocold`
 - `export DAEMON_HOME=<your data directory>`
 5. Log out and log back in.
-6. Initialize Cosmovisor with the following command.  The <path to executable> is the the full path to dydxprotocold
+6. Initialize Cosmovisor with the following command.  The <path to executable> is the full path to dydxprotocold
 - `cosmovisor init <path to executable>`
 7. Cosmovisor is now ready for use.
 
