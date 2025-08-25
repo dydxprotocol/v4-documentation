@@ -13,7 +13,7 @@ async def get_withdrawal_capacity_by_denom(
 ```
 
 ```rust [Rust]
-pub async fn capacity_by_denom(&mut self, denom: Denom) -> Result<Vec<LimiterCapacity>, Error>
+pub async fn get_withdrawal_capacity_by_denom(&mut self, denom: Denom) -> Result<Vec<LimiterCapacity>, Error>
 ```
 
 ```typescript [TypeScript]

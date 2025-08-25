@@ -41,7 +41,7 @@ use dydx::indexer::PerpetualPositionStatus;
 // Fetch all subaccount '0' positions. [!code focus]
 let positions = indexer // [!code focus]
     .accounts() // [!code focus]
-    .list_positions(&subaccount, None) // [!code focus]
+    .get_subaccount_perpetual_positions(&subaccount, None) // [!code focus]
     .await?; // [!code focus]
 
 // Fetch only open positions. // [!code focus]
@@ -51,7 +51,7 @@ let opts = ListPositionsOpts { // [!code focus]
 }; // [!code focus]
 let positions = indexer  // [!code focus]
     .accounts()  // [!code focus]
-    .list_positions(&subaccount, Some(opts)) // [!code focus]
+    .get_subaccount_perpetual_positions(&subaccount, Some(opts)) // [!code focus]
     .await?;  // [!code focus]
 ```
 
@@ -79,7 +79,7 @@ console.log(response.markets); // [!code focus]
 ```rust [Rust]
 let markets = indexer // [!code focus]
         .markets() // [!code focus]
-        .list_perpetual_markets(None) // `None`: Use default options.  // [!code focus]
+        .get_perpetual_markets(None) // `None`: Use default options.  // [!code focus]
         .await?; // [!code focus]
 println!("{markets:?}"); // [!code focus]
 ```
@@ -109,7 +109,7 @@ const response = await indexer.account.getSubaccountOrders(ADDRESS, 0);
 ```rust [Rust]
 let orders = indexer // [!code focus]
     .accounts() // [!code focus]
-    .list_orders(&subaccount, None) // [!code focus]
+    .get_subaccount_orders(&subaccount, None) // [!code focus]
     .await?; // [!code focus]
 ```
 
@@ -140,7 +140,7 @@ const response = await indexer.account.getSubaccountFills(ADDRESS, 0);
 ```rust [Rust]
 let fills = indexer // [!code focus]
     .accounts() // [!code focus]
-    .get_fills(&env.subaccount, None) // [!code focus]
+    .get_subaccount_fills(&env.subaccount, None) // [!code focus]
     .await?; // [!code focus]
 ```
 
@@ -171,7 +171,7 @@ console.log(response.candles); // [!code focus]
 use dydx::indexer::CandleResolution;
 let candles = indexer // [!code focus]
     .markets() // [!code focus]
-    .get_candles(&"BTC-USD".into(), CandleResolution::M1, None) // [!code focus]
+    .get_perpetual_market_candles(&"BTC-USD".into(), CandleResolution::M1, None) // [!code focus]
     .await?; // [!code focus]
 println!("{candles:?}"); // [!code focus]
 ```
@@ -268,7 +268,7 @@ const height = await node.get.latestBlockHeight();
 ```
 
 ```rust [Rust]
-let height = node.get_latest_block_height().await?;
+let height = node.latest_block_height().await?;
 ```
 
 :::
