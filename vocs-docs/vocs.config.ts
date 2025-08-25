@@ -138,7 +138,7 @@ export default defineConfig({
                             link: '/interaction/integration/integration-revshare',
                         },
                     ]
-                },
+                }
             ],
         },
         {
@@ -320,6 +320,10 @@ export default defineConfig({
                         },
                     ],
                 },
+                {
+                    text: "Onboarding FAQs",
+                    link: '/concepts/onboarding-faqs'
+                }
             ],
         },
         {
