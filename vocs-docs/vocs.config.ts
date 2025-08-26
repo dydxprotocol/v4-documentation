@@ -218,6 +218,10 @@ export default defineConfig({
                     collapsed: true,
                     items: [
                         {
+                            text: 'Limit Orderbook and Matching',
+                            link: '/concepts/trading/limit-orderbook',
+                        },
+                        {
                             text: 'Markets',
                             collapsed: true,
                             items: [
@@ -282,11 +286,11 @@ export default defineConfig({
                             ],
                         },
                         {
-                            text: 'Configuration, Controls & Environment',
+                            text: 'Rewards, Fees and Limits',
                             collapsed: true,
                             items: [
                                 {
-                                    text: 'Rewards, Fees and Parameters',
+                                    text: 'Rewards and Fees',
                                     link: '/concepts/trading/rewards',
                                     collapsed: true,
                                     items: [
@@ -301,22 +305,24 @@ export default defineConfig({
                                     ],
                                 },
                                 {
-                                    text: 'Other Limits',
-                                    link: '/concepts/trading/other-limits'
-                                },
-                                {
-                                    text: 'Withdrawal Rate Limits and Gating',
-                                    link: '/concepts/trading/withdrawal-rate-limits-and-gating'
-                                },
-                                {
-                                    text: 'Rate Limits',
-                                    link: '/concepts/trading/rate-limits'
+                                    text: 'Limits',
+                                    collapsed: true,
+                                    items: [
+                                        {
+                                            text: 'Equity Tier Limits',
+                                            link: '/concepts/trading/limits/equity-tier-limits',
+                                        },
+                                        {
+                                            text: 'Rate Limits',
+                                            link: '/concepts/trading/limits/rate-limits',
+                                        },
+                                        {
+                                            text: 'Withdrawal Limits',
+                                            link: '/concepts/trading/limits/withdrawal-limits',
+                                        }
+                                    ],
                                 },
                             ],
-                        },
-                        {
-                            text: 'Limit Orderbook and Matching',
-                            link: '/concepts/trading/limit-orderbook',
                         },
                     ],
                 },

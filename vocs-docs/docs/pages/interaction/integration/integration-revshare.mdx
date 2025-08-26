@@ -8,7 +8,6 @@ Order router details and revenue share percentages can be monitored through the 
 
 To participate in the Order Router Rev Share program, users need to propose and have a passing vote for their order router address & revenue split.
 
-- The maximum revenue share allowed is `800,000` ppm (80% of trading fees).
 - Affiliate revenue takes priority in the distribution hierarchy.
 - If there is an active affiliate split that has not reached its maximum within a 30-day rolling window, no revenue will be shared with the order router
 
@@ -36,7 +35,7 @@ message Order {
 The key components of this message are:
 
 - `address` - The address of the order router that will receive the revenue share. This is also the id you place in your order message
-- `sharePpm` - The revenue share percentage in parts per million (ppm). This should be between `[0, 800,000)` ppm
+- `sharePpm` - The revenue share percentage in parts per million (ppm).
 
 After submitting the proposal, it must go through the standard governance voting process and receive a passing vote before the order router address and revenue share percentage are activated in the system.
 
@@ -61,11 +60,11 @@ To update the revenue share percentage for an existing order router, create a go
 
 The proposal must go through the standard governance voting process and receive a passing vote before the updated revenue share percentage takes effect.
 
-Note that:
+:::note
 
-- The updated sharePpm must still be within the allowable range of `[0, 800,000)` ppm
 - You must use the exact same address that was previously approved
 - The update will completely replace the previous configuration once approved
+:::
 
 ## Deleting an Order Router Rev Share (Optional)
 
@@ -85,6 +84,7 @@ Submit a governance proposal with the following message structure:
 ]
 ```
 
+:::note
 Key points to note:
 
 - Setting `sharePpm` to 0 effectively disables the revenue share for that order router
@@ -93,6 +93,7 @@ Key points to note:
 - Once approved, the order router will no longer receive any revenue share
 
 After the proposal passes, any orders that include this order router address will no longer generate revenue share for the router.
+:::
 
 ## Changes to the Order Message
 The `order_router_address` field is set when an order is placed
