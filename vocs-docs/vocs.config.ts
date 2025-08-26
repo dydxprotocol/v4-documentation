@@ -323,6 +323,8 @@ export default defineConfig({
                                         }
                                     ],
                                 },
+                            ],
+                        },
                     ],
                 },
                 {
