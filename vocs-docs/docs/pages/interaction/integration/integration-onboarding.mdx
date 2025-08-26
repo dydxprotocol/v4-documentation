@@ -45,6 +45,11 @@ Subaccounts 128 to 128,000 are child subaccounts and are isolated margin. Child 
 
 ## Deposits and Withdrawals
 
+::::note
+Skip has an `allow_unsafe` parameter, which is set to False by default. It is recommeneded to keep it to False and  **NOT** recommended to be set to True, as it can lead
+to bad trade execution for users, see more on Skip go best practises [here](https://docs.skip.build/go/advanced-swapping/allow_unsafe-preventing-handling-bad-execution) and [here](https://docs.skip.build/go/advanced-swapping/safe-swapping-how-to-protect-users-from-harming-themselves).
+::::
+
 ### Deposits 
 Deposits are in three steps. 
 
@@ -101,6 +106,7 @@ curl 'https://api.skip.build/v2/fungible/route' \
   ```
 
 Here `ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5` is the USDC denom of the dYdX Chain. 
+
 
 ### Set Bridge option
 Set the [bridges](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute#body-bridges) option to include `“CCTP”`, `“GO_FAST”`, `“IBC”`, and `“AXELAR”`.  
