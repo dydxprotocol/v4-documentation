@@ -306,7 +306,6 @@ export default defineConfig({
                                 },
                                 {
                                     text: 'Limits',
-                                    link: '/concepts/trading/limits',
                                     collapsed: true,
                                     items: [
                                         {
