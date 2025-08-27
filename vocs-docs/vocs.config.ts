@@ -60,7 +60,7 @@ export default defineConfig({
                         {
                             text: 'Watch Orderbook',
                             link: '/interaction/data/watch-orderbook',
-                        },
+                        }
                     ],
                 },
                 {
@@ -248,7 +248,7 @@ export default defineConfig({
                                 {
                                     text: 'Quantums and Subticks',
                                     link: '/concepts/trading/quantums'
-                                },
+                                }
                             ],
                         },
                         {
@@ -322,6 +322,10 @@ export default defineConfig({
                                         }
                                     ],
                                 },
+                                {
+                                    text: 'Governance Functionalities',
+                                    link: '/concepts/trading/governance'
+                                }
                             ],
                         },
                     ],
