@@ -1,5 +1,5 @@
 # Reading a Proposal
-A governance proposal is a json document submitted to the dYdX Chain governance module. One of the most popular types of governance proposals is a new market proposal which add new markets to the dYdX Chain if passed. A new market proposal specifies parameters necessary to specify a market, such as the name of the market, oracle sources, and liquidity tier. This page will outline how to interpret the market parameters so that the community can assess the proposal and be prepared to trade with correct configurations if the market becomes live. See [proposing a new market](../users-governance/proposing_a_new_market.md) for more information on how the market parameters can be calculated.
+A governance proposal is a json document submitted to the dYdX Chain governance module. One of the most popular types of governance proposals is a new market proposal which add new markets to the dYdX Chain if passed. A new market proposal specifies parameters necessary to specify a market, such as the name of the market, oracle sources, and liquidity tier. This page will outline how to interpret the market parameters so that the community can assess the proposal and be prepared to trade with correct configurations if the market becomes live. See [proposing a new market](proposing_a_new_market.md) for more information on how the market parameters can be calculated.
 
 
 ## Example Proposal
@@ -97,7 +97,7 @@ Create Perpetual message specifies the parameters specific to the perpetual.
 - `atomic_resolution` determines the precision of the size of the coin. If the atomic resolution is -10, then the perpetual positions are represented as multiples of 10^-10.
 - `default_funding_ppm` is the default funding rate in parts per million.
 - `id` is the id of the perpetual. This should be the same as the oracle_market_id and clob_pair_id.
-- `liquidity_tier` is the liquidity tier of the proposed market. This should be set based on [dYdX liquidity tier guidelines](./functionalities.md#liquidity-tiers)
+- `liquidity_tier` is the liquidity tier of the proposed market. This should be set based on [dYdX liquidity tier guidelines](functionalities.md#liquidity-tiers)
 - `market_id` is the id of the oracle market. This should be the same as the id.
 - `ticker` is the ticker of the market being added.
 
@@ -136,6 +136,6 @@ You can calculate the following values based on parameters in a new market propo
   - `min_order_size` = 10^(-10) * 1000000 = 0.0001 BTC
 
 ## Next Steps
-If you are a dYdX Chain user, you can [vote on a proposal](../users-governance/voting.md) or [submit your own](../users-governance/submitting_a_proposal.md).
+If you are a dYdX Chain user, you can [vote on a proposal](voting.md) or [submit your own](submitting_a_proposal.md).
 
 If you are a market maker aiming to provide liquidity to a new market, you can configure a trading strategy using values and derived values from the proposal.

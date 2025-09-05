@@ -4,7 +4,7 @@
 
 Validators can choose how to run a validator and manage software upgrades according to their preferred option:
 
-1. Using [Cosmovisor](./cosmovisor.md)
+1. Using [Cosmovisor](cosmovisor.md)
 2. Manual
 
 ## Voting for Upgrade Proposals
@@ -13,7 +13,7 @@ See [Governance -> Voting](../../users-governance/voting.md)
 
 ## Upgrades
 
-Releases for the dYdX Chain will use [semantic versioning](https://semver.org/). See [here](./types_of_upgrades.md) for details.
+Releases for the dYdX Chain will use [semantic versioning](https://semver.org/). See [here](types_of_upgrades.md) for details.
 
 ### ⚒️ Cosmovisor Users
 
