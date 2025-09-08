@@ -15,8 +15,8 @@ The proposal should consist of 4 messages to be executed **atomically and in ord
 
 Notes:
 
-- For guideline on choosing values for individual params, see next [section](./proposing_a_new_market.md#choosing-market-parameters).
-- Liquidity tiers are mentioned throughout this page. The liquidity tier documentation can be found [here](../users-governance/functionalities.md#liquidity-tiers). 
+- For guideline on choosing values for individual params, see next [section](proposing_a_new_market.md#choosing-market-parameters).
+- Liquidity tiers are mentioned throughout this page. The liquidity tier documentation can be found [here](functionalities.md#liquidity-tiers). 
 - The exact ordering of messages above is necessary for successful onchain execution.
 - Each of the 4 top-level messages should have `Authority = dydx10d07y265gmmuvt4z0w9aw880jnsr700jnmapky`, the [gov module](https://github.com/dydxprotocol/v4-chain/blob/5e72896719e2f8d2fe6e10fddbde18b363a6bbe3/protocol/app/module_accounts_test.go#L28).
 - The `MsgCreateClobPair` message wrapped in `messages[3]: MsgDelayMessage` should have `Authority = dydx1mkkvp26dngu6n8rmalaxyp3gwkjuzztq5zx6tr`, the [delaymsg module](https://github.com/dydxprotocol/v4-chain/blob/5e72896719e2f8d2fe6e10fddbde18b363a6bbe3/protocol/app/module_accounts_test.go#L36).
@@ -53,7 +53,7 @@ The following decribes how to set various parameters for a new market and assume
 | `MsgCreateOracleMarket`      | `exponent`                    | Denotes the number of decimals a value should be shifted in the price daemon                             | `p-9`                                                                                |
 | `MsgCreateOracleMarket`      | `min_exchanges`               | Used for an index price to be valid.                                                                     | `3`                                                                                  |
 | `MsgCreateOracleMarket`      | `min_price_change_ppm`        | The minimum amount the index price has to change for an oracle price update to be valid.                 | Liquidity Tier 0: `1000` <br> Liquidity Tier 1: `2500` <br> Liquidity Tier 2: `800` |
-| `MsgCreateOracleMarket`      | `exchange_config_json`        | Spot exchange query configuration for the oracle price                                                   | See [below](./proposing_a_new_market.md#Choosing-oracle-sources)                     |
+| `MsgCreateOracleMarket`      | `exchange_config_json`        | Spot exchange query configuration for the oracle price                                                   | See [below](proposing_a_new_market.md#Choosing-oracle-sources)                     |
 | `MsgCreatePerpetual`         | `atomic_resolution`           | L the exponent for converting an atomic amount (`size = 1`) to a full coin.                              | `-6 - p`                                                                             |
 | `MsgCreatePerpetual`         | `default_funding_ppm`         | The default funding payment if there is no price premium. In parts-per-million.                          | `0`                                                                                  |
 | `Msg[Update/Create]ClobPair` | `quantum_conversion_exponent` | `10^quantum_conversion_exponent` gives the number of quote quantum traded per base quantum.              | `-9`                                                                                 |
@@ -68,7 +68,7 @@ One way of evaluating whether a new market is optimally compatible with the soft
 
 To select robust oracle sources, follow the procedure below: 
 
-1. Find spot market tickers from eligible exchanges with the desired symbol as the base asset. The quote asset should be USD, USDT, BTC, or ETH. See [below](./proposing_a_new_market.md###List-of-eligible-exchanges) for a list of eligible exchanges. Note that pools in certain DEXes are eligible to be considered a robust source but no DEXes is queryable as of 3/5/24. 
+1. Find spot market tickers from eligible exchanges with the desired symbol as the base asset. The quote asset should be USD, USDT, BTC, or ETH. See [below](proposing_a_new_market.md###List-of-eligible-exchanges) for a list of eligible exchanges. Note that pools in certain DEXes are eligible to be considered a robust source but no DEXes is queryable as of 3/5/24. 
   - If the quote asset is not USD, add the following flag `"adjustByMarket":"quote_asset-USD"`. This flag ensures that the base asset oracle price is adjusted by the oracle price of the quote asset. 
 2. Currently the software supports only one source from an exchange per market. Among the tickers from an exchange, choose the most liquid spot market with the highest trading volume. If one market is more liquid but another has more trading volume, choose the one with deeper liquidity. 
   - When counting the number of robust oracles, two pools with different quote assets from one DEX can be considered as two independent sources. DEX pools can have quote assets that are not specified above. 
@@ -247,7 +247,7 @@ Below is an example proposal JSON file to propose adding `BTC-USD` as a new perp
 
 ## Submitting an Onchain Proposal
 
-Follow instructions [here](./submitting_a_proposal.md) to submit an onchain proposal.
+Follow instructions [here](submitting_a_proposal.md) to submit an onchain proposal.
 
 
 #### Disclaimer

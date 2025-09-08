@@ -40,4 +40,4 @@ Below is an example proposal JSON file to propose a slashing a validator's total
 
 ## Submitting an Onchain Proposal
 
-Follow instructions [here](./submitting_a_proposal.md) to submit an onchain proposal.
+Follow instructions [here](submitting_a_proposal.md) to submit an onchain proposal.

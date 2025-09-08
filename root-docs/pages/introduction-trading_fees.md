@@ -30,4 +30,4 @@ https://dydx-ops-rest.kingnodes.com/dydxprotocol/v4/feetiers/perpetual_fee_param
 
 ## More Info
 
-For more detailed information about trading rewards, fee structures, and parameters, please see the [Rewards, Fees and Parameters](./concepts-trading/rewards_fees_and_parameters.md) section.
+For more detailed information about trading rewards, fee structures, and parameters, please see the [Rewards, Fees and Parameters](concepts-trading/rewards_fees_and_parameters.md) section.
