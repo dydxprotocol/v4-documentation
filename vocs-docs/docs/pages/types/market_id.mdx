@@ -1,0 +1,20 @@
+# MarketId
+
+In `dYdX`, `market id` and `perpetual id` may not match. For example,
+
+```text
+dydxprotocold query perpetuals show-perpetual 145
+perpetual:
+  funding_index: "6530"
+  open_interest: "0"
+  params:
+    atomic_resolution: -5
+    default_funding_ppm: 100
+    id: 145
+    liquidity_tier: 4
+    market_id: 71
+    market_type: PERPETUAL_MARKET_TYPE_ISOLATED
+    ticker: LUCE-USD
+```
+
+Here, `perpetual id` is 145 but the `market id` is 71.

@@ -31,7 +31,7 @@ pub async fn get_price(&mut self, market_id: u32) -> Result<MarketPrice, Error>
 
 | Parameter   | Location | Type  | Required | Description           |
 | ----------- | -------- | ----- | -------- | --------------------- |
-| `market_id` | query    | [u32] | true     | [Clob Pair ID]        |
+| `market_id` | query    | [u32] | true     | [Market ID]           |
 
 #### Response
 
@@ -51,4 +51,4 @@ Examples: [Python] | [Rust] | [API]
 [MarketPrice]: /types/market_price
 [Bad Request]: /types/bad-request
 [Not Found]: /types/not-found
-[Clob Pair ID]: /types/clob_pair_id
+[Market ID]: /types/market_id
