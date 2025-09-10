@@ -21,7 +21,27 @@ pub async fn get_price(&mut self, market_id: u32) -> Result<MarketPrice, Error>
 ```url [API]
 /dydxprotocol.prices.Query/MarketPrice
 ```
+:::
 
+:::warning
+In `dYdX`, `market id` and `perpetual id` may not match. For example,
+
+```text
+dydxprotocold query perpetuals show-perpetual 145
+perpetual:
+  funding_index: "6530"
+  open_interest: "0"
+  params:
+    atomic_resolution: -5
+    default_funding_ppm: 100
+    id: 145
+    liquidity_tier: 4
+    market_id: 71
+    market_type: PERPETUAL_MARKET_TYPE_ISOLATED
+    ticker: LUCE-USD
+```
+
+Here, `perpetual id` is 145 but the `market id` is 71.
 :::
 
 :::details[Unification Plan]
@@ -29,9 +49,9 @@ pub async fn get_price(&mut self, market_id: u32) -> Result<MarketPrice, Error>
 
 #### Parameters
 
-| Parameter   | Location | Type  | Required | Description           |
-| ----------- | -------- | ----- | -------- | --------------------- |
-| `market_id` | query    | [u32] | true     | [Market ID]           |
+| Parameter   | Location | Type  | Required | Description                        |
+| ----------- | -------- | ----- | -------- | ---------------------------------- |
+| `market_id` | query    | [u32] | true     | ID of the market to fetch price of |
 
 #### Response
 
@@ -51,4 +71,3 @@ Examples: [Python] | [Rust] | [API]
 [MarketPrice]: /types/market_price
 [Bad Request]: /types/bad-request
 [Not Found]: /types/not-found
-[Market ID]: /types/market_id
