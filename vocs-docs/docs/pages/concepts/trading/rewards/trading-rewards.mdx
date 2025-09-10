@@ -6,7 +6,7 @@ Trading rewards are subject to adjustments by the applicable Governance Communit
 
 Trading rewards are designed to incentivize `Traders` to trade on the protocol. The source of trading rewards is a configured `Rewards Treasury` account.
 
-For each successful trade, `Traders` will be rewarded in the `NATIVE_TOKEN` dYdX based on the formula outlined in the below section. Trading rewards are distributed automatically and directly to the trader’s account per block.
+For each successful trade, `Traders` will be rewarded in NATIVE_TOKEN dYdX based on the formula outlined in the below section. Trading rewards are distributed automatically and directly to the trader’s account per block.
 
 ## Motivation
 
@@ -64,12 +64,12 @@ Components of the Trading Rewards formula:
 For a taker, rewards in a given block are:
 
 ```
-trading reward from taker fee = taker volume X (taker fee rate - max maker rebate - max possible affiliate taker fee share) X C X (1 - protocol revenue share rate)
+trading reward from taker fee = taker volume * (taker fee rate - max maker rebate - max possible affiliate taker fee share) * C * (1 - protocol revenue share rate)
 ```
  
 where `max possible affiliate taker fee share` will be:
 
-- If the taker 30d rolling volume is < = $50M, 50% X taker fee rate regardless of whether the taker is referred or who they are referred by.
+- If the taker 30d rolling volume is < = $50M, 50% * taker fee rate regardless of whether the taker is referred or who they are referred by.
 - If the taker 30d rolling volume is > $50M, 0 since the taker doesn’t generate affiliate revenue share. 
 
 `Taker Fee Revenue Share` is MegaVault revenue share + Treasury subDAO revenue share + Market Mapper revenue share. You can read more about the revenue share in the governance proposals on Megavault, Treasury subDAO and Market Mapper.
@@ -80,7 +80,7 @@ where `max possible affiliate taker fee share` will be:
 Similarly, maker rewards for a user are calculated as:
 
 ```
-trading reward from maker fee = maker volume (positive maker fees) X C X (1 - protocol revenue share rate)
+trading reward from maker fee = maker volume * (positive maker fees) * C * (1 - protocol revenue share rate)
 ```
 
 ### Example 
@@ -95,8 +95,8 @@ Below is an example using the given formula to calculate the trading reward base
 - `C`: A constant multiplier that is currently set to 0.5 by the dYdX governance, but subject to change through dYdX governance.
 
 ```
-Trading Reward from Taker Fee = 1,000,000 × (0.0004 − 0.00011 − 0.0002) × 0.5 × (1−0.6)
-Trading Reward from Taker Fee = 1,000,000 × 0.00009 × 0.5 × 0.4 = 18
+Trading Reward from Taker Fee = 1,000,000 * (0.0004 − 0.00011 − 0.0002) * 0.5 * (1−0.6)
+Trading Reward from Taker Fee = 1,000,000 * 0.00009 * 0.5 * 0.4 = 18
 ```
  
 For this example, the Trading Reward would be equivalent to $18 in DYDX for an approximate Taker Fee of $400 paid by the user.
