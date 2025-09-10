@@ -13,7 +13,7 @@ async def get_withdrawal_and_transfer_gating_status(
 ```
 
 ```rust [Rust]
-pub async fn withdrawal_and_transfers_blocked_info(
+pub async fn get_withdrawal_and_transfer_gating_status(
     &mut self,
     perpetual_id: u32,
 ) -> Result<QueryGetWithdrawalAndTransfersBlockedInfoResponse, Error>

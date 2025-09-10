@@ -149,7 +149,7 @@ order = market.order(
 
 ```rust [Rust]
 // Get current block number.
-let current_block_height = client.get_latest_block_height().await?;
+let current_block_height = client.latest_block_height().await?;
 let size = BigDecimal::from_str("0.01")?; // 0.01 ETH
 // Create the order. The order ID is also returned
 let (_id, order) = OrderBuilder::new(market, subaccount)

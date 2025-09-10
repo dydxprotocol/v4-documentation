@@ -17,7 +17,7 @@ async getPerpetualMarkets(market?: string): Promise<Data>
 ```
 
 ```rust [Rust]
-pub async fn list_perpetual_markets(
+pub async fn get_perpetual_markets(
     &self,
     opts: Option<ListPerpetualMarketsOpts>,
 ) -> Result<HashMap<Ticker, PerpetualMarket>, Error>
