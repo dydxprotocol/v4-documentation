@@ -6,7 +6,7 @@ Trading rewards are subject to adjustments by the applicable Governance Communit
 
 Trading rewards are designed to incentivize `Traders` to trade on the protocol. The source of trading rewards is a configured `Rewards Treasury` account.
 
-For each successful trade, `Traders` will be rewarded in `NATIVE_TOKEN` based on the formula outlined in the below section. Trading rewards are distributed automatically and directly to the trader’s account per block.
+For each successful trade, `Traders` will be rewarded in the `NATIVE_TOKEN` dYdX based on the formula outlined in the below section. Trading rewards are distributed automatically and directly to the trader’s account per block.
 
 ## Motivation
 
@@ -32,37 +32,74 @@ Each block, new tokens are transferred into this `T` from the vesting account an
 
 Each block, `T` can grow or shrink based on protocol activity.
 
-### Reward Treasury Vesting
+:::note
+Definitions and notes
+- The current configuration and parameters can be found by querying the network.
+- `treasury_account`: referred to as `T` in the above. specifies which account the trading rewards come from. Can be configured via gov.
+- `VestEntry` : specifies a vesting schedule from `vester_account` to `treasury_account` for a given `denom` token. The vesting happens linearly from `start_time` and `end_time`.
+- `denom`: specifies the token that the trading rewards should use. Can be configured via gov.
+- `fee_multiplier_ppm`: referred to as `C` in the above. Specifies the proportion (in ppm) that fees should be multiplied by to get the maximum rewards amount. Can be configured via gov.
+:::
 
-The protocol’s default vesting behavior is to linearly vest `denom` tokens from `vester_account` to `treasury_account` from `start_time` to `end_time`.
-
-The above is configured via `VestEntry`.
 
 ### Formula & Emission
 
-The software reflects a Rewards Treasury of tokens that are available to be distributed to traders. Call the size of this Rewards Treasury `T`. Each block, new tokens are transferred into this `T` from the vesting contract and rewards are then distributed. Each block, `T` can grow or shrink based on protocol activity. 
+We define a trader Total rewards as:
 
-Let `A` represent the amount of rewards that are distributed from this `T` to traders in a given block.
+```
+Total trading rewards = trading reward from taker fee + trading reward from maker fee
+```
 
-We define a trader X’s “rewards score” in a given block as:
+Components of the Trading Rewards formula:
 
-![FRP1](/FRP1.png)
+1. `Taker and Maker Volume`
+2. `Fee Rate`
+3. `Maker Rebates`
+4. `Affiliate Fee Share`
+5. `Protocol Revenue Sharing`
+6. `C Constant`
 
-Let `S` be the sum of all the rewards scores across all traders for a given block. `S` is given by:
 
-![FRP2](/FRP2.png)
+#### 1. Trading Rewards for Takers
+For a taker, rewards in a given block are:
 
-Every block, the amount `A` of the native token that is distributed to traders is defined as:
+```
+trading reward from taker fee = taker volume X (taker fee rate - max maker rebate - max possible affiliate taker fee share) X C X (1 - protocol revenue share rate)
+```
+ 
+where `max possible affiliate taker fee share` will be:
 
-![FRP3](/FRP3.png)
+- If the taker 30d rolling volume is < = $50M, 50% X taker fee rate regardless of whether the taker is referred or who they are referred by.
+- If the taker 30d rolling volume is > $50M, 0 since the taker doesn’t generate affiliate revenue share. 
 
-Where `C` is a constant configurable by the applicable Governance Community. The open source software is configured for the constant to be initially set at 0. 
+`Taker Fee Revenue Share` is MegaVault revenue share + Treasury subDAO revenue share + Market Mapper revenue share. You can read more about the revenue share in the governance proposals on Megavault, Treasury subDAO and Market Mapper.
 
-The amount remaining `(T - A)` is retained in the Rewards Treasury and new tokens are emitted into the Rewards Treasury the following block.
+ 
 
-`A` is calculated and distributed to all the takers who traded in the block and `T - A` is rolled over and retained in the Rewards Treasury for the next block.
+#### 2. Trading Rewards for Makers
+Similarly, maker rewards for a user are calculated as:
 
-The rewards distributed, `A`, are allocated proportional to each trader’s score. 
+```
+trading reward from maker fee = maker volume (positive maker fees) X C X (1 - protocol revenue share rate)
+```
+
+### Example 
+Below is an example using the given formula to calculate the trading reward based on specific inputs for taker volume, fee rates, and other parameters. 
+
+ In this example, we assume the following values for a trader:
+- `Taker Volume`: totaling $1M in trailing volume in 30 days.
+- `Taker Fee Rate`: taker fee rate of 0.04% assuming they have been referred by a VIP Affiliate, starting at fee tier 3.
+- `Max Maker Rebate`: maximum rebate available for makers is 0.011%.
+- `Max Possible Affiliate Taker Fee Share`: as the trader is referred by a VIP affiliate, entitling the VIP affiliate to 50% of the trader’s taker fee rate.
+- `Taker Fee Revenue Share`: the taker fee revenue share is 60% or 0.6 including 50% to MegaVault and 10% to Treasury subDAO, as well as 0% to market mapper for a given market.
+- `C`: A constant multiplier that is currently set to 0.5 by the dYdX governance, but subject to change through dYdX governance.
+
+```
+Trading Reward from Taker Fee = 1,000,000 × (0.0004 − 0.00011 − 0.0002) × 0.5 × (1−0.6)
+Trading Reward from Taker Fee = 1,000,000 × 0.00009 × 0.5 × 0.4 = 18
+```
+ 
+For this example, the Trading Reward would be equivalent to $18 in DYDX for an approximate Taker Fee of $400 paid by the user.
 
 
 ## FAQ
@@ -80,18 +117,3 @@ Users earn trading rewards up to, but not exceeding, 90% of a fill’s net-tradi
 Trading rewards distributed by the protocol, each block, are capped at the dollar equivalent of the total net trading fees generated by the protocol that block. Thus, trading rewards distributed can fluctuate on a block by block basis. 
 
 This can result in a large amount of “savings” by the protocol (via reduced inflation) by not overspending to incentivize trading activity.
-
-## Parameters / Configurations
-
-> 💡 The current configuration and parameters can be found by querying the network.
-
-
-### Rewards
-
-- `treasury_account`: referred to as `T` in the above. specifies which account the trading rewards come from. Can be configured via gov.
-- `denom`: specifies the token that the trading rewards should use. Can be configured via gov.
-- `fee_multiplier_ppm`: referred to as `C` in the above. Specifies the proportion (in ppm) that fees should be multiplied by to get the maximum rewards amount. Can be configured via gov.
-
-### Vest
-
-- `VestEntry` : specifies a vesting schedule from `vester_account` to `treasury_account` for a given `denom` token. The vesting happens linearly from `start_time` and `end_time`.
