@@ -1,18 +1,16 @@
-### Set Order Router Revenue share
+### Update Unconditional Revenue Share Config
 
-Set order router revenue share
-
-#### Method Declaration
+Update unconditional revenue sharing config
 
 :::code-group
 
 ```python [Python]
-async def set_order_router_revenue_share(
+async def update_unconditional_revenue_share_config(
     self,
     authority: str,
     address: str,
     share_ppm: int
-) -> MsgSetOrderRouterRevShareResponse
+) -> MsgUpdateUnconditionalRevShareConfigResponse
 ```
 
 ```typescript [TypeScript]
@@ -38,14 +36,15 @@ async def set_order_router_revenue_share(
 
 #### Response
 
-| Status | Meaning       | Schema                                        | Description                           |
-| ------ | ------------- | --------------------------------------------- | ------------------------------------- |
-| `200`  | [OK]          | [MsgSetOrderRouterRevShareResponse]           | Order router revenue share            |
-| `400`  | [Bad Request] |                                               | The request was malformed or invalid. |
+| Status | Meaning       | Schema                                               | Description                                |
+| ------ | ------------- | ---------------------------------------------------- | ------------------------------------------ |
+| `200`  | [OK]          | [MsgUpdateUnconditionalRevShareConfigResponse]       | Update uncondiotional reveneu share config |
+| `400`  | [Bad Request] |                                                      | The request was malformed or invalid.      |
 
 Examples: [Python]
 
 [Python]: https://github.com/dydxprotocol/v4-clients/blob/95f2ad4b7d87e2c8f819138fcbe903826af47230/v4-client-py-v2/examples/revenue_share_example.py
 [OK]: /types/ok
-[MsgSetOrderRouterRevShareResponse]: /types/msg_set_order_router_rev_share_response
+[MsgUpdateUnconditionalRevShareConfigResponse]: /types/msg_update_unconditional_revenue_share_config_response
 [Bad Request]: /types/bad-request
+
