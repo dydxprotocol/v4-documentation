@@ -1,0 +1,51 @@
+### Set Order Router Revenue share
+
+Set order router revenue share
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def set_order_router_revenue_share(
+    self,
+    authority: str,
+    address: str,
+    share_ppm: int
+) -> MsgSetOrderRouterRevShareResponse
+```
+
+```typescript [TypeScript]
+```
+
+```rust [Rust]
+```
+
+```url [API]
+
+```
+
+:::
+
+#### Parameters
+
+| Parameter     | Location  | Type      | Required  | Description                                       |
+| ------------- | --------- | --------- | --------- | ------------------------------------------------- |
+| `authority`   | query     | string    | true      | The authority                                     |
+| `address`     | query     | String    | true      | The address to send revenue                       |
+| `share_ppm`   | query     | int       | true      | Parts per million amount                          |
+
+
+#### Response
+
+| Status | Meaning       | Schema                                        | Description                           |
+| ------ | ------------- | --------------------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [MsgSetOrderRouterRevShareResponse]    | Unconditional revenue share config    |
+| `400`  | [Bad Request] |                                               | The request was malformed or invalid. |
+
+Examples: [Python] | [Rust] | [API]| [Guide - Get Latest Block]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/95f2ad4b7d87e2c8f819138fcbe903826af47230/v4-client-py-v2/examples/revenue_share_example.py
+[OK]: /types/ok
+[MsgSetOrderRouterRevShareResponse]: /types/msg_set_order_router_rev_share_response
+[Bad Request]: /types/bad-request
