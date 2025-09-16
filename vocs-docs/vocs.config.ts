@@ -211,6 +211,10 @@ export default defineConfig({
                             text: 'Indexer',
                             link: '/concepts/architecture/indexer',
                         },
+                                               {
+                            text: 'Order Gateway (OEGS)',
+                            link: '/concepts/architecture/oegs',
+                        },
                     ],
                 },
                 {
