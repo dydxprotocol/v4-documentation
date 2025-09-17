@@ -41,7 +41,6 @@ Order represents a single order belonging to a `Subaccount` for a particular `Cl
 - Must be a multiple of ClobPair.SubticksPerTick (where `ClobPair.Id = orderId.ClobPairId`)
 
 `twap_parameters`: [TwapParameters] <Opt/>
-> **Note:** This field will be introduced in a future version of the API (v9.0).
 - Configuration for a TWAP order
 - Must be set for TWAP orders
 - Ignored for all other order types
@@ -52,6 +51,9 @@ Order represents a single order belonging to a `Subaccount` for a particular `Cl
 
 `good_til_oneof`: [GoodTilOneof] <Opt/>
 - Information about when the order expires
+
+`order_router_address`: string <Opt/>
+- Router address to share the revenue
 
 [OrderId]: /types/order_id
 [OrderSide]: /types/order_side
