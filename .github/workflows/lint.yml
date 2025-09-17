@@ -2,18 +2,11 @@ name: Lint Vocs Docs
 
 on:
   push:
-    paths:
-      - 'vocs-docs/**'
   pull_request:
-    paths:
-      - 'vocs-docs/**'
 
 jobs:
   lint:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: vocs-docs
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
