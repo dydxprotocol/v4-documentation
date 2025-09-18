@@ -94,9 +94,13 @@ Below is an example using the given formula to calculate the trading reward base
 - `Taker Fee Revenue Share`: the taker fee revenue share is 60% or 0.6 including 50% to MegaVault and 10% to Treasury subDAO, as well as 0% to market mapper for a given market.
 - `C`: A constant multiplier that is currently set to 0.5 by the dYdX governance, but subject to change through dYdX governance.
 
+:::note
+Note that the community has voted to set the C parameter to 0
+:::
+
 ```
-Trading Reward from Taker Fee = 1,000,000 * (0.0004 − 0.00011 − 0.0002) * 0.5 * (1−0.6)
-Trading Reward from Taker Fee = 1,000,000 * 0.00009 * 0.5 * 0.4 = 18
+Trading Reward from Taker Fee = 1,000,000 * (0.0004 − 0.00011 − 0.0002) * 0 * (1−0.6)
+Trading Reward from Taker Fee = 1,000,000 * 0.00009 * 0 * 0.4 = 18 = 0
 ```
  
 For this example, the Trading Reward would be equivalent to $18 in DYDX for an approximate Taker Fee of $400 paid by the user.
