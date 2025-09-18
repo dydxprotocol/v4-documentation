@@ -42,3 +42,4 @@ After deployment is complete, your Vocs instance will be live on your Vercel dom
     A predefined template is available and should be used as the basis for creating all new pages. This ensures consistency in structure and style throughout the documentation.
 
     `docs/pages/templates/method.mdx`
+
