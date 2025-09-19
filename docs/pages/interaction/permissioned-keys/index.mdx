@@ -221,6 +221,23 @@ In this example, the **trader** can use the authenticator to issue orders on the
 
 :::code-group
 
+```typescript [TypeScript]
+const client = await CompositeClient.connect(network);
+// Place an order using the authenticator.
+const tx = await client.placeShortTermOrder(
+  authenticatedSubaccount,
+  'ETH-USD',
+  side,
+  price,
+  0.01,
+      clientId,
+      goodTilBlock,
+      timeInForce,
+      false,
+      undefined,
+    );
+```
+
 ```python [Python]
 id = ... # authenticator ID # [!code focus]
 # Create the order ID, using the owner address # [!code focus]
@@ -241,22 +258,6 @@ tx_options = TxOptions([id], wallet.sequence, wallet.account_number) # [!code fo
 place = await node.place_order(wallet, order, tx_options) # [!code focus]
 ```
 
-```typescript [TypeScript]
-const client = await CompositeClient.connect(network);
-// Place an order using the authenticator. // [!code focus]
-const tx = await client.placeShortTermOrder(
-  authenticatedSubaccount,
-  'ETH-USD',
-  side,
-  price,
-  0.01,
-      clientId,
-      goodTilBlock,
-      timeInForce,
-      false,
-      undefined,
-    );
-```
 
 ```rust [Rust]
 // Create a `PublicAccount` representing the owner. // [!code focus]
