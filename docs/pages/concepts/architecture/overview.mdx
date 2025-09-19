@@ -32,6 +32,13 @@ In service of building an end-to-end decentralized experience, dYdX has built th
 
 - **Mobile**: The iOS and Android apps are built in native Swift and Kotlin, respectively. The mobile apps interact with the Indexer in the same way the web application does, and will send trades directly to the chain. The mobile apps have been open sourced as well, allowing anyone to deploy the mobile app to the App Store or Play store. Specifically for the App store, the deployer needs to have a developer account as well as a Bitrise account to go through the app submission process.
 
+### Order Entry Gateway Service (OEGS) ?
+The Order Entry Gateway represents the next step in dYdX’s multi-stage performance evolution and is made possible by the following 2 designs:
+
+1. Designated proposers — A governance-selected subset of validators responsible for proposing blocks. This creates a predictable topology for faster routing (available in v9 software upgrade).
+2. Order Entry Gateway Service (OEGS) — open-sourced infrastructure that provides a direct, optimized path from traders to the proposer set, reducing latency, increasing throughput, and lowering barriers for professional and retail traders alike (available now on testnet).
+
+
 ### Lifecycle of an Order
 
 Now that we have a better understanding of each of the components of dYdX Chain, let's take a look at how it all comes together when placing an order. When an order is placed on dYdX Chain, it follows the flow below:
