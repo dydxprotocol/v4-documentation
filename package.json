@@ -7,7 +7,7 @@
     "dev": "vocs dev",
     "build": "vocs build",
     "preview": "vocs preview",
-    "lint": "remark ./**/*.mdx --frail"
+    "lint": "remark './docs/**/*.mdx' --frail"
   },
   "dependencies": {
     "react": "latest",
