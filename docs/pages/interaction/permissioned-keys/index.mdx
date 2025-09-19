@@ -9,21 +9,31 @@ This section will guide you through authenticators use and management. We show t
 
 ## Owner
 
-::::steps
+There are 2 ways to setup Permissioned API Keys:
+1/ Via the Trade interface (default permissions to trade on all cross-margin pairs)
+2/ Via API (customisable)
 
-### Setup a Setup API Keys
-On the dYdX.trade frontend click `More → API Trading Keys`.
-Click `Generate New API Key`.
-The app generates a new keypair:
-API Wallet Address
-Private Key (one-time view)
-Save your Private Key immediately. It will not be shown again and is not stored by dYdX.
-Check the terms and click Authorize API Key.
-Done — you can repeat this process to create multiple API keys if needed.
+
+### Setup Permissioned API Keys via Trade Interface
+
+![Setup Permissioned API Key](/APIKey.png)
+
+- On the dYdX.trade after loggin in with your wallet or socials, click `More → API Trading Keys`.
+- Click `Generate New API Key`.
+- The app then generates a new keypair:
+    - API Wallet Address
+    - Private Key (one-time view)
+
+- Make sure to save your Private Key immediately. It will not be shown again and is not stored by dYdX.
+- Check the terms and click Authorize API Key.
+- Done — you can repeat this process to create multiple API keys if needed.
+- Now you can go to [Import private key](/interaction/permissioned-keys#trader) to start trading via API keys.
+
+::::steps
 
 ### Create an authenticator
 
-Lets create an authenticator which allows only the **trader** to place orders.
+Alternativaly, you can create a custom authenticator which allows only the **trader** to place orders.
 
 To create this authenticator, we use two sub-authenticators: `signatureVerification` and `messageFilter`:
 - the `signatureVerification` authenticator must be present in all authenticator sets and contains the **trader**'s public key;
@@ -180,15 +190,32 @@ client
 
 ::::steps
 
-### Get the authenticator ID
 
-Grab the authenticator ID created by the **owner** in [**Owner**::Step 2](/interaction/permissioned-keys#add-the-authenticator), either by: 
-- request to the **owner** through other channels, or;
-- by using the list authenticators method to fetch the last authenticator (see [**Owner**::Step 3](/interaction/permissioned-keys#last-authenticators)).
+### Get the authenticator ID and permissioned API Key
+
+Grab the authenticator ID created by the **owner** in [Add authenticator](/interaction/permissioned-keys#add-the-authenticator), either by: 
+- request the **owner** for the authenticator ID or by using the list authenticators method to fetch the to be used authenticator (see [list authenticators](/interaction/permissioned-keys#last-authenticators)).
+- Get the private key from the owner in [**Owner**::Step 1](/interaction/permissioned-keys#get-the-private-key).
+
+
+### Setup the permissioned wallet
+If you got a private key from the trading interface load in via `fromPrivateKey`, otherwise use `fromMnemonic` if you didn't create via the trading interface by assigning to mnemonic.
+
+```typescript
+  const fromWallet = await LocalWallet.fromPrivateKey(DYDX_TEST_PRIVATE_KEY, BECH32_PREFIX);
+  const fromSubaccount = SubaccountInfo.forLocalWallet(fromWallet, 0);
+  const authenticatedSubaccount = SubaccountInfo.forPermissionedWallet(
+        fromAccount.signingWallet,
+        address,
+        subaccountNumber,
+        [authenticatorId],
+      )
+```
+
 
 ### Using the authenticator
 
-Having the authenticator ID, the **trader** can now use it to perform the allowed actions.
+The **trader** can now use the permissioned API key to perform the allowed trading actions.
 
 In this example, the **trader** can use the authenticator to issue orders on the behalf of the **owner**.
 
@@ -216,19 +243,13 @@ place = await node.place_order(wallet, order, tx_options) # [!code focus]
 
 ```typescript [TypeScript]
 const client = await CompositeClient.connect(network);
-const wallet = await LocalWallet.fromPrivateKey(DYDX_TEST_PRIVATE_KEY, BECH32_PREFIX);
 // Place an order using the authenticator. // [!code focus]
 const tx = await client.placeShortTermOrder(
-      SubaccountInfo.forPermissionedWallet(
-        fromAccount.signingWallet,
-        forAccount.address,
-        forAccount.subaccountNumber,
-        [authenticatorId],
-      ),
-      'ETH-USD',
-      side,
-      price,
-      0.01,
+  authenticatedSubaccount,
+  'ETH-USD',
+  side,
+  price,
+  0.01,
       clientId,
       goodTilBlock,
       timeInForce,
