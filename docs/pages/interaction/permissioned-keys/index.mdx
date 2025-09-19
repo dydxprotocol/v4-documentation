@@ -11,6 +11,16 @@ This section will guide you through authenticators use and management. We show t
 
 ::::steps
 
+### Setup a Setup API Keys
+On the dYdX.trade frontend click `More → API Trading Keys`.
+Click `Generate New API Key`.
+The app generates a new keypair:
+API Wallet Address
+Private Key (one-time view)
+Save your Private Key immediately. It will not be shown again and is not stored by dYdX.
+Check the terms and click Authorize API Key.
+Done — you can repeat this process to create multiple API keys if needed.
+
 ### Create an authenticator
 
 Lets create an authenticator which allows only the **trader** to place orders.
@@ -206,28 +216,25 @@ place = await node.place_order(wallet, order, tx_options) # [!code focus]
 
 ```typescript [TypeScript]
 const client = await CompositeClient.connect(network);
-const wallet = await LocalWallet.fromMnemonic(DYDX_TEST_MNEMONIC_2, BECH32_PREFIX);
-const subaccount = new SubaccountInfo(wallet, 0);
-const ownerSubaccount = ...;
-const id = ...; // authenticator ID
-const currentBlock = await client.validatorClient.get.latestBlockHeight();
+const wallet = await LocalWallet.fromPrivateKey(DYDX_TEST_PRIVATE_KEY, BECH32_PREFIX);
 // Place an order using the authenticator. // [!code focus]
-const tx = await client.placeShortTermOrder( // [!code focus]
-  subaccount, // [!code focus]
-  'ETH-USD',
-  OrderSide.BUY,
-  1000,
-  0.01,
-  Math.floor(Math.random() * 10000), // client ID
-  currentBlock + 10,
-  Order_TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
-  false,
-  undefined,
-  { // [!code focus]
-    authenticators: [id], // [!code focus]
-    accountForOrder: ownerSubaccount, // [!code focus]
-  }, // [!code focus]
-); // [!code focus]
+const tx = await client.placeShortTermOrder(
+      SubaccountInfo.forPermissionedWallet(
+        fromAccount.signingWallet,
+        forAccount.address,
+        forAccount.subaccountNumber,
+        [authenticatorId],
+      ),
+      'ETH-USD',
+      side,
+      price,
+      0.01,
+      clientId,
+      goodTilBlock,
+      timeInForce,
+      false,
+      undefined,
+    );
 ```
 
 ```rust [Rust]
