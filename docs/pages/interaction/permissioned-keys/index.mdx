@@ -34,7 +34,7 @@ On the dYdX.trade, after signing in with your wallet or socials:
 
 ### Create an authenticator
 
-Alternativaly, you can create a custom authenticator which allows only the **trader** to place orders.
+Alternatively, you can create a custom authenticator which allows only the **trader** to place orders.
 
 To create this authenticator, we use two sub-authenticators: `signatureVerification` and `messageFilter`:
 - the `signatureVerification` authenticator must be present in all authenticator sets and contains the **trader**'s public key;
@@ -194,9 +194,9 @@ client
 
 ### Get the authenticator ID and permissioned API Key
 
-Grab the authenticator ID created by the **owner** in [Add authenticator](/interaction/permissioned-keys#add-the-authenticator), either by: 
-- request the **owner** for the authenticator ID or by using the list authenticators method to fetch the to be used authenticator (see [list authenticators](/interaction/permissioned-keys#last-authenticators)).
-- Get the private key from the owner in [via the Trade Interface](/interaction/permissioned-keys#get-the-private-key).
+Grab the `authenticatorId` created by the **owner** in [Add authenticator](/interaction/permissioned-keys#add-the-authenticator), either by: 
+- request the **owner** for the `authenticatorId` or by using the list authenticators method to fetch the to be used authenticator (see [list authenticators](/interaction/permissioned-keys#last-authenticators)).
+- Get the private key `DYDX_TEST_PRIVATE_KEY` from the owner in [via the Trade Interface](/interaction/permissioned-keys#get-the-private-key).
 
 
 ### Setup the permissioned wallet
@@ -204,11 +204,10 @@ If you got a private key from the trading interface load in via `fromPrivateKey`
 
 ```typescript
   const fromWallet = await LocalWallet.fromPrivateKey(DYDX_TEST_PRIVATE_KEY, BECH32_PREFIX);
-  const fromSubaccount = SubaccountInfo.forLocalWallet(fromWallet, 0);
   const authenticatedSubaccount = SubaccountInfo.forPermissionedWallet(
-        fromAccount.signingWallet,
-        address,
-        subaccountNumber,
+        fromWallet,
+        address, //owner dydx address
+        subaccountNumber, //subaccount to trade onbehalf of
         [authenticatorId],
       )
 ```
