@@ -21,12 +21,16 @@ There are several reward mechanisms available with the protocol software.
 
 See more on [Staking Rewards](/concepts/trading/rewards/staking-rewards).
 
-## Trading Rewards
+## Trading Rewards (Note that C factor has been set to 0)
 
 - Rewards distributed to `Traders` after each successful trade
 - Based on a specified `formula` with several inputs
 - Distributed automatically every block with successful trades
 - Claimed automatically
+
+:::note
+Note that traders now earn 50% trading rebates directly after each trade as trading rewards via C factor have been set to 0 via governance.
+:::
 
 See more on [Trading Rewards](/concepts/trading/rewards/trading-rewards).
 
@@ -44,12 +48,10 @@ The basic structure for fees have been developed to reflect the following charac
 | 1     | < $1M                                  | 5.0             | 1.0                                    |
 | 2    | ≥ $1M                                  | 4.5             | 1.0                                    |
 | 3   | ≥ $5M                                  | 4.0             | 0.5                                    |
-| 4    | ≥ $25M                                 | 3.5             | —                                      |
-| 5     | ≥ $125M                                | 3.0             | —                                      |
-| 6    | ≥ $125M and ≥0.5% exchange mkt. share  | 2.5             | -0.5                                   |
-| 7   | ≥ $125M and ≥1% maker mkt. share       | 2.5             | -0.7                                   |
-| 8  | ≥ $125M and ≥2% maker mkt. share       | 2.5             | -0.9                                   |
-| 9    | ≥ $125M and ≥4% maker mkt. share       | 2.5             | -1.1                                   |
+| 4    | ≥ $25M                                 | 3.5             | 0                                      |
+| 5     | ≥ $50M                                | 3.0             | 0                                      |
+| 6    | ≥ $100M                                | 2.5             | -0.7                                   |
+| 7   | ≥ $200M                                 | 2.5             | -1.1                                   |
 
 ## Parameters
 

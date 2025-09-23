@@ -9,11 +9,32 @@ This section will guide you through authenticators use and management. We show t
 
 ## Owner
 
+There are 2 ways to setup Permissioned API Keys:
+1/ Via the Trade interface (default permissions to trade on all cross-margin pairs)
+2/ Via API (customisable)
+
+
 ::::steps
+
+### Setup Permissioned API Keys via Trade Interface
+
+![Setup Permissioned API Key](/APIKey.png)
+
+On the dYdX.trade, after signing in with your wallet or socials:
+- click `More → API Trading Keys`.
+- Click `Generate New API Key`. This generates a new keypair:
+    - API Wallet Address
+    - Private Key
+    :::note
+    This is a one-time view, make sure to save your Private Key immediately. It will not be shown again and is not stored by dYdX
+    :::
+- Check the `terms` and click `Authorize API Key`.
+- Now you can go to [Import private key](/interaction/permissioned-keys#trader) to start trading via API keys.
+
 
 ### Create an authenticator
 
-Lets create an authenticator which allows only the **trader** to place orders.
+Alternatively, you can create a custom authenticator which allows only the **trader** to place orders.
 
 To create this authenticator, we use two sub-authenticators: `signatureVerification` and `messageFilter`:
 - the `signatureVerification` authenticator must be present in all authenticator sets and contains the **trader**'s public key;
@@ -170,19 +191,52 @@ client
 
 ::::steps
 
-### Get the authenticator ID
 
-Grab the authenticator ID created by the **owner** in [**Owner**::Step 2](/interaction/permissioned-keys#add-the-authenticator), either by: 
-- request to the **owner** through other channels, or;
-- by using the list authenticators method to fetch the last authenticator (see [**Owner**::Step 3](/interaction/permissioned-keys#last-authenticators)).
+### Get the authenticator ID and permissioned API Key
+
+Grab the `authenticatorId` created by the **owner** in [Add authenticator](/interaction/permissioned-keys#add-the-authenticator), either by: 
+- request the **owner** for the `authenticatorId` or by using the list authenticators method to fetch the to be used authenticator (see [list authenticators](/interaction/permissioned-keys#last-authenticators)).
+- Get the private key `DYDX_TEST_PRIVATE_KEY` from the owner in [via the Trade Interface](/interaction/permissioned-keys#get-the-private-key).
+
+
+### Setup the permissioned wallet
+If you got a private key from the trading interface load in via `fromPrivateKey`, otherwise use `fromMnemonic` if you didn't create via the trading interface by assigning to mnemonic.
+
+```typescript
+  const fromWallet = await LocalWallet.fromPrivateKey(DYDX_TEST_PRIVATE_KEY, BECH32_PREFIX);
+  const authenticatedSubaccount = SubaccountInfo.forPermissionedWallet(
+        fromWallet,
+        address, //owner dydx address
+        subaccountNumber, //subaccount to trade onbehalf of
+        [authenticatorId],
+      )
+```
+
 
 ### Using the authenticator
 
-Having the authenticator ID, the **trader** can now use it to perform the allowed actions.
+The **trader** can now use the permissioned API key to perform the allowed trading actions.
 
 In this example, the **trader** can use the authenticator to issue orders on the behalf of the **owner**.
 
 :::code-group
+
+```typescript [TypeScript]
+const client = await CompositeClient.connect(network);
+// Place an order using the authenticator.
+const tx = await client.placeShortTermOrder(
+  authenticatedSubaccount,
+  'ETH-USD',
+  side,
+  price,
+  0.01,
+      clientId,
+      goodTilBlock,
+      timeInForce,
+      false,
+      undefined,
+    );
+```
 
 ```python [Python]
 id = ... # authenticator ID # [!code focus]
@@ -204,31 +258,6 @@ tx_options = TxOptions([id], wallet.sequence, wallet.account_number) # [!code fo
 place = await node.place_order(wallet, order, tx_options) # [!code focus]
 ```
 
-```typescript [TypeScript]
-const client = await CompositeClient.connect(network);
-const wallet = await LocalWallet.fromMnemonic(DYDX_TEST_MNEMONIC_2, BECH32_PREFIX);
-const subaccount = new SubaccountInfo(wallet, 0);
-const ownerSubaccount = ...;
-const id = ...; // authenticator ID
-const currentBlock = await client.validatorClient.get.latestBlockHeight();
-// Place an order using the authenticator. // [!code focus]
-const tx = await client.placeShortTermOrder( // [!code focus]
-  subaccount, // [!code focus]
-  'ETH-USD',
-  OrderSide.BUY,
-  1000,
-  0.01,
-  Math.floor(Math.random() * 10000), // client ID
-  currentBlock + 10,
-  Order_TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
-  false,
-  undefined,
-  { // [!code focus]
-    authenticators: [id], // [!code focus]
-    accountForOrder: ownerSubaccount, // [!code focus]
-  }, // [!code focus]
-); // [!code focus]
-```
 
 ```rust [Rust]
 // Create a `PublicAccount` representing the owner. // [!code focus]
