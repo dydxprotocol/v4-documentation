@@ -1,0 +1,7 @@
+# MarketMapperRevenueShareParams
+
+`address`: string
+
+`revenue_share_ppm`: int
+
+`valid_days`: int
