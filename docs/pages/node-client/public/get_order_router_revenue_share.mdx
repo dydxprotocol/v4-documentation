@@ -1,0 +1,44 @@
+### Get Order Router Revenue share
+
+Retrieves order router revenue share
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_order_router_revenue_share(self, address: str) -> QueryOrderRouterRevShareResponse
+```
+
+```typescript [TypeScript]
+```
+
+```rust [Rust]
+```
+
+```url [API]
+
+```
+
+:::
+
+#### Parameters
+
+| Parameter | Location | Type   | Mandatory | Description                            |
+| --------- | -------- | ------ | --------- | -------------------------------------- |
+| address   | Query    | string | true      | Address of the revenue share recipient |
+
+
+#### Response
+
+| Status | Meaning       | Schema                                        | Description                           |
+| ------ | ------------- | --------------------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [QueryOrderRouterRevShareResponse]            | Order router revenue share            |
+| `400`  | [Bad Request] |                                               | The request was malformed or invalid. |
+
+Examples: [Python]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/95f2ad4b7d87e2c8f819138fcbe903826af47230/v4-client-py-v2/examples/revenue_share_example.py
+[OK]: /types/ok
+[QueryOrderRouterRevShareResponse]: /types/query_order_router_revenue_share_response
+[Bad Request]: /types/bad-request
