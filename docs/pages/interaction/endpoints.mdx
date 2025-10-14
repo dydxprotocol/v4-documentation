@@ -20,6 +20,13 @@ The Node client (also known as the Validator client) is the main client for inte
 
 You'll need an endpoint to setup the Node client. Grab an RPC/gRPC endpoint from [here](#node). Additionally for the Python client, you'all also need a HTTP and WebSockets endpoints.
 
+:::tip[OEGS]
+With the release of the Order Entry Gateway Service (OEGS), users can now connect to dYdX via OEGS endpoints. OEGS provides both gRPC and RPC endpoints.
+for more info on OEGS, check [here](/concepts/architecture/oegs.mdx)
+:::
+
+
+
 :::code-group
 
 ```python [Python]
@@ -27,9 +34,9 @@ from dydx_v4_client.network import make_mainnet
 from dydx_v4_client.node.client import NodeClient
 
 config = make_mainnet( # [!code focus]
-   node_url="your-chosen-grpc-node.com" # [!code focus]
-   rest_indexer="https://your-chosen-rest-indexer.com", # [!code focus]
-   websocket_indexer="wss://your-chosen-websocket-indexer.com", # [!code focus]
+   node_url="oegs.dydx.trade:443" # [!code focus]
+   rest_indexer="https://indexer.dydx.trade", # [!code focus]
+   websocket_indexer="wss://indexer.dydx.trade/v4/ws", # [!code focus]
 ).node # [!code focus]
 # Call make_testnet() to use the testnet instead. # [!code focus]
 
@@ -212,6 +219,7 @@ let noble = NobleClient::connect( // [!code focus]
 ## Endpoints
 
 Some known endpoints are provided below. Use these to connect to the dYdX networks.
+Feel free to compare the most suitable gRPC endpoint from this [status endpoint](https://grpc-status.dydx.trade/)
 
 ### Node
 
@@ -223,6 +231,7 @@ Connections with the full nodes are established using the (g)RPC protocol.
 
 | Team          | URI                                                                                                                                                                                                                                                 | Rate limit |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| OEGS          | `grpc://oegs.dydx.trade:443`                                                                                                                                                                                                                        |            |            
 | Polkachu      | `https://dydx-dao-grpc-1.polkachu.com:443` <br/> `https://dydx-dao-grpc-2.polkachu.com:443` <br/> `https://dydx-dao-grpc-3.polkachu.com:443` <br/> `https://dydx-dao-grpc-4.polkachu.com:443` <br/> `https://dydx-dao-grpc-5.polkachu.com:443` | 300 req/m  |
 | KingNodes     | `https://dydx-ops-grpc.kingnodes.com:443`                                                                                                                                                                                                           | 250 req/m  |
 | Enigma        | `https://dydx-dao-grpc.enigma-validator.com:443`                                                                                                                                                                                                    |            |
@@ -233,6 +242,7 @@ Connections with the full nodes are established using the (g)RPC protocol.
 
 | Team          | URI                                                    | Rate limit |
 | ------------- | ------------------------------------------------------ | ---------- |
+| OEGS          | `https://oegs.dydx.trade:443`                          |            |
 | Polkachu      | `https://dydx-dao-rpc.polkachu.com:443`                | 300 req/m  |
 | KingNodes     | `https://dydx-ops-rpc.kingnodes.com:443`               | 250 req/m  |
 | Enigma        | `https://dydx-dao-rpc.enigma-validator.com:443`        |            |
@@ -259,6 +269,7 @@ Connections with the full nodes are established using the (g)RPC protocol.
 
 | Team          | URI                                                |
 | ------------- | -------------------------------------------------- |
+| OEGS          | `oegs-testnet.dydx.exchange:443`   |
 | Lavender Five | `testnet-dydx.lavenderfive.com:443 (TLS)`          |
 | King Nodes    | `test-dydx-grpc.kingnodes.com:443 (TLS)`           |
 | Polkachu      | `dydx-testnet-grpc.polkachu.com:23890 (plaintext)` |
@@ -267,6 +278,7 @@ Connections with the full nodes are established using the (g)RPC protocol.
 
 | Team          | URI                                             |
 | ------------- | ----------------------------------------------- |
+| OEGS          | `https://oegs-testnet.dydx.exchange:443`        |
 | Enigma        | `https://dydx-rpc-testnet.enigma-validator.com` |
 | Lavender Five | `https://testnet-dydx-rpc.lavenderfive.com`     |
 | King Nodes    | `https://test-dydx-rpc.kingnodes.com`           |
