@@ -1,4 +1,5 @@
 import { Button } from 'vocs/components'
+import Details from '../../../../components/Details';
 
 ### Get Asset Positions
 
@@ -44,13 +45,13 @@ pub async fn get_subaccount_asset_positions(
 
 :::
 
-:::details[Unification Plan]
+<Details title="Unification Plan">
 - Rename all methods to `get_asset_positions` - shorter is better.
 - Add a `Subaccount` pair to Python and JavaScript, since it's always a pair
 - Add options to the Rust version
 - Rename `created_before_or_at_time` parameter to `created_before_or_at`
 - Rename `PerpetualPositionStatus` to `PositionStatus`
-:::
+</Details>
 
 #### Parameters
 

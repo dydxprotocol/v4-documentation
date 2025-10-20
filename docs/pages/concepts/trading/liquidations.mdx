@@ -3,63 +3,70 @@
 As part of the default settings of the v4 open source software (”dYdX Chain”), accounts whose total value falls below their maintenance margin requirement may have their positions automatically closed by the liquidation engine. Positions are closed via protocol-generated liquidation matches where a protocol-generated liquidation order uses a calculated “Fillable Price” as the limit price to match against liquidity resting on the order book.  
  Profits or losses from liquidations are taken on by the insurance fund.
 A liquidated subaccount may have its position partially or fully closed. v4 open source software includes a liquidations configuration which — as determined by the applicable Governance Community — will determine how much of the position is liquidated.
- 
+
 ## Liquidation Penalty
 
 As part of the default settings of the v4 open source software, when an account is liquidated, up to the entire remaining value of the account may be taken as penalty and transferred to an insurance fund.
- 
+
 The liquidation engine will attempt to leave funds in accounts of positive value where possible after they have paid the Maximum Liquidation Penalty of 1.5%. The 1.5% fee contemplated in the default v4 software will be subject to adjustments by the applicable Governance Community.
- 
- 
+
 ## Isolated Liquidation Price
 
 This is the price at which a specific position reaches the point of liquidation.
-1. __Formula Explanation:__
-  - The liquidation price `p'` is calculated using:
-  ```
-   p' = (e - s * p) / (|s| * MMF - s)
-  ```
-  - Here:
-    - `e` is the current equity in the account.
-    - `s` is the size of the position.
-    - `p` is the original price of the position.
-    - `MMF` is the maintenance margin fraction, a percentage that indicates the minimum equity required to keep the position open.
 
-2. __Example:__
-  - Suppose a trader deposits $1,000 (`e = 1000`).
-  - The trader shorts 3 ETH contracts (`s = -3`) at $3,000 per contract, with a maintenance margin fraction of 5% (`MMF = 0.05`).
-  - The formula becomes: `p' = (1000 - (-3 * 3000)) / (3 * 0.05 - (-3))`
-  - This simplifies to: `p' = (1000 + 9000) / (0.15 + 3) = 10000 / 3.15 ≈ 3174.60`
-  - This means if the price of ETH rises to $3,174.60, the position will reach the liquidation threshold. 
-  - At this price, the trader's remaining equity would be 5% of the notional value of the position or $476.2 based on the calculation `(3 * 3174.6 * 0.05 ≈ 476.2)`.
- 
+1. **Formula Explanation:**
+
+- The liquidation price `p'` is calculated using:
+
+```
+ p' = (e - s * p) / (|s| * MMF - s)
+```
+
+- Here:
+  - `e` is the current equity in the account.
+  - `s` is the size of the position.
+  - `p` is the original price of the position.
+  - `MMF` is the maintenance margin fraction, a percentage that indicates the minimum equity required to keep the position open.
+
+2. **Example:**
+
+- Suppose a trader deposits $1,000 (`e = 1000`).
+- The trader shorts 3 ETH contracts (`s = -3`) at $3,000 per contract, with a maintenance margin fraction of 5% (`MMF = 0.05`).
+- The formula becomes: `p' = (1000 - (-3 * 3000)) / (3 * 0.05 - (-3))`
+- This simplifies to: `p' = (1000 + 9000) / (0.15 + 3) = 10000 / 3.15 ≈ 3174.60`
+- This means if the price of ETH rises to $3,174.60, the position will reach the liquidation threshold.
+- At this price, the trader's remaining equity would be 5% of the notional value of the position or $476.2 based on the calculation `(3 * 3174.6 * 0.05 ≈ 476.2)`.
+
 ## Cross Liquidation Price
 
 For cross-margining (multiple positions sharing the same margin), the calculation is adjusted to account for the margin used by other positions.
 
-1. __Key Terms:__
-  - __Total Maintenance Margin Requirement (`MMR_t`):__ Calculate the maintenance margin needed for all positions at current prices: `MMR_t = |s| · p · MMF`
-  - __Other Positions' Margin Requirement (`MMR_o`)__: Subtract the margin requirement of the position in question from MMR_t: `MMR_o = MMR_t - |s| * p * MMF`
-  - __New Margin Requirement at Price `p'`__: Add `MMR_o` to the margin requirement of the position at the new price: `MMR_o + |s| * p' * MMF`
-  - __Liquidation Price Formula__: Substitute into the equation to find the liquidation price for the position: `p' = (e - s * p - MMR_o) / (|s| * MMF - s)`
+1. **Key Terms:**
 
-2. __Example:__
-  - Suppose a trader deposits $1,000 (`e = 1000`).
-  - The trader shorts 1.5 ETH (`s = -1.5`) at $3,000 and buys 1,000 STRK contracts at $1.75 (`MMF = 10%` for STRK).
-  - __Calculate Other Positions' Margin Requirement__: `MMR_o = 1000 * 1.75 * 0.10 = 175`
-  - Compute the Liquidation Price for ETH: `p' = (1000 - (-1.5 * 3000) - 175) / (1.5 * 0.05 + 1.5)`
-  - This simplifies to: `p' = (1000 + 4500 - 175) / 1.575 ≈ 3380.95`.
-  - If the ETH price reaches $3,380.95, the equity would fall to the required margin level.
- 
+- **Total Maintenance Margin Requirement (`MMR_t`):** Calculate the maintenance margin needed for all positions at current prices: `MMR_t = |s| · p · MMF`
+- **Other Positions' Margin Requirement (`MMR_o`)**: Subtract the margin requirement of the position in question from MMR_t: `MMR_o = MMR_t - |s| * p * MMF`
+- **New Margin Requirement at Price `p'`**: Add `MMR_o` to the margin requirement of the position at the new price: `MMR_o + |s| * p' * MMF`
+- **Liquidation Price Formula**: Substitute into the equation to find the liquidation price for the position: `p' = (e - s * p - MMR_o) / (|s| * MMF - s)`
+
+2. **Example:**
+
+- Suppose a trader deposits $1,000 (`e = 1000`).
+- The trader shorts 1.5 ETH (`s = -1.5`) at $3,000 and buys 1,000 STRK contracts at $1.75 (`MMF = 10%` for STRK).
+- **Calculate Other Positions' Margin Requirement**: `MMR_o = 1000 * 1.75 * 0.10 = 175`
+- Compute the Liquidation Price for ETH: `p' = (1000 - (-1.5 * 3000) - 175) / (1.5 * 0.05 + 1.5)`
+- This simplifies to: `p' = (1000 + 4500 - 175) / 1.575 ≈ 3380.95`.
+- If the ETH price reaches $3,380.95, the equity would fall to the required margin level.
+
 ## “Fillable Price” for Liquidations
 
 As part of the default settings of dYdX Chain, the “fillable price” (or the limit price of a liquidation order) for a position being liquidated is calculated as follows. For both short and long position:
- 
+
 ```
 Fillable Price (Short or Long) = P x (1 - ((SMMR x MMF) x (BA x (1 - Q)))
 ```
- 
+
 Where (provided as genesis parameters):
+
 - `P` is the oracle price for the market
 - `SMMR` is the spread to maintenance margin ratio
 - `MMR`= `Config.FillablePriceConfig.SpreadToMaintenanceMarginRatioPpm`
@@ -68,28 +75,28 @@ Where (provided as genesis parameters):
 - `A` = `Config.FillablePriceConfig.BankruptcyAdjustmentPpm`. Is ≥ 1.
 - `Q = V / TMMR` where `V` is the total account value, and `TMMR` is the total maintenance margin requirement
 
-On the other hand, the “Close Price” will be the sub-ticks of whatever maker order(s) the liquidation order matches against. 
- 
+On the other hand, the “Close Price” will be the sub-ticks of whatever maker order(s) the liquidation order matches against.
+
 For more information on Margin fractions and calculations, see [Margin](/concepts/trading/margin).
- 
+
 ## FAQ
 
 > What price is used to determine liquidations?
 
 As part of the default settings, Oracle Price is used to estimate the value of an account’s positions. If the account’s value falls below the account’s maintenance margin requirement, the account is liquidatable.
- 
+
 > Who receives the liquidation fees?
 
 The insurance fund would receive liquidation fees / penalty. Please note that the applicable Governance Community needs to initially fund the insurance fund from the applicable community treasury.
- 
+
 > How liquidation engine works?
 
 Our liquidation engine automatically closes positions that fall below the maintenance margin.
- 
+
 > Does dYdX apply a penalty in the event of liquidation?
 
-Yes. The liquidation engine will attempt to leave funds in accounts of positive value where possible after they have paid the Maximum Liquidation Penalty of 1.5%. The 1.5% fee contemplated in the default v4 software will be subject to adjustments by the applicable Governance Community. 
- 
-> How to avoid liquidation? 
+Yes. The liquidation engine will attempt to leave funds in accounts of positive value where possible after they have paid the Maximum Liquidation Penalty of 1.5%. The 1.5% fee contemplated in the default v4 software will be subject to adjustments by the applicable Governance Community.
 
-In order to avoid liquidation, you can deposit more assets to your account, as while opening a position the key point is to have enough assets to cover the maintenance margin requirements. You can also close the part of the position and the liquidation price will change. 
+> How to avoid liquidation?
+
+In order to avoid liquidation, you can deposit more assets to your account, as while opening a position the key point is to have enough assets to cover the maintenance margin requirements. You can also close the part of the position and the liquidation price will change.

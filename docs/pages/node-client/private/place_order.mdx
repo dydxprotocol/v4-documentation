@@ -1,3 +1,5 @@
+import Details from '../../../components/Details';
+
 ### Place Order
 
 Execute a transaction that places an order on a market.
@@ -52,13 +54,12 @@ pub async fn place_order(
 
 :::
 
-:::details[Unification Plan]
-
+<Details title="Unification Plan">
 - Use a convenient `Wallet` and `Order` pair for all clients
 - TypeScript doesn't use authenticators
 - In Python we use them explicitly
 - Consider to do the same like in Rust (set it automatically)
-  :::
+</Details>
 
 #### Parameters
 

@@ -1,0 +1,23 @@
+# Files to ignore from remark linting
+# One pattern per line
+
+# Ignore component files (TSX not MDX)
+docs/components/*.tsx
+
+# Ignore files that have formatting issues
+resources.mdx
+docs/pages/nodes/full-node-streaming/example.mdx
+docs/pages/node-client/public/query_transaction.mdx
+docs/pages/node-client/public/query_transaction_result.mdx
+docs/pages/nodes/full-node-streaming/index.mdx
+docs/pages/interaction/endpoints.mdx
+docs/pages/interaction/data/market.mdx
+docs/pages/interaction/client/quick-start-ts.mdx
+docs/pages/interaction/client/quick-start-py.mdx
+docs/pages/interaction/client/quick-start-rs.mdx
+
+# You can add more patterns here
+# Example patterns:
+# test-*.mdx
+# **/draft/*.mdx
+# docs/pages/temp/*.mdx
