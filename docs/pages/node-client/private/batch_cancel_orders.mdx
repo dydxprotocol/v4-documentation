@@ -1,3 +1,5 @@
+import Details from '../../../components/Details';
+
 ### Batch Cancel Orders
 
 Cancel a batch of short-terms orders.
@@ -42,10 +44,9 @@ pub async fn batch_cancel_orders(
 
 :::
 
-:::details[Unification Plan]
-
+<Details title="Unification plan">
 - `TxOptions` is not available in Rust
-  :::
+</Details>
 
 #### Parameters
 
@@ -76,7 +77,6 @@ Examples: [Python] | [TypeScript] | [Rust]
 [OrderBatch]: /types/order_batch
 [TxOptions]: /types/tx_options
 [Height]: /types/height
-[String]: /types/string
 [Bad Request]: /types/bad-request
 [Not Found]: /types/not-found
 [TxHash]: /types/tx_hash

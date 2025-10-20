@@ -39,17 +39,18 @@ Here is an example response:
 
 Read as:
 
-| Net Collateral            | Long-term / Conditional orders   | 
-| ------------------------- | -------------------------------  |
-| < $20                     |  0                               |    
-| >= $20 and < $100         |  10                              |  
-| >= $100 and < $1,000      |  20                              | 
-| >= $1,000 and < $10,000   |  40                              | 
-| >= $10,000 and < $100,000 |  100                             | 
-| >= $100,000               |  200                             |
+| Net Collateral            | Long-term / Conditional orders |
+| ------------------------- | ------------------------------ |
+| < $20                     | 0                              |
+| >= $20 and < $100         | 10                             |
+| >= $100 and < $1,000      | 20                             |
+| >= $1,000 and < $10,000   | 40                             |
+| >= $10,000 and < $100,000 | 100                            |
+| >= $100,000               | 200                            |
 
 For example up to 20 open stateful orders across all markets for a subaccount with a net collateral of $2,000.
 
 Note:
+
 - Short term orders, including limit `Immediate-or-Cancel`, `Fill-or-Kill`, and market orders on the frontend do not have this limitation.
 - Only the `stateful_order_equity_tiers` field is in effect -- short term order equity limits under the `short_term_order_equity_tiers` key are no longer in effect.

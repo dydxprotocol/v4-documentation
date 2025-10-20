@@ -1,3 +1,5 @@
+import Details from '../../../components/Details';
+
 ### Get Delegator Unbonding Delegations
 
 Query all unbonding delegations associated with a specific delegator address. See the [definition](https://github.com/cosmos/cosmos-sdk/tree/main/x/staking#delegatorunbondingdelegations).
@@ -32,12 +34,11 @@ pub async fn get_delegator_unbonding_delegations(
 
 :::
 
-:::details[Unification Plan]
-
+<Details title="Unification Plan">
 - Python and TypeScript don't contain options
 - Options in protocol are not optional
 - Two types of options (v4 and cosmos, are the same, please use cosmos)
-  :::
+</Details>
 
 #### Parameters
 

@@ -7,7 +7,7 @@
     "dev": "vocs dev",
     "build": "vocs build",
     "preview": "vocs preview",
-    "lint": "remark './docs/**/*.mdx' --frail"
+    "lint": "./remark-filter.sh './docs/**/*.mdx' --ignore-file .lintignore | xargs remark --frail"
   },
   "dependencies": {
     "react": "latest",

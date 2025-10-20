@@ -1,3 +1,5 @@
+import Details from '../../../components/Details';
+
 ### Get Clob Pairs
 
 Obtain a comprehensive list of all available order book trading pairs.
@@ -27,10 +29,9 @@ pub async fn get_clob_pairs(
 
 :::
 
-:::details[Unification Plan]
-
+<Details title="Unification Plan">
 - Python and TypeScript don't contain options
-  :::
+</Details>
 
 #### Parameters
 
@@ -51,8 +52,6 @@ Examples: [Python] | [TypeScript] | [Rust] | [API]
 [TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/validator_get_example.ts#L49
 [Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/validator_get.rs#L74
 [API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/clob/clob_pair
-[u8]: /types/u8
-[u64]: /types/u64
 [OK]: /types/ok
 [ClobPair]: /types/clob_pair
 [PageRequest]: /types/page_request

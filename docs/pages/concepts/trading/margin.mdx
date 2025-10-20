@@ -2,9 +2,9 @@
 
 As part of default settings on the dYdX Chain open source software, each market has two risk parameters, Initial Margin Fraction (IMF) and Maintenance Margin Fraction (MMF):
 
-  - **Initial Margin Fraction**: A percentage (fixed until [certain level](#open-interest-based-imf) of Open Interest) that determines the minimum collateral required to open or increase positions.
+- **Initial Margin Fraction**: A percentage (fixed until [certain level](#open-interest-based-imf) of Open Interest) that determines the minimum collateral required to open or increase positions.
 
-  - **Maintenance Margin Fraction**: A percentage (fixed) that determines the minimum collateral required to maintain positions and avoid liquidation.
+- **Maintenance Margin Fraction**: A percentage (fixed) that determines the minimum collateral required to maintain positions and avoid liquidation.
 
 ## Open-Interest-Based IMF
 
@@ -29,43 +29,44 @@ The [Open Notional Lower Cap](https://github.com/dydxprotocol/v4-chain/blob/b829
 The margin requirement for a single position is calculated as follows:
 
 <pre class="center-column">
-Initial Margin Requirement = abs(S &times; P &times; I)
-Maintenance Margin Requirement = abs(S &times; P &times; M)
+  Initial Margin Requirement = abs(S &times; P &times; I) Maintenance Margin
+  Requirement = abs(S &times; P &times; M)
 </pre>
 
 Where:
 
-* `S` is the size of the position (positive if long, negative if short)
-* `P` is the oracle price for the market
-* `I` is the initial margin fraction for the market
-* `M` is the maintenance margin fraction for the market
+- `S` is the size of the position (positive if long, negative if short)
+- `P` is the oracle price for the market
+- `I` is the initial margin fraction for the market
+- `M` is the maintenance margin fraction for the market
 
 The margin requirement for the account as a whole is the sum of the margin requirement over each market `i` in which the account holds a position:
 
 <pre class="center-column">
-Total Initial Margin Requirement = Σ abs(S<sub>i</sub> &times; P<sub>i</sub> &times; I<sub>i</sub>)
-Total Maintenance Margin Requirement = Σ abs(S<sub>i</sub> &times; P<sub>i</sub> &times; M<sub>i</sub>)
+  Total Initial Margin Requirement = Σ abs(S<sub>i</sub> &times; P<sub>i</sub>{" "}
+  &times; I<sub>i</sub>) Total Maintenance Margin Requirement = Σ abs(S
+  <sub>i</sub> &times; P<sub>i</sub> &times; M<sub>i</sub>)
 </pre>
 
 The total margin requirement is compared against the total value of the account, which incorporates the quote asset (USDC) balance of the account as well as the value of the positions held by the account:
 
 <pre class="center-column">
-Total Account Value = Q + Σ (S<sub>i</sub> &times; P<sub>i</sub>)
+  Total Account Value = Q + Σ (S<sub>i</sub> &times; P<sub>i</sub>)
 </pre>
 
 The Total Account Value is also referred to as equity.
 
 Where:
 
-* `Q` is the account's USDC balance (note that `Q` may be negative). In the API, this is called `quoteBalance`. Every time a transfer, deposit or withdrawal occurs for an account, the balance changes. Also, when a position is modified for an account, the `quoteBalance` changes. Also funding payments and liquidations will change an account's `quoteBalance`.
-* `S` and `P` are as defined above (note that `S` may be negative)
+- `Q` is the account's USDC balance (note that `Q` may be negative). In the API, this is called `quoteBalance`. Every time a transfer, deposit or withdrawal occurs for an account, the balance changes. Also, when a position is modified for an account, the `quoteBalance` changes. Also funding payments and liquidations will change an account's `quoteBalance`.
+- `S` and `P` are as defined above (note that `S` may be negative)
 
 An account cannot open new positions or increase the size of existing positions if it would lead the total account value of the account to drop below the total initial margin requirement. If the total account value ever falls below the total maintenance margin requirement, the account may be liquidated.
 
 Free collateral is calculated as:
 
 <pre class="center-column">
-Free collateral = Total Account Value - Total Initial Margin Requirement
+  Free collateral = Total Account Value - Total Initial Margin Requirement
 </pre>
 
 Equity and free collateral can be tracked over time using the latest oracle price (obtained from the markets websocket).

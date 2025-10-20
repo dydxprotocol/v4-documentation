@@ -1,3 +1,5 @@
+import Details from '../../../components/Details';
+
 ### Cancel Order
 
 Terminate an existing order using the provided order ID and related parameters, such as block validity periods and transaction options.
@@ -43,9 +45,9 @@ pub async fn cancel_order(
 
 :::
 
-:::details[Unification Plan]
+<Details title="Unification plan">
 - Check the `marketId` is really needed (used in `TypeScript`)
-:::
+</Details>
 
 #### Parameters
 

@@ -283,7 +283,6 @@ impl OrderBook {
 Given the decentralized nature of dYdX, sometimes, some of the bids will be higher than some of the asks.
 
 :::info
-:::details[Crossed orderbook]
 There is no guarantee that prices do not cross (a bid higher than a ask) because there is no centralized orderbook. For that reason, the software does not include a global offset. The _correct_ orderbook at any given time is whatever the current block proposer has in its mempool, which is not what the indexer or the front end can directly see. The block proposer changes every block, so there is a new canonical mempool, and therefore, a new canonical orderbook every block. Due to the particulars of message propagation, that means there will be slight differences in the canonical orderbook every block. The prices will uncross eventually.
 :::
 

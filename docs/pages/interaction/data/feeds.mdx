@@ -1,3 +1,5 @@
+import Details from '../../../components/Details';
+
 # WebSockets
 
 The Indexer can provide realtime data through its WebSockets endpoint.
@@ -51,7 +53,7 @@ let mut indexer = IndexerClient::new(config.indexer);
 Upon a successful connection you will receive an initial connection message.
 This message maybe abstracted away, depending on the client.
 
-:::details[Connection response]
+<Details title="Connection response">
 ```tsx
 {
   "type": "connected",
@@ -59,7 +61,7 @@ This message maybe abstracted away, depending on the client.
   "message_id": 0
 }
 ```
-:::
+</Details>
 
 ## Subscribe
 
@@ -112,7 +114,7 @@ Here, the update messages contain the finalized trades (matched orders) for the 
 
 For each received message, the `handler()` function will be called on it. Modify it to implement your desired logic.
 
-:::details[Handling in Rust]
+<Details title="Handling in Rust">
 In Rust, callbacks are not used. Intead, the handle returned on subscription must be polled.
 
 ```rust [Rust]
@@ -121,7 +123,7 @@ while let Some(msg) = trades_feed.recv().await {
     println!("New trades update: {msg:?}");
 }
 ```
-:::
+</Details>
 
 ## Unsubscribe
 
