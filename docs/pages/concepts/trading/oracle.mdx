@@ -1,20 +1,16 @@
 # Oracle Prices
 
-As part of the default settings of the v4 open source software (”dYdX Chain”), oracle prices are aggregated prices that provide up-to-date price data for different assets. The oracle price for each trading pair is used for the following:
+Oracle prices are aggregated prices that provide up-to-date price data for different assets. The oracle price for each trading pair is used for the following:
 - Ensuring that each account is well-collateralized after each trade
 - Determining when an account should be liquidated
 - Triggering "triggerable" order types such as Stop-Limit and Take-Profit orders
 
 ## How are oracle prices determined on dYdX Chain?
 
-As part of the default settings on dYdX Chain, oracle prices will be determined by the current validator set of the network. In addition to verifying transactions and validating data, validators are also responsible for determining and verifying the oracle price. Once the oracle price is agreed upon during consensus, the oracle price is used to trigger “triggerable” order types such as Stop-Limit and Take-Profit orders.
- 
-## How do validators agree on oracle price?
+Oracle prices are determined by the current validator set of the network. 
+1. each validator runs a sidecar that pulls prices from oracle providers external exchange prices, such as Binance, Bitfinex, Bitstamp, Bybit, Coinbase, crypto.com, GateIO, ...  the entire list is shown [here](https://github.com/skip-mev/connect-mmu/blob/main/local/config-dydx-mainnet.json)
+2. each validator submits their view of oracle prices through vote extensions (some caveats here where there's a max number of markets that can be updated per block, minimum threshold on price changes, etc.)
+3. proposer proposes prices by aggregating these vote extensions
+4. network accepts a block
+5. oracle prices update
 
-As part of the default settings on dYdX Chain, every validator would run a continuous process to calculate the fair market price for relevant assets. The block proposer suggests any needed price changes within the proposed blocks. Other validators then apply certain rules to agree on the prices in a manner that prevents misuse. If the block is accepted, the prices also get approved.
- 
-By following a new price-acceptance criteria, this logic helps validators make sure that the new suggested price is reasonable and not too far from both the previous referenced price. It ensures that sudden and extreme changes in the price are controlled and reasonable.
- 
-## What happens if there is a sudden change in the Oracle price?
-
-To prevent extreme fluctuations, validators apply rules to ensure that any suggested price changes are reasonable and not drastically different from previous prices. This helps maintain stability in the market.
