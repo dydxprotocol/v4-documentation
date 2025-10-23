@@ -8,7 +8,7 @@ Oracle prices are aggregated prices that provide up-to-date price data for diffe
 ## How are oracle prices determined on dYdX Chain?
 
 Oracle prices are determined by the current validator set of the network. 
-1. each validator runs a sidecar that pulls prices from oracle providers external exchange prices, such as Binance, Bitfinex, Bitstamp, Bybit, Coinbase, crypto.com, GateIO, ...  the entire list is shown [here](https://github.com/skip-mev/connect-mmu/blob/main/local/config-dydx-mainnet.json)
+1. each validator runs a sidecar that pulls prices from oracle providers and external exchanges, such as Binance, Bitfinex, Bitstamp, Bybit, Coinbase, crypto.com, GateIO, ...  the entire list is shown [here](https://github.com/skip-mev/connect-mmu/blob/main/local/config-dydx-mainnet.json)
 2. each validator submits their view of oracle prices through vote extensions (some caveats here where there's a max number of markets that can be updated per block, minimum threshold on price changes, etc.)
 3. proposer proposes prices by aggregating these vote extensions
 4. network accepts a block
