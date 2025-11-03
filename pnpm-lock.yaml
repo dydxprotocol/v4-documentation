@@ -30,9 +30,6 @@ importers:
       remark-lint-no-shortcut-reference-link:
         specifier: ^4.0.1
         version: 4.0.1
-      remark-mdx:
-        specifier: ^3.1.1
-        version: 3.1.1
       remark-preset-lint-recommended:
         specifier: ^7.0.1
         version: 7.0.1
