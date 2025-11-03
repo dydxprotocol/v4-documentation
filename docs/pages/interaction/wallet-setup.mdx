@@ -1,14 +1,16 @@
+import Details from '../../components/Details';
+
 # Wallet Setup
 
 To manage your accounts, issue orders, and perform other operations that are required to be signed, a Wallet is required. To instantiate a Wallet, you must first have your associated __mnemonic__.
 
-:::details[Unification Plan]
+<Details title="Unification plan">
 - The Python client requires the use of an address to setup the Wallet. However, the address can only be fetched using a Wallet. The address is derived from the mnemonic (address < public key < private key < mnemonic).
 - Wallet, accounts, subaccounts are all handled differently among the clients. Probably the Rust client handles this best, giving the user more control:
     1. There is a `Wallet`;
     2. The `Wallet` is used to derive an `Account` by index (each `Account` is associated with a keypair);
     3. An `Account` is used to derive a `Subaccount` by index. A `Subaccount` is employed to create orders.  
-:::
+</Details>
 
 ::::steps
 

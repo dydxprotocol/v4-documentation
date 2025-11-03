@@ -1,3 +1,5 @@
+import Details from '../../../components/Details';
+
 ### Get Subaccount
 
 Fetches details of a specific subaccount based on its owner's address and the subaccount's unique number.
@@ -34,10 +36,11 @@ pub async fn get_subaccount(
 
 :::
 
-:::details[Unification Plan]
+<Details title="Unification Plan">
 
 - Rust uses `Subaccount` - a wrapper that combines `Address` with `SubaccountNumber`, it's safer to create the same type for Python and TypeScript
-  :::
+
+</Details>
 
 #### Parameters
 

@@ -14,6 +14,10 @@ async def get_market_mapper_revenue_share_details(self, market_id: int) -> Query
 ```
 
 ```rust [Rust]
+pub async fn get_market_mapper_rev_share_details(
+    &mut self,
+    market_id: u32,
+) -> Result<MarketMapperRevShareDetails, Error>
 ```
 
 ```url [API]

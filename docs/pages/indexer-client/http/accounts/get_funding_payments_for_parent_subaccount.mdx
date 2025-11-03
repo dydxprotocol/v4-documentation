@@ -1,4 +1,5 @@
 import { Button } from 'vocs/components'
+import Details from '../../../../components/Details';
 
 ### Get Funding Payments for Parent Subaccount
 
@@ -49,12 +50,12 @@ curl -X GET "https://indexer.v4testnet.dydx.exchange/v4/fundingPayments/parentSu
 
 :::
 
-:::details[Unification Plan]
+<Details title="Unification Plan">
 - Rename all methods to `get_funding_payments_for_parent_subaccount` - shorter is better.
 - Add a `ParentSubaccount` pair to Python and JavaScript, since it's always a pair
 - `page` optional parameter is missing in Python
 - `page` optional parameter is missing in Rust
-:::
+</Details>
 
 #### Parameters
 
@@ -81,4 +82,4 @@ A promise that resolves to funding payment data containing details such as payme
 [OK]: /types/ok
 [u32]: /types/u32
 [DateTime]: /types/date_time
-[FundingPaymentsResponseObject]: /types/funding_payments_response_object 
+[FundingPaymentsResponseObject]: /types/funding_payments_response_object

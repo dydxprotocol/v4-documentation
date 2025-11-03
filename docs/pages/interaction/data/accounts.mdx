@@ -1,3 +1,5 @@
+import Details from '../../../components/Details';
+
 # Accounts
 
 All of your trading activity is associated with your account which corresponds to an address.
@@ -72,7 +74,8 @@ println!("Open positions: {:?}", subaccount_resp.open_perpetual_positions);
 
 ::::note
 dYdX is built on the Cosmos SDK and therefore has related methods available. To see the balances of your assets/tokens please see the methods below.
-::::details[Cosmos Bank Balances]
+
+<Details title="Cosmos Bank Balances">
 
 Get the account balance of all assets types (currently USDC and dYdX tokens).
 
@@ -93,6 +96,8 @@ let balance = client
 ```
 
 :::
+
+</Details>
 
 The balance of a specific asset can also be fetched instead.
 
