@@ -35,6 +35,8 @@ Note that traders now earn 50% trading rebates directly after each trade as trad
 See more on [Trading Rewards](/concepts/trading/rewards/trading-rewards).
 
 ## Fees
+
+### Fee tiers
 :::note
 The fee schedule is subject to adjustments by the applicable Governance Community.
 Refer to forum [here](https://dydx.forum/) for the latest updates on reward schedule changes per season and the dydx [rewards leaderboard](https://dydx.trade/DYDX) for estimated rewards.
@@ -58,6 +60,24 @@ Refer to the dydx frontend [fees page](https://dydx.trade/portfolio/fees) for th
 | 6    | ≥ $100M                 | 2.5             | -0.7           | 
 | 7   | ≥ $200M                  | 2.5             | -1.1           | 
 
+
+### Staking tier
+- Fee discounts are based on fee tier and the amount of staked DYDX
+- Discounts apply only to net positive trading fees
+- Only staked tokens (status: bonded) count towards a given trader's staking fee discount. Unstaked DYDX in the unbonding period does not qualify.
+- Staking discounts do not apply to maker rebates (negative fees) 
+- The dYdX community [voted](https://www.mintscan.io/dydx/proposals/310) to set the staking fee discounts below. Staking fee discounts can be changed at any time with a dYdX governance proposal. When staking thresholds are not defined by the dYdX community for a particular tier, the staking discount defaults to 0%
+
+| Tier  | Discount 1  | | Discount 2 | |
+|-------|--------------|---------|--------|-----|
+|       | Number of dYdX | Discount | Number of dYdX | Discount |
+| 1     | 3,000                 | 25%         |  20,000  | 50%           | 
+| 2    | 20,000                  | 20%        | 80,000   | 45%           | 
+| 3   | 80,000                    | 20%       | 200,000    | 40%            |
+| 4    | 200,000                  | 15%       | 800,000    | 30%              |
+| 5-7     | 800,000                 | 5%       | 5,000,000    | 10%              |
+
+Refer to the dydx frontend [fees page](https://dydx.trade/portfolio/fees) for the latest schedule
 
 
 ## Parameters
