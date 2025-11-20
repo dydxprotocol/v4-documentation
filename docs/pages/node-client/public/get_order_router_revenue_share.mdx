@@ -14,6 +14,10 @@ async def get_order_router_revenue_share(self, address: str) -> QueryOrderRouter
 ```
 
 ```rust [Rust]
+pub async fn get_order_router_rev_share(
+    &mut self,
+    address: Address,
+) -> Result<OrderRouterRevShare, Error>
 ```
 
 ```url [API]

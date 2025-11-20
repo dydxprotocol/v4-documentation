@@ -1,25 +1,29 @@
-# Integration Guide 
-This guide outlines the development of a perpetual trading front-end application using the dYdX v4 application chain APIs. 
-It covers backend data interpretation and rendering for end users, as well as trade execution. 
-While maintaining a high-level perspective, it addresses specific details as needed. 
+# Integration Guide
+
+This guide outlines the development of a perpetual trading front-end application using the dYdX v4 application chain APIs.
+It covers backend data interpretation and rendering for end users, as well as trade execution.
+While maintaining a high-level perspective, it addresses specific details as needed.
 For in-depth implementation details, refer to the dYdX source repository, where dYdX Trading Inc. maintains the trading application's source code for web, iOS, and Android platforms.
 
-
 ## Overview of dYdX Repositories
+
 The following repos contain the source code for the dYdX client applications. They can serve as a good reference if you are wondering about the implementation details:
 
 ## Main applications
 
 ::::steps
 
-### [v4-web](https://github.com/dydxprotocol/v4-web). 
-The web application.  This is the React application that powers the https://dydx.trade site. It references the v4-client-js repo for read/write data from the validator.
+### [v4-web](https://github.com/dydxprotocol/v4-web).
 
-### [v4-native-ios](https://github.com/dydxprotocol/v4-native-ios).  
-The iOS application written in Swift  It’s powered by the abacus library for its core trading logic.  It also uses the v4-client-js for read/write data from the validator, and the cartera-ios library to interact with mobile wallet apps.
+The web application. This is the React application that powers the https://dydx.trade site. It references the v4-client-js repo for read/write data from the validator.
 
-### [v4-native-android](https://github.com/dydxprotocol/v4-native-android).  
-The Android application written in Kotlin. Same with the iOS app, it uses abacus at its core, and use the v4-client-js for read/write data from the validator.  Cartera-android is used to interact with mobile wallet apps.
+### [v4-native-ios](https://github.com/dydxprotocol/v4-native-ios).
+
+The iOS application written in Swift It’s powered by the abacus library for its core trading logic. It also uses the v4-client-js for read/write data from the validator, and the cartera-ios library to interact with mobile wallet apps.
+
+### [v4-native-android](https://github.com/dydxprotocol/v4-native-android).
+
+The Android application written in Kotlin. Same with the iOS app, it uses abacus at its core, and use the v4-client-js for read/write data from the validator. Cartera-android is used to interact with mobile wallet apps.
 
 ::::
 
@@ -27,13 +31,16 @@ The Android application written in Kotlin. Same with the iOS app, it uses abacus
 
 ::::steps
 
-### [v4-client-js](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-js). 
- Typescript library that wraps the common functions to query and write to the validator/blockchain.  It takes a user’s mnemonic and then can send transactions to the validator on the user's behalf.  It’s responsible for all data directly flowing in between the client applications and the validator.
+### [v4-client-js](https://github.com/dydxprotocol/v4-clients/tree/main/v4-client-js).
 
-### [abacus](https://github.com/dydxprotocol/v4-abacus). 
- Kotlin library that powers the core trading logic of the iOS and Android applications.  The library pulls the data from the indexer and executes transactions by calling v4-client-js. 
+Typescript library that wraps the common functions to query and write to the validator/blockchain. It takes a user’s mnemonic and then can send transactions to the validator on the user's behalf. It’s responsible for all data directly flowing in between the client applications and the validator.
 
-###  [v4-localization](https://github.com/dydxprotocol/v4-localization). 
-Contains localization data used by all client applications.  There is no application logic. 
+### [abacus](https://github.com/dydxprotocol/v4-abacus).
+
+Kotlin library that powers the core trading logic of the iOS and Android applications. The library pulls the data from the indexer and executes transactions by calling v4-client-js.
+
+### [v4-localization](https://github.com/dydxprotocol/v4-localization).
+
+Contains localization data used by all client applications. There is no application logic.
 
 ::::

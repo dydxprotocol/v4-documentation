@@ -1,3 +1,5 @@
+import Details from '../../../components/Details';
+
 ### Simulate
 
 Pre-execution simulation of a transaction, predicting its execution cost and resource usage without committing any changes.
@@ -32,10 +34,9 @@ pub async fn simulate(&mut self, tx_raw: &Raw) -> Result<GasInfo, NodeError>
 
 :::
 
-:::details[Unification Plan]
-
+<Details title="Unification Plan">
 - Some extra parameters in TypeScript? What to do with them?
-  :::
+</Details>
 
 #### Parameters
 

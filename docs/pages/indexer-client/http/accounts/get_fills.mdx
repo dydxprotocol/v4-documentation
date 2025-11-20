@@ -1,4 +1,5 @@
 import { Button } from 'vocs/components'
+import Details from '../../../../components/Details';
 
 ### Get Fills
 
@@ -49,7 +50,7 @@ pub async fn get_subaccount_fills(
 
 :::
 
-:::details[Unification Plan]
+<Details title="Unification Plan">
 - Rename all methods to `get_fills` - shorter is better.
 - Add a `Subaccount` pair to Python and JavaScript, since it's always a pair
 - Rename `created_before_or_at_time` parameter to `created_before_or_at`
@@ -57,7 +58,7 @@ pub async fn get_subaccount_fills(
 - `page` optional parameter is missing in Rust
 - In Rust `market` field of the options struct must be `ticker`
 - In Rust `market_type` field of the options struct must be `ticker_type`
-:::
+</Details>
 
 #### Parameters
 

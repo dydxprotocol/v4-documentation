@@ -36,9 +36,6 @@ v4_subaccounts
 
 :::
 
-:::details[Unification Plan]
-:::
-
 #### Schema
 
 The field `id` is a string containing the subaccount ID (address and subaccount number). It is formattted as `{address}/{subaccount-number}`.
@@ -50,9 +47,6 @@ The field `contents` is serialized using the following schemas.
 | Initial | Update     | 
 | ------ | ----------- | 
 | [`SubaccountsInitialMessage`] | [`SubaccountsUpdateMessage`] <BatchedArray/> |
-
-[address]: /types/address
-[subaccount-number]: /types/subaccount_number
 
 [`SubaccountsInitialMessage`]: /types/subaccounts_initial_message
 [`SubaccountsUpdateMessage`]: /types/subaccounts_update_message
