@@ -15,29 +15,53 @@ Builder fees and addresses can be queried via the indexer using the `/orders` an
     - `partner address` - where fees will be routed
     - `fee (in ppm)` that will be charged on order matching
 
-```go
-message Order {
-  // The unique ID of this order. Meant to be unique across all orders.
-  OrderId order_id = 1 [ (gogoproto.nullable) = false ];
-	
-	...
-	
-	// builder_code is the metadata for the partner or builder of an order.
-  BuilderCodeParameters builder_code_params = 12;
+:::code-group
+
+```typescript [TypeScript]
+// BuilderCodeParameters interface
+export interface IBuilderCodeParameters {
+  builderAddress: string; // Address to receive the fee
+  feePpm: number; // Fee in parts per million
 }
 
-// BuilderCodeParameters represents the metadata for the 
-// partner or builder of an order. This allows them to 
-// specify a fee for providing there service
-// which will be paid out in the event of an order fill.
-message BuilderCodeParameters {
-  // The address of the builder to which the fee will be paid.
-  string builder_address = 1;
+// Example: Place an order with builder code parameters
+const order: IPlaceOrder = {
+  clientId: 2,
+  clobPairId: 1,
+  side: Order_Side.SIDE_BUY,
+  quantums: Long.fromNumber(1000000),
+  subticks: Long.fromNumber(50000),
+  timeInForce: Order_TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
+  reduceOnly: false,
+  orderFlags: OrderFlags.SHORT_TERM,
+  goodTilBlock: currentBlockHeight + 20,
+  builderCodeParameters: {
+    builderAddress: 'dydx1example_builder_address',
+    feePpm: 1000, // 0.1% fee (1000 parts per million)
+  }
+};
 
-  // The fee enforced on the order in ppm.
-  uint32 fee_ppm = 2;
-}
+await client.validatorClient.post.placeOrder(
+  subaccount,
+  order.clientId,
+  order.clobPairId,
+  order.side,
+  order.quantums,
+  order.subticks,
+  order.timeInForce,
+  order.orderFlags,
+  order.reduceOnly,
+  order.goodTilBlock,
+  undefined,
+  0,
+  undefined,
+  undefined,
+  order.builderCodeParameters,
+  undefined
+);
 ```
+
+:::
 
 :::note
 `BuilderCodeParameters` is an optional field

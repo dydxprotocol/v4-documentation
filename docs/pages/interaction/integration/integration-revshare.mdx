@@ -17,21 +17,34 @@ To participate in the Order Router Rev Share program, users need to propose and 
 
 ## Voting in via Governance
 
-To participate in the Order Router Rev Share program, you need to create and submit a governance proposal. Below is an example of what the governance message structure looks like:
-```json
-message Order {
-"messages": [
-	{
-		"@type": "/dydxprotocol.revshare.MsgSetOrderRouterRevShare",
-		"authority": authority,
-		"order_router_rev_share": {
-			"address": {{your address}},
-			"share_ppm": {{your requested ppm}},
-		}
-	}
-]
-}
+To participate in the Order Router Rev Share program, you need to create and submit a governance proposal. Below are examples of the governance message structure:
+
+:::code-group
+
+```python [Python]
+# Example: Set order router revenue share via governance
+from dydx_v4_client.node.client import NodeClient
+
+# This method creates the governance message
+# Note: This requires governance authority to execute
+async def set_order_router_revenue_share_example():
+    node = await NodeClient.connect(network.node)
+    
+    # Set order router revenue share
+    # authority: Governance authority address
+    # address: Order router address that will receive revenue share
+    # share_ppm: Revenue share in parts per million
+    response = await node.set_order_router_revenue_share(
+        authority="dydx1...",  # Governance authority
+        address="dydx1your_router_address",  # Your order router address
+        share_ppm=5000  # 0.5% revenue share (5000 parts per million)
+    )
+    
+    print(response)
 ```
+
+:::
+
 The key components of this message are:
 
 - `address` - The address of the order router that will receive the revenue share. This is also the id you place in your order message
@@ -45,18 +58,25 @@ The process for updating an existing order router's revenue share is the same as
 
 To update the revenue share percentage for an existing order router, create a governance message with the same structure:
 
-```json
-"messages": [
-	{
-		"@type": "/dydxprotocol.revshare.MsgSetOrderRouterRevShare",
-		"authority": authority,
-		"order_router_rev_share": {
-			"address": {{your existing address}},
-			"share_ppm": {{your new requested ppm}},
-		}
-	}
-]
+:::code-group
+
+```python [Python]
+# Update existing order router revenue share
+async def update_order_router_revenue_share_example():
+    node = await NodeClient.connect(network.node)
+    
+    # Update with new revenue share percentage
+    # Note: address must match the previously approved order router address
+    response = await node.set_order_router_revenue_share(
+        authority="dydx1...",  # Governance authority
+        address="dydx1your_existing_router_address",  # Existing approved address
+        share_ppm=7500  # New revenue share: 0.75% (7500 parts per million)
+    )
+    
+    print(response)
 ```
+
+:::
 
 The proposal must go through the standard governance voting process and receive a passing vote before the updated revenue share percentage takes effect.
 
@@ -71,18 +91,26 @@ The proposal must go through the standard governance voting process and receive 
 To delete an order router's revenue share configuration, you simply need to set the revenue share percentage to 0. This process follows the same governance workflow as setting up or updating a revenue share.
 
 Submit a governance proposal with the following message structure:
-```json
-"messages": [
-	{
-		"@type": "/dydxprotocol.revshare.MsgSetOrderRouterRevShare",
-		"authority": authority,
-		"order_router_rev_share": {
-			"address": {{your existing address}},
-			"share_ppm": 0,
-		}
-	}
-]
+
+:::code-group
+
+```python [Python]
+# Delete order router revenue share by setting share_ppm to 0
+async def delete_order_router_revenue_share_example():
+    node = await NodeClient.connect(network.node)
+    
+    # Set share_ppm to 0 to disable revenue share
+    # Note: address must match the previously approved order router address
+    response = await node.set_order_router_revenue_share(
+        authority="dydx1...",  # Governance authority
+        address="dydx1your_existing_router_address",  # Existing approved address
+        share_ppm=0  # Setting to 0 disables revenue share
+    )
+    
+    print(response)
 ```
+
+:::
 
 :::note
 Key points to note:
@@ -100,15 +128,35 @@ The `order_router_address` field is set when an order is placed
 
 - `order_router_address` - the ID of the order router and where fees will be sent to
 
-```go
-message Order {
-  // The unique ID of this order. Meant to be unique across all orders.
-  OrderId order_id = 1 [ (gogoproto.nullable) = false ];
-  ...
-  // order_router_address is the metadata for the frontend order router.
-  string order_router_address = 13;
-}
+:::code-group
+
+```python [Python]
+# Place an order with order router address for revenue share
+from dydx_v4_client.node.market import Market
+from v4_proto.dydxprotocol.clob.order_pb2 import Order
+
+market = Market(market_data)
+current_block = await node.latest_block_height()
+
+new_order = market.order(
+    order_id=order_id,
+    order_type=OrderType.MARKET,
+    side=Order.Side.SIDE_SELL,
+    size=0.0001,
+    price=0,  # Market order
+    time_in_force=Order.TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
+    reduce_only=False,
+    good_til_block=current_block + 10,
+    order_router_address='dydx1your_router_address',  # Order router address (must be voted in via governance)
+)
+
+transaction = await node.place_order(
+    wallet=wallet,
+    order=new_order,
+)
 ```
+
+:::
 
 ## Order Validation Checks
 
