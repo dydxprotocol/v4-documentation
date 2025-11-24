@@ -19,8 +19,6 @@ To participate in the Order Router Rev Share program, users need to propose and 
 
 To participate in the Order Router Rev Share program, you need to create and submit a governance proposal. Below are examples of the governance message structure:
 
-:::code-group
-
 ```python [Python]
 # Example: Set order router revenue share via governance
 from dydx_v4_client.node.client import NodeClient
@@ -43,8 +41,6 @@ async def set_order_router_revenue_share_example():
     print(response)
 ```
 
-:::
-
 The key components of this message are:
 
 - `address` - The address of the order router that will receive the revenue share. This is also the id you place in your order message
@@ -57,8 +53,6 @@ After submitting the proposal, it must go through the standard governance voting
 The process for updating an existing order router's revenue share is the same as setting up a new one. You will need to submit a governance proposal with the updated parameters.
 
 To update the revenue share percentage for an existing order router, create a governance message with the same structure:
-
-:::code-group
 
 ```python [Python]
 # Update existing order router revenue share
@@ -76,8 +70,6 @@ async def update_order_router_revenue_share_example():
     print(response)
 ```
 
-:::
-
 The proposal must go through the standard governance voting process and receive a passing vote before the updated revenue share percentage takes effect.
 
 :::note
@@ -91,8 +83,6 @@ The proposal must go through the standard governance voting process and receive 
 To delete an order router's revenue share configuration, you simply need to set the revenue share percentage to 0. This process follows the same governance workflow as setting up or updating a revenue share.
 
 Submit a governance proposal with the following message structure:
-
-:::code-group
 
 ```python [Python]
 # Delete order router revenue share by setting share_ppm to 0
@@ -110,8 +100,6 @@ async def delete_order_router_revenue_share_example():
     print(response)
 ```
 
-:::
-
 :::note
 Key points to note:
 
@@ -127,8 +115,6 @@ After the proposal passes, any orders that include this order router address wil
 The `order_router_address` field is set when an order is placed
 
 - `order_router_address` - the ID of the order router and where fees will be sent to
-
-:::code-group
 
 ```python [Python]
 # Place an order with order router address for revenue share
@@ -155,8 +141,6 @@ transaction = await node.place_order(
     order=new_order,
 )
 ```
-
-:::
 
 ## Order Validation Checks
 

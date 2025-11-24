@@ -15,8 +15,6 @@ Builder fees and addresses can be queried via the indexer using the `/orders` an
     - `partner address` - where fees will be routed
     - `fee (in ppm)` that will be charged on order matching
 
-:::code-group
-
 ```typescript [TypeScript]
 // BuilderCodeParameters interface
 export interface IBuilderCodeParameters {
@@ -60,8 +58,6 @@ await client.validatorClient.post.placeOrder(
   undefined
 );
 ```
-
-:::
 
 :::note
 `BuilderCodeParameters` is an optional field
