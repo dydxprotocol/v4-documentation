@@ -3,68 +3,83 @@
 Builder codes enables external parties to submit orders to dYdX and collect fees (per-order) for building and routing an order to the exchange.
 The address and fee, in parts per million, needs to be configured via the `BuilderCodeParameters` in the order message itself. The fee will be paid out when the given order is filled.
 
+**Important:** Builder code fees are added **on top of each fill**, as opposed to revenue share where the fee revenue is split. No governance proposal is required to use builder codes.
+
 Builder fees and addresses can be queried via the indexer using the `/orders` and `/fills` endpoints as usual. `/orders` contains details on the fee rate and builder address. `/fills` also contains the builder address as well as details on the amount charged per-fill.
 
 
-## Changes To The Order Message
+# Placing orders and verifying Order Router Address in Fills
 
 ::::steps
 
 ## BuilderCodeParameters
 `BuilderCodeParameters` is an addition to the order message which will specify:
-    - `partner address` - where fees will be routed
-    - `fee (in ppm)` that will be charged on order matching
+    - `builderAddress` - where fees will be routed
+    - `feePpm (in ppm)` that will be charged on order matching
 
-```typescript [TypeScript]
-// BuilderCodeParameters interface
-export interface IBuilderCodeParameters {
-  builderAddress: string; // Address to receive the fee
-  feePpm: number; // Fee in parts per million
-}
+```python [Python]
+import asyncio
+import random
 
-// Example: Place an order with builder code parameters
-const order: IPlaceOrder = {
-  clientId: 2,
-  clobPairId: 1,
-  side: Order_Side.SIDE_BUY,
-  quantums: Long.fromNumber(1000000),
-  subticks: Long.fromNumber(50000),
-  timeInForce: Order_TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
-  reduceOnly: false,
-  orderFlags: OrderFlags.SHORT_TERM,
-  goodTilBlock: currentBlockHeight + 20,
-  builderCodeParameters: {
-    builderAddress: 'dydx1example_builder_address',
-    feePpm: 1000, // 0.1% fee (1000 parts per million)
-  }
-};
+from dydx_v4_client import MAX_CLIENT_ID, OrderFlags
+from v4_proto.dydxprotocol.clob.order_pb2 import Order
 
-await client.validatorClient.post.placeOrder(
-  subaccount,
-  order.clientId,
-  order.clobPairId,
-  order.side,
-  order.quantums,
-  order.subticks,
-  order.timeInForce,
-  order.orderFlags,
-  order.reduceOnly,
-  order.goodTilBlock,
-  undefined,
-  0,
-  undefined,
-  undefined,
-  order.builderCodeParameters,
-  undefined
-);
+from dydx_v4_client.indexer.rest.constants import OrderType
+from dydx_v4_client.indexer.rest.indexer_client import IndexerClient
+from dydx_v4_client.network import TESTNET
+from dydx_v4_client.node.client import NodeClient
+from dydx_v4_client.node.market import Market
+from dydx_v4_client.wallet import Wallet
+from tests.conftest import DYDX_TEST_MNEMONIC, TEST_ADDRESS
+
+MARKET_ID = "ETH-USD"
+
+node = await NodeClient.connect(TESTNET.node)
+indexer = IndexerClient(TESTNET.rest_indexer)
+
+market = Market(
+    (await indexer.markets.get_perpetual_markets(MARKET_ID))["markets"][MARKET_ID]
+)
+wallet = await Wallet.from_mnemonic(node, DYDX_TEST_MNEMONIC, TEST_ADDRESS)
+
+order_id = market.order_id(
+    TEST_ADDRESS, 0, random.randint(0, MAX_CLIENT_ID), OrderFlags.SHORT_TERM
+)
+
+current_block = await node.latest_block_height()
+
+new_order = market.order(
+    order_id=order_id,
+    order_type=OrderType.MARKET,
+    side=Order.Side.SIDE_SELL,
+    size=size,
+    price=0,  # Recommend set to oracle price - 5% or lower for SELL, oracle price + 5% for BUY
+    time_in_force=Order.TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
+    reduce_only=False,
+    good_til_block=current_block + 10,
+    builder_address=TEST_ADDRESS,
+    fee_ppm=500,
+)
+
+transaction = await node.place_order(
+    wallet=wallet,
+    order=new_order,
+)
+
+print(transaction)
+wallet.sequence += 1
+
+await asyncio.sleep(5)
+
+fills = await indexer.account.get_subaccount_fills(
+    address=TEST_ADDRESS, subaccount_number=0, ticker=MARKET_ID, limit=1
+)
+print(f"Fills: {fills}")
+assert fills["fills"][0]["builderAddress"] == TEST_ADDRESS
 ```
-
-:::note
-`BuilderCodeParameters` is an optional field
-:::
 
 ## Order Validation Checks
     - Ensure the `builder address` is valid
-    - Ensure the `feePPM` is in the range `(0, 10,000]`
+    - Ensure the `feePpm` is in the range `(0, 10,000]`
 
 ::::

@@ -17,111 +17,55 @@ To participate in the Order Router Rev Share program, users need to propose and 
 
 ## Voting in via Governance
 
-To participate in the Order Router Rev Share program, you need to create and submit a governance proposal. Below are examples of the governance message structure:
+To participate in the Order Router Rev Share program, you need to create and submit a governance proposal. Since governance proposals require adding gas, deposit, and other parameters, it's recommended to create the proposal using a JSON file and submit it via CLI command.
 
-```python [Python]
-# Example: Set order router revenue share via governance
-from dydx_v4_client.node.client import NodeClient
+For an example of the governance proposal JSON structure, see [proposal 311 on Mintscan](https://www.mintscan.io/dydx/proposals/311).
 
-# This method creates the governance message
-# Note: This requires governance authority to execute
-async def set_order_router_revenue_share_example():
-    node = await NodeClient.connect(network.node)
-    
-    # Set order router revenue share
-    # authority: Governance authority address
-    # address: Order router address that will receive revenue share
-    # share_ppm: Revenue share in parts per million
-    response = await node.set_order_router_revenue_share(
-        authority="dydx1...",  # Governance authority
-        address="dydx1your_router_address",  # Your order router address
-        share_ppm=5000  # 0.5% revenue share (5000 parts per million)
-    )
-    
-    print(response)
-```
-
-The key components of this message are:
+The key components of the proposal message are:
 
 - `address` - The address of the order router that will receive the revenue share. This is also the id you place in your order message
-- `sharePpm` - The revenue share percentage in parts per million (ppm).
+- `share_ppm` - The revenue share percentage in parts per million (ppm)
 
 After submitting the proposal, it must go through the standard governance voting process and receive a passing vote before the order router address and revenue share percentage are activated in the system.
 
-## Updating Revenue Share (Optional)
+## Placing orders with order rev share address and verifying Order Router Address in Fills
 
-The process for updating an existing order router's revenue share is the same as setting up a new one. You will need to submit a governance proposal with the updated parameters.
-
-To update the revenue share percentage for an existing order router, create a governance message with the same structure:
-
-```python [Python]
-# Update existing order router revenue share
-async def update_order_router_revenue_share_example():
-    node = await NodeClient.connect(network.node)
-    
-    # Update with new revenue share percentage
-    # Note: address must match the previously approved order router address
-    response = await node.set_order_router_revenue_share(
-        authority="dydx1...",  # Governance authority
-        address="dydx1your_existing_router_address",  # Existing approved address
-        share_ppm=7500  # New revenue share: 0.75% (7500 parts per million)
-    )
-    
-    print(response)
-```
-
-The proposal must go through the standard governance voting process and receive a passing vote before the updated revenue share percentage takes effect.
-
-:::note
-
-- You must use the exact same address that was previously approved
-- The update will completely replace the previous configuration once approved
-:::
-
-## Deleting an Order Router Rev Share (Optional)
-
-To delete an order router's revenue share configuration, you simply need to set the revenue share percentage to 0. This process follows the same governance workflow as setting up or updating a revenue share.
-
-Submit a governance proposal with the following message structure:
-
-```python [Python]
-# Delete order router revenue share by setting share_ppm to 0
-async def delete_order_router_revenue_share_example():
-    node = await NodeClient.connect(network.node)
-    
-    # Set share_ppm to 0 to disable revenue share
-    # Note: address must match the previously approved order router address
-    response = await node.set_order_router_revenue_share(
-        authority="dydx1...",  # Governance authority
-        address="dydx1your_existing_router_address",  # Existing approved address
-        share_ppm=0  # Setting to 0 disables revenue share
-    )
-    
-    print(response)
-```
-
-:::note
-Key points to note:
-
-- Setting `sharePpm` to 0 effectively disables the revenue share for that order router
-- The address must match the previously approved order router address
-- The proposal must still pass through the standard governance voting process
-- Once approved, the order router will no longer receive any revenue share
-
-After the proposal passes, any orders that include this order router address will no longer generate revenue share for the router.
-:::
-
-## Changes to the Order Message
 The `order_router_address` field is set when an order is placed
 
 - `order_router_address` - the ID of the order router and where fees will be sent to
 
 ```python [Python]
-# Place an order with order router address for revenue share
+import asyncio
+import random
+import time
+
+from dydx_v4_client import MAX_CLIENT_ID, OrderFlags
+from dydx_v4_client.indexer.rest.constants import OrderType
+from dydx_v4_client.indexer.rest.indexer_client import IndexerClient
+from dydx_v4_client.key_pair import KeyPair
+from dydx_v4_client.network import TESTNET
+from dydx_v4_client.node.client import NodeClient
 from dydx_v4_client.node.market import Market
+from dydx_v4_client.node.message import order_id
+from dydx_v4_client.wallet import Wallet
+from tests.conftest import TEST_ADDRESS_2, TEST_ADDRESS, DYDX_TEST_MNEMONIC
 from v4_proto.dydxprotocol.clob.order_pb2 import Order
 
-market = Market(market_data)
+
+node = await NodeClient.connect(TESTNET.node)
+indexer = IndexerClient(TESTNET.rest_indexer)
+MARKET_ID = "ETH-USD"
+market = Market(
+    (await indexer.markets.get_perpetual_markets(MARKET_ID))["markets"][
+        MARKET_ID
+    ]
+)
+wallet = await Wallet.from_mnemonic(node, DYDX_TEST_MNEMONIC, TEST_ADDRESS)
+
+order_id = market.order_id(
+    TEST_ADDRESS, 0, random.randint(0, MAX_CLIENT_ID), OrderFlags.SHORT_TERM
+)
+
 current_block = await node.latest_block_height()
 
 new_order = market.order(
@@ -129,21 +73,37 @@ new_order = market.order(
     order_type=OrderType.MARKET,
     side=Order.Side.SIDE_SELL,
     size=0.0001,
-    price=0,  # Market order
+    price=0,  # Recommend set to oracle price - 5% or lower for SELL, oracle price + 5% for BUY
     time_in_force=Order.TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
     reduce_only=False,
     good_til_block=current_block + 10,
-    order_router_address='dydx1your_router_address',  # Order router address (must be voted in via governance)
+    order_router_address=TEST_ADDRESS_2,
 )
 
 transaction = await node.place_order(
     wallet=wallet,
     order=new_order,
 )
+
+print(transaction)
+
+await asyncio.sleep(5)
+
+fills = await indexer.account.get_subaccount_fills(
+    address=TEST_ADDRESS, subaccount_number=0, limit=1
+)
+
+print(f"Fills: {fills}")
+
+response = await node.get_market_mapper_revenue_share_param()
+print(response)
+
+response = await node.get_order_router_revenue_share(TEST_ADDRESS_2)
+print(response)
 ```
 
 ## Order Validation Checks
 
-- Ensure the `order_router_address` field is valid and already voted in via governance
+- Ensure the `order_router_address`(TEST_ADDRESS_2) field is valid and already voted in via governance
 
 ::::
