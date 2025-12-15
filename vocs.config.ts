@@ -30,7 +30,7 @@ export default defineConfig({
                     ],
                 },
                 {
-                    text: 'Preparing to Trade',
+                    text: 'Connecting to dYdX',
                     link: '/interaction/endpoints',
                 },
                 {
@@ -134,7 +134,7 @@ export default defineConfig({
                             link: '/interaction/integration/integration-builder-codes',
                         },
                         {
-                            text: 'Revnue Share',
+                            text: 'Revenue Share',
                             link: '/interaction/integration/integration-revshare',
                         },
                     ]
