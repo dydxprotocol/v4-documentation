@@ -22,14 +22,10 @@ curl https://api.dydx.exchange/v4/geo
 {"geo":{"country":"JP","region":"Tokyo","regionCode":"13","city":"Tokyo","timezone":"Asia/Tokyo","ll":[35.6164,139.7425],"metro":null,"blocked":false}
 ```
 
-The client should call the indexer’s`/v4/compliance/geoblock` endpoint
-(or `/v4/compliance/geoblock-keplr`, if the user’s connected wallet is Keplr) 
-upon app launching and when the user connects to a new wallet.  
-
-This will update the user's compliance status based on the requesting IP.  To authenticate the user, sign a message with the user's private key, and send the signed message as part of the payload. See [sample](https://github.com/dydxprotocol/v4-web/blob/main/src/bonsai/rest/compliance.ts#L158) implementation.
+This will show the user's compliance status based on the requesting IP. 
 
 ### `/v4/screen`
-The client can query the compliant status of the user by calling the indexer’s `/v4/screen` endpoint:
+The client can additionally query the compliant status of the user by calling the indexer’s `/v4/screen` endpoint:
 
 ```bash
 curl https://indexer.v4testnet.dydx.exchange/v4/compliance/screen/dydx14y0wd820uzr5rd6xu85q5475rg5sk03fsuke3m
