@@ -86,9 +86,9 @@ metrics_enabled = "true"
 price_ttl = "10s"
 
 # Interval is the time between each price update request. The recommended interval
-# is the block time of the chain. Otherwise, 1.5 seconds (1500ms) is a good default. If this
+# is the block time of the chain. Otherwise, 0.6 seconds (600ms) is a good default. If this
 # is greater than 1 minute (1m), the app will not start.
-interval = "1500ms"
+interval = "600ms"
 ```
 
 ## Slinky Configs
@@ -99,7 +99,7 @@ Sidecar can be configured by both flags and environment variables.
 
 | Key                                   | Default      | Description                                                                                                                                       |
 |---------------------------------------|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| `CONNECT_CONFIG_HOST`                    | `"0.0.0.0"`    | The address Slinky will serve requests from. WARNING: changing this value requires updating the oracle_address in the app.toml configuration.    |
+| `CONNECT_CONFIG_HOST`                    | `"0.0.0.0"`    | The address Slinky will serve requests from. For single-machine deployments, consider using `127.0.0.1` for enhanced security. WARNING: changing this value requires updating the oracle_address in the app.toml configuration.    |
 | `CONNECT_CONFIG_PORT`                    | `"8080"`       | The port Slinky will serve requests from. WARNING: changing this value requires updating the oracle_address in the app.toml configuration.       |
 | `CONNECT_CONFIG_METRICS_ENABLED`         | `"true"`       | Enables prometheus metrics.                                                                                                                       |
 | `CONNECT_CONFIG_METRICS_PROMETHEUSSERVERADDRESS` | `"0.0.0.0:8002"` | The address of your prometheus server instance.                                                                                                   |
