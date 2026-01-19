@@ -1,5 +1,7 @@
 # TwapParameters
 
+When using TWAP parameters, the `OrderFlags` value must be set to 128 (TWAP) on `OrderId.OrderFlags` in the order placement message.
+
 `duration`: [`u32`]
 - Duration of the TWAP order execution in seconds
 - Must be between 300 (5 minutes) and 86,400 (24 hours)
