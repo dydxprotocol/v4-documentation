@@ -53,7 +53,7 @@ println!("ETH-USD current price: {:?}", market.oracle_price);
 Every order created has an unique identifier, referred to as the __order ID__. It can be calculated locally and is composed of,
 - **Subaccount ID**: The account address plus the integer identifying the subaccount;
 - **Client ID**: A 32-bit integer chosen by the user to identify the order. Two orders can't have the same client ID;
-- **Order flags**: An integer identifying if the order is short-term (`0`), long-term (`64`), or conditional (`32`);
+- **Order flags**: An integer identifying if the order is short-term (`0`), long-term (`64`), conditional (`32`), or TWAP (`128`);
 - **CLOB Pair ID**: The ID of the underlying market/perpetual.
 
 :::info

@@ -43,6 +43,7 @@ Order represents a single order belonging to a `Subaccount` for a particular `Cl
 `twap_parameters`: [TwapParameters] <Opt/>
 - Configuration for a TWAP order
 - Must be set for TWAP orders
+- When `twap_parameters` is supplied, `OrderFlags` must be set to 128 (TWAP) on `OrderId.OrderFlags`
 - Ignored for all other order types
 
 
