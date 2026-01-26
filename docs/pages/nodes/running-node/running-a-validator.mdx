@@ -162,7 +162,7 @@ The output of the command should look similar to this:
 
 ### Connecting a dYdX Validator node to Slinky
 
-In order for the application to get prices from Slinky, we need to add the following lines under the [oracle] heading in the `app.toml`.
+In order for the application to get prices from Slinky, we need to add the following lines under the `[oracle]` heading in the `app.toml`.
 Remember to change the `oracle_address` value to the address of your Slinky instance.
 ```toml (app.toml)
 # ... other sections
@@ -188,7 +188,7 @@ Remote signers can be used with Connect, however only certain versions are compa
 **Horcrux**
 Required Version: `v3.3.0+` [link](https://github.com/strangelove-ventures/horcrux/releases)
 
-**With `Horcrux-Proxy`**   
+**With `Horcrux-Proxy`**
 Required Version: `v1.0.0+` [link](https://github.com/strangelove-ventures/horcrux-proxy/releases)
 
 **TMKMS**
