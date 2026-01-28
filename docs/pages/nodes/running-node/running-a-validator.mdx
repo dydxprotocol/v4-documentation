@@ -8,12 +8,228 @@ For the chain to process bridge transactions from Ethereum, Ethereum testnet, or
 
 As a validator run the flags `--bridge-daemon-enabled=false` in the command you run when starting the node, since the bridge has been disabled
 
-## Connect Sidecar
+## Slinky
 
-Starting in `v5.0.0`, running a validating full node requires a Skip Protocol's Connect Sidecar to be run in order to fetch Oracle prices. The sidecar should be started before upgrading from `v4` to `v5`. Instructions to start Connect Sidecar can be found [here](https://docs.skip.build/connect/validators/quickstart).
+Starting in [`v5.0.0`](https://www.mintscan.io/dydx/proposals/59), running a validating full node requires the Slinky sidecar to be running in order to fetch Oracle prices. Slinky is a sidecar that pulls price data from external sources and caches them for the validator to use.
 
-Support issues with Skip's Sidecar should be directed [here](https://discord.gg/7hxEThEaRQ).
+### Running Slinky
 
-You can find the required version of the Connect sidecar listed in the `dYdX Blockchain` section [here](https://docs.skip.build/connect/validators/quickstart#run-connect-sidecar).
+First, please ensure you have received your API keys for the relevant decentralized provider nodes. If you have not received API keys, please reach out to the provider team in the relevant communication channels. 
+
+Next, place your API keys under their corresponding URLs in the example file below and save it to your system. Keep the file path handy as it needs to be passed into a flag when running Slinky.
+
+The `oracle.json` file also supplies an edited configuration for the `dydx_migration_api` which facilitates graceful migration from dydx's `x/prices` module to `x/marketmap` module.
+For the `dydx_migration_api` provider, make sure to fill in the URL for the REST endpoint and gRPC endpoint of your node (in that order). The migration API will not work unless the REST API endpoint is the first endpoint in the endpoints list.
+
+<details>
+<summary>Example `oracle.json` file</summary>
+
+```json
+{
+    "providers": {
+    "dydx_migration_api": {
+    "api": {
+    "endpoints": [
+{
+    "url": "http://<YOUR NODE REST API ENDPOINT>"
+},
+{
+    "url": "<YOUR NODE GRPC ENDPOINT>:<YOUR NODE GRPC PORT>"
+}
+    ]
+}
+},
+    "raydium_api": {
+    "api": {
+    "endpoints": [
+{
+    "url": "https://solana.polkachu.com",
+    "authentication": {
+    "apiKeyHeader":"x-api-key",
+    "apiKey":"API KEY"
+}
+},
+{
+    "url": "https://connect-solana.kingnodes.com",
+    "authentication": {
+    "apiKeyHeader":"x-api-key",
+    "apiKey":"API KEY"
+}
+},
+{
+    "url": "https://dydx.helius-rpc.com",
+    "authentication": {
+    "apiKeyHeader": "x-api-key",
+    "apiKey": "API KEY"
+}
+}
+    ]
+}
+},
+    "uniswapv3_api-ethereum": {
+    "api": {
+    "endpoints": [
+{
+    "url": "https://ethereum.polkachu.com",
+    "authentication": {
+    "apiKeyHeader": "x-api-key",
+    "apiKey": "API KEY"
+}
+},
+{
+    "url": "https://connect-eth.kingnodes.com",
+    "authentication": {
+    "apiKeyHeader": "x-api-key",
+    "apiKey": "API KEY"
+}
+},
+{
+    "url": "https://ethereum-rpc.rhino-apis.com",
+    "authentication": {
+    "apiKeyHeader": "x-api-key",
+    "apiKey": "API KEY"
+}
+}
+    ]
+}
+},
+    "uniswapv3_api-base": {
+    "api": {
+    "endpoints": [
+{
+    "url": "https://base-rpc.rhino-apis.com",
+    "authentication": {
+    "apiKeyHeader": "x-api-key",
+    "apiKey": "API KEY"
+}
+},
+{
+    "url": "https://connect-base.kingnodes.com",
+    "authentication": {
+    "apiKeyHeader": "x-api-key",
+    "apiKey": "API KEY"
+}
+},
+{
+    "url": "https://base.polkachu.com",
+    "authentication": {
+    "apiKeyHeader": "x-api-key",
+    "apiKey": "API KEY"
+}
+}
+    ]
+}
+}
+}
+}
+```
+
+</details>
+
+With the `oracle.json` file path, enter the following command to run Slinky.
+
+```bash
+connect \
+--marketmap-provider dydx_migration_api \
+--oracle-config path/to/oracle.json
+```
+
+For more information on the available configuration parameters for Slinky, please refer to the [Slinky Configuration](/nodes/running-node/required-node-configs.mdx#slinky-configs) section.
+
+### Verifying Slinky is Running
+
+To verify that Slinky is running, enter the following command.
+
+```bash
+curl 'http://localhost:8080/connect/oracle/v2/prices' | jq .
+```
+
+The output of the command should look similar to this:
+```json
+{
+  "prices": {
+    "ATOM/USD": "920650000",
+    "BITCOIN/USD": "3980283250000",
+    "DYDX/USD": "273682500",
+    "ETHEREUM/BITCOIN": "5842000",
+    "ETHEREUM/USD": "232550500000",
+    "POLKADOT/USD": "638800000",
+    "SOLANA/USD": "8430350000"
+  },
+  "timestamp": "2024-01-23T01:15:09.776890Z"
+}
+```
+
+### Connecting a dYdX Validator node to Slinky
+
+In order for the application to get prices from Slinky, we need to add the following lines under the `[oracle]` heading in the `app.toml`.
+Remember to change the `oracle_address` value to the address of your Slinky instance.
+```toml (app.toml)
+# ... other sections
+
+[oracle]
+enabled = "true" # if you are not running a full node, set this to "false"
+oracle_address = "<YOUR_SLINKY_SIDECAR_ADDRESS>:8080"
+client_timeout = "250ms"
+metrics_enabled = "true"
+interval = "1500ms"
+price_ttl = "10s"
+```
+
+For more information on the available configuration parameters for the oracle, please refer to the [Oracle Configuration](/nodes/running-node/required-node-configs.mdx#oracle-configuration) section.
+
+### Advanced Slinky Configuration
+
+In case you are using a remote signer or have another distributed validator setup, you may need to configure Slinky differently.
+
+#### Using Remote Signers
+Remote signers can be used with Connect, however only certain versions are compatible
+
+**Horcrux**
+Required Version: `v3.3.0+` [link](https://github.com/strangelove-ventures/horcrux/releases)
+
+**With `Horcrux-Proxy`**
+Required Version: `v1.0.0+` [link](https://github.com/strangelove-ventures/horcrux-proxy/releases)
+
+**TMKMS**
+Required Version: `v0.13.1+` [link](https://github.com/iqlusioninc/tmkms/tags)
+
+#### Using Distributed Validators
+
+Connect can be used within a distributed validator setup. To do so, simply apply the same `app.toml` changes to each validator node. 
+Head over to [configuration](/nodes/running-node/required-node-configs.mdx) to see the necessary application-side configurations.
+
+### Upgrading Slinky
+
+The recommended version of Slinky is the latest released version in the GitHub repository [link](https://github.com/dydxprotocol/slinky).
 
 Instructions on upgrading sidecar can be found [here](/nodes/upgrades/upgrading-sidecar).
+
+### Slinky FAQ
+<details>
+<summary>Can I run Slinky on the same machine as my validator?</summary>
+
+- Yes, you can run it anywhere - but please defer to any chain-specific recommendations if there are any!
+
+</details>
+
+<details>
+<summary>Can I use IPv6?</summary>
+
+- No, IPv6 is currently not supported for sidecar-node communication.
+
+</details>
+
+<details>
+<summary>Can I get slashed for running Connect?</summary>
+
+- No.
+
+</details>
+
+<details>
+<summary>Does Connect take up a lot of resources?</summary>
+
+- No, the Connect binary is very lightweight. On a 36 GB Macbook Pro M3, a Connect instance fetching 125 markets took up only 50MB of memory, and 6% of the CPU.
+
+</details>

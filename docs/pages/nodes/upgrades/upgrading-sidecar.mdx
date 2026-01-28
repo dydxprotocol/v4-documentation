@@ -1,3 +1,10 @@
-Starting in `v5.0.0`, all validating full nodes should be running the [Sidecar](../running-node/optimize.mdx#slinky-sidecar). Non validating full nodes do not need to run the sidecar.
+Starting in [`v5.0.0`](https://www.mintscan.io/dydx/proposals/59), all validating full nodes should be running the [Sidecar](/nodes/running-node/running-a-validator#slinky). Non validating full nodes do not need to run the sidecar.
 
-Follow instructions [here](https://docs.skip.build/connect/validators/faq#how-do-i-upgrade-the-connect-binary) to upgrade the sidecar.
+Upgrading the Slinky binary can be done out of band of the chain's binary. If you have a load balancer, CNAME, etc., in front of your sidecar you can simply start up the new version and switch out which version traffic is being directed to during live chain validation.
+
+If you are running the Slinky sidecar in a container you can shut down the container, pull the updated container image and relaunch your container to update.
+
+If you are running the Slinky binary via `systemd` or other management tool, you will need to stop the process and re-launch using the newly released binary.
+
+The node will still be able to participate in consensus without the sidecar, and will begin attaching prices to blocks once Slinky is available. In the worst case, an upgrade in any of these manners will cause you to miss including vote extensions for a single block which should have no negative effects on you or the network.
+
