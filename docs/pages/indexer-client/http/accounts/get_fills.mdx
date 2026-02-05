@@ -66,8 +66,8 @@ pub async fn get_subaccount_fills(
 | ----------------------------- | -------- | ------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------- |
 | `address`                     | query    | [Address]          | true       | The wallet address that owns the account.                                                                        |
 | `subaccountNumber`            | query    | [SubaccountNumber] | true       | The identifier for the specific subaccount within the wallet address.                                            |
-| `ticker`                      | query    | [Ticker]           | false      | The market symbol to filter fills by (e.g., "BTC-USD"). If not provided, fills for all markets will be returned. |
-| `tickerType`                  | query    | [MarketType]       | false      | The type of market to filter by.                                                                                 |
+| `market`                      | query    | [Ticker]           | false      | The market symbol to filter fills by (e.g., "BTC-USD"). If not provided, fills for all markets will be returned. (Python/TS SDK parameter: `ticker`) |
+| `marketType`                  | query    | [MarketType]       | false      | The type of market to filter by. (Python/TS SDK parameter: `ticker_type` / `tickerType`)                         |
 | `limit`                       | query    | [u32]              | false      | Maximum number of asset positions to return in the response.                                                     |
 | `createdBeforeOrAtHeight`     | query    | [Height]           | false      | Filters results to positions created at or before a specific blockchain height.                                |
 | `createdBeforeOrAt`           | query    | [DateTime]         | false      | Filters results to positions created at or before a specific timestamp (ISO 8601 format).                      |
