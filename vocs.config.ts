@@ -138,6 +138,10 @@ export default defineConfig({
                             link: '/interaction/integration/integration-revshare',
                         },
                     ]
+                },
+                {
+                    text: 'Third-Party Integrations',
+                    link: '/third-party-integrations',
                 }
             ],
         },
