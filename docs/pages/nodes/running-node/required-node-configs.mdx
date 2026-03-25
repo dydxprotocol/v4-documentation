@@ -103,7 +103,77 @@ Sidecar can be configured by both flags and environment variables.
 | `CONNECT_CONFIG_PORT`                    | `"8080"`       | The port Slinky will serve requests from. WARNING: changing this value requires updating the oracle_address in the app.toml configuration.       |
 | `CONNECT_CONFIG_METRICS_ENABLED`         | `"true"`       | Enables prometheus metrics.                                                                                                                       |
 | `CONNECT_CONFIG_METRICS_PROMETHEUSSERVERADDRESS` | `"0.0.0.0:8002"` | The address of your prometheus server instance.                                                                                                   |
+| `STORK_PUB_KEY` | **No default - must set** | Public key (hex) for verifying Stork price feed signatures on the sidecar. Slinky ships unset (`""`). Recommended: `0x0a803F9b1CCe32e2773e0d2e98b37E0775cA5d44` (confirm against the aggregator key in [Stork's public keys](https://docs.stork.network/resources/public-keys)). |
+| `SLINKY_CONFIG_PROVIDERS_STORK_API_API_ENDPOINTS_0_URL` | **No default - must set** | HTTPS URL of the Stork price feed Slinky pulls from. Slinky ships unset (`""`). Recommended: `https://oracle-relay-staging.dydx.trade/prices`. |
 
+<details>
+<summary>Terms of Use for `oracle-relay-staging.dydx.trade`</summary>
+
+**Oracle Proxy Terms of Use**
+
+These Terms of Use (the "**Terms**") govern your access to and use of the oracle proxy service operated by dYdX Operations Services Ltd. ("**DOS**") that provides access to third-party price data for infrastructure supporting the dYdX Protocol.
+
+By accessing, cloning, pulling data from, or otherwise using the data relay service or this repository (the "**Service**"), you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, you must not access or use the Service.
+
+**1. Nature of the Service**
+
+The Service is a technical relay and caching layer deployed and operated by DOS that retrieves, caches, and redistributes certain price and market data originating from third-party data providers. The Service may utilize software components developed by third parties and may depend on infrastructure, networks, and systems operated by entities other than DOS. The Service is provided solely to facilitate the operation and maintenance of infrastructure supporting the dYdX Protocol.
+
+DOS does not generate price data, determine asset values, publish official price feeds, verify the correctness of the underlying data, or operate upstream data networks. The Service merely retrieves and redistributes data originating from third-party sources.
+
+The Service must not be interpreted as an authoritative or canonical source of price information.
+
+**2. Third-Party Data Sources**
+
+Data made available through the Service may originate from one or more third-party data providers and may depend on infrastructure and systems that are outside the control of DOS.
+
+DOS does not control, operate, or guarantee the availability, accuracy, or performance of any third-party data provider or any upstream infrastructure used to generate or transmit the data.
+
+DOS shall have no responsibility or liability for any act or omission of any third-party data provider, including Douro Labs or the Pyth network, in connection with the provision, interruption, or accuracy of any Data made available through the Service.
+
+**3. Incorporation of Third-Party Terms**
+
+By accessing or using the Service, you confirm that you have read, understood, and expressly agree to be bound by the Douro Labs Subscription Terms available at [here](https://www.dourolabs.xyz/Subscription-Terms.pdf) as in effect at the time of your acceptance of these Terms. DOS will notify you of any material changes to the Douro Labs Subscription Terms that affect your use of the Service.
+
+In the event of any conflict between these Terms and the Douro Labs Subscription Terms, these Terms shall prevail except where the Douro Labs Subscription Terms impose stricter restrictions on the use of data, in which case the stricter restriction shall apply.
+
+Data made available through the Service may also originate from other Data Providers whose terms govern your use of that data. You are responsible for reviewing and complying with the applicable terms of each Data Provider whose data you access through the Service.
+
+**4. Disclaimer of Warranties**
+
+THE SERVICE AND ALL DATA MADE AVAILABLE THROUGH IT ARE PROVIDED "AS IS" AND "AS AVAILABLE". TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, DOS AND ITS AFFILIATES DISCLAIM ALL WARRANTIES, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING WARRANTIES OF ACCURACY, COMPLETENESS, TIMELINESS, AVAILABILITY, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+DATA MAY BE INCOMPLETE, INACCURATE, STALE, OR DELAYED DUE TO FACTORS OUTSIDE DOS'S CONTROL. YOU MUST NOT RELY ON THE SERVICE OR THE DATA AS A SOLE OR AUTHORITATIVE SOURCE OF PRICE INFORMATION AND ARE SOLELY RESPONSIBLE FOR INDEPENDENTLY VERIFYING ANY DATA OBTAINED THROUGH THE SERVICE.
+
+**5. Restriction on Use**
+
+You shall not use the Data obtained through the Service to create, calculate, publish, contribute to, or otherwise maintain any index, rate, or other data series that would constitute a "benchmark" within the meaning of Regulation (EU) 2016/1011 (the EU Benchmarks Regulation, as amended), the UK Benchmarks Regulation (as retained and amended in UK law), or any comparable benchmark regulation in any applicable jurisdiction (collectively, "**Benchmark Laws**"). You further shall not use the Data in any manner that would result in DOS being deemed a benchmark administrator, contributor, or otherwise subject to obligations under any Benchmark Laws.
+
+For the avoidance of doubt, the Data made available through the Service is not intended or approved for use as a financial benchmark, a regulated market data product, or as a reference rate in any financial instrument, contract, or investment fund within the meaning of any Benchmark Laws or any applicable financial markets regulation. DOS makes no representation that the Data satisfies the requirements of any regulated data product or that its use in connection with any financial instrument or product is permissible under applicable law. You are solely responsible for ensuring that your use of the Data complies with all applicable laws and regulations, including any licensing or authorisation requirements applicable to your use of financial or market data.
+
+Furthermore, you shall not, and shall not permit any third party to: (i) reverse engineer, decompile, or otherwise attempt to discern the source code or protocols of the Service or any components thereof; (ii) copy, modify, adapt, distribute, publish, resell, or sublicense the data obtained through the Service to any third party; (iii) remove or modify any proprietary markings on the data; (iv) use the data in violation of any applicable law; (v) seek to circumvent the Service to access upstream data sources directly; or (vi) use the data for any purpose other than operating and maintaining infrastructure supporting the dYdX Protocol.
+
+**6. Suspension and Termination**
+
+DOS may suspend or terminate your access to the Service at any time, with or without notice, if: (i) you breach these Terms or any applicable Data Provider terms; (ii) your use exceeds applicable rate or usage limits; (iii) DOS's agreement with any upstream data provider terminates or expires; or (iv) DOS reasonably determines that suspension is necessary to protect the integrity of the Service or comply with applicable legal or contractual obligations. DOS shall not be liable for any loss or damage arising from any such suspension or termination.
+
+**7. Limitation of Liability**
+
+TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, DOS AND ITS AFFILIATES SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF OR INABILITY TO USE THE SERVICE OR THE DATA. DOS'S TOTAL AGGREGATE LIABILITY TO YOU SHALL NOT EXCEED USD $100, WHETHER ARISING IN CONTRACT, TORT, OR OTHERWISE. THESE LIMITATIONS SURVIVE TERMINATION OF THESE TERMS AND APPLY REGARDLESS OF THE FORM OF ACTION. NOTHING IN THESE TERMS EXCLUDES OR LIMITS LIABILITY THAT CANNOT BE EXCLUDED OR LIMITED UNDER APPLICABLE LAW.
+
+**8. Indemnification**
+
+You agree to defend, indemnify, and hold harmless DOS and its affiliates and their respective officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, costs, and expenses (including reasonable attorneys' fees) arising out of or relating to: (i) your use of the Service in violation of these Terms or any applicable Data Provider terms; (ii) your violation of any applicable law; or (iii) your gross negligence or willful misconduct in connection with your use of the Service. The foregoing indemnification obligation shall not apply to the extent that a claim arises from DOS's own gross negligence or willful misconduct.
+
+**9. Amendments**
+
+DOS reserves the right to modify these Terms at any time and will, where practicable, provide reasonable notice of material changes. Continued use of the Service after the effective date of any amendment constitutes acceptance. If you do not agree to the amended Terms, you must cease using the Service.
+
+**10. Governing Law and Disputes**
+
+These Terms are governed by the laws of the Cayman Islands, without regard to conflict of laws principles. Any dispute arising out of or relating to these Terms shall be finally resolved by binding arbitration administered by the Cayman Islands Mediation & Arbitration Centre ("**CI-MAC**") under its then-current rules and the Arbitration Act of the Cayman Islands. The seat of arbitration shall be George Town, Grand Cayman. Proceedings shall be conducted in English before a sole arbitrator. Any award shall be final, binding, and enforceable in any court of competent jurisdiction.
+
+</details>
 
 ### Flags
 
