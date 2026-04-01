@@ -105,6 +105,8 @@ Sidecar can be configured by both flags and environment variables.
 | `CONNECT_CONFIG_METRICS_PROMETHEUSSERVERADDRESS` | `"0.0.0.0:8002"` | The address of your prometheus server instance.                                                                                                   |
 | `STORK_PUB_KEY` | **No default - must set** | Public key (hex) for verifying Stork price feed signatures on the sidecar. Slinky ships unset (`""`). Recommended: `0x0a803F9b1CCe32e2773e0d2e98b37E0775cA5d44` (confirm against the aggregator key in [Stork's public keys](https://docs.stork.network/resources/public-keys)). |
 | `SLINKY_CONFIG_PROVIDERS_STORK_API_API_ENDPOINTS_0_URL` | **No default - must set** | HTTPS URL of the Stork price feed Slinky pulls from. Slinky ships unset (`""`). Recommended: `https://oracle-relay.dydx.trade/prices`. |
+| `PYTH_PUB_KEY` | **No default - must set** | Public key for verifying Pyth price data on the sidecar. Slinky ships unset (`""`). Recommended: `9gKEEcFzSd1PDYBKWAKZi4Sq4ZCUaVX5oTr8kEjdwsfR`. You can confirm the trusted signer by querying the Pyth Lazer storage account as described in [Use Pyth Lazer SDK in smart contracts](https://docs.pyth.network/price-feeds/pro/integrate-as-consumer/svm#use-pyth-lazer-sdk-in-smart-contracts). |
+| `SLINKY_CONFIG_PROVIDERS_PYTH_API_API_ENDPOINTS_0_URL` | **No default - must set** | HTTPS URL of the Pyth price feed Slinky pulls from. Slinky ships unset (`""`). Recommended: `https://oracle-relay.dydx.trade/prices`. |
 
 <details>
 <summary>Terms of Use for `oracle-relay.dydx.trade`</summary>
