@@ -2,7 +2,7 @@
 
 Staking rewards are designed to reward `Validators` and `Stakers` (=Delegators). The sources of staking rewards are trading fees and gas fees collected by the protocol.
 
-The protocol uses the [CosmosSDK’s x/distribution module](https://docs.cosmos.network/main/build/modules/distribution) to allocate the accrued trading and gas fees to `Validators` and `Stakers`.
+The protocol uses the [CosmosSDK’s x/distribution module](https://docs.cosmos.network/sdk/v0.50/build/modules/distribution) to allocate the accrued trading and gas fees to `Validators` and `Stakers`.
 
 ![Staking Rewards](../../artifacts/staking_rewards.png)
 
@@ -18,7 +18,7 @@ Staking Rewards =
    * (1 - community tax rate) * (1 - validator commission rate)
 ```
 
-The details of how the Staking Rewards are calculated can be found in the [CosmosSDK’s x/distribution documentation](https://docs.cosmos.network/main/build/modules/distribution#the-distribution-scheme).
+The details of how the Staking Rewards are calculated can be found in the [CosmosSDK’s x/distribution documentation](https://docs.cosmos.network/sdk/v0.50/build/modules/distribution#the-distribution-scheme).
 
 ## Parameters
 
@@ -27,4 +27,4 @@ The details of how the Staking Rewards are calculated can be found in the [Cosmo
 - `x/distribution: community_tax` : specifies the proportion of fee pool that should be sent to `community_treasury` before staking rewards are distributed. This value can be configured via gov.
 - `x/staking: validator_commission` : specifies the proportion of the staking rewards that a given validator will take from delegator’s reward. This is configured per validator and can be updated by the validator.
 
-See [CosmosSDK doc](https://docs.cosmos.network/main/build/modules/distribution#params) for details.
+See [CosmosSDK doc](https://docs.cosmos.network/sdk/v0.50/build/modules/distribution#params) for details.

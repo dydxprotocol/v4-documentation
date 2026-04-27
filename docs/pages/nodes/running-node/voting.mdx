@@ -57,7 +57,7 @@ To vote for a governance proposal, use the following command:
 dydxprotocold tx gov vote [proposal_id] [option] --from [key]
 ```
 
-The option can be either `Yes`, `No`, `NoWithVeto`, `Abstain`. See [here](https://docs.cosmos.network/v0.47/modules/gov#option-set) for the descriptions of the these options.
+The option can be either `Yes`, `No`, `NoWithVeto`, `Abstain`. See [here](https://docs.cosmos.network/sdk/v0.47/build/modules/gov#option-set) for the descriptions of the these options.
 
 ## To see the votes
 

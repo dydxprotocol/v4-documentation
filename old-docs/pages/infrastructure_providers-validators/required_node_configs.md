@@ -10,7 +10,7 @@ The dYdX Chain has important node configurations required for normal chain opera
 - The `config.toml` file read by CometBFT
   - ([Full documentation](https://docs.cometbft.com/v0.38/core/configuration))
 - The `app.toml` file read by CosmosSDK
-  - ([Full documentation](https://docs.cosmos.network/main/learn/advanced/config))
+  - ([Full documentation](https://docs.cosmos.network/sdk/v0.50/learn/advanced/config))
 
 ### `config.toml`
 
