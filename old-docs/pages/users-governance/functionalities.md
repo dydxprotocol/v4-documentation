@@ -154,4 +154,4 @@ The Community Treasury is an account controlled by governance and can be funded 
 
 ## CosmosSDK Default Modules
 
-For more information on default modules, head to the [Cosmos SDK official documentation](https://docs.cosmos.network/v0.47/modules). dYdX Chain inherits the same governance properties of any standard CosmosSDK modules that are present on dYdX Chain,
+For more information on default modules, head to the [Cosmos SDK official documentation](https://docs.cosmos.network/sdk/v0.47/build/modules). dYdX Chain inherits the same governance properties of any standard CosmosSDK modules that are present on dYdX Chain,

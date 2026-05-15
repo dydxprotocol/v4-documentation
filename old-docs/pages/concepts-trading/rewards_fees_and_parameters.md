@@ -138,7 +138,7 @@ _MinCommissionRate_: The chain-wide minimum commission rate that a validator can
 
 **Governance Parameters**
 
-These parameters define how governance proposals can be submitted and executed. For more information on the governance module and its associated parameters, head to the official [Cosmos SDK docs](https://docs.cosmos.network/v0.47/modules/gov#parameters).
+These parameters define how governance proposals can be submitted and executed. For more information on the governance module and its associated parameters, head to the official [Cosmos SDK docs](https://docs.cosmos.network/sdk/v0.47/build/modules/gov#parameters).
 
 |            | Min Deposit             | MinInitialDepositRatio | Max Deposit Period | Voting Period | Quorum | Threshold | Veto  |
 | ---------- | ----------------------- | ---------------------- | ------------------ | ------------- | ------ | --------- | ----- |

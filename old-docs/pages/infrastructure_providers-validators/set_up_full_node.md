@@ -60,7 +60,7 @@ echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bashrc # Write
 ```
 
 ### Step 3: Install Cosmovisor and create data directories
-[Cosmovisor](https://docs.cosmos.network/main/build/tooling/cosmovisor) is a process manager for Cosmos SDK-based blockchains that enables automatic binary updates without downtime. To install the latest version of Cosmovisor, run the following command:
+[Cosmovisor](https://docs.cosmos.network/sdk/v0.50/build/tooling/cosmovisor) is a process manager for Cosmos SDK-based blockchains that enables automatic binary updates without downtime. To install the latest version of Cosmovisor, run the following command:
 ```bash
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 ```
