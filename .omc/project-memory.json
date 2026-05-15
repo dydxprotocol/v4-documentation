@@ -1,0 +1,146 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1775204642155,
+  "projectRoot": "/Users/kaizhang/Documents/work/dydx/v4-documentation",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "react",
+        "version": "latest",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "latest",
+        "category": "frontend"
+      }
+    ],
+    "packageManager": "pnpm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "pnpm build",
+    "testCommand": null,
+    "lintCommand": "pnpm lint",
+    "devCommand": "pnpm dev",
+    "scripts": {
+      "dev": "vocs dev",
+      "build": "vocs build",
+      "preview": "vocs preview",
+      "lint": "./remark-filter.sh './docs/**/*.mdx' --ignore-file .lintignore | xargs remark --frail"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 1,
+      "lastAccessed": 1775204642139,
+      "keyFiles": []
+    },
+    "old-docs": {
+      "path": "old-docs",
+      "purpose": null,
+      "fileCount": 16,
+      "lastAccessed": 1775204642143,
+      "keyFiles": [
+        "LICENSE",
+        "README.md",
+        "fonts.css",
+        "next-env.d.ts",
+        "next.config.js"
+      ]
+    },
+    "docs/components": {
+      "path": "docs/components",
+      "purpose": "UI components",
+      "fileCount": 6,
+      "lastAccessed": 1775204642143,
+      "keyFiles": [
+        "Array.tsx",
+        "BatchedArray.tsx",
+        "CustomLayout.tsx"
+      ]
+    },
+    "docs/dist": {
+      "path": "docs/dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 80,
+      "lastAccessed": 1775204642144,
+      "keyFiles": [
+        "APIKey.png",
+        "APITradingClassicPic1.png",
+        "APITradingClassicPic2.png"
+      ]
+    },
+    "docs/pages": {
+      "path": "docs/pages",
+      "purpose": "Page components",
+      "fileCount": 5,
+      "lastAccessed": 1775204642144,
+      "keyFiles": [
+        "index.mdx",
+        "landing.mdx",
+        "repositories.mdx"
+      ]
+    },
+    "docs/public": {
+      "path": "docs/public",
+      "purpose": "Public files",
+      "fileCount": 77,
+      "lastAccessed": 1775204642144,
+      "keyFiles": [
+        "APIKey.png",
+        "APITradingClassicPic1.png",
+        "APITradingClassicPic2.png"
+      ]
+    },
+    "old-docs/components": {
+      "path": "old-docs/components",
+      "purpose": "UI components",
+      "fileCount": 1,
+      "lastAccessed": 1775204642144,
+      "keyFiles": [
+        "Logo.tsx"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}
