@@ -52,7 +52,7 @@ pub async fn transfer(
 | `sender_subaccount`       | query     | [SubaccountId]    | true      | The sender subaccount ID.                         |
 | `recipient_subaccount`    | query     | [SubaccountId]    | true      | The recipient subaccount ID.                      |
 | `asset_id`                | query     | [AssetId]         | true      | The asset ID.                                     |
-| `amount`                  | query     | int               | true      | The amount to transfer i USDC                     |
+| `amount`                  | query     | int               | true      | The amount to transfer in quote quantums (e.g. `1_000_000` = 1 USDC). [See more about quantums] |
 
 #### Response
 
@@ -74,3 +74,4 @@ Examples: [Python] | [TypeScript] | [Rust]
 [TxHash]: /types/tx_hash
 [Bad Request]: /types/bad-request
 [Not Found]: /types/not-found
+[See more about quantums]: ../../concepts/trading/quantums#quantums
