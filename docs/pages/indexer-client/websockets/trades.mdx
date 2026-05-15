@@ -10,8 +10,8 @@ Data feed of the trades on a market. Data contains order fills updates, such as 
 
 ```python [Python]
 # class `Trades`
-def subscribe(self, market: str, batched: bool = True) -> Self
-def unsubscribe(self, market: str)
+def subscribe(self, id: str, batched: bool = True) -> Self
+def unsubscribe(self, id: str)
 ```
 
 ```typescript [TypeScript]
@@ -31,7 +31,7 @@ pub async fn trades(
 ```
 
 ```url [Channel]
-v4_orderbook
+v4_trades
 ```
 
 :::
