@@ -1,0 +1,33 @@
+### Get Account Balances
+
+Query all balances of an account/address.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_account_balances(
+    self, address: str
+) -> bank_query.QueryAllBalancesResponse:
+```
+
+```rust [Rust]
+pub async fn get_account_balances(&mut self, address: Address) -> Result<Vec<Coin>, Error>
+```
+
+```typescript [TypeScript]
+getAccountBalances(): Promise<readonly Coin[]>
+```
+
+:::
+
+#### Parameters
+
+
+#### Response
+
+Examples: [TypeScript] | [Rust]
+
+[Rust]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-rs/client/examples/noble_transfer.rs#L62
+[TypeScript]: https://github.com/dydxprotocol/v4-clients/blob/3e8c7e1b960291b7ef273962d374d9934a5c4d33/v4-client-js/examples/noble_example.ts#L58

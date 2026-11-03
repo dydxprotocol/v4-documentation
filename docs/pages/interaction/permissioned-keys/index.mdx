@@ -1,0 +1,286 @@
+# Permissioned Keys
+
+Permissioned Keys provide a way for different traders to share the same account.
+Using this mechanism, the owner of an account can provide different types of permissions, allowing flexibility to what and what not the permissioned users can do with its account.
+
+A permission, or set of permissions, is also known as an **authenticator**. See all available authenticator types [here](/concepts/trading/authenticators).
+
+This section will guide you through authenticators use and management. We show the two sides of this authenticating interaction. We'll label the main user, which gives the permissiones, as the **owner**, and the permissioned user as the **trader**.
+
+## Owner
+
+There are 2 ways to setup Permissioned API Keys:
+1/ Via the Trade interface (default permissions to trade on all cross-margin pairs)
+2/ Via API (customisable)
+
+
+::::steps
+
+### Setup Permissioned API Keys via Trade Interface
+
+![Setup Permissioned API Key](/APIKey.png)
+
+On the dYdX.trade, after signing in with your wallet or socials:
+- click `More → API Trading Keys`.
+- Click `Generate New API Key`. This generates a new keypair:
+    - API Wallet Address
+    - Private Key
+    :::note
+    This is a one-time view, make sure to save your Private Key immediately. It will not be shown again and is not stored by dYdX
+    :::
+- Check the `terms` and click `Authorize API Key`.
+- Now you can go to [Import private key](/interaction/permissioned-keys#trader) to start trading via API keys.
+
+
+### Create an authenticator
+
+Alternatively, you can create a custom authenticator which allows only the **trader** to place orders.
+
+To create this authenticator, we use two sub-authenticators: `signatureVerification` and `messageFilter`:
+- the `signatureVerification` authenticator must be present in all authenticator sets and contains the **trader**'s public key;
+- the `messageFilter` authenticator must contain the gRPC message ID of the allowed transaction (here `MsgPlaceOrder`).
+
+We compose everything together using the composable authenticator `AllOf`, stating that some **trader**'s transaction is only allowed if it complies with all the authenticators.
+
+The **trader** also needs to send the **owner** the its public key, associated with its address.
+This can be done by encoding the public key (e.g., hex string) and sending it. The **owner** then decodes it, serving it as input below.
+
+:::code-group
+
+```python [Python]
+# trader_key = trader_wallet.public_key.key
+auth = Authenticator.compose(
+    # All sub-authenticators must be valid.
+    AuthenticatorType.AllOf,
+    [
+        # The allowed account.
+        Authenticator.signature_verification(trader_key),
+        # The allowed action.
+        Authenticator.message_filter("/dydxprotocol.clob.MsgPlaceOrder"),
+    ],
+)
+```
+
+```typescript [TypeScript]
+// const traderKey = traderWallet.pubKey!.value;
+const auth = [
+  // The allowed account.
+  {
+    type: AuthenticatorType.SIGNATURE_VERIFICATION,
+    config: traderKey,
+  },
+  // The allowed action.
+  {
+    type: AuthenticatorType.MESSAGE_FILTER,
+    config: toBase64(new TextEncoder().encode("/dydxprotocol.clob.MsgPlaceOrder")),
+  },
+];
+// Encode the authenticator.
+const jsonString = JSON.stringify(auth);
+const encodedData = new TextEncoder().encode(jsonString);;
+```
+
+```rust [Rust]
+// let trader_key = trader_account.public_key().to_bytes();
+// All sub-authenticators must be valid.
+let authenticator = Authenticator::AllOf(vec![
+    // The allowed account.
+    Authenticator::SignatureVerification(trader_key),
+    // The allowed action.
+    Authenticator::MessageFilter("/dydxprotocol.clob.MsgPlaceOrder".into()),
+]);
+```
+
+:::
+
+### Add the authenticator
+
+Now we need to push the authenticator to the network.
+
+:::code-group
+
+```python [Python]
+# Add the authenticator. [!code focus]
+response = await node.add_authenticator(wallet, auth) # [!code focus]
+```
+
+```typescript [TypeScript]
+try {
+    // Add the authenticator. [!code focus]
+    await client.addAuthenticator(subaccount, AuthenticatorType.ALL_OF, encodedData); // [!code focus]
+} catch (error) {
+    console.log(error.message);
+}
+```
+
+```rust [Rust]
+// Add the authenticator. [!code focus]
+client // [!code focus]
+    .authenticators() // [!code focus]
+    .add_authenticator(&account, account.address.clone(), authenticator) // [!code focus]
+    .await?; // [!code focus]
+```
+
+:::
+
+### List authenticators
+
+You can confirm if the authenticator was added by listing all the authenticators associated with your (owner) address.
+
+The added authenticator, identified by an ID (integer), will appear last on the list. The **trader** will then need to use this ID.
+
+:::code-group
+
+```python [Python]
+# List authenticators.
+authenticators = await node.get_authenticators(wallet.address)
+# Grab the last authenticator ID.
+id = authenticators.account_authenticators[-1]
+```
+
+```typescript [TypeScript]
+// List authenticators.
+const authenticators = await client.getAuthenticators(wallet1.address!);
+// Grab the last authenticator ID.
+const lastElement = authenticators.accountAuthenticators.length - 1;
+const id = authenticators.accountAuthenticators[lastElement].id;
+```
+
+```rust [Rust]
+// List authenticators.
+let id = client
+    .authenticators()
+    .get_authenticators(account.address().clone())
+    .await?
+    .last() // Grab the last authenticator ID.
+    .unwrap()
+    .id;
+```
+
+:::
+
+### Remove the authenticator
+
+Authenticators can be removed if they are needed anymore, or if the **trader** goes rogue.
+
+:::code-group
+
+```python [Python]
+# Remove the authenticator.
+response = await node.remove_authenticator(wallet, id)
+```
+
+```typescript [TypeScript]
+// Remove the authenticator.
+await client.removeAuthenticator(subaccount, id);
+```
+
+```rust [Rust]
+// Remove the authenticator.
+client
+    .authenticators()
+    .remove_authenticator(&mut account, account.address.clone(), id)
+    .await?;
+```
+
+:::
+
+::::
+
+## Trader
+
+::::steps
+
+
+### Get the authenticator ID and permissioned API Key
+
+Grab the `authenticatorId` created by the **owner** in [Add authenticator](/interaction/permissioned-keys#add-the-authenticator), either by: 
+- request the **owner** for the `authenticatorId` or by using the list authenticators method to fetch the to be used authenticator (see [list authenticators](/interaction/permissioned-keys#last-authenticators)).
+- Get the private key `DYDX_TEST_PRIVATE_KEY` from the owner in [via the Trade Interface](/interaction/permissioned-keys#get-the-private-key).
+
+
+### Setup the permissioned wallet
+If you got a private key from the trading interface load in via `fromPrivateKey`, otherwise use `fromMnemonic` if you didn't create via the trading interface by assigning to mnemonic.
+
+```typescript
+  const fromWallet = await LocalWallet.fromPrivateKey(DYDX_TEST_PRIVATE_KEY, BECH32_PREFIX);
+  const authenticatedSubaccount = SubaccountInfo.forPermissionedWallet(
+        fromWallet,
+        address, //owner dydx address
+        subaccountNumber, //subaccount to trade onbehalf of
+        [authenticatorId],
+      )
+```
+
+
+### Using the authenticator
+
+The **trader** can now use the permissioned API key to perform the allowed trading actions.
+
+In this example, the **trader** can use the authenticator to issue orders on the behalf of the **owner**.
+
+:::code-group
+
+```typescript [TypeScript]
+const client = await CompositeClient.connect(network);
+// Place an order using the authenticator.
+const tx = await client.placeShortTermOrder(
+  authenticatedSubaccount,
+  'ETH-USD',
+  side,
+  price,
+  0.01,
+      clientId,
+      goodTilBlock,
+      timeInForce,
+      false,
+      undefined,
+    );
+```
+
+```python [Python]
+id = ... # authenticator ID # [!code focus]
+# Create the order ID, using the owner address # [!code focus]
+order_id = market.order_id( # [!code focus]
+    OWNER_ADDRESS, # address # [!code focus]
+    0, # subaccount number
+    random.randint(0, 100000000), # client ID, can be random
+    OrderFlags.SHORT_TERM # short-term order
+) # [!code focus]
+# Create the order as usual # [!code focus]
+order = market.order( # [!code focus]
+    order_id, # [!code focus]
+    # ...
+) # [!code focus]
+# The TxOptions should have the authenticator ID to be used. # [!code focus]
+tx_options = TxOptions([id], wallet.sequence, wallet.account_number) # [!code focus]
+# Place the order. # [!code focus]
+place = await node.place_order(wallet, order, tx_options) # [!code focus]
+```
+
+
+```rust [Rust]
+// Create a `PublicAccount` representing the owner. // [!code focus]
+let owner_account = // [!code focus]
+    PublicAccount::updated(owner_address.clone(), &mut client).await?; // [!code focus]
+// Register the public account. // [!code focus]
+account // [!code focus]
+    .authenticators_mut() // [!code focus]
+    .add_authenticator(external_account, id); // [!code focus]
+
+// Create an order for the owner subaccount. // [!code focus]
+let owner_subaccount = Subaccount { // [!code focus]
+    address: owner_address.clone(), // [!code focus]
+    number: 0.try_into()?,
+}; // [!code focus]
+let (_, order) = OrderBuilder::new(market, owner_subaccount) // [!code focus]
+    //...
+    .build(123456)?;
+
+// Place an order using the authenticator. // [!code focus]
+let tx_hash = client.place_order(&mut account, order).await?; // [!code focus]
+```
+
+:::
+
+::::

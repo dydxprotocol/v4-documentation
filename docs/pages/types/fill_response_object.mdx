@@ -1,0 +1,57 @@
+import Opt from '../../components/Opt';
+
+# FillResponseObject
+
+Represents the details of a trade fill, including size, price, market information, and metadata related to the order and subaccount.
+
+
+`id`: [FillId]
+
+`side`: [OrderSide]
+
+`liquidity`: [Liquidity]
+
+`type`: [FillType]
+
+`market`: [Ticker]
+
+`market_type`: [MarketType]
+
+`price`: [Price]
+
+`size`: [BigDecimal]
+
+`fee`: [BigDecimal]
+
+`affiliate_rev_share`: [BigDecimal]
+
+`created_at`: [DateTime]
+
+`created_at_height`: [Height]
+
+`order_id`: [OrderId] <Opt/>
+
+`client_metadata`: [ClientMetadata] <Opt/>
+
+`subaccount_number`: [SubaccountNumber]
+
+`builder_fee`: [BigDecimal] <Opt/>
+
+> **Note:** Builder fee fields will be introduced in a future version of the API (v9.0).
+
+`builder_address`: [Address] <Opt/>
+
+[FillId]: /types/fill_id
+[OrderSide]: /types/order_side
+[BigDecimal]: /types/big_decimal
+[FillType]: /types/fill_type
+[Liquidity]: /types/liquidity
+[Ticker]: /types/ticker
+[MarketType]: /types/market_type
+[Price]: /types/price
+[SubaccountNumber]: /types/subaccount_number
+[Height]: /types/height
+[DateTime]: /types/date_time
+[ClientMetadata]: /types/client_metadata
+[OrderId]: /types/order_id
+[Address]: /types/address

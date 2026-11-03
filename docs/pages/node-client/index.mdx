@@ -1,0 +1,9 @@
+# Node API
+
+Nodes are the servers that manage and maintain the dYdX network. Trading transactions are broadcast to these, which then are evaluated and eventually comitted into state by the underlying consensus mechanim. It serves both a [Private API](/node-client/private), which receives transactions signed by the user, and a [Public API](/node-client/public), available for different data queries. The [Permissioned Keys API](/node-client/authenticators) is also available.
+
+See the [guide](/interaction/endpoints#node-client) on how to use the available Node client to learn how to connect to it.
+
+:::tip
+Consider using the [Indexer API](/indexer-client) over the Node Public API for data queries.
+:::

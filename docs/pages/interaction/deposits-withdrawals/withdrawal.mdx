@@ -1,0 +1,25 @@
+# Withdrawal Process
+
+Withdrawing from dYdX Chain requires first moving funds from your trading subaccount to your main account before bridging to your destination chain.
+
+## Process Flow (Withdrawal)
+
+1. **Connect your wallet** to the dYdX interface and Navigate to "Withdraw" section
+2. **Choose destination chain and enter destination address**
+3. **Enter withdrawal amount**
+4. **Review transaction details**
+   - Pay attention to the relayers and bridges involved in your specific route
+5. **Confirm and sign the transaction**
+6. **Third-party services process your withdrawal:**
+   - For Skip methods: Relayers monitor for your transaction and execute cross-chain transfers
+   - For IBC transfers: IBC relayer network handles the IBC
+   - Multiple validators may need to confirm your transaction depending on the route
+7. **Wait for confirmation** across all networks
+    - Timeframes vary based on network congestion and the third-party services involved
+
+## Withdrawal Timeframes
+
+| Withdrawal Method | Approximate Time |
+| ----------------- | ---------------- |
+| Skip Go           | 1-5 minutes      |
+| Direct IBC        | 30 seconds       |

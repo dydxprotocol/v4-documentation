@@ -1,0 +1,29 @@
+import Opt from '../../components/Opt';
+import Array from '../../components/Array';
+
+# ParentSubaccountsUpdateMessage
+
+Update message received on the `v4_parent_subaccounts` channel.
+
+`perpetualPositions`: [`PerpetualPositionSubaccountMessage`] <Opt/> <Array />
+
+`assetPositions`: [`AssetPositionSubaccountMessage`] <Opt/> <Array/>
+
+`orders`: [`OrderSubaccountMessage`] <Opt/> <Array/>
+
+`fills`: [`FillSubaccountMessage`] <Opt/> <Array/>
+
+`transfers`: [`TransferSubaccountMessage`] <Opt/> <Array/>
+
+`tradingReward`: [`TradingRewardSubaccountMessage`] <Opt/>
+
+`blockHeight`: [`Height`] <Opt/>
+
+
+[`PerpetualPositionSubaccountMessage`]: /types/perpetual_position_subaccount_message
+[`AssetPositionSubaccountMessage`]: /types/asset_position_subaccount_message
+[`OrderSubaccountMessage`]: /types/order_subaccount_message
+[`FillSubaccountMessage`]: /types/fill_subaccount_message
+[`TransferSubaccountMessage`]: /types/transfer_subaccount_message
+[`TradingRewardSubaccountMessage`]: /types/trading_reward_subaccount_message
+[`Height`]: /types/height

@@ -1,0 +1,46 @@
+# Permissioned Keys
+
+## Overview
+
+Permissioned Keys are a dYdX specific extension to the Cosmos authentication system that allows an account to add custom logic for verifying and confirming transactions placed on that account. For example, an account could enable other accounts to sign and place transactions on their behalf, limit those transactions to certain message types or clob pairs etc, all in a composable way.
+
+To enable this there are currently six types of "authenticator" that can used, four that enable specific authentication methods and two that allow for composability:
+
+**Sub-Authenticator Types**
+
+- **SignatureVerification** – Enables authentication via a specific key
+- **MessageFilter** – Restricts authentication to certain message types
+- **SubaccountFilter** – Restricts authentication to certain subaccount constraints
+- **ClobPairIdFilter** – Restricts transactions to specific CLOB pair IDs
+
+**Composable Authenticators**
+
+- **AnyOf** - Succeeds if *any* of its sub-authenticators succeeds
+- **AllOf** - Succeeds only if *all* sub-authenticators succeed
+
+## Capabilities
+
+### Available Features ✅
+
+1. **Account Access Control**
+
+   - Limit withdrawals/transfers entirely
+   - Multiple trading keys under same account
+   - Trading key separation from withdrawal keys
+
+2. **Asset-Specific Trading**
+
+   - Whitelist specific trading pairs
+   - E.g., Allow BTC/USD and ETH/USD, restrict others
+
+3. **Subaccount Management**
+   - Control trading permissions per subaccount
+   - E.g., Enable trading on subaccount 0, restrict subaccount 1
+
+### Current Limitations ❌
+
+1. **Position Management**
+
+   - Cannot set maximum position sizes
+   - No order size restrictions
+   - No custom leverage limits

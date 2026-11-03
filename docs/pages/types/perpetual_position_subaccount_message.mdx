@@ -1,0 +1,45 @@
+import Opt from '../../components/Opt';
+import Array from '../../components/Array';
+
+# PerpetualPositionSubaccountMessage
+
+Update sub-message received on the `v4_subaccounts` channel.
+
+`address`: [`Address`]
+
+`subaccountNumber`: [`SubaccountNumber`]
+
+`positionId`: string
+
+`market`: [`Ticker`]
+
+`side`: [`PositionSide`]
+
+`status`: [`PerpetualPositionStatus`]
+
+`size`: [`Quantity`]
+
+`maxSize`: [`Quantity`]
+
+`netFunding`: [`BigDecimal`]
+
+`entryPrice`: [`Price`]
+
+`exitPrice`: [`Price`] <Opt/>
+
+`sumOpen`: [`BigDecimal`]
+
+`sumClose`: [`BigDecimal`]
+
+`realizedPnl`: [`BigDecimal`] <Opt/>
+
+`unrealizedPnl`: [`BigDecimal`] <Opt/>
+
+[`Address`]: /types/address
+[`SubaccountNumber`]: /types/subaccount_number
+[`Ticker`]: /types/ticker
+[`Quantity`]: /types/quantity
+[`BigDecimal`]: /types/big_decimal
+[`Price`]: /types/price
+[`PositionSide`]: /types/position_side
+[`PerpetualPositionStatus`]: /types/perpetual_position_status

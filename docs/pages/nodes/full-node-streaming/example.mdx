@@ -1,0 +1,584 @@
+# gRPC Streaming Example
+
+[Indexer-based orderbook streaming](/interaction/data/watch-orderbook), due to the increased latency introduced by the Indexer, can cause issues like more outdated orders or a crossed orderbook.
+In a full node, the orderbook available will be more up-to-date and should be preferred over the Indexer-based solution.
+This requires a full node with [gRPC streaming enabled](/nodes/full-node-streaming).
+
+:::note
+While more up-to-date than the Indexer, the orderbook state can vary slightly between nodes due to dYdX's offchain orderbook design.
+:::
+
+In this example, we'll guide on how to connect and handle the gRPC data in order to enable use-cases such as orderbook watching.
+While full node streaming is provided both using gRPC and WebSockets, we'll focus here on gRPC-based streaming due to its higher efficiency.
+
+
+:::tip[Full Example]
+This guide is only a general walkthrough of the important methods on how to establish and maintain a gRPC connection, and maintain the orderbook state.
+For the worked example see the [repository](https://github.com/dydxprotocol/grpc-stream-client) (Python).
+:::
+
+::::steps
+
+## Install dependencies
+
+gRPC uses structured and serialized data using [Protocol Buffers](https://en.wikipedia.org/wiki/Protocol_Buffers).
+For Python, install the package [`v4-proto`](https://pypi.org/project/v4-proto/) which already contains the messages and generated code used in gRPC.
+This is the main dependency used in this guide, allowing us to deserialize the incoming stream messages.
+
+:::info
+
+:::details[Dependency list]
+The full dependency list used in this guide.
+```bash [Terminal]
+grpcio>=1.67.0
+grpcio-tools==1.64.1
+protobuf==5.28.1
+PyYAML==6.0.1
+sortedcontainers==2.4.0
+v4-proto==6.0.8
+```
+:::
+
+## Establish a connection
+
+With a full node with gRPC streaming available, we can now try to establish a connection to it. We'll need to define a gRPC configuration to maintain an healthy connection.
+Lets also define here the CLOB pairs IDs (markets) that we are interested in, as well as the relevant subaccounts.
+
+```python [Python]
+import grpc
+from v4_proto.dydxprotocol.clob.query_pb2 import StreamOrderbookUpdatesRequest
+from v4_proto.dydxprotocol.clob.query_pb2_grpc import QueryStub
+from v4_proto.dydxprotocol.subaccounts.subaccount_pb2 import SubaccountId
+
+GRPC_OPTIONS = [
+    # Send keepalive ping every 30 seconds
+    ("grpc.keepalive_time_ms", 3000),
+    # Wait 10 seconds for ping ack before considering the connection dead
+    ("grpc.keepalive_timeout_ms", 1000,),
+    # Allow keepalive pings even when there are no calls
+    ("grpc.keepalive_permit_without_calls", True,),
+    # Minimum allowed time between pings
+    ("grpc.http2.min_time_between_pings_ms", 3000,),
+    # Minimum allowed time between pings with no data
+    ("grpc.http2.min_ping_interval_without_data_ms", 3000,),
+]
+
+endpoint = "your-node-address:9090"
+clob_pair_ids = [0, 1] # ETH-USD
+subaccount_ids = [] # All subaccounts
+
+# Establish async connection 
+async with grpc.aio.insecure_channel(endpoint, GRPC_OPTIONS) as channel:
+    tasks = [
+        listen_to_grpc_stream(
+            channel,
+            clob_pair_ids,
+            subaccount_ids,
+            feed_handler,
+        ),
+    ]
+    await asyncio.gather(*tasks)
+```
+
+## Streaming
+
+The streaming function `listen_to_grpc_stream()` processes the continuous stream of orderbook updates. Each message contains batched updates that must be processed sequentially to maintain correct state.
+
+```python [Python]
+async def listen_to_grpc_stream(
+    channel: grpc.Channel,
+    clob_pair_ids: List[int],
+    subaccount_ids: List[str],
+    feed_handler: FeedHandler,
+):
+    """Subscribe to gRPC stream and handle orderbook updates."""
+    stub = QueryStub(channel)
+    
+    # Parse subaccount ids (format: owner_address/subaccount_number)
+    subaccount_protos = [
+        SubaccountId(owner=sa.split('/')[0], number=int(sa.split('/')[1])) 
+        for sa in subaccount_ids
+    ]
+    
+    request = StreamOrderbookUpdatesRequest(
+        clob_pair_id=clob_pair_ids, 
+        subaccount_ids=subaccount_protos
+    )
+    
+    async for response in stub.StreamOrderbookUpdates(request):
+        fill_events = feed_handler.handle(response)
+        # Process fills and other updates
+        for fill in fill_events:
+            print(f"Fill: {fill.quantums} @ {fill.subticks}")
+
+```
+
+## Maintaining Orderbook and Subaccount State
+
+Lets add a component `FeedHandler` that maintains local state by processing streaming updates.
+It will handle different message types and ensure state consistency.
+
+```python [Python]
+class FeedHandler:
+    def __init__(self):
+        self.books: Dict[int, LimitOrderBook] = {}
+        self.subaccounts: Dict[SubaccountId, StreamSubaccount] = {}
+        self.has_seen_first_snapshot = False
+    
+    def handle(self, message: StreamOrderbookUpdatesResponse) -> List[Fill]:
+        """Handle incoming stream messages and update state."""
+        collected_fills = []
+        
+        for update in message.updates:
+            update_type = update.WhichOneof('update_message')
+            
+            if update_type == 'orderbook_update':
+                self._handle_orderbook_update(update.orderbook_update)
+            elif update_type == 'order_fill':
+                fills = self._handle_fills(update.order_fill, update.exec_mode)
+                collected_fills += fills
+            elif update_type == 'subaccount_update':
+                self._handle_subaccounts(update.subaccount_update)
+                
+        return collected_fills
+```
+
+
+### Snapshots
+
+Snapshots provide the complete current state and serve as the foundation for processing subsequent incremental updates. The client should wait for snapshots before processing any other messages to ensure state consistency.
+
+> Discard order messages until you receive a `StreamOrderbookUpdate` with `snapshot` set to `true`. This message contains the full orderbook state for each clob pair.
+
+> Similarly, discard subaccount messages until you receive a `StreamSubaccountUpdate` with `snapshot` set to `true`. This message contains the full subaccount state for each subscribed subaccount.
+
+```python
+def _handle_orderbook_update(self, update: StreamOrderbookUpdate):
+    """Handle orderbook snapshots and incremental updates."""
+    # Skip messages until the first snapshot is received
+    if not self.has_seen_first_snapshot and not update.snapshot:
+        return
+    
+    # Skip subsequent snapshots
+    if update.snapshot and self.has_seen_first_snapshot:
+        logging.warning("Skipping subsequent snapshot")
+        return
+    
+    if update.snapshot:
+        # This is a new snapshot of the book state
+        if not self.has_seen_first_snapshot:
+            self.has_seen_first_snapshot = True
+    
+    # Process each update in the batch
+    for u in update.updates:
+        update_type = u.WhichOneof('update_message')
+        
+        if update_type == 'order_place':
+            self._handle_order_place(u.order_place)
+        elif update_type == 'order_update':
+            self._handle_order_update(u.order_update)
+        elif update_type == 'order_remove':
+            self._handle_order_remove(u.order_remove)
+
+def _handle_subaccounts(self, update: StreamSubaccountUpdate):
+    """Handle subaccount snapshots and updates."""
+    parsed_subaccount = parse_subaccounts(update)
+    subaccount_id = parsed_subaccount.subaccount_id
+    
+    if update.snapshot:
+        # Skip subsequent snapshots
+        if subaccount_id in self.subaccounts:
+            logging.warning(f"Saw multiple snapshots for subaccount {subaccount_id}")
+            return
+        self.subaccounts[subaccount_id] = parsed_subaccount
+    else:
+        # Skip messages until the first snapshot is received
+        if subaccount_id not in self.subaccounts:
+            return
+        # Update the existing subaccount
+        existing_subaccount = self.subaccounts[subaccount_id]
+        existing_subaccount.perpetual_positions.update(parsed_subaccount.perpetual_positions)
+        existing_subaccount.asset_positions.update(parsed_subaccount.asset_positions)
+```
+
+### Orderbook Management
+
+The orderbook is implemented as a Level 3 (L3) order book that maintains individual orders with their full details. This provides maximum granularity for trading applications that need to track specific orders and their execution.
+
+:::info
+:::details[Order Data]
+```python
+from dataclasses import dataclass
+from typing import Dict, Iterator, Optional
+from sortedcontainers import SortedDict
+
+@dataclass(frozen=True)  # frozen=True allows use as dict keys
+class OrderId:
+    """Unique identifier for orders within a CLOB pair."""
+    owner_address: str        # Account that placed the order
+    subaccount_number: int    # Subaccount index within the account  
+    client_id: int           # Client-assigned order ID (can be reused)
+    order_flags: int         # Order type flags (conditional, short-term, etc.)
+
+@dataclass
+class Order:
+    """Individual order with pricing and quantity information."""
+    order_id: OrderId
+    is_bid: bool             # True for buy orders, False for sell orders
+    original_quantums: int   # Original order size (integer, needs conversion)
+    quantums: int           # Remaining size after fills (integer, needs conversion)
+    subticks: int           # Price level (integer, needs conversion)
+```
+:::
+
+Lets implement an efficient Orderbook data structure named `LimitOrderBook` suitable for high-frequency trading.
+
+:::info
+:::details[Orderbook]
+
+```python
+class LimitOrderBook:
+    """
+    Level 3 orderbook with O(log N) insertion, O(1) updates and removal.
+    
+    Architecture:
+    - SortedDict maps price levels to order queues
+    - Each price level is a doubly-linked list (FIFO order execution)
+    - Hash map provides O(1) order lookup by OrderId
+    """
+    
+    def __init__(self):
+        # Fast order lookup by ID
+        self.oid_to_order_node: Dict[OrderId, ListNode] = {}
+        
+        # Price-ordered asks (lowest price first)
+        self._asks: SortedDict[int, DoublyLinkedList] = SortedDict()
+        
+        # Price-ordered bids (highest price first)  
+        self._bids: SortedDict[int, DoublyLinkedList] = SortedDict(lambda x: -x)
+    
+    def add_order(self, order: Order) -> Order:
+        """
+        Add order to the end of its price level queue.
+        
+        Orders at the same price level execute in time priority (FIFO).
+        New orders are always placed at the back of the queue.
+        """
+        # Determine which side of the book
+        book_side = self._bids if order.is_bid else self._asks
+        
+        # Get or create the price level
+        level = self._get_or_create_level(order.subticks, book_side)
+        
+        # Add to end of price level queue and index for fast lookup
+        order_node = level.append(order)
+        self.oid_to_order_node[order.order_id] = order_node
+        
+        return order
+    
+    def remove_order(self, oid: OrderId) -> Order:
+        """
+        Remove order from book and clean up empty price levels.
+        
+        Returns the removed order for processing (e.g., logging cancellations).
+        """
+        # Find and remove the order node
+        order_node = self.oid_to_order_node.pop(oid)
+        order = order_node.data
+        
+        # Remove from the appropriate price level
+        book_side = self._bids if order.is_bid else self._asks
+        level: DoublyLinkedList = book_side[order.subticks]
+        level.remove(order_node)
+        
+        # Clean up empty price levels to save memory
+        if level.head is None:
+            del book_side[order.subticks]
+        
+        return order
+    
+    def get_order(self, oid: OrderId) -> Optional[Order]:
+        """O(1) order lookup by ID."""
+        node = self.oid_to_order_node.get(oid)
+        return node.data if node else None
+    
+    def asks(self) -> Iterator[Order]:
+        """Iterate asks from best (lowest) to worst (highest) price."""
+        for price, level in self._asks.items():
+            for order in level:  # Time priority within price level
+                yield order
+    
+    def bids(self) -> Iterator[Order]:
+        """Iterate bids from best (highest) to worst (lowest) price.""" 
+        for price, level in self._bids.items():
+            for order in level:  # Time priority within price level
+                yield order
+    
+    @staticmethod
+    def _get_or_create_level(subticks: int, book_side: SortedDict) -> DoublyLinkedList:
+        """Lazily create price levels as orders arrive."""
+        if subticks not in book_side:
+            book_side[subticks] = DoublyLinkedList()
+        return book_side[subticks]
+```
+:::
+
+Each price level maintains orders in a doubly-linked list for efficient insertion and removal.
+
+:::info
+:::details[Order Queue]
+
+```python
+class ListNode:
+    """Node in the doubly-linked list representing an order."""
+    def __init__(self, data):
+        self.data = data      # The Order object
+        self.prev = None      # Previous order in queue
+        self.next = None      # Next order in queue
+
+class DoublyLinkedList:
+    """
+    FIFO queue for orders at the same price level.
+    
+    Provides O(1) append and remove operations essential
+    for high-frequency order book updates.
+    """
+    
+    def __init__(self):
+        self.head = None  # First order (next to execute)
+        self.tail = None  # Last order (most recently added)
+    
+    def append(self, data) -> ListNode:
+        """Add new order to the end of the queue."""
+        new_node = ListNode(data)
+        
+        if self.head is None:
+            # First order at this price level
+            self.head = self.tail = new_node
+        else:
+            # Add to end, maintaining FIFO order
+            self.tail.next = new_node
+            new_node.prev = self.tail
+            self.tail = new_node
+            
+        return new_node
+    
+    def remove(self, node_to_remove: ListNode):
+        """Remove specific order from anywhere in the queue."""
+        # Update previous node's forward link
+        if node_to_remove.prev:
+            node_to_remove.prev.next = node_to_remove.next
+        else:
+            self.head = node_to_remove.next
+        
+        # Update next node's backward link  
+        if node_to_remove.next:
+            node_to_remove.next.prev = node_to_remove.prev
+        else:
+            self.tail = node_to_remove.prev
+        
+        # Clean up the removed node
+        node_to_remove.prev = node_to_remove.next = None
+```
+:::
+
+
+Orders progress through a lifecycle of placement, updates, and removal. Your client must handle each stage correctly to maintain accurate book state.
+
+:::info
+:::details[Order Management]
+
+```python
+def _handle_order_place(self, order_place: OrderPlaceV1) -> int:
+    """
+    Insert new orders at the end of their price level queue.
+    Track both initial quantity and cumulative filled amount.
+    """
+    order = helpers.parse_indexer_order(order_place.order)
+    clob_pair_id = order_place.order.order_id.clob_pair_id
+    book = self._get_book(clob_pair_id)
+    
+    # Verify order doesn't already exist (should see remove before place)
+    if book.get_order(order.order_id) is not None:
+        raise AssertionError(f"Order {order.order_id} already exists")
+    
+    # Store initial quantums for fill tracking
+    order.original_quantums = order.quantums
+    book.add_order(order)
+    return clob_pair_id
+
+def _handle_order_update(self, order_update: OrderUpdateV1) -> int:
+    """
+    Update an order's total filled amount.
+    
+    Note: total_filled_quantums is cumulative, not incremental.
+    Remaining quantity = original_quantums - total_filled_quantums
+    """
+    clob_pair_id = order_update.order_id.clob_pair_id
+    oid = helpers.parse_indexer_oid(order_update.order_id)
+    order = self._get_book(clob_pair_id).get_order(oid)
+    
+    if order is None:
+        # Order may not exist yet due to message ordering
+        return clob_pair_id
+    
+    # Calculate remaining quantity after fills
+    order.quantums = order.original_quantums - order_update.total_filled_quantums
+    return clob_pair_id
+
+def _handle_order_remove(self, order_remove: OrderRemoveV1) -> int:
+    """
+    Remove orders from the book.
+    
+    Removal reasons include:
+    - User cancellation
+    - Order expiry (Good-Til-Block/Good-Til-BlockTime)
+    - Complete fill
+    - Best-effort cancellation (order may still fill until expiry)
+    """
+    clob_pair_id = order_remove.order_id.clob_pair_id
+    oid = helpers.parse_indexer_oid(order_remove.order_id)
+    book = self._get_book(clob_pair_id)
+    
+    # Remove order if it exists (may have already been removed)
+    if book.get_order(oid) is not None:
+        book.remove_order(oid)
+    
+    return clob_pair_id
+```
+:::
+
+Handle both optimistic and finalized trades correctly. Optimistic fills update book state immediately, while only finalized fills should be treated as confirmed trades.
+
+:::info
+
+:::details[Fills and Trade Confirmation]
+
+```python
+def _handle_fills(self, order_fill: StreamOrderbookFill, exec_mode: int) -> List[fills.Fill]:
+    """
+    Process trade fills and update maker order states.
+    
+    Important: Use ALL ClobMatch messages to update book state (optimistic),
+    but only treat execMode=7 (finalized) fills as confirmed trades.
+    """
+    # Skip fills until we have orderbook snapshots
+    if not self.has_seen_first_snapshot:
+        return []
+    
+    parsed_fills = fills.parse_fill(order_fill, exec_mode)
+    
+    for fill in parsed_fills:
+        clob_pair_id = fill.clob_pair_id
+        maker_oid = fill.maker
+        order = self._get_book(clob_pair_id).get_order(maker_oid)
+        
+        if order is not None:
+            # Update maker order's remaining quantity
+            # fill_amounts represents total filled, not incremental
+            order.quantums = order.original_quantums - fill.maker_total_filled_quantums
+            
+            # Log different treatment for optimistic vs finalized
+            status = "finalized" if exec_mode == 7 else "optimistic"
+            logging.debug(f"({status}) Fill processed: {fill.quantums} @ {fill.subticks}")
+    
+    return parsed_fills
+
+def is_trade_finalized(fill: fills.Fill) -> bool:
+    """
+    Only treat fills with exec_mode=7 as consensus-confirmed trades.
+    Other exec modes are optimistic and may be reverted.
+    """
+    return fill.exec_mode == 7
+```
+:::
+
+## Additional logic
+
+Process informational taker order messages without updating state.
+
+:::info
+:::details[Taker Orders]
+
+```python
+def _handle_taker_order(self, stream_taker_order: StreamTakerOrder, block_height: int):
+    """
+    Handle taker order messages (informational only).
+    
+    Taker orders are emitted when orders enter the matching engine,
+    regardless of success/failure. No state updates required.
+    """
+    order = helpers.parse_protocol_order(stream_taker_order.order)
+    
+    # Log for analytics/monitoring but don't update book state
+    logging.debug(f"Taker order: {order.order_id} size={order.quantums}")
+    
+    # Optional: Track taker order metrics
+    self.taker_order_metrics.process_order(order, block_height)
+```
+:::
+
+Convert protocol integers to decimal values for display and analysis. [Fetch the market information](/indexer-client/http#get-perpetual-markets) from the Indexer, containing data required for integer conversion.
+
+:::info
+:::details[Data Conversion]
+
+
+```python
+def subticks_to_price(subticks: int, atomic_resolution: int, quantum_conversion_exponent: int) -> float:
+    """
+    Convert integer subticks to human-readable price.
+    
+    Formula: subticks * 10^(-atomic_resolution) * 10^(-quantum_conversion_exponent)
+    """
+    return subticks * (10 ** (-atomic_resolution - quantum_conversion_exponent))
+
+def quantums_to_size(quantums: int, atomic_resolution: int) -> float:
+    """
+    Convert integer quantums to human-readable quantity.
+    
+    Formula: quantums * 10^(-atomic_resolution)
+    """
+    return quantums * (10 ** (-atomic_resolution))
+
+def format_fill_for_display(fill: fills.Fill, market_info: dict) -> str:
+    """Format fill for human consumption."""
+    ar = market_info['atomicResolution']
+    qce = market_info['quantumConversionExponent']
+    
+    price = subticks_to_price(fill.subticks, ar, qce)
+    size = quantums_to_size(fill.quantums, ar)
+    side = "buy" if fill.taker_is_buy else "sell"
+    status = "finalized" if fill.exec_mode == 7 else "optimistic"
+    
+    return f"({status}) {side} {size} @ {price}"
+```
+
+:::
+
+Validate orderbook state consistency in order to detect any errors, here related with crossed orderbook (a bid larger than a ask).
+
+:::info
+:::details[Validate Orderbook]
+
+```python
+def _validate_books(self):
+    """
+    Validate orderbook state consistency.
+    
+    Each node maintains subjective state until block finalization.
+    Regular validation helps detect processing errors.
+    """
+    for cpid, book in self.books.items():
+        best_ask = next(book.asks(), None)
+        best_bid = next(book.bids(), None)
+        
+        if best_ask and best_bid:
+            if best_ask.subticks <= best_bid.subticks:
+                # Crossed book indicates state error
+                raise AssertionError(
+                    f"Crossed book for market {cpid}: "
+                    f"ask {best_ask.subticks} <= bid {best_bid.subticks}"
+                )
+```
+:::

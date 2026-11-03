@@ -1,0 +1,68 @@
+{
+  "----------INTRODUCTION----------": {
+    "title": "Introduction",
+    "type": "separator"
+  },
+
+  "index": "About dYdX",
+  "introduction-getting_started": "Getting Started",
+  "introduction-onboarding_faqs": "Onboarding FAQs",
+  "introduction-trading_fees": "Trading Fees",
+  
+
+  "----------USERS----------": {
+    "title": "Chain Users",
+    "type": "separator"
+  },
+  "users-rewards": "Rewards",
+  "users-governance": "Governance",
+  "user-guides": "Guides",
+  "users-faqs": "User Submitted Questions",
+
+  "----------INFRASTRUCTURE PROVIDERS----------": {
+    "title": "Chain Infrastructure",
+    "type": "separator"
+  },
+
+  "infrastructure_providers-validators": "Validators & Full-Nodes",
+  "infrastructure_providers-network": "Network Configuration",
+  "infrastructure_providers-operators": "Indexer Operators",
+
+  "----------API INTEGRATION----------": {
+    "title": "API Integrations",
+    "type": "separator"
+  },
+
+  "api_integration-clients": "Client Documentation",
+  "api_integration-indexer": "Indexer Documentation",
+  "api_integration-full-node-streaming": "Full Node Streaming API",
+  "api_integration-repositories": "Repositories",
+  "api_integration-trading": "Trading",
+  "api_integration-deposits_and_withdrawals": "Deposits and Withdrawals",
+  "api_integration-constants": "Constants",
+  "api_integration-guides": "Guides",
+
+  "----------CONCEPTS----------": {
+    "title": "Technical Concepts",
+    "type": "separator"
+  },
+
+  "concepts-architecture": "Architecture",
+  "concepts-trading": "Trading",
+  "concepts-limit-order-book-and-matching": "Limit Order Book and Matching",
+
+  "----------OTHER----------": {
+    "title": "Policies",
+    "type": "separator"
+  },
+
+  "other-security": "Security",
+  "other-terms_of_use_and_privacy_policy": "Terms of Use & Privacy",
+
+  "testnet app": {
+    "title": "Testnet App ↗",
+    "type": "page",
+    "href": "https://v4.testnet.dydx.exchange",
+    "newWindow": true
+  }
+}

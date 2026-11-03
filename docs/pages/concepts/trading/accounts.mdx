@@ -1,0 +1,24 @@
+# Accounts and Subaccounts
+
+Accounts and subaccounts serve as identifiers in the dYdX ecosystem.
+
+## Main Account
+
+A (main) account is associated with a public-private keypair, and with a trader's on-chain identity.
+
+* Known publicly and associated with an address;
+* Holds tokens/assets that are sent to/from the chain, including tokens used for gas and collateral;
+* Gas for transactions is used from the main account;
+* Main accounts cannot trade;
+* Several main accounts can be derived from the same mnemonic phrase. Each user main account is completely independent and private/unlinkable from each other.
+
+## Subaccounts
+
+Subaccounts provide a way to isolate funds and manage risk within an account. They are used to trade.
+
+* Each main account can have 128,001 subaccounts;
+* Each subaccount is uniquely identified using as subaccount ID of `(main account address, integer)`;
+* Once you deposit funds to a valid subaccount ID, the subaccount will automatically be created;
+* Only the main account can send transactions on behalf of a subaccount;
+* Subaccounts do not require gas (no gas is used for trading);
+* Subaccounts require collateral token (currently USDC) in order to trade.

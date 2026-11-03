@@ -1,0 +1,19 @@
+# Running a Validator
+
+💡Note: failure to set up below configurations on a validator node may compromise chain functionality.
+
+## Ethereum RPC Endpoint
+
+For the chain to process bridge transactions from Ethereum, Ethereum testnet, or other chain that supports the `eth_getLogs` RPC method, the bridge daemon queries an RPC endpoint for logs emitted by the bridge contract. By default, a node will use a public testnet endpoint that may have rate-limiting, low reliability, or other restricted functionality.
+
+As a validator run the flags `--bridge-daemon-enabled=false` in the command you run when starting the node, since the bridge has been disabled
+
+## Connect Sidecar
+
+Starting in `v5.0.0`, running a validating full node requires a Skip Protocol's Connect Sidecar to be run in order to fetch Oracle prices. The sidecar should be started before upgrading from `v4` to `v5`. Instructions to start Connect Sidecar can be found [here](https://docs.skip.build/connect/validators/quickstart).
+
+Support issues with Skip's Sidecar should be directed [here](https://discord.gg/7hxEThEaRQ).
+
+You can find the required version of the Connect sidecar listed in the `dYdX Blockchain` section [here](https://docs.skip.build/connect/validators/quickstart#run-connect-sidecar).
+
+Instructions on upgrading sidecar can be found [here](./upgrades/upgrading_sidecar.md).

@@ -1,0 +1,71 @@
+import Opt from '../../components/Opt';
+import Array from '../../components/Array';
+
+# OrderSubaccountMessage
+
+Update sub-message received on the `v4_subaccounts` channel.
+
+`id`: string
+
+`subaccountId`: [`SubaccountId`]
+
+`clientId`: [`ClientId`]
+
+`clobPairId`: [`ClobPairId`] <Opt/>
+
+`side`: [`OrderSide`] <Opt/>
+
+`size`: [`Quantity`] <Opt/>
+
+`ticker`: [`Ticker`] <Opt/>
+
+`price`: [`Price`] <Opt/>
+
+`type`: [`OrderType`] <Opt/>
+
+`timeInForce`: [`ApiTimeInForce`] <Opt/>
+
+`postOnly`: bool <Opt/>
+
+`reduceOnly`: bool <Opt/>
+
+`status`: [`ApiOrderStatus`]
+
+`orderFlags`: [`OrderFlags`]
+
+`totalFilled`: [`BigDecimal`] <Opt/>
+
+`totalOptimisticFilled`: [`BigDecimal`] <Opt/>
+
+`goodTilBlock`: [`Height`] <Opt/>
+
+`goodTilBlockTime`: [`DateTime`] <Opt/>
+
+`triggerPrice`: [`Price`] <Opt/>
+
+`updatedAt`: [`DateTime`] <Opt/>
+
+`updatedAtHeight`: [`Height`] <Opt/>
+
+`removalReason`: string <Opt/>
+
+`createdAtHeight`: [`Height`] <Opt/>
+
+`clientMetadata`: [`ClientMetadata`] <Opt/>
+
+
+[`SubaccountId`]: /types/subaccount_id
+[`ClientId`]: /types/client_id
+[`OrderSide`]: /types/order_side
+[`ClobPairId`]: /types/clob_pair_id
+[`OrderType`]: /types/order_type
+[`Ticker`]: /types/ticker
+[`OrderFlags`]: /types/order_flags
+[`ApiTimeInForce`]: /types/api_time_in_force
+[`ApiOrderStatus`]: /types/api_order_status
+[`BigDecimal`]: /types/big_decimal
+[`Height`]: /types/height
+[`DateTime`]: /types/date_time
+[`Price`]: /types/price
+[`ClientMetadata`]: /types/client_metadata
+[`Quantity`]: /types/quantity

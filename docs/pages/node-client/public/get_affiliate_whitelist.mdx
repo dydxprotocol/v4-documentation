@@ -1,0 +1,43 @@
+### Get Affiliate White List
+
+Get affiliate white list.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_affiliate_whitelist(
+    self,
+) -> affiliate_query.AffiliateWhitelistResponse
+```
+
+```rust [Rust]
+pub async fn get_affiliate_whitelist(&mut self) -> Result<AffiliateWhitelist, Error>
+```
+
+```typescript [TypeScript]
+async getAffiliateWhitelist(): Promise<AffiliateModule.AffiliateWhitelistResponse>
+```
+
+```uri
+/dydxprotocol.affiliates.Query/AffiliateWhitelist
+```
+
+:::
+
+#### Parameters
+
+#### Response
+
+| Status    | Meaning   | Schema                                        |
+| --------- | --------- | --------------------------------------------- |
+| `200`     | [OK]      | [AffiliateModule.AffiliateWhitelistResponse]  |
+
+
+Examples: [API]
+
+[API]: https://test-dydx-rest.kingnodes.com/dydxprotocol/affiliates/affiliate_whitelist
+
+[OK]: /types/ok
+[AffiliateModule.AffiliateWhitelistResponse]: /types/cosmos

@@ -1,0 +1,67 @@
+### Delegate
+
+Delegate tokens from a delegator to a validator.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def delegate(
+    self,
+    wallet: Wallet,
+    delegator: str,
+    validator: str,
+    quamtums: int,
+    denomination: str,
+)
+```
+
+
+```typescript [TypeScript]
+async delegate(
+    subaccount: SubaccountInfo,
+    delegator: string,
+    validator: string,
+    amount: string,
+    broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [Rust]
+pub async fn delegate(
+    &mut self,
+    account: &mut Account,
+    delegator: Address,
+    validator: Address,
+    token: impl Tokenized,
+) -> Result<TxHash, NodeError>
+```
+
+```uri
+```
+
+:::
+
+#### Parameters
+
+| Parameter     | Location  | Type              | Mandatory | Description           |
+| ------------- | --------- | ----------------- | --------- | --------------------- |
+| subaccount    | query     | [SubaccountInfo]  | true      | Subaccount number     |
+| delegator     | query     | string            | true      | Delegator information |
+| validator     | query     | string            | true      | validator information |
+| amount        | query     | string            | true      | Amount to delegate    |
+| broadcastMode | query     | [BroadcastMode]   | false     | Mode of broadcast     |
+
+#### Response
+
+| Status    | Meaning   | Schema                                                                |
+| --------- | --------- | --------------------------------------------------------------------- |
+| `200`     | [OK]      | [BroadcastTxAsyncResponse] | [BroadcastTxSyncResponse] | [IndexedTx]  |
+
+[SubaccountInfo]: /types/subaccount_info
+[BroadcastMode]: /types/broadcast_mode
+[BroadcastTxAsyncResponse]: /types/cosmos
+[BroadcastTxSyncResponse]: /types/cosmos
+[IndexedTx]: /types/cosmos
+[OK]: /types/ok

@@ -1,0 +1,57 @@
+### Register Affiliate
+
+Register affiliate.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def register_affiliate(
+    self, wallet: Wallet, referee: str, affiliate: str
+) -> Any
+```
+
+```typescript [TypeScript]
+async registerAffiliate(
+    subaccount: SubaccountInfo,
+    affiliate: string,
+    broadcastMode?: BroadcastMode,
+    gasAdjustment: number = 2,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```rust [Rust]
+pub async fn register_affiliate(
+    &mut self,
+    account: &mut Account,
+    referee: Address,
+    affiliate: Address,
+) -> Result<TxHash, NodeError>
+```
+
+```uri
+```
+:::
+
+#### Parameters
+
+| Parameter         | Location  | Type              | Mandatory | Description               |
+| ----------------- | --------- | ----------------- | --------- | ------------------------- |
+| `subaccount`      | query     | [SubaccountInfo]  | true      | Subaccount information    |
+| `affiliate`       | query     | string            | true      | Affiliate information     |
+| `broadcastMode`   | query     | [BroadcastMode]   | false     | Mode of broadcast         |
+| `gasAdjustment`   | query     | int               | false     | Gas adjustment value      |
+
+#### Response
+
+| Status    | Meaning   | Schema                                                                |
+| --------- | --------- | --------------------------------------------------------------------- |
+| `200`     | [OK]      | [BroadcastTxAsyncResponse] | [BroadcastTxSyncResponse] | [IndexedTx]  |
+
+[SubaccountInfo]: /types/subaccount_info
+[BroadcastMode]: /types/broadcast_mode
+[OK]: /types/ok
+[BroadcastTxAsyncResponse]: /types/cosmos
+[BroadcastTxSyncResponse]: /types/cosmos
+[IndexedTx]: /types/cosmos

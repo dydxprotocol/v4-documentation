@@ -1,0 +1,58 @@
+### Withdraw Delegator Reward
+
+Withdraw delegator reward.
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def withdraw_delegate_reward(
+    self, wallet: Wallet, delegator: str, validator: str
+) -> Any
+```
+
+```rust [Rust]
+pub async fn withdraw_delegator_reward(
+    &mut self,
+    account: &mut Account,
+    delegator: Address,
+    validator: Address,
+) -> Result<TxHash, NodeError>
+```
+
+```typescript [TypeScript]
+async withdrawDelegatorReward(
+    subaccount: SubaccountInfo,
+    delegator: string,
+    validator: string,
+    broadcastMode?: BroadcastMode,
+): Promise<BroadcastTxAsyncResponse | BroadcastTxSyncResponse | IndexedTx>
+```
+
+```uri
+```
+
+:::
+
+#### Parameters
+
+| Parameter     | Location  | Type              | Mandatory | Description           |
+| ------------- | --------- | ----------------- | --------- | --------------------- |
+| subaccount    | query     | [SubaccountInfo]  | true      | Subaccount number     |
+| delegator     | query     | string            | true      | Delegator information |
+| validator     | query     | string            | true      | validator information |
+| broadcastMode | query     | [BroadcastMode]   | false     | Mode of broadcast     |
+
+#### Response
+
+| Status    | Meaning   | Schema                                                                |
+| --------- | --------- | --------------------------------------------------------------------- |
+| `200`     | [OK]      | [BroadcastTxAsyncResponse] | [BroadcastTxSyncResponse] | [IndexedTx]  |
+
+[SubaccountInfo]: /types/subaccount_info
+[BroadcastMode]: /types/broadcast_mode
+[BroadcastTxAsyncResponse]: /types/cosmos
+[BroadcastTxSyncResponse]: /types/cosmos
+[IndexedTx]: /types/cosmos
+[OK]: /types/ok

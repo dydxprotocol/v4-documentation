@@ -1,0 +1,37 @@
+import Head from 'next/head';
+import type { AppProps } from 'next/app'
+import * as React from 'react'
+import Script from 'next/script'
+
+
+import 'nextra-theme-docs/style.css'
+import '../styles.css'
+import '../fonts.css'
+
+const GA_ID = 'G-BM5F5DVTBF'  // Your GA ID here
+
+
+function App({ Component, pageProps }: AppProps) {
+
+  return (
+    <>
+
+              {/* Google Analytics */}
+        <Script
+          strategy="lazyOnload"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+        />
+        <Script strategy="lazyOnload" id="ga-script">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
+      <Component {...pageProps} />
+    </>
+  )
+}
+
+export default App

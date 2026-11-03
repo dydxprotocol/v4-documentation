@@ -1,2 +1,5 @@
-.next
-node_modules
+dist
+/node_modules
+vocs-docs/
+
+.omc/*
