@@ -461,18 +461,7 @@ export default defineConfig({
             rel: 'apple-touch-icon',
             href: 'https://dydx.exchange/icon.svg'
         }),
-      // Kapa AI Widget
-        React.createElement('script', {
-            key: 'kapa-widget',
-            src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
-            'data-website-id': '7353f8eb-1333-44ce-8ea3-d5767430e3fc',
-            'data-project-name': 'dYdX',
-            'data-project-color': '#212131',
-            'data-project-logo': 'https://dydx.exchange/icon.svg',
-            'data-user-analytics-fingerprint-enabled': 'true',
-            defer: true
-        }),
-        
+
         // Google Analytics
         React.createElement('script', {
             key: 'gtag-script',

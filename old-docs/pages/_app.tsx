@@ -15,15 +15,6 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <Script
-        strategy="afterInteractive"
-          src="https://widget.kapa.ai/kapa-widget.bundle.js"
-          data-website-id="c82800f5-e43e-4afe-86c5-dc5ba554a339"
-          data-project-name="kapa.ai"
-          data-project-color="#FF0000"
-          data-project-logo="https://dydx.exchange/icon.svg"
-          data-user-analytics-fingerprint-enabled="true"
-          />
 
               {/* Google Analytics */}
         <Script
