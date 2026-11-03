@@ -1,0 +1,33 @@
+# Data sources
+
+
+The client application would need the obtain the data from the following sources:
+
+## Data sources
+
+::::steps
+### [Indexer](/indexer-client)
+
+The Indexer aggregates blockchain data to provide a Web2 interface for client applications. Clients access updated market data, order books, and user account information through REST and WebSocket endpoints. All data from the Indexer is read-only.
+
+### [Node Client](/node-client)
+
+The client application submits transactions to the blockchain through the validator and also reads data from it. It uses v4-client-js functions to streamline read and write operations.
+
+### Metadata Service
+
+Static market data, including market icons, names, and various URLs, can be retrieved from this REST service. There are two endpoints (use POST instead of GET):
+
+- `metadata-service/v1/info`: Returns a list of market metadata:
+
+```bash
+curl --request POST 'https://66iv2m87ol.execute-api.ap-northeast-1.amazonaws.com/mainnet/metadata-service/v1/info
+```
+
+- `metadata-service/v1/prices`: Returns a list of spot market pricing information. Sample curl request:
+
+```bash
+curl --request POST 'https://66iv2m87ol.execute-api.ap-northeast-1.amazonaws.com/mainnet/metadata-service/v1/prices'
+```
+
+::::

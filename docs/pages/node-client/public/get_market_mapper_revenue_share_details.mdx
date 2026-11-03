@@ -1,0 +1,48 @@
+### Get Market Mapper Revenue Share Details
+
+Retrieves market mapper revenue share details
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_market_mapper_revenue_share_details(self, market_id: int) -> QueryMarketMapperRevShareDetailsResponse
+```
+
+```typescript [TypeScript]
+```
+
+```rust [Rust]
+pub async fn get_market_mapper_rev_share_details(
+    &mut self,
+    market_id: u32,
+) -> Result<MarketMapperRevShareDetails, Error>
+```
+
+```url [API]
+
+```
+
+:::
+
+#### Parameters
+
+| Parameter   | Location | Type      | Required | Description                                            |
+| ----------- | -------- | --------- | -------- | ------------------------------------------------------ |
+| `market_id` | query    | int       | true     | Market id                                              |
+
+
+#### Response
+
+| Status | Meaning       | Schema                                        | Description                           |
+| ------ | ------------- | --------------------------------------------- | ------------------------------------- |
+| `200`  | [OK]          | [QueryMarketMapperRevShareDetailsResponse]    | Market mapper revenue share details   |
+| `400`  | [Bad Request] |                                               | The request was malformed or invalid. |
+
+Examples: [Python]
+
+[Python]: https://github.com/dydxprotocol/v4-clients/blob/95f2ad4b7d87e2c8f819138fcbe903826af47230/v4-client-py-v2/examples/revenue_share_example.py
+[OK]: /types/ok
+[QueryMarketMapperRevShareDetailsResponse]: /types/query_market_mapper_revenue_share_details_response
+[Bad Request]: /types/bad-request

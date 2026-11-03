@@ -10,7 +10,7 @@ jobs:
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
         file-extension: '.md'
-        folder-path: 'pages'
+        folder-path: 'old-docs/pages'
         base-branch: 'main'
         use-quiet-mode: 'yes'
 
@@ -21,6 +21,6 @@ jobs:
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
         file-extension: '.mdx'
-        folder-path: 'pages'
+        folder-path: 'old-docs/pages'
         base-branch: 'main'
         use-quiet-mode: 'yes'

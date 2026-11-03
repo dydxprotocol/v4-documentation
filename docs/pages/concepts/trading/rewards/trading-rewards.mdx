@@ -1,0 +1,125 @@
+# Trading Rewards
+
+:::note
+Trading rewards are subject to adjustments by the applicable Governance Community.
+Note that the community has voted to set the C parameter to 0
+:::
+
+Trading rewards are designed to incentivize `Traders` to trade on the protocol. The source of trading rewards is a configured `Rewards Treasury` account.
+
+For each successful trade, `Traders` will be rewarded in NATIVE_TOKEN dYdX based on the formula outlined in the below section. Trading rewards are distributed automatically and directly to the trader’s account per block.
+
+## Motivation
+
+**The primary goal behind trading rewards is to incentivize trading on the protocol.**
+
+To facilitate fair trading behaviors and to preserve the protocol’s safety, trading rewards have the following secondary goals:
+
+- Self-trading should not be profitable
+- Any distributed rewards should be proportional to fees paid to the protocol
+- Trading rewards should be deterministic
+- Trading rewards should be settled and distributed every block
+- Trading rewards should limit the protocol overspending on trading activity
+
+## Details
+
+![Trading Rewards](/trading_rewards.png)
+
+### Reward Treasury
+
+The amount of tokens available to be distributed to traders is tracked by the protocol’s configured Rewards Treasury account. Call the size of this Rewards Treasury `T`. 
+
+Each block, new tokens are transferred into this `T` from the vesting account and rewards are then distributed from `T`. 
+
+Each block, `T` can grow or shrink based on protocol activity.
+
+:::note
+Definitions and notes
+- The current configuration and parameters can be found by querying the network.
+- `treasury_account`: referred to as `T` in the above. specifies which account the trading rewards come from. Can be configured via gov.
+- `VestEntry` : specifies a vesting schedule from `vester_account` to `treasury_account` for a given `denom` token. The vesting happens linearly from `start_time` and `end_time`.
+- `denom`: specifies the token that the trading rewards should use. Can be configured via gov.
+- `fee_multiplier_ppm`: referred to as `C` in the above. Specifies the proportion (in ppm) that fees should be multiplied by to get the maximum rewards amount. Can be configured via gov.
+:::
+
+
+### Formula & Emission
+
+We define a trader Total rewards as:
+
+```
+Total trading rewards = trading reward from taker fee + trading reward from maker fee
+```
+
+Components of the Trading Rewards formula:
+
+1. `Taker and Maker Volume`
+2. `Fee Rate`
+3. `Maker Rebates`
+4. `Affiliate Fee Share`
+5. `Protocol Revenue Sharing`
+6. `C Constant`
+
+
+#### 1. Trading Rewards for Takers
+For a taker, rewards in a given block are:
+
+```
+trading reward from taker fee = taker volume * (taker fee rate - max maker rebate - max possible affiliate taker fee share) * C * (1 - protocol revenue share rate)
+```
+ 
+where `max possible affiliate taker fee share` will be:
+
+- If the taker 30d rolling volume is < = $50M, 50% * taker fee rate regardless of whether the taker is referred or who they are referred by.
+- If the taker 30d rolling volume is > $50M, 0 since the taker doesn’t generate affiliate revenue share. 
+
+`Taker Fee Revenue Share` is MegaVault revenue share + Treasury subDAO revenue share + Market Mapper revenue share. You can read more about the revenue share in the governance proposals on Megavault, Treasury subDAO and Market Mapper.
+
+ 
+
+#### 2. Trading Rewards for Makers
+Similarly, maker rewards for a user are calculated as:
+
+```
+trading reward from maker fee = maker volume * (positive maker fees) * C * (1 - protocol revenue share rate)
+```
+
+### Example 
+Below is an example using the given formula to calculate the trading reward based on specific inputs for taker volume, fee rates, and other parameters. 
+
+ In this example, we assume the following values for a trader:
+- `Taker Volume`: totaling $1M in trailing volume in 30 days.
+- `Taker Fee Rate`: taker fee rate of 0.04% assuming they have been referred by a VIP Affiliate, starting at fee tier 3.
+- `Max Maker Rebate`: maximum rebate available for makers is 0.011%.
+- `Max Possible Affiliate Taker Fee Share`: as the trader is referred by a VIP affiliate, entitling the VIP affiliate to 50% of the trader’s taker fee rate.
+- `Taker Fee Revenue Share`: the taker fee revenue share is 60% or 0.6 including 50% to MegaVault and 10% to Treasury subDAO, as well as 0% to market mapper for a given market.
+- `C`: A constant multiplier that is currently set to 0.5 by the dYdX governance, but subject to change through dYdX governance.
+
+:::note
+Note that the community has voted to set the C parameter to 0
+:::
+
+```
+Trading Reward from Taker Fee = 1,000,000 * (0.0004 − 0.00011 − 0.0002) * 0.4 * (1−0.6)
+Trading Reward from Taker Fee = 1,000,000 * 0.00009 * 0.4 * 0.4 = 18
+```
+ 
+For this example, the Trading Reward would be equivalent to $18 in DYDX for an approximate Taker Fee of $400 paid by the user.
+Note that however since the C factor has been reduced to 0, traders now get rebates directly instead of C constant trading rewards
+
+
+## FAQ
+
+> How do trading rewards work from a user perspective? 
+
+Traders are rewarded after each successful trade made on the protocol.
+
+Immediately after each fill, a user is sent a certain amount of trading rewards directly to their dYdX Chain address, based on the formulas described below. Prior to each trade, the UI also shows the maximum amount of rewards a trade of that size could receive.
+
+Users earn trading rewards up to, but not exceeding, 90% of a fill’s net-trading-fees, paid in the governance token of the network.
+
+> How do trading rewards affect potential inflation of the governance token? 
+
+Trading rewards distributed by the protocol, each block, are capped at the dollar equivalent of the total net trading fees generated by the protocol that block. Thus, trading rewards distributed can fluctuate on a block by block basis. 
+
+This can result in a large amount of “savings” by the protocol (via reduced inflation) by not overspending to incentivize trading activity.

@@ -1,0 +1,109 @@
+# Revenue Share
+
+Order Router Rev Share enables third-party order routers to direct orders to dYdX and earn a portion of the trading fees (maker and taker). The revenue share, specified in parts per million (ppm), must be voted in via Governance and set in the `order_router_address` field in the order message itself.
+
+The revenue will be distributed based on filled orders that were routed through the participating order router.
+
+Order router details and revenue share percentages can be monitored through the indexer using the `/orders` and `/fills` endpoints. The `/orders` endpoint provides information on the order router address, while the `/fills` endpoint shows the order router address and the specific revenue amount distributed per fill.
+
+To participate in the Order Router Rev Share program, users need to propose and have a passing vote for their order router address & revenue split.
+
+- Affiliate revenue takes priority in the distribution hierarchy.
+- If there is an active affiliate split that has not reached its maximum within a 30-day rolling window, no revenue will be shared with the order router
+
+## Implementation Details
+
+::::steps
+
+## Voting in via Governance
+
+To participate in the Order Router Rev Share program, you need to create and submit a governance proposal. Since governance proposals require adding gas, deposit, and other parameters, it's recommended to create the proposal using a JSON file and submit it via CLI command.
+
+For an example of the governance proposal JSON structure, see [proposal 311 on Mintscan](https://www.mintscan.io/dydx/proposals/311).
+
+The key components of the proposal message are:
+
+- `address` - The address of the order router that will receive the revenue share. This is also the id you place in your order message
+- `share_ppm` - The revenue share percentage in parts per million (ppm)
+
+After submitting the proposal, it must go through the standard governance voting process and receive a passing vote before the order router address and revenue share percentage are activated in the system.
+
+## Placing orders with order rev share address and verifying Order Router Address in Fills
+
+The `order_router_address` field is set when an order is placed
+
+- `order_router_address` - the ID of the order router and where fees will be sent to
+
+```python [Python]
+import asyncio
+import random
+import time
+
+from dydx_v4_client import MAX_CLIENT_ID, OrderFlags
+from dydx_v4_client.indexer.rest.constants import OrderType
+from dydx_v4_client.indexer.rest.indexer_client import IndexerClient
+from dydx_v4_client.key_pair import KeyPair
+from dydx_v4_client.network import TESTNET
+from dydx_v4_client.node.client import NodeClient
+from dydx_v4_client.node.market import Market
+from dydx_v4_client.node.message import order_id
+from dydx_v4_client.wallet import Wallet
+from tests.conftest import TEST_ADDRESS_2, TEST_ADDRESS, DYDX_TEST_MNEMONIC
+from v4_proto.dydxprotocol.clob.order_pb2 import Order
+
+
+node = await NodeClient.connect(TESTNET.node)
+indexer = IndexerClient(TESTNET.rest_indexer)
+MARKET_ID = "ETH-USD"
+market = Market(
+    (await indexer.markets.get_perpetual_markets(MARKET_ID))["markets"][
+        MARKET_ID
+    ]
+)
+wallet = await Wallet.from_mnemonic(node, DYDX_TEST_MNEMONIC, TEST_ADDRESS)
+
+order_id = market.order_id(
+    TEST_ADDRESS, 0, random.randint(0, MAX_CLIENT_ID), OrderFlags.SHORT_TERM
+)
+
+current_block = await node.latest_block_height()
+
+new_order = market.order(
+    order_id=order_id,
+    order_type=OrderType.MARKET,
+    side=Order.Side.SIDE_SELL,
+    size=0.0001,
+    price=0,  # Recommend set to oracle price - 5% or lower for SELL, oracle price + 5% for BUY
+    time_in_force=Order.TimeInForce.TIME_IN_FORCE_UNSPECIFIED,
+    reduce_only=False,
+    good_til_block=current_block + 10,
+    order_router_address=TEST_ADDRESS_2,
+)
+
+transaction = await node.place_order(
+    wallet=wallet,
+    order=new_order,
+)
+
+print(transaction)
+
+await asyncio.sleep(5)
+
+fills = await indexer.account.get_subaccount_fills(
+    address=TEST_ADDRESS, subaccount_number=0, limit=1
+)
+
+print(f"Fills: {fills}")
+
+response = await node.get_market_mapper_revenue_share_param()
+print(response)
+
+response = await node.get_order_router_revenue_share(TEST_ADDRESS_2)
+print(response)
+```
+
+## Order Validation Checks
+
+- Ensure the `order_router_address`(TEST_ADDRESS_2) field is valid and already voted in via governance
+
+::::

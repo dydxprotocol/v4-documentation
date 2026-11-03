@@ -1,31 +1,45 @@
-<p align="center"><img src="https://dydx.exchange/icon.svg?" width="256" /></p>
+## Development
 
-<h1 align="center">dYdX Chain Documentation</h1>
+This is a [Vocs](https://vocs.dev) project bootstrapped with the Vocs CLI.
 
-<div align="center">
-  <a href='https://github.com/dydxprotocol/v4-documentation/blob/024e1b35537ba619b79576d07464a8cb4eb2de66/LICENSE'>
-    <img src='https://img.shields.io/badge/License-AGPL_v3-blue.svg' alt='License' />
-  </a>
-</div>
-
-## Local Development
-
-Install `pnpm` and project dependencies: 
-```bash
-nvm install 18 && nvm use 18
-npm install -g pnpm
-pnpm i
 ```
-
-Start development server on localhost:3000:
-```bash
+pnpm install
 pnpm dev
 ```
 
-## Formatting
-To format .mdx files, you can use the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension in VSCode.
 
-## Github Actions
-Upon push of a commit, the following checks are made:
-* [markdown-link-check](https://github.com/gaurav-nelson/github-action-markdown-link-check) checks that all links work.
-  * If you are configuring a link that is erroring out, considering adding something to the [mlc_config.json](./mlc_config.json) using [these options](https://github.com/tcort/markdown-link-check#config-file-format).
+## Deploy Vocs on Vercel (Quick Guide)
+
+You can easily deploy Vocs using [Vercel](https://vercel.com). Follow these simple steps:
+
+* Go to your Vercel dashboard and click **Add New** > **Project**.
+* Select **Import Git Repository** and choose your forked Vocs repository.
+* In the **New Project** setup:
+
+  * Set **Framework Preset** to `Other`.
+  * Set the **Root Directory** to `.` (root directory).
+* Click **Deploy**.
+
+After deployment is complete, your Vocs instance will be live on your Vercel domain. 🎉
+
+
+## Documentation Guidelines
+
+1. **Adding Sections to the Table of Contents (TOC)**
+
+    To add new sections to the Table of Contents, update the configuration file `vocs.config.ts`. Make sure to modify the appropriate section of the config so that your new pages or sections appear correctly in the TOC.
+
+2. **Pages Location**
+
+    All documentation pages are located in the `docs/pages` directory. Each page should be added there, following the structure defined in the TOC configuration.
+
+3. **Types Location**
+
+    All types are stored in a separate folder: `docs/pages/types`. The types are used in tables of parameters for methods.
+
+4. **Using the Template**
+
+    A predefined template is available and should be used as the basis for creating all new pages. This ensures consistency in structure and style throughout the documentation.
+
+    `docs/pages/templates/method.mdx`
+

@@ -1,0 +1,50 @@
+### Get Parent Subaccount Number Fills
+
+TODO
+
+#### Method Declaration
+
+:::code-group
+
+```python [Python]
+async def get_parent_fills(
+    self,
+    address: str,
+    subaccount_number: int,
+    limit: Optional[int] = None,
+    market: Optional[str] = None,
+    market_type: Optional[TickerType] = None,
+    created_before_or_at_height: Optional[int] = None,
+    created_before_or_at: Optional[str] = None,
+) -> Any
+```
+
+```typescript [TypeScript]
+async getParentSubaccountNumberFills(
+  address: string,
+  parentSubaccountNumber: number,
+  ticker?: string | null,
+  tickerType: TickerType = TickerType.PERPETUAL,
+  limit?: number | null,
+  createdBeforeOrAtHeight?: number | null,
+  createdBeforeOrAt?: string | null,
+  page?: number | null,
+): Promise<Data>
+```
+
+```rust [Rust]
+pub async fn get_parent_subaccount_number_fills(
+    &self,
+    subaccount: &ParentSubaccount,
+    opts: Option<GetFillsOpts>,
+) -> Result<Vec<FillResponseObject>, Error>
+```
+
+```url [API]
+/v4/fills/parentSubaccountNumber
+```
+
+:::
+
+
+#### Parameters
