@@ -121,7 +121,7 @@ A wide range of order types and parameters are provided to allow for different t
   - If **true**: can only decrease your position size by 1. The remaining .25 BTC sell will not fill and be cancelled;
   - Else: The remaining .25 BTC sell can fill and the position become .25 BTC short.
 - **Good until Block**: Validity of the order. It is an integer value, different for short-term and long-term orders:
-  - **Short-term**: Short term orders have a maximum validity of current block height + `ShortBlockWindow`. Currently, `ShortBlockWindow` is 20 blocks, or about 30 seconds;
+  - **Short-term**: Short term orders have a maximum validity of current block height + `ShortBlockWindow`. Currently, `ShortBlockWindow` is 40 blocks, or about 30 seconds;
   - **Long-term**: Stateful orders have a maximum validity of current block time + `StatefulOrderTimeWindow`. Currently, `StatefulOrderTimeWindow` this value is 95 days.
 
 :::code-group
