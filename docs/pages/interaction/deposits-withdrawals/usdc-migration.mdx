@@ -6,11 +6,11 @@ dYdX keeps one USDC denom. Its backing moves from Noble to Injective, so the Nob
 2. **Deposit from Injective.** Noble deposits are rejected and refunded.
 3. **Withdraw with a plain `MsgTransfer`** to Noble or Injective. Forwarding memos are rejected (not yet merged).
 
-Users do not need to do anything. Their USDC balance and denom stay the same.
+USDC holders do not need to do anything. Their USDC balance and denom stay the same. Whoever created or operates a Noble forwarding address that targets dYdX (integrators, the app operator, or users who set one up themselves) must repoint it to the Injective route before activation, or deposits through it are refunded on Noble.
 
 ## Timeline
 
-The change ships switched off in v9.9. Governance turns it on later, with a separate proposal. Then, once all Noble backing has been replaced, governance closes the Noble exit so Injective is the only route.
+The change ships switched off in v9.9. Governance turns it on later, by a governance proposal after the upgrade. Then, once all Noble backing has been replaced, governance closes the Noble exit so Injective is the only route.
 
 | Date | Event |
 | --- | --- |
@@ -27,9 +27,9 @@ Governance cannot close the Noble exit while any Noble backing remains or a Nobl
 
 | Phase | Noble to dYdX | Injective to dYdX | dYdX to Noble | dYdX to Injective |
 | --- | --- | --- | --- | --- |
-| Before activation | Works as today | Arrives as a separate voucher, not USDC | Works as today | No canonical route |
+| Before activation | Works as today | Arrives as a separate voucher, not USDC | Works as today | Plain IBC transfer; arrives as an IBC voucher of dYdX USDC, not Injective USDC |
 | Activation, Noble exit open | Rejected, code 13 | USDC minted 1:1 | Allowed, up to `ledger.noble_backing` | Allowed, up to `ledger.injective_backing` |
-| Noble exit closed | Rejected, code 13 | USDC minted 1:1 | Rejected, code 22 (not yet merged) | Allowed, up to `ledger.injective_backing` |
+| Noble exit closed | Rejected, code 13 | USDC minted 1:1 | Rejected, code 1 (code 22 once the audit fixes merge, not yet merged) | Allowed, up to `ledger.injective_backing` |
 | Paused (`MODE_PAUSED`) | Rejected, code 13 | Rejected, code 2. Refunded on Injective. | Rejected, code 2 | Rejected, code 2 |
 
 While paused, withdrawals already in flight still settle.
@@ -85,7 +85,7 @@ Injective USDC that reached dYdX by another path stays a raw voucher. It is not 
 
 ### Injective route values
 
-| Value | |
+| Value | Setting |
 | --- | --- |
 | dYdX channel | `channel-62` |
 | Packet denom (`controls.injective_packet_denom`) | `erc20:0xa00C59fF5a080D2b954d0c75e46E22a0c371235a` |
@@ -106,7 +106,7 @@ The memo rules below (code 21) are not yet merged.
 - Other memos on the Noble route pass through unchanged.
 - Nothing forwards through dYdX. It runs no packet-forward middleware.
 - On Injective, the IBC sender of every dYdX withdrawal is the module account. Attribute users from `canonical_usdc_transfer` on dYdX.
-- Noble auto-forwarding addresses that point to dYdX must be repointed to the Injective route before activation. Deposits through them are rejected after activation.
+- Whoever created or operates a Noble forwarding address that targets dYdX (integrators, the app operator, or users who set one up themselves) must repoint it to the Injective route before activation, or deposits through it are refunded on Noble.
 
 ## Rebalancing Noble backing
 
@@ -123,13 +123,15 @@ The route delivers USDC, not `controls.injective_denom`, whatever the router lis
 
 | Code | Meaning |
 | --- | --- |
+| 1 | Noble exit is closed. Use Injective. Code 22 once the audit fixes merge (not yet merged). |
 | 2 | Routing is paused. Treat it as a status, not a failure, and retry later. |
 | 3 | USDC sent on a channel other than Noble or Injective |
 | 4 | Amount exceeds that route's backing. Use the other route. |
 | 5 | Too many withdrawals in flight (`controls.max_pending_settlements`, at most 100,000; mainnet value TBD). Retry later. |
 | 13 | Noble deposit rejected |
+| 19 | Injective deposit rejected while `controls.injective_deposits_disabled` is set. Refunded on Injective. |
 | 21 | Memo not allowed (not yet merged) |
-| 22 | Noble exit is closed. Use Injective. (not yet merged) |
+| 22 | Noble exit is closed. Use Injective. Replaces code 1 once the audit fixes merge (not yet merged). |
 | `ratelimit` 1002 | Withdrawal rate limit. Currently $1M per hour and $10M per 24 hours. Each route gets its own limit (not yet merged); per-route values TBD. |
 
 Withdrawal rejections fail the transaction, so they show up in simulation.
@@ -157,7 +159,7 @@ Index these instead of the ICS20 events. On the Injective route the ICS20 events
 
 - Route deposits through Injective, with `controls.injective_packet_denom` on the last hop.
 - Drop `forward` memos on withdrawals; split into two transactions.
-- Repoint Noble auto-forwarding addresses before activation.
+- Repoint any Noble forwarding addresses you operate that target dYdX to the Injective route before activation.
 - Check `ledger.*_backing` before quoting a withdrawal route, and handle codes 2, 4 and 5 as retryable.
 
 **Indexers and explorers**
@@ -168,6 +170,6 @@ Index these instead of the ICS20 events. On the Injective route the ICS20 events
 
 **CEXs and market makers**
 
-- Move deposit flows from Noble to Injective before activation.
+- Move deposit flows, including any Noble forwarding addresses you operate that target dYdX, from Noble to Injective before activation.
 - Plan large withdrawals around per-route backing and rate limits.
 - Use short IBC timeouts and watch `pending_settlements` for stuck withdrawals.
