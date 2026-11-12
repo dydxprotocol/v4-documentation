@@ -95,6 +95,10 @@ export default defineConfig({
                             text: 'Troubleshooting',
                             link: '/interaction/deposits-withdrawals/troubleshooting',
                         },
+                        {
+                            text: 'USDC migration (Noble to Injective)',
+                            link: '/interaction/deposits-withdrawals/usdc-migration',
+                        },
                     ]
                 },
                 {
