@@ -44,6 +44,11 @@ Source chain gas fees \+ Deposits \~$0.02 Withdrawals: \~$0.1-$7
    - Relayers monitor and trigger the final IBC transfer to dYdX Chain
 
 ## Example Deposit
+
+:::warning
+This example shows a route through Noble from before the v9.9 upgrade. Since the upgrade, a route whose last hop is Noble to dYdX is rejected (code 13) and refunded on Noble. USDC must enter dYdX from Injective, with `controls.injective_packet_denom` on the last hop. Check the route Skip returns before submitting it. See the [Canonical USDC integrator guide](/interaction/deposits-withdrawals/usdc-migration).
+:::
+
 Ethereum → dYdX via Skip Go
 
 ```json

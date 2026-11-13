@@ -17,6 +17,16 @@ Withdrawing from dYdX Chain requires first moving funds from your trading subacc
 7. **Wait for confirmation** across all networks
     - Timeframes vary based on network congestion and the third-party services involved
 
+## USDC Withdrawal Routes
+
+Since the v9.9 upgrade, USDC leaves dYdX only to Noble or Injective, with a plain `MsgTransfer`:
+
+- **Noble:** allowed until governance closes the Noble exit, up to `ledger.noble_backing`. After the exit closes, Noble withdrawals are rejected (code 22).
+- **Injective:** allowed up to `ledger.injective_backing`. The memo must be empty. Send to an Injective address (`inj1…`) that you control.
+- **Any other chain:** rejected (code 3).
+
+Forwarding memos are rejected (code 21), so a withdrawal to any other destination takes two steps: withdraw to Noble or Injective, then send a second transaction from there. If an amount exceeds one route's backing (code 4), use the other route. Withdrawals are also subject to the [withdrawal rate limits](/concepts/trading/limits/withdrawal-limits), which both routes share. A failed or timed-out withdrawal returns the USDC to the sender. See the [Canonical USDC integrator guide](/interaction/deposits-withdrawals/usdc-migration) for all error codes.
+
 ## Withdrawal Timeframes
 
 | Withdrawal Method | Approximate Time |
