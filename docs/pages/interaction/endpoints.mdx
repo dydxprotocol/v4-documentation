@@ -180,7 +180,11 @@ let faucet = FaucetClient::new( // [!code focus]
 
 ### Noble client
 
-To move assets in and out of the dYdX network, the Noble network is commonly employed.
+Before the v9.9 upgrade, the Noble network was commonly employed to move assets in and out of the dYdX network.
+
+:::warning[Deprecated for deposits]
+Since the v9.9 upgrade, Noble-to-dYdX deposits are rejected (code 13) and refunded on Noble, so do not use the Noble client to deposit. It can still be used for withdrawals through Noble until governance closes the Noble exit. See the [Canonical USDC integrator guide](/interaction/deposits-withdrawals/usdc-migration).
+:::
 
 :::tip[Alternatives]
 Moving assets is not restricted to using the Noble client directly. Please see the [Deposits and Withdrawals](/interaction/deposits-withdrawals/overview) page.
