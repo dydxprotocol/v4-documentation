@@ -96,7 +96,7 @@ export default defineConfig({
                             link: '/interaction/deposits-withdrawals/troubleshooting',
                         },
                         {
-                            text: 'USDC migration (Noble to Injective)',
+                            text: 'Canonical USDC on dYdX: Integrator Guide',
                             link: '/interaction/deposits-withdrawals/usdc-migration',
                         },
                     ]
