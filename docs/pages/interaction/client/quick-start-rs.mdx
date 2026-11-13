@@ -91,3 +91,5 @@ endpoint = "https://faucet.v4testnet.dydx.exchange"
 ```
 
 :::
+
+The optional `[noble]` section configures the [Noble client](/noble-client). Since the v9.9 upgrade, Noble-to-dYdX deposits are rejected (code 13), so do not use the Noble client to deposit. It can still be used for withdrawals through Noble until governance closes the Noble exit. See the [Canonical USDC integrator guide](/interaction/deposits-withdrawals/usdc-migration).

@@ -1,5 +1,9 @@
 # Skip Go Fast (`Instant Deposit`)
 
+:::warning[Deprecated]
+Skip Go Fast delivers deposits to dYdX through Noble. Since the v9.9 upgrade, Noble-to-dYdX deposits are rejected (code 13) and refunded on Noble, and Go Fast does not carry over to USDC on Injective. This page describes the method as it worked before the upgrade. See the [Canonical USDC integrator guide](/interaction/deposits-withdrawals/usdc-migration).
+:::
+
 Skip Go Fast is a **decentralized bridging protocol**, developed by **Skip**, that enables **rapid and secure cross-chain transactions** across major blockchain ecosystems such as Ethereum, Cosmos, and Solana. Go Fast accelerates cross-chain actions by up to 25 times, **reducing onboarding times from 10+ minutes to seconds**. Learn more [here](https://docs.skip.build/go/advanced-transfer/go-fast#go-fast).
 
 ## Supported Chains & Assets
@@ -25,15 +29,11 @@ If starting with an asset that is not USDC, Skip Go will swap the asset to USDC 
 
 ## Fees
 
-:::note
-The dYdX Foundation's Free Deposit Program ends on 31 October 2026. After that date, Skip Go Fast deposits pay the standard fees listed below.
-:::
-
 :::info
 
-- As of 24/6 Ethereum deposits > $100 route via skip go fast by default. Until 31 October 2026 their fees are covered by the dYdX Foundation's Free Deposit Program.
-- As of 8/7 EVM L2 deposits > $20 route via skip go fast by default. Until 31 October 2026 their fees are covered by the dYdX Foundation's Free Deposit Program.
-  All other routes go via skip regular
+- Before the v9.9 upgrade, Ethereum deposits > $100 routed via skip go fast by default.
+- Before the v9.9 upgrade, EVM L2 deposits > $20 routed via skip go fast by default.
+  All other routes went via skip regular
   :::
 
 All Skip Go Fast `10 bps` on the transfer size \+ source chain fee:
