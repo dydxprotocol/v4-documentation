@@ -3,6 +3,10 @@
 
 ## Deposit with Coinbase
 
+:::warning[Deprecated]
+This flow sends USDC from Coinbase to a Noble address that forwards to dYdX. Since the v9.9 upgrade, Noble-to-dYdX deposits, including those from Noble auto-forwarding addresses, are rejected (code 13) and refunded on Noble. This section describes the flow as it worked before the upgrade. See the [Canonical USDC integrator guide](/interaction/deposits-withdrawals/usdc-migration).
+:::
+
 **Coinbase deposits** involve an **automatic Noble Wallet to dYdX IBC transfer** without needing a third-party bridge.
 
 ### Process Flow (Deposit)
@@ -44,7 +48,7 @@ Coinbase → dYdX
 
 For users familiar with the Cosmos ecosystem, direct IBC transfers provide a straightforward method to deposit funds.
 
-Supported Cosmos Chains: Osmosis, Cosmos Hub, Kujira, Noble, Injective and other IBC-enabled chains
+USDC deposits must come directly from Injective. On Injective the channel to dYdX is `channel-258` (per Skip's registry); on dYdX it is `channel-62`. USDC sent from Noble is rejected (code 13) and refunded on Noble. USDC arriving any other way is a different voucher, not USDC. A multi-hop route through Injective works only if the last hop carries `controls.injective_packet_denom`. See the [Canonical USDC integrator guide](/interaction/deposits-withdrawals/usdc-migration).
 
 ### Process Flow (Deposit)
 
