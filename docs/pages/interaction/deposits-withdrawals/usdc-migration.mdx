@@ -1,0 +1,168 @@
+# Canonical USDC on dYdX: Integrator Guide
+
+dYdX keeps one USDC denom. Its backing moves from Noble to Injective, so the Noble path in the denom trace no longer means anything.
+
+1. **Show it as USDC.** No Noble label. Do not derive the name or the route from the denom trace.
+2. **Deposit from Injective.** Noble deposits are rejected and refunded.
+3. **Withdraw with a plain `MsgTransfer`** to Noble or Injective. Forwarding memos are rejected.
+
+The v9.9 upgrade turns it on at the upgrade height: Noble deposits close and Injective deposits open, while Noble withdrawals stay available. Governance later closes the Noble exit so Injective is the only route. Governance cannot close the Noble exit while any Noble backing remains or a Noble withdrawal is still in flight; such a proposal fails with code 17. Read the live settings from `/dydxprotocol/v4/canonicalusdc/state`.
+
+USDC holders do not need to do anything. Their USDC balance and denom stay the same.
+
+## Phases
+
+The behaviour changes as the module moves through three phases. The v9.9 upgrade takes it from the first to the second. Governance moves it to the third.
+
+| Phase | Deposits | Withdrawals to Noble | Withdrawals to Injective |
+| --- | --- | --- | --- |
+| Before activation (`controls.mode` = `MODE_DISABLED`) | Unchanged. | Unchanged. | Unchanged. USDC arriving over the Injective channel is a separate voucher, not USDC. |
+| Activation, Noble exit open (`MODE_GRADUAL`, `controls.noble_withdrawals_enabled` = `true`) | Injective deposits are credited 1:1. Noble deposits are rejected, code 13. | Allowed, up to `ledger.noble_backing`. | Allowed, up to `ledger.injective_backing`. This starts at 0, so withdrawals fail with code 4 until Injective deposits or the operator's redeposits add backing. |
+| Noble exit closed (`MODE_GRADUAL`, `controls.noble_withdrawals_enabled` = `false`) | Injective only. | Rejected, code 22. | Allowed, up to `ledger.injective_backing`. |
+
+In `MODE_PAUSED`, new transfers are rejected with code 2, but transfers already in flight still settle.
+
+### Live state
+
+Poll `/dydxprotocol/v4/canonicalusdc/state`:
+
+| Field | Meaning |
+| --- | --- |
+| `controls.mode` | `MODE_DISABLED` (before activation), `MODE_GRADUAL` (active) or `MODE_PAUSED` |
+| `controls.noble_withdrawals_enabled` | Whether the Noble exit is open |
+| `controls.injective_deposits_disabled` | When true, Injective deposits are rejected (code 19) and refunded on Injective |
+| `controls.max_pending_settlements` | Cap on withdrawals in flight, shared by both routes (code 5) |
+| `ledger.noble_backing` | Most that can leave through Noble |
+| `ledger.injective_backing` | Most that can leave through Injective |
+| `ledger.pending_injective`, `ledger.pending_noble` | Withdrawals in flight on each route |
+
+To track withdrawals in flight, query `/dydxprotocol/v4/canonicalusdc/pending_settlements` (paginated), or `/dydxprotocol/v4/canonicalusdc/pending_settlements/{source_channel}/{sequence}` for one packet. Set a short timeout on withdrawals. A packet that is neither acknowledged nor timed out keeps the user's USDC locked and holds one of the shared pending slots (code 5).
+
+## Routes
+
+![USDC enters dYdX from Injective and leaves to Noble or Injective. Noble to dYdX deposits are rejected and refunded on Noble. dYdX to Noble withdrawals are allowed without a forward memo. Injective to dYdX deposits mint USDC 1:1 to the receiver. dYdX to Injective withdrawals use an empty memo, with the module account as sender. USDC withdrawals from dYdX to any other chain are rejected. From any other chain, only USDC sent there before activation returns.](/usdc-migration-routes.png)
+
+Routes for the USDC denom after activation, while the Noble exit is open. Red arrows are rejected with an error; funds stay with, or return to, the sender.
+
+## Display
+
+| On dYdX | Show as |
+| --- | --- |
+| `ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5` | USDC, 6 decimals, no chain suffix |
+| `controls.injective_denom` (`ibc/BDC8EC8C66D3D784B2DC7E8F7DAE93A49961AE747CEEBBC7DC4BAFF564E40BD3`) | A separate reserve asset. Never add it to a USDC balance. |
+| `dydx1xl0ph9qhsyp3smtyhgxzjkz7yvxtqp92rjq7nt` | The `canonicalusdc` module account. It holds the reserve and is not a user. Exclude it from holder counts and TVL. |
+
+USDC supply equals `noble_backing + injective_backing + pending_injective`, not the Noble escrow balance.
+
+Noble auto-forwarding addresses that forward to dYdX must be repointed or stopped before activation. Forwarded deposits are rejected with code 13 and refunded on Noble.
+
+## IBC routes
+
+| Flow | Result |
+| --- | --- |
+| Injective to dYdX, direct | USDC minted 1:1 to the receiver |
+| Noble to dYdX | Rejected, code 13. Refunded on Noble. |
+| USDC arriving any other way | A different voucher, not USDC. Do not offer it. |
+| dYdX to Noble | Allowed while `noble_withdrawals_enabled`, up to `ledger.noble_backing` |
+| dYdX to Injective | Allowed, up to `ledger.injective_backing`. Memo must be empty. |
+| dYdX to any other chain | Rejected, code 3 |
+
+A failed or timed-out withdrawal returns the USDC to the sender.
+
+Injective USDC that reached dYdX before activation is not converted. It can be sent back to Injective.
+
+### Injective route values
+
+| Value | Setting |
+| --- | --- |
+| dYdX channel | `channel-62` |
+| Packet denom (`controls.injective_packet_denom`) | `erc20:0xa00C59fF5a080D2b954d0c75e46E22a0c371235a` |
+| Local denom (`controls.injective_denom`) | `ibc/BDC8EC8C66D3D784B2DC7E8F7DAE93A49961AE747CEEBBC7DC4BAFF564E40BD3` |
+| Injective channel | `channel-258`, per Skip's registry |
+
+## Forwarding
+
+| Flow | Result | Do instead |
+| --- | --- | --- |
+| dYdX to Noble and onward, with a `forward` memo | Rejected, code 21 | Plain transfer to Noble, then a second transaction from Noble |
+| dYdX to Injective with any memo | Rejected, code 21 | Empty memo, then act from Injective |
+| Another chain to Noble to dYdX | Last hop rejected, code 13 | Route through Injective |
+| Another chain to Injective to dYdX | Works if the last hop carries `controls.injective_packet_denom` | Include it on the last hop |
+
+- Other memos on the Noble route pass through unchanged.
+- Nothing forwards through dYdX. It runs no packet-forward middleware.
+- On Injective, the IBC sender of every dYdX withdrawal is the module account. Attribute users from `canonical_usdc_transfer` on dYdX.
+
+## Migrating Noble-backed USDC
+
+Users do not need to do this. The designated operator clears the remaining Noble backing by sending USDC out through Noble and back in through Injective. The USDC ends up the same, now Injective-backed. The operator may use the routes below or a direct CCTP path.
+
+| Skip route | Result |
+| --- | --- |
+| CCTP: `orbiter` memo to Noble, then a second transaction from Injective | Works |
+| Swap: one transaction with a `forward` memo | Rejected, code 21. Request the route with `allow_swaps: false`. |
+
+The route delivers USDC, not `controls.injective_denom`, whatever the router lists as its output.
+
+## Key dates
+
+- **Fri Nov 13:** governance proposal expected (3-day vote).
+- **Tue Nov 17:** v9.9 upgrade and activation targeted (block height to be set in the proposal).
+- **Dec 1, 2026:** Circle may limit CCTP exits from Noble to destinations that still support CCTP v1 burns.
+- **Early December:** second governance vote to close the Noble exit, only once Noble backing is zero.
+- **Jan 12, 2027:** Circle fully pauses USDC on Noble.
+- Circle's burn limit on Noble is currently $250,000 per transaction and is declining.
+
+## Error codes
+
+| Code | Meaning |
+| --- | --- |
+| 2 | Routing is paused. Treat this as a status, not a failure. Retry later. |
+| 3 | USDC sent on a channel other than Noble or Injective |
+| 4 | Amount exceeds that route's backing. Use the other route. |
+| 5 | Too many withdrawals in flight. Retry later. |
+| 13 | Noble deposit rejected |
+| 19 | Injective deposit rejected while `controls.injective_deposits_disabled` is set. Refunded on Injective. |
+| 21 | Memo not allowed |
+| 22 | Noble exit is closed. Use Injective. |
+| `ratelimit` 1002 | Withdrawal rate limit. Shared by both routes: $1M per hour and $10M per 24 hours. |
+
+Withdrawal rejections fail the transaction, so they show up in simulation.
+
+## Events
+
+Index these instead of the ICS20 events. On the Injective route the ICS20 events name the module account and count each withdrawal twice.
+
+| Event | Meaning |
+| --- | --- |
+| `canonical_usdc_inbound` | Deposit credited. Carries amount, receiver, sender, source channel and sequence. |
+| `canonical_usdc_transfer` | Withdrawal sent, pending. Carries route, amount, sender, receiver, denoms, source channel and sequence. |
+| `canonical_usdc_settlement` | Withdrawal outcome: `success`, `error` or `timeout`. Carries the same fields as the transfer event plus the outcome, keyed by the same channel and sequence. |
+
+## Checklists
+
+**Wallets**
+
+- Show the USDC denom as USDC, with no Noble label.
+- Deposit from Injective; stop offering Noble deposits at activation.
+- Withdraw with a plain `MsgTransfer` to Noble or Injective, empty memo for Injective.
+- Hide the reserve denom and never add it to USDC balances.
+
+**Routers and bridges**
+
+- Route deposits through Injective, with `controls.injective_packet_denom` on the last hop.
+- Drop `forward` memos on withdrawals; split into two transactions.
+- Repoint or stop any Noble forwarding addresses you operate that target dYdX before activation.
+- Check `ledger.*_backing` before quoting a withdrawal route, and handle codes 2 and 5 as retryable and code 4 by using the other route.
+
+**Indexers and explorers**
+
+- Index `canonical_usdc_*` events, not ICS20 events.
+- Exclude the module account from holder counts and TVL.
+- Compute supply from the ledger, not the Noble escrow.
+
+**CEXs and market makers**
+
+- Move deposit flows, including any Noble forwarding addresses you operate that target dYdX, from Noble to Injective before activation.
+- Plan large withdrawals around each route's backing and the shared rate limit.
+- Use short IBC timeouts and watch `pending_settlements` for stuck withdrawals.

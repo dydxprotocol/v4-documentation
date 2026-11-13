@@ -95,6 +95,10 @@ export default defineConfig({
                             text: 'Troubleshooting',
                             link: '/interaction/deposits-withdrawals/troubleshooting',
                         },
+                        {
+                            text: 'Canonical USDC on dYdX: Integrator Guide',
+                            link: '/interaction/deposits-withdrawals/usdc-migration',
+                        },
                     ]
                 },
                 {

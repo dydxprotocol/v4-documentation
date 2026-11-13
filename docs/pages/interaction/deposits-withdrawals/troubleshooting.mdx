@@ -8,9 +8,10 @@
 
 - Verify transaction succeeded on source blockchain explorer
 - Check Noble explorer for IBC transfer confirmation
-- Ensure you've connected the correct wallet to dYdX interface; this is important for the autosweeping to happen from noble to dYdX chain and to sweep into your dYdX subaccount
+- Ensure you've connected the correct wallet to dYdX interface; this is important for the autosweeping to happen from noble to dYdX chain and to sweep into your dYdX subaccount. After the USDC migration activates at the v9.9 upgrade height (targeted for Nov 17), Noble-to-dYdX deposits are rejected and refunded on Noble; see the [USDC migration guide](/interaction/deposits-withdrawals/usdc-migration)
 - Check [skip explorer](https://explorer.skip.build/) or [Range Tracker Tool](https://usdc.range.org/usdc) to see if relayers have picked up your transaction
 - Wait at least 30 minutes for all confirmations to complete
+- After the USDC migration activates at the v9.9 upgrade height (targeted for Nov 17), Noble deposits are rejected (code 13) and refunded on Noble. Deposit from Injective instead. See the [USDC migration guide](/interaction/deposits-withdrawals/usdc-migration)
 
 #### **Transaction stuck or pending**
 
@@ -109,6 +110,6 @@ Remember to include transaction details, wallet addresses, and a clear descripti
 8. **Understand third-party dependencies** in your chosen transfer route:
    - Skip relies on their own solver network and DEX integrations
    - IBC transfers depend on the Cosmos relayer infrastructure
-   - Coinbase deposits rely on Coinbase's infrastructure and Noble's IBC integration
+   - Coinbase deposits rely on Coinbase's infrastructure and Noble's IBC integration. After the USDC migration activates at the v9.9 upgrade height (targeted for Nov 17), Noble-to-dYdX deposits are rejected and refunded on Noble; see the [USDC migration guide](/interaction/deposits-withdrawals/usdc-migration)
 9. **Monitor relayer and bridge status** during high network congestion periods
 10. **Have backup withdrawal methods** in case one bridge or relayer network experiences issues
