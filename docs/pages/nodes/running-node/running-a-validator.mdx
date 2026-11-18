@@ -14,9 +14,7 @@ Starting in [`v5.0.0`](https://www.mintscan.io/dydx/proposals/59), running a val
 
 ### Running Slinky
 
-First, please ensure you have received your API keys for the relevant decentralized provider nodes. If you have not received API keys, please reach out to the provider team in the relevant communication channels. 
-
-Next, place your API keys under their corresponding URLs in the example file below and save it to your system. Keep the file path handy as it needs to be passed into a flag when running Slinky.
+Save the example file below to your system. Keep the file path handy as it needs to be passed into a flag when running Slinky.
 
 The `oracle.json` file also supplies an edited configuration for the `dydx_migration_api` which facilitates graceful migration from dydx's `x/prices` module to `x/marketmap` module.
 For the `dydx_migration_api` provider, make sure to fill in the URL for the REST endpoint and gRPC endpoint of your node (in that order). The migration API will not work unless the REST API endpoint is the first endpoint in the endpoints list.
@@ -26,105 +24,28 @@ For the `dydx_migration_api` provider, make sure to fill in the URL for the REST
 
 ```json
 {
-    "providers": {
+  "providers": {
     "dydx_migration_api": {
-    "api": {
-    "endpoints": [
-{
-    "url": "http://<YOUR NODE REST API ENDPOINT>"
-},
-{
-    "url": "<YOUR NODE GRPC ENDPOINT>:<YOUR NODE GRPC PORT>"
-}
-    ]
-}
-},
-    "raydium_api": {
-    "api": {
-    "endpoints": [
-{
-    "url": "https://connect-solana.kingnodes.com",
-    "authentication": {
-    "apiKeyHeader": "x-api-key",
-    "apiKey":"API KEY"
-}
-},
-{
-    "url": "https://dydx.helius-rpc.com",
-    "authentication": {
-    "apiKeyHeader": "x-api-key",
-    "apiKey": "API KEY"
-}
-},
-{
-    "url": "https://dydx-solanam-525a.mainnet.rpcpool.com",
-    "authentication": {
-    "apiKeyHeader": "x-token",
-    "apiKey": "API KEY"
-}
-}
-    ]
-}
-},
-    "uniswapv3_api-ethereum": {
-    "api": {
-    "endpoints": [
-{
-    "url": "https://ethereum.polkachu.com",
-    "authentication": {
-    "apiKeyHeader": "x-api-key",
-    "apiKey": "API KEY"
-}
-},
-{
-    "url": "https://connect-eth.kingnodes.com",
-    "authentication": {
-    "apiKeyHeader": "x-api-key",
-    "apiKey": "API KEY"
-}
-},
-{
-    "url": "https://ethereum-rpc.rhino-apis.com",
-    "authentication": {
-    "apiKeyHeader": "x-api-key",
-    "apiKey": "API KEY"
-}
-}
-    ]
-}
-},
-    "uniswapv3_api-base": {
-    "api": {
-    "endpoints": [
-{
-    "url": "https://base-rpc.rhino-apis.com",
-    "authentication": {
-    "apiKeyHeader": "x-api-key",
-    "apiKey": "API KEY"
-}
-},
-{
-    "url": "https://connect-base.kingnodes.com",
-    "authentication": {
-    "apiKeyHeader": "x-api-key",
-    "apiKey": "API KEY"
-}
-},
-{
-    "url": "https://base.polkachu.com",
-    "authentication": {
-    "apiKeyHeader": "x-api-key",
-    "apiKey": "API KEY"
-}
-}
-    ]
-}
-}
-}
+      "api": {
+        "endpoints": [
+          {
+            "url": "http://<YOUR NODE REST API ENDPOINT>"
+          },
+          {
+            "url": "<YOUR NODE GRPC ENDPOINT>:<YOUR NODE GRPC PORT>"
+          }
+        ]
+      }
+    }
+  }
 }
 ```
 
 </details>
+
+If your `oracle.json` still has `raydium_api`, `uniswapv3_api-ethereum` or `uniswapv3_api-base` blocks, you can delete them.
+No enabled market uses these providers since [proposal 399](https://www.mintscan.io/dydx/proposals/399), and the dYdX Foundation stopped funding the Solana, Ethereum and Base endpoints they pointed to on 2026-10-31.
+Slinky does not start a provider that no enabled market uses, so these blocks are already inactive and deleting them does not need an immediate restart.
 
 With the `oracle.json` file path, enter the following command to run Slinky.
 
