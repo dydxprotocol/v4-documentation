@@ -76,7 +76,7 @@ export default defineConfig({
                             link: '/interaction/deposits-withdrawals/overview',
                         },
                         {
-                            text: 'Skip Go Fast',
+                            text: 'Skip Go Fast (turned off)',
                             link: '/interaction/deposits-withdrawals/skipgofast',
                         },
                         {

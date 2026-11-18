@@ -4,9 +4,9 @@ In an effort to reduce risk across the protocol, withdrawals can be rate limited
 
 ## Withdrawal rate limits
 
-As a default setting, withdrawals of Noble USDC are rate limited to max(1% of TVL, $1mm) per hour
+As a default setting, withdrawals of USDC are rate limited, shared by both routes: the greater of $1M or 1% of USDC TVL per hour, and the greater of $10M or 10% of TVL per 24 hours.
 
-As a default setting, withdrawals of Noble USDC are rate limited to max(10% of TVL, $10mm) per day
+Withdrawals to Noble and to Injective count against the same limits. A withdrawal over the limit is rejected with `ratelimit` error 1002. See the [Canonical USDC integrator guide](/interaction/deposits-withdrawals/usdc-migration).
 
 These rate limit parameters can be updated by governance.
 
