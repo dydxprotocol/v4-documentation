@@ -109,8 +109,8 @@ Here `ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5` is t
 
 
 ### Set Bridge option
-Set the [bridges](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute#body-bridges) option to include `“CCTP”`, `“GO_FAST”`, `“IBC”`, and `“AXELAR”`.  
-You can also set the [go_fast](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute#body-go-fast) to `true` for selected chains/and tokens (see [here](https://docs.skip.build/go/advanced-transfer/go-fast)), which would return a route that can be completed within 10 seconds.
+Set the [bridges](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute#body-bridges) option to include `“CCTP”`, `“IBC”`, and `“AXELAR”`.  
+Do not set `go_fast`. Go Fast routes deliver through Noble and are rejected with code 13.
 
 The route endpoint will return the estimated time and fees for the transfer that can be shown to the user.
 
@@ -144,8 +144,8 @@ To submit the transaction, the transaction payload data from the `msgs` or `msgs
 
 ### Go Fast Supported Tokens & Chains 
 
-:::warning[Deprecated]
-Go Fast delivers deposits to dYdX through Noble, so its deposits are rejected (code 13) since the v9.9 upgrade. Go Fast does not carry over to USDC on Injective. See [Skip Go Fast](/interaction/deposits-withdrawals/skipgofast).
+:::warning
+**Deprecated.** Go Fast delivers deposits to dYdX through Noble, so its deposits are rejected (code 13) since the v9.9 upgrade. Go Fast does not carry over to USDC on Injective. See [Skip Go Fast](/interaction/deposits-withdrawals/skipgofast).
 :::
 
 - Go Fast supports `any EVM` asset on the supported source chains that can be swapped to USDC.

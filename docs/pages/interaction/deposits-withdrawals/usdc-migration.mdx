@@ -125,7 +125,7 @@ The route delivers USDC, not `controls.injective_denom`, whatever the router lis
 | 19 | Injective deposit rejected while `controls.injective_deposits_disabled` is set. Refunded on Injective. |
 | 21 | Memo not allowed |
 | 22 | Noble exit is closed. Use Injective. |
-| `ratelimit` 1002 | Withdrawal rate limit. Shared by both routes: $1M per hour and $10M per 24 hours. |
+| `ratelimit` 1002 | Withdrawal rate limit. Shared by both routes: the greater of $1M or 1% of USDC TVL per hour, and the greater of $10M or 10% of TVL per 24 hours. |
 
 Withdrawal rejections fail the transaction, so they show up in simulation.
 
