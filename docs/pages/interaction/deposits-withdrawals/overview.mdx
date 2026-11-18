@@ -1,6 +1,6 @@
 # Deposits and Withdrawals
 
-This guide provides a **step-by-step** explanation of deposit and withdrawal processes on the dYdX Chain. It covers Skip Go (`regular`), direct IBC transfers, and the deprecated Skip Go Fast (`Instant`) and Coinbase-via-Noble deposit methods, along with troubleshooting methods and best practices to ensure seamless transactions.
+This guide provides a **step-by-step** explanation of deposit and withdrawal processes on the dYdX Chain. It covers Skip Go (`regular`), direct IBC transfers, the turned-off Skip Go Fast (`Instant`) method, and the deprecated Coinbase-via-Noble deposit method, along with troubleshooting methods and best practices to ensure seamless transactions.
 
 :::info
 Since the v9.9 upgrade, dYdX USDC is backed by USDC on Injective instead of Noble. USDC deposits come from Injective. Noble deposits, including Noble auto-forwarding addresses, are rejected (code 13) and refunded on Noble. Withdrawals go to Noble, until governance closes the Noble exit, or to Injective. See the [Canonical USDC integrator guide](/interaction/deposits-withdrawals/usdc-migration).
@@ -10,7 +10,7 @@ Since the v9.9 upgrade, dYdX USDC is backed by USDC on Injective instead of Nobl
 
 | Method                                           | Description                                                               | Finality      | Chains Supported                                                                                | Fee Range (USD)                                                                                                                         |
 | :----------------------------------------------- | :------------------------------------------------------------------------ | :------------ | :---------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **Skip Go Fast (`Instant Deposit`)**             | Deprecated. Go Fast delivers through Noble, so its deposits are rejected (code 13) and it does not carry over to USDC on Injective | N/A | N/A | N/A |
+| **Skip Go Fast (`Instant Deposit`)**             | Turned off. Skip Go Fast, which powered `Instant` deposits in the dYdX app, is no longer available for dYdX. Use Skip Go (`regular`), which routes USDC through Injective | N/A | N/A | N/A |
 | **Skip Go (`regular`)**                          | A universal interoperability platform supporting multiple bridges         | 2-30 minutes  | Ethereum Mainnet, Arbitrum, Optimism, Base, Polygon, Avalanche, Solana, Neutron, Osmosis | Deposits \~$0.02 Withdrawals: \~$0.1-$7 \+ source chain gas fee: Ethereum: gas price L2s: gas price Cosmos: gas price Solana: gas price |
 | **Coinbase via Noble**                           | Deprecated. Coinbase deposits arrive through Noble and are rejected (code 13) and refunded on Noble | N/A | N/A | N/A |
 | **Direct IBC Transfer**                          | USDC deposits from Injective; USDC withdrawals to Noble (until the Noble exit closes) or Injective, with a plain `MsgTransfer` | 15-30 seconds | Injective (deposits); Noble and Injective (withdrawals) | \~$0.1-0.5 |

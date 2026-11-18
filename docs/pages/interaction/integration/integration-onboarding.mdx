@@ -110,7 +110,7 @@ Here `ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5` is t
 
 ### Set Bridge option
 Set the [bridges](https://docs.skip.build/go/api-reference/prod/fungible/post-v2fungibleroute#body-bridges) option to include `“CCTP”`, `“IBC”`, and `“AXELAR”`.  
-Do not set `go_fast`. Go Fast routes deliver through Noble and are rejected with code 13.
+Skip Go Fast is turned off for dYdX. Use standard Skip Go routing, which delivers USDC to dYdX through Injective; see the [Canonical USDC integrator guide](/interaction/deposits-withdrawals/usdc-migration).
 
 The route endpoint will return the estimated time and fees for the transfer that can be shown to the user.
 
@@ -142,15 +142,8 @@ To submit the transaction, the transaction payload data from the `msgs` or `msgs
 
 ::::
 
-### Go Fast Supported Tokens & Chains 
+### Go Fast (turned off)
 
 :::warning
-**Deprecated.** Go Fast delivers deposits to dYdX through Noble, so its deposits are rejected (code 13) since the v9.9 upgrade. Go Fast does not carry over to USDC on Injective. See [Skip Go Fast](/interaction/deposits-withdrawals/skipgofast).
+**Turned off.** Skip Go Fast, which powered `Instant` deposits in the dYdX app, is no longer available for dYdX. Use standard Skip Go routing, which delivers USDC through Injective. See the [Canonical USDC integrator guide](/interaction/deposits-withdrawals/usdc-migration) and [Skip Go Fast](/interaction/deposits-withdrawals/skipgofast) for reference.
 :::
-
-- Go Fast supports `any EVM` asset on the supported source chains that can be swapped to USDC.
-- Any asset on the `Cosmos side` that can be swapped from USDC is also supported.
-- This includes `instant deposit` support for assets like ETH on Ethereum, which can be instantly converted to USDC on dYdX.
-- If a chain has `instant finality` and `IBC compatibility`, transfers can be near-instant, making it functionally similar to Instant Deposit.
-- `Chains not supported by CCTP` will not have Instant Deposit functionality but can still use IBC for transfers.
-- For an exhaustive list of supported tokens, reference the [Skip Go documentation](https://docs.skip.build/go/advanced-transfer/go-fast).
