@@ -43,10 +43,6 @@ For the `dydx_migration_api` provider, make sure to fill in the URL for the REST
 
 </details>
 
-If your `oracle.json` still has `raydium_api`, `uniswapv3_api-ethereum` or `uniswapv3_api-base` blocks, you can delete them.
-No enabled market uses these providers since [proposal 399](https://www.mintscan.io/dydx/proposals/399), and the dYdX Foundation stopped funding the Solana, Ethereum and Base endpoints they pointed to on 2026-10-31.
-Slinky does not start a provider that no enabled market uses, so these blocks are already inactive and deleting them does not need an immediate restart.
-
 With the `oracle.json` file path, enter the following command to run Slinky.
 
 ```bash
